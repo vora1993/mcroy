@@ -1,0 +1,44 @@
+<?php
+$title = "FAQ for Property Loan";
+$this->headTitle($title);
+?>
+<div id="page-title"><h2><?php echo $title ?></h2></div>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="blog-page blog-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="blog-single-content blog-container">
+                        <div class="content-faq">
+                                <?php 
+                                $_faq = \Zend\Json\Json::decode($this->faq->getQuestion());
+                                if(count($_faq) > 0) {
+                                    $k = 1;
+                                    foreach ($_faq as $key => $value) {
+                                        ?>
+                                        <div class="faq">
+                                            <div class="faq-title">
+                                                <h3 data-toggle="collapse" data-target="#faq<?php echo $k ?>"><?php echo $value->question ?></h3>
+                                                <button class="btn btn-faq collapsed" data-toggle="collapse" data-target="#faq<?php echo $k ?>"><span class="icn-collapsed-red"></span></button>
+                                            </div>
+                                            <div class="collapse" id="faq<?php echo $k; ?>">
+                                                <div class="row">
+                                                    <div class="col-md-12 faq-item">
+                                                        <?php echo $value->answer ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php 
+                                        $k++;   
+                                    }
+                                }
+                                ?>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

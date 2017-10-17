@@ -1,0 +1,122 @@
+<?php if($this->auth()): ?>
+<?php else: ?>
+<div id="auth" style="display: none;">
+    <!-- BEGIN LOGIN FORM -->
+    <form class="login-form" action="<?php echo $this->url("frontend_user", array("action" => "login")) ?>" method="post">
+        <h3 class="form-title"><?php echo $this->translate("Login to") ?> <?php echo $this->setting()->company_name ?></h3>
+        <h4><?php echo $this->translate("Don't have an account?") ?> <a class="btn-reg-trig" href="javascript:;"><?php echo $this->translate("Sign up") ?></a></h4>        
+        <div class="alert alert-danger display-hide">
+            <button class="close" data-close="alert"></button>
+            <span> <?php echo $this->translate("Enter any email and password") ?> </span>
+        </div>
+        <div class="alert alert-success display-hide">
+            <button class="close" data-close="alert"></button>
+            <span> <?php echo $this->translate("Successfully logged") ?> </span>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-block btn-social btn-lg btn-facebook" href="<?php echo $this->url("frontend_user", array("action" => "facebook-auth")) ?>">
+                <span class="fa fa-facebook"></span> <?php echo $this->translate("Login with Facebook") ?>
+            </a>
+        </div>
+        <div class="form-group" style="position: relative;">
+            <hr class="hr_or">
+            <span class="span_or"><?php echo $this->translate("or") ?></span>
+        </div>
+        <div class="form-group">
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Email") ?></label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo $this->translate("Email") ?>" name="identity" /> 
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Password") ?></label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="<?php echo $this->translate("Password") ?>" name="credential" /> 
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" name="remember" class="icheck" data-checkbox="icheckbox_flat-blue" value="1" /> <?php echo $this->translate("Remember me") ?></label>
+            <a class="pull-right" href="<?php echo $this->url("frontend_user", array("action" => "forgot-password")) ?>" id="forget-password"> <?php echo $this->translate("Forgot password") ?> </a>
+        </div>
+        <div class="form-actions">
+            <input type="hidden" name="redirect_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
+            <button type="submit" class="btn dark btn-block btn-lg"> <?php echo $this->translate("Login to") ?> <?php echo $this->setting()->company_name ?> </button>
+        </div>
+    </form>
+    <!-- END LOGIN FORM -->
+    
+    <!-- BEGIN REGISTER FORM-->
+    <form class="register-form" action="<?php echo $this->url("frontend_user", array("action" => "register")) ?>" method="post">
+        <h3 class="form-title"><?php echo $this->translate("Sign up account") ?></h3>
+        <h4><?php echo $this->translate("Already have an account?") ?> <a class="btn-log-trig" href="javascript:;"><?php echo $this->translate("Log in") ?></a></h4> 
+        <div class="alert alert-danger display-hide">
+            <button class="close" data-close="alert"></button>
+            <span> <?php echo $this->translate("(*) All field are required") ?> </span>
+        </div>
+        <div class="alert alert-success display-hide">
+            <button class="close" data-close="alert"></button>
+            <span> <?php echo $this->translate("Successfully register") ?> </span>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-block btn-social btn-lg btn-facebook" href="<?php echo $this->url("frontend_user", array("action" => "facebook-auth")) ?>">
+                <span class="fa fa-facebook"></span> <?php echo $this->translate("Sign up with Facebook") ?>
+            </a>
+        </div>
+        <div class="form-group" style="position: relative;">
+            <hr class="hr_or">
+            <span class="span_or"><?php echo $this->translate("or") ?></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("First name") ?><span class="required"> * </span></label>
+            <input type="text" name="firstname" data-required="1" class="form-control placeholder-no-fix" placeholder="<?php echo $this->translate("First name") ?> (*)" /> 
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Last name") ?><span class="required"> * </span></label>
+            <input type="text" name="lastname" data-required="1" class="form-control placeholder-no-fix" placeholder="<?php echo $this->translate("Last name") ?> (*)" /> 
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Email") ?><span class="required"> * </span></label>
+            <input type="text" name="email" data-required="1" class="form-control placeholder-no-fix" placeholder="<?php echo $this->translate("Email") ?> (*)" /> 
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Password") ?><span class="required"> * </span></label>
+            <input type="password" name="password" data-required="1" class="form-control" id="password" placeholder="<?php echo $this->translate("Password") ?> (*)" /> 
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Password Verify") ?><span class="required"> * </span></label>
+            <input type="password" name="passwordVerify" data-required="1" class="form-control" id="passwordVerify" placeholder="<?php echo $this->translate("Password Verify") ?> (*)" /> 
+        </div>            
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Phone") ?><span class="required"> * </span></label>
+            <input type="text" name="phone" data-required="1" class="form-control" placeholder="<?php echo $this->translate("Phone") ?> (*)" /> 
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" name="newsletter" class="icheck" data-checkbox="icheckbox_flat-blue" value="1" /> <?php echo $this->translate("Sign up newsletter") ?></label>
+        </div>
+        <div class="form-actions">
+            <input type="hidden" name="redirect_url" value="" />
+            <button type="submit" class="btn dark"><?php echo $this->translate("Register") ?></button>
+        </div>
+    </form>
+    <!-- END FORM-->
+</div>
+<?php endif; ?>
+<?php
+$offScript = 16;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/user_login.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/user_register.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+// On Click SignUp It Will Hide Login Form and Display Registration Form
+$(".btn-reg-trig").click(function() {
+    $(".login #auth .register-form").show();
+    $(".login #auth .login-form").hide();
+});
+
+// On Click SignIn It Will Hide Registration Form and Display Login Form
+$(".btn-log-trig").click(function() {
+    $(".login #auth .login-form").show();
+    $(".login #auth .register-form").hide();
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

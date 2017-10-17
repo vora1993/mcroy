@@ -1,0 +1,216 @@
+<?php
+$title = $this->translate("Setting Email");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'setting', 'action' => 'email')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-double-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/setting') ?>"><?php echo $this->translate("Setting") ?></a>
+                    <i class="fa fa-angle-double-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Email") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit portlet-form bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-settings font-red"></i>
+                            <span class="caption-subject font-red sbold uppercase"><?php echo $this->translate($title) ?></span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <!-- BEGIN FORM-->
+                        <form action="<?php echo $this->url("admin/setting", array('action' => 'edit-email')) ?>" id="form_setting" class="form-horizontal">
+                            <div class="form-body">
+                                <?php
+                                $other_array_key = array('email_type', 'email_name', 'email_host', 'email_username', 'email_password', 'email_from', 'email_to', 'email_cc');
+                                foreach ($this->settings as $key => $setting): ?>
+                                    <?php if(in_array($setting->getKey(), $other_array_key)): ?>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3"><?php echo $this->translate($setting->getName()) ?></label>
+                                        <div class="col-md-6">
+                                            <?php if($setting->getKey() === 'email_type') { 
+                                                $email_type = $setting->getValue();?>
+                                                <select name="email_type" class="form-control">
+                                                    <option value="mail"<?php if($email_type === 'mail') echo ' selected'; ?>><?php echo $this->translate("Mail") ?></option>
+                                                    <option value="smtp"<?php if($email_type === 'smtp') echo ' selected'; ?>><?php echo $this->translate("Smtp") ?></option>
+                                                </select>
+                                            <?php } else { ?>
+                                            <input type="text" name="<?php echo $setting->getKey(); ?>" class="form-control" value="<?php echo $setting->getValue(); ?>" /> 
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <?php endif;?>
+                                <?php endforeach;?>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                                        <button type="button" class="btn btn-outline" onclick="cancel('admin/setting')"><?php echo $this->translate("Cancel") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-summernote/summernote.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-summernote/summernote.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('#aboutupload').on("change", function(){
+    var form = document.getElementById('form_setting');
+    var fileInput = document.getElementById('aboutupload');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            var result = $.parseJSON(xhr.responseText);
+            if(result.success === true) {
+                toastr.success("Image uploaded.");
+                $('#about').attr("src", full_url + result.src);
+                $('#about_image').val(result.name);
+            } else {
+                toastr.warning(result.msg);
+            } 
+        }
+    }
+    // Add any event handlers here...
+    xhr.open('POST', full_url + "/admin/setting/change-about-image", true);
+    xhr.send(formData);
+});
+
+$('#contactupload').on("change", function(){
+    var form = document.getElementById('form_setting');
+    var fileInput = document.getElementById('contactupload');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            var result = $.parseJSON(xhr.responseText);
+            if(result.success === true) {
+                toastr.success("Image uploaded.");
+                $('#contact').attr("src", full_url + result.src);
+                $('#contact_image').val(result.name);
+            } else {
+                toastr.warning(result.msg);
+            } 
+        }
+    }
+    // Add any event handlers here...
+    xhr.open('POST', full_url + "/admin/setting/change-contact-image", true);
+    xhr.send(formData);
+});
+
+var form = $('#form_setting');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+    
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('.user-form .form-group').removeClass('has-error');
+        $('.user-form .help-block, .user-form .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check.");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

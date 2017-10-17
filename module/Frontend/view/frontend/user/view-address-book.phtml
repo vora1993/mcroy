@@ -1,0 +1,75 @@
+<?php
+$title = $this->translate("Detail address book");
+$this->headTitle($title);
+?>
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="<?php echo $this->url("home") ?>"><?php echo $this->translate("Home") ?></a></li>
+            <li><a href="<?php echo $this->url("user") ?>"><?php echo $this->translate("User") ?></a></li>
+            <li class="active"><?php echo $this->translate("Address book") ?></li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-3">
+                <?php echo $this->partial('user-sidebar'); ?>
+            </div>
+            <!-- END SIDEBAR -->
+        
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-7">
+                <h1><?php echo $this->translate("Address book page") ?></h1>
+                <div class="content-page">
+                    <h3><?php echo $this->translate("View address book") ?></h3>
+                    <?php 
+                    if($this->customer) {
+                        ?>
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo $this->translate("Name") ?></td>
+                                        <td><?php echo $this->customer->getName() ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $this->translate("Phone") ?></td>
+                                        <td><?php echo $this->customer->getPhone() ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $this->translate("Email") ?></td>
+                                        <td><?php echo $this->customer->getEmail() ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $this->translate("Date Added") ?></td>
+                                        <td><?php echo date("d/m/Y H:i:s", strtotime($this->customer->getDateAdded())) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $this->translate("Date Modified") ?></td>
+                                        <td><?php echo $this->customer->getDateModified() ? date("d/m/Y H:i:s", strtotime($this->customer->getDateModified())) : $translator->translate("N.A")  ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+    </div>
+</div>
+<?php
+$offStyle = 12;
+$offScript = 20;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+
+JS;
+$this->inlineScript()->captureEnd();
+?>

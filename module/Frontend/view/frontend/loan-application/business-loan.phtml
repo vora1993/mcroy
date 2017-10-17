@@ -1,0 +1,552 @@
+<?php
+$title = $this->category->getName();
+$this->headTitle($title);
+$min_loan_amount = $this->setting()->min_loan_amount;
+$max_loan_amount = $this->setting()->max_loan_amount;
+$max_loan_tenure = $this->setting()->max_loan_tenure;
+?>
+
+<div id="content" class="box-compare">
+    <div id="compare-tab">
+        <div class="box-title-compare">
+            <div class="title-compare"><?php echo $title ?></div>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#business" aria-expanded="true"><i class="fa fa-percent"></i> <span class="title-lag"><?php echo $this->translate("Business Term Loan") ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
+    		    <li><a data-toggle="tab" href="#info" aria-expanded="true"><i class="fa fa-comments-o"></i> <?php echo $this->translate("Faq") ?> </a></li>
+    		    <li><a data-toggle="tab" href="#need"><i class="fa fa-question-circle"></i><span class="title-lag"><?php echo $this->translate("Need Help") ?></span><span class="title-xs"><?php echo $this->translate("Help") ?></span></a></li>
+            </ul>
+        </div>
+        <div class="tabs-bank"></div>
+
+        <div class="tab-content">
+            <div class="container">
+                <div class="row">
+                    <div id="business" class="tab-pane fade active in">
+                        <div class="col-md-12">
+                            <div class="search-bank">
+                                <form method="post" action="<?php echo $this->url("loan_application", array("action" => "business-loan")) ?>" id="form_loan">
+                                    <div class="col-md-9 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 15px;">
+                                                <div class="row">
+                                                    <b class="col-xs-12 lb-loan"><?php echo $this->translate("I want to borrow") ?></b>
+                                                    <div class="col-xs-12">
+                                                        <div class="input-group">
+                                                            <input type="text" name="loan_amount" value="50000" id="loan_amount" class="form-control" placeholder="50000" />
+                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                        </div>
+                    						    	</div>
+                                                </div>
+                   	                        </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 15px;">
+                                                <div class="row">
+                                                    <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("Over") ?></b>
+                                                    <div class="col-xs-12">
+                    							    	<div class="input-group">
+                                                            <input type="text" name="loan_tenure" value="3" id="loan_tenure" class="form-control" placeholder="3" />
+                    							    	    <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("years") ?></i></span>
+                                                        </div>
+                    						    	</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12"  style="margin-bottom: 15px;">
+                                                <div class="row">
+                                                    <b class="col-xs-12 lb-loan">
+                                                        <?php echo $this->translate("Eligibility - Sale Turn Over") ?>
+                                                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<?php echo $this->setting()->eligibility_sale_turn_over ?>" data-html="true" data-original-title="<span><?php echo $this->translate("Eligibility - Sale Turn Over") ?></span>"><i class="fa fa-question-circle"></i></a>
+                                                    </b>
+                                                    <div class="col-xs-12">
+                                                        <div class="input-group">
+                                                            <input type="text" name="min_sales_turnover" value="50000" id="min_sales_turnover" class="form-control" placeholder="50000" />
+                                                            <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12"  style="margin-bottom: 15px;">
+                                                <div class="row">
+                                                    <b class="col-xs-12 lb-loan">
+                                                        <?php echo $this->translate("Eligibility - Years of Incorporation") ?>
+                                                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<?php echo $this->setting()->eligibility_years_of_incorporation ?>" data-html="true" data-original-title="<span><?php echo $this->translate("Eligibility - Years of Incorporation") ?></span>"><i class="fa fa-question-circle"></i></a>
+                                                    </b>
+                                                    <div class="col-xs-12">
+                                                        <div class="input-group">
+                                                            <input type="text" name="min_years_of_incorporation" value="3" id="min_years_of_incorporation" class="form-control" placeholder="3" />
+                                                            <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("years") ?></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-xs-12">
+                                        <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                                        <button type="button" id="submit-search" class="btn_calculate"><?php echo $this->translate("Calculate My Results") ?></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-xs-12 business-loan">
+                            <div class="filter-table-head hidden-sm hidden-xs">
+                                <ul>
+                                    <li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Bank") ?></div>
+                                        </aside>
+                                    </li><!--
+                                    --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Rate") ?></div>
+                                            <div class="sort" data-field="rate"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                        </aside>
+                                    </li><!--
+                                    --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Min Requirement") ?></div>
+                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->min_requirement ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                        </li><!--
+                                    --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Monthly Installment") ?><span></span></div>
+                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                            <div class="sort" data-field="month"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                        </aside>  
+                                        </li><!--
+                                    --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Total Interest") ?></div>
+                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->total_interest_payable ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                            <div class="sort" data-field="interest"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                        </aside>
+                                       </li><!--
+                                       --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Processing Fee") ?></div>
+                                        </aside>
+                                       </li><!--
+                                    --><li>
+                                        <aside class="head-title">
+                                            <div class="name"><?php echo $this->translate("Penalty Fee") ?></div>
+                                        </aside>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="filters-table-container" id="results"></div>
+                            <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                        </div>
+                        <div id="column-right" class="col-sm-3 col-xs-12">
+                            <div class="box-featured-bank">
+                                <div class="featured-bank lowest-interest">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/4.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">HSBC's Personal Loan</h4>
+                                        <span class="amout-bank">(7%)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-processing">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/1.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">POSB Personal Loan</h4>
+                                        <span class="amout-bank">(10%)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-penalty">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/3.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">Standard  Chartered CashOne</h4>
+                                        <span class="amout-bank">(8.5%)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-annual">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/2.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">Citibank Ready Credit</h4>
+                                        <span class="amout-bank">(6.7%)</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="box-featured-apply">
+                                    <?php echo $count; ?> customer just successfully apply this <?php echo $title ?> today.
+                                </div>
+                        </div>
+                    </div>
+
+                    <div id="info" class="tab-pane fade">
+        				<div class="body-info">
+                            <div class="content-faq">
+                                <?php 
+                                $_faq = \Zend\Json\Json::decode($this->faq->getQuestion());
+                                if(count($_faq) > 0) {
+                                    $k = 1;
+                                    foreach ($_faq as $key => $value) {
+                                        ?>
+                                        <div class="faq-item">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-faq collapsed" data-toggle="collapse" data-target="#faq<?php echo $k ?>"><span class="icn-collapsed-red"></span></button>
+                                                    <h3 data-toggle="collapse" data-target="#faq<?php echo $k ?>"><?php echo $value->question ?></h3>
+                                                </div>
+                                            </div>
+                                            <div class="collapse" id="faq<?php echo $k; ?>">
+                                                <div class="row">
+                                                    <div class="col-md-12 faq-content">
+                                                        <?php echo nl2br($value->answer) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php 
+                                        $k++;   
+                                    }
+                                }
+                                ?>
+                            </div>    
+                        </div>
+                    </div>
+
+                    <div id="need" class="tab-pane fade">
+                        <div class="body-info">
+                            <div class="content-faq">                               
+                                <form action="<?php echo $this->url("page", array("action" => "post-question")) ?>" class="form-horizontal" id="question_form">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $this->translate("Name") ?>
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9"><input type="text" name="name" class="form-control"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $this->translate("Company") ?>
+                                            </label>
+                                            <div class="col-md-9"><input type="text" name="company" class="form-control"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $this->translate("Phone") ?>
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9"><input type="text" name="phone" class="form-control"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $this->translate("Email") ?>
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9"><input type="text" name="email" class="form-control"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3"><?php echo $this->translate("Message") ?>
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9"><textarea name="message" class="form-control" rows="4"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button type="submit" class="btn btn-primary"><?php echo $this->translate("Submit") ?></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>    
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="compare-disclaimer">
+            <div class="container">
+               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
+            </div>
+		</div>
+
+        <?php echo $this->partial('frontend_sub_footer'); ?>
+    </div>
+</div>
+
+<section class="shortlist"> 
+    <div class="container" id="shortlisted-holder">
+        <div class="row compare-row" style="display: none;">
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="shortlist-info-container">
+                            <div class="shortlist-info" id="compare-title"><span>0</span> <?php echo $this->translate("Shortlisted Business Term Loan") ?></div>
+                            <p><?php echo $this->translate("Select up to 3 banks for comparison") ?></p>
+                            <a class="clear-shortlist" href="javascript:;" onclick="Loan.clear_compare(this)"><i class="fa fa-times-circle"></i> <?php echo $this->translate("Clear Shortlist") ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" id="compare-holder"></div>
+            <div class="col-xs-2">
+                <div class="row">
+                    <a class="btn blue btn-lg text-uppercase fancybox-button" href="#compare" onclick="Loan.popup()"><?php echo $this->translate("Compare Now") ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="compare-arrow"><a href="javascript:;" onclick="Loan.shortlist2(this)"><i class="fa fa-angle-double-down"></i></a></div>
+    </div>
+</section>
+
+<div id="featured-apply" style="display: none;">2 customer just successfully apply this business term loan today.</div>
+
+
+<?php
+echo $this->partial('compare');
+
+$notify = \Zend\Json\Json::decode($this->setting()->notify);
+if(count($notify) > 0) {
+    echo '<script type="text/javascript">';
+    $time_out = 2500;
+    foreach ($notify as $value) {
+        echo 'setTimeout(function(){
+                $.bootstrapGrowl("'.$value.'", {
+                    ele: "body",
+                    type: "info",
+                    offset: {
+                        from: "bottom",
+                        amount: 20
+                    },
+                    align: "right",
+                    width: 250,
+                    delay: 10000,
+                    allow_dismiss: true,
+                    stackup_spacing: 10
+                });
+            }, '.$time_out.');';
+        $time_out = $time_out + 500;
+    }
+    echo '</script>';
+}
+
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+//$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-notific8/jquery.notific8.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+//$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-notific8/jquery.notific8.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+/*var settings = {
+    theme: 'teal',
+    horizontalEdge: 'bottom',
+    verticalEdge: 'right'
+};
+
+setTimeout(function(){ 
+    $.notific8($.trim("There are 10 people viewed these loans today"), settings);
+    $.notific8($.trim("There are 5 customer applied these loans today"), settings);
+}, 3000);
+*/
+
+$('#testimonials .box-content').owlCarousel({
+    items: 1,
+   	autoPlay: 5000,
+   	singleItem: true,
+   	navigation: false,
+   	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+   	pagination: true
+});
+    
+var BACKSPACE_KEY = 8;
+var DELETE_KEY = 46;
+var MAX_LOAN_AMOUNT = {$max_loan_amount};
+var MAX_LOAN_TENURE = {$max_loan_tenure};
+$(document).ready(function() {
+    Loan.load_compare();
+    $('.btn_calculate').on('click', function() {
+        var category_id = $("input[name=category_id]").val();
+        
+        var loan_amount = formatIntNumber($("input[name=loan_amount]").val());
+        var loan_tenure = $("input[name=loan_tenure]").val();
+
+        var min_sales_turnover = formatIntNumber($("input[name=min_sales_turnover]").val());
+        var min_years_of_incorporation = $("input[name=min_years_of_incorporation]").val();
+
+        if(loan_amount > 0 && loan_tenure > 0) {
+            $.ajax({
+                type: "POST",
+                url: $("#form_loan").attr("action"),
+                data: {category_id: category_id, loan_amount: loan_amount, loan_tenure: loan_tenure, min_sales_turnover: min_sales_turnover, min_years_of_incorporation: min_years_of_incorporation},
+                dataType: 'json',
+                beforeSend: function() {
+                    App.blockUI({boxed: true});
+                },
+                success: function(itemJson) {
+                    App.unblockUI();
+                    $('#results').html(itemJson.html);
+                    Loan.detail();
+                },
+
+                error : function(xhr, status){
+                    console.log(status);
+                },
+            });
+        }
+    });
+
+    
+
+    $("#loan_amount, #min_sales_turnover").val(formatNumber($("#loan_amount, #min_sales_turnover").val(), ""));
+
+    $("#loan_amount, #min_sales_turnover").on("keydown", function(evt) {
+        var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+        if(charCode == BACKSPACE_KEY || charCode == DELETE_KEY ){
+            return true;
+        }
+        return isEnterNumber(charCode);
+    });
+
+    
+
+    $("#loan_amount, #min_sales_turnover").on("keyup", function() {
+        var val = $(this).val();
+        val = Number(val.replace(/,/g, ""));
+        if (val > MAX_LOAN_AMOUNT) {
+            $(this).val(formatNumber(MAX_LOAN_AMOUNT, ""));
+            toastr.warning("No unsecured loans above $ {$max_loan_amount}");
+        } else {
+            $(this).val(formatNumber(val, ""));
+        }
+    });
+
+
+    $("#loan_tenure, #min_years_of_incorporation").on("keydown", function(evt) {
+
+        var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+
+        if(charCode == BACKSPACE_KEY || charCode == DELETE_KEY ){
+
+            return true;
+
+        }
+
+        return isEnterNumber(charCode);
+
+    });
+
+    $("#loan_tenure, #min_years_of_incorporation").on("keyup", function() {
+
+        var val = $(this).val();
+
+        if (val > MAX_LOAN_TENURE) {
+
+            toastr.warning("No unsecured loans above {$max_loan_tenure} years");
+
+            $(this).val(MAX_LOAN_TENURE);
+
+        }
+
+    });
+  
+
+    // Trigger
+
+    $( "#loan_amount, #loan_tenure, #min_sales_turnover, #min_years_of_incorporation" ).trigger( "change" );
+
+    $( ".btn_calculate" ).trigger( "click" );
+
+});
+
+var form = $("#question_form");
+form.validate({
+    errorElement: "span",
+    errorClass: "help-block",
+    focusInvalid: false,
+    ignore: "",
+    rules: {
+        name: {
+            required: true
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        phone: {
+            required: true,
+            number: true
+        },
+        message: {
+            required: true
+        }
+    },
+    
+    highlight: function(element) {
+        $(element).closest(".form-group").addClass("has-error");
+    },
+
+    success: function(label) {
+        label.closest(".form-group").removeClass("has-error");
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        var form = $(form);
+        
+        var inputs = form.find("input, select, button, textarea");
+        
+        var serializedData = form.serialize();
+    
+        inputs.prop("disabled", true);
+        
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        $("#question_form .form-group").removeClass("has-error");
+        $("#question_form .help-block, #question_form .alert").remove();
+        
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        request.always(function () {
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+
+$this->inlineScript()->captureEnd();
+
+?>

@@ -1,0 +1,401 @@
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 42px;">
+            <li class="sidebar-toggler-wrapper hide">
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                <div class="sidebar-toggler">
+                    <span></span>
+                </div>
+                <!-- END SIDEBAR TOGGLER BUTTON -->
+            </li>
+            <li class="nav-item start <?php if($this->view === 'dashboard') echo ' active open'?>">
+                <a href="<?php echo $this->url("admin") ?>" class="nav-link">
+                    <i class="icon-speedometer"></i>
+                    <span class="title"><?php echo $this->translate("Dashboard") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'dashboard') echo ' open'?>"></span>
+                </a>
+            </li>
+            <li class="nav-item <?php if($this->view === 'bank') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-bank"></i>
+                    <span class="title"><?php echo $this->translate("Bank & Company") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'bank') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'bank' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List Bank") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'bank' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Bank") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'bank' && $this->action === 'property-loan') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank", array("action" => "view-property-loan")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Property Loan Package") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'bank' && $this->action === 'interest-rate') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank", array("action" => "view-interest-rate")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Interest Rate") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'bank' && $this->action === 'referral-summary') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank", array("action" => "view-referral-summary")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Referral Summary") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'business_loan') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-pie-chart"></i>
+                    <span class="title"><?php echo $this->translate("Business Loan") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'business_loan') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'category') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "category")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Business Term Loan Categories") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Business Term Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Business Term Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'business_loan' && $this->action === 'business-term-loan') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "business-term-loan")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Business Term Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'business_loan' && $this->action === 'factoring') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/factoring") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Factoring") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'business_loan' && $this->action === 'funding') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/funding") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("PeerToPeer Funding") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'business_loan' && $this->action === 'interest-rate') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/bank", array("action" => "view-interest-rate")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Interest Rate") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'faq') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "faq")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Business Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'faq6') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "faq6")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Government Assisted Loan") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'property_loan') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-share-alt"></i>
+                    <span class="title"><?php echo $this->translate("Property Loan") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'property_loan') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'category') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "category")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Property Loan Categories") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "index")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Property Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Property Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'property_loan' && $this->action === 'home_loan') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "home-loan")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Home Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="hide nav-item <?php if($this->view === 'property_loan' && $this->action === 'refinancing') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "refinancing")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Refinancing") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Property Loan") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'application_loan') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-calculator"></i>
+                    <span class="title"><?php echo $this->translate("Loan Application") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'application_loan') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'application_loan' && $this->action === 'business_loan') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/application_loan", array("action" => "business-loan")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Business Term Loan Application") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'application_loan' && $this->action === 'property_loan') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/application_loan", array("action" => "property-loan")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Property Loan Application") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'application_loan' && $this->action === 'referral_summary') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/application_loan", array("action" => "referral_summary")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Referral Summary") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'admin_bank_account') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-globe-alt"></i>
+                    <span class="title"><?php echo $this->translate("Bank Account") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'admin_bank_account') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'category') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "category")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Bank Account Categories") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Bank Account") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Bank Account") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'faq') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "faq")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Bank Account") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'post') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-pin"></i>
+                    <span class="title"><?php echo $this->translate("Blog") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'post') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'post' && $this->action === 'category') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/post", array("action" => "category")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Categories") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'post' && $this->action === 'post') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/post") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("All Posts") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'post' && $this->action === 'add-post') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/post", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'page') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-docs"></i>
+                    <span class="title"><?php echo $this->translate("Pages") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'page') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'page' && $this->action === 'page') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/admin_page") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("All Pages") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'page' && $this->action === 'add') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/admin_page", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'crm') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-drawer"></i>
+                    <span class="title"><?php echo $this->translate("CRM") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'crm') echo ' open'?>"></span>
+                </a>
+            </li>
+            <li class="nav-item <?php if($this->view === 'infographic') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title"><?php echo $this->translate("Infographic") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'infographic') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'infographic' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/infographic") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Lists of Infographic") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'infographic' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/infographic", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add Infographic") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'slider') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-picture"></i>
+                    <span class="title"><?php echo $this->translate("Sliders") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'slider') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'slider' && $this->action === 'slider') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/slider") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("All Sliders") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'slider' && $this->action === 'add') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/slider", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'testimonial') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-bubbles"></i>
+                    <span class="title"><?php echo $this->translate("Testimonials") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'testimonial') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'testimonial' && $this->action === 'testimonial') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/testimonial") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("All Testimonials") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'testimonial' && $this->action === 'add') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/testimonial", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'setting') echo ' active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-settings"></i>
+                    <span class="title"><?php echo $this->translate("Setting") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'setting') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'company') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'view-company')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Company") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'home') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-home')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Homepage") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'widget') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'widget')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Widget") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'menu') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'menu')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Menu") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'loan') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-loan')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'common-interests') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-common-interests')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Common Interests") ?></span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'tooltip') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-tooltip')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Tooltip") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'email') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-email')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Email") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'social') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-social')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Social") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'user') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-user"></i>
+                    <span class="title"><?php echo $this->translate("Users") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'user') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'user' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/user") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Users") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'user' && $this->action === 'role') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/user", array("action" => "role")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Roles") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'user' && $this->action === 'subscribe') echo 'active'?>">
+                        <a href="<?php echo $this->url("admin/user", array("action" => "subscribe")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Subscribes") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+            

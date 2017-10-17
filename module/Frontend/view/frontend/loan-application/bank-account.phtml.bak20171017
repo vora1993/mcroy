@@ -1,0 +1,95 @@
+<?php
+$title = $this->category->getName();
+$this->headTitle($title);
+$min_loan_amount = $this->setting()->min_loan_amount;
+$max_loan_amount = $this->setting()->max_loan_amount;
+$max_loan_tenure = $this->setting()->max_loan_tenure;
+?>
+<div class="title-property">
+    <div class="container">
+        <h2><?php echo $title ?></h2>
+        <div class="portlet-head">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="stepproperty">
+                        <div class="stepproperty-row">
+                            <div class="stepproperty-step<?php if($title === 'Current Account (SGD)') echo ' active'; ?>">
+                                <div class="stepproperty-circle">S$</div>
+                                <p>Current Account (SGD)</p>
+                            </div>
+                            <div class="line-stepproperty line-stepproperty1"></div>
+                            <div class="stepproperty-step<?php if($title === 'Current Account (USD)') echo ' active'; ?>">
+                                <div class="stepproperty-circle">$</div>
+                                <p>Current Account (USD)</p>
+                            </div>
+                            <div class="line-stepproperty line-stepproperty2"></div>
+                            <div class="stepproperty-step<?php if($title === 'Fixed Deposit') echo ' active'; ?>">
+                                <div class="stepproperty-circle">%</div>
+                                <p>Fixed Deposit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="filters-table-container" id="results"></div>
+                <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="compare-disclaimer">
+    <div class="container">
+   	    <p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
+    </div>
+</div>
+
+<section class="shortlist" style="overflow: hidden; display: none;"> 
+    <div class="container" id="shortlisted-holder">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="shortlist-info-container">
+                            <div class="shortlist-info" id="compare-title"><span>0</span> <?php echo $this->translate("Shortlisted Business Term Loan") ?></div>
+                            <p><?php echo $this->translate("Select up to 3 banks for comparison") ?></p>
+                            <a class="clear-shortlist" href="javascript:;" onclick="Loan.clear_compare(this)"><i class="fa fa-times-circle"></i> <?php echo $this->translate("Clear Shortlist") ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" id="compare-holder"></div>
+            <div class="col-xs-2">
+                <div class="row">
+                    <a class="btn blue btn-lg text-uppercase fancybox-button" href="#compare" onclick="Loan.popup()"><?php echo $this->translate("Compare Now") ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+echo $this->partial('compare');
+
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom4.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+$(document).ready(function() {
+    Loan.load();
+    Loan.load_compare();
+});
+JS;
+$this->inlineScript()->captureEnd();
+
+?>

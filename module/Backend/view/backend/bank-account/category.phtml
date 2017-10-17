@@ -1,0 +1,297 @@
+<?php
+$title = $this->translate("Category Management");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'admin_bank_account', 'action' => 'category')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/admin_bank_account') ?>"><?php echo $this->translate("Bank Account") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Category") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light">
+                    <div class="portlet-title">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                    <a class="btn dark" data-toggle="modal" href="#add_category"><i class="fa fa-plus"></i> <?php echo $this->translate("Add Category") ?> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="dd" id="nestable"><?php echo $this->category_html ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="add_category" tabindex="-1" role="add_category" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?php echo $this->url("admin/admin_bank_account", array("action" => "add-category")) ?>" method="post" class="form-horizontal" id="form_add_category">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title"><?php echo $this->translate("Add New Category") ?></h4>
+                </div>
+                <div class="modal-body"> 
+                    <div class="form-group">
+                        <label for="name" class="col-md-3 control-label"><?php echo $this->translate("Name") ?></label>
+                        <div class="col-md-9">
+                            <input type="text" name="name" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal"><?php echo $this->translate("Close") ?></button>
+                    <button type="submit" class="btn red-thunderbird"><?php echo $this->translate("Submit") ?></button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- END MODAL -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-nestable/nestable.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/sweetalert2/sweetalert2.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-nestable/jquery.nestable.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/sweetalert2/sweetalert2.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+function create_category(button) {
+    var l = Ladda.create(button);
+    var name = $('input[name=category_name]').val();
+    if(name) {
+        $.ajax({
+            type: 'POST',
+            url: full_url + '/admin/bank-account/create-category',
+            data: {name: name}, 
+            beforeSend: function() {
+                l.start();
+            },
+            success: function(data) {
+                l.stop();
+                if(data.success) toastr.success(data.msg);
+                else toastr.error(data.msg);
+            },
+            error: function(xhr) { // if error occured
+                toastr.error("Error occured. Please try again.");
+            },
+            dataType: 'json'  
+        });
+    }
+}
+
+function select_category(button) {
+    var l = Ladda.create(button);
+    var group_id = $('select[name=group_id]').val();
+    if(group_id > 0) {
+        window.location.href = full_url + '/admin/bank-account/category/'+group_id;
+    }
+}
+
+function edit_category(button, id) {
+    var l = Ladda.create(button);
+    var category_id   = id;
+    var category_name = $('#collapse_'+id+' input[name=label_title]').val();
+    if(category_id) {
+        $.ajax({
+            type: 'POST',
+            url: full_url + '/admin/bank-account/edit-category',
+            data: {category_id:category_id, category_name: category_name}, 
+            beforeSend: function() {
+                l.start();
+            },
+            success: function(data) {
+                l.stop();
+                if(data.success) {
+                    toastr.success(data.msg);
+                    setTimeout(function(){ window.location.reload(); }, 1500);
+                } else {
+                    toastr.error(data.msg);
+                } 
+            },
+            error: function(xhr) { // if error occured
+                toastr.error("Error occured. Please try again.");
+            },
+            dataType: 'json'  
+        });
+    }
+}
+
+function remove_category(button, id) {
+    swal({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, remove it!',
+        cancelButtonText: 'No, keep it',
+    }).then(function() {
+        var l = Ladda.create(button);
+        $.ajax({
+            type: 'POST',
+            url: full_url + '/admin/bank-account/remove-category',
+            data: {category_id:id}, 
+            beforeSend: function() {
+                l.start();
+            },
+            success: function(data) {
+                l.stop();
+                if(data.success) {
+                    toastr.success(data.msg);
+                    setTimeout(function(){ window.location.reload(); }, 1500);
+                } else {
+                    toastr.error(data.msg);
+                } 
+            },
+            error: function(xhr) { // if error occured
+                toastr.error("Error occured. Please try again.");
+            },
+            dataType: 'json'  
+        });
+    }, function(dismiss) {
+		// dismiss can be 'cancel', 'overlay', 'close', 'timer'
+		if (dismiss === 'cancel') {
+			swal(
+				'Cancelled',
+				'Your category is safe :)',
+			'error'
+			);
+		}
+	});
+}
+
+var form = $('#form_add_category');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        name: {
+            required: true
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+    
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_add_category .form-group').removeClass('has-error');
+        $('#form_add_category .help-block, #form_add_category .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                form.trigger("reset");
+                $(".modal").modal('hide');
+                toastr.success(result.msg);
+                setTimeout(function(){ window.location.reload(); }, 1500);
+            } else {
+                toastr.error(result.msg);
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+
+$('.dd').nestable({ 
+    dropCallback: function(details) {
+        var order = new Array();
+        $("li[data-id='"+details.destId +"']").find('ol:first').children().each(function(index,elem) {
+            order[index] = $(elem).attr('data-id');
+        });
+        if (order.length === 0){
+            var rootOrder = new Array();
+            $("#nestable > ol > li").each(function(index,elem) {
+                rootOrder[index] = $(elem).attr('data-id');
+            });
+        }
+        $.post(full_url+'/admin/bank-account/category', { 
+            source : details.sourceId, 
+            destination: details.destId, 
+            order:JSON.stringify(order),
+            rootOrder:JSON.stringify(rootOrder) 
+        }, function(response) {
+            var result = $.parseJSON(response);
+            if(result.success) toastr.success(result.msg); 
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

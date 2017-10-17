@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <?php echo $this->headTitle($this->translate($this->setting()->company_name))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
+        <meta content="<?php echo $this->setting()->company_description ?>" name="description" />
+        <meta content="<?php echo $this->setting()->owner_name ?>" name="author" />
+        
+        <?php 
+        $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/favicon.ico')); 
+        
+        $offStyle = 1;
+        $this->headLink()->offsetSetStylesheet($offStyle++, 'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all')
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/pace/themes/pace-theme-flash.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/font-awesome/css/font-awesome.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/simple-line-icons/simple-line-icons.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap/css/bootstrap.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/select2/css/select2.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/select2/css/select2-bootstrap.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/ladda/ladda-themeless.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/icheck/skins/all.css'));
+        
+        $offStyle = 21;
+        $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/components.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/plugins.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/layout.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/themes/light.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/custom_admin.css'));
+        
+        ?>
+        
+        <?php echo $this->headLink();?>
+                        
+        <!-- Scripts -->
+        <?php
+        $offHScript = 1;
+        $this->headScript()->offsetSetFile($offHScript++, $this->basePath('assets/plugins/pace/pace.min.js', 'text/javascript'));
+        
+        $offScript = 1;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/excanvas.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap/js/bootstrap.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/js.cookie.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.blockui.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js'));
+        // offScript 1 ~ 10
+        $offScript = 21;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/icheck/icheck.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/select2/js/select2.full.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/ladda/spin.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/ladda/ladda.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/app.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/layout.min.js'));?>
+        
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var server_url = '<?php echo $this->serverUrl() ?>';
+        var base_path = '<?php echo $this->basePath() ?>';
+        var full_url = '<?php echo $this->serverUrl().$this->basePath() ?>';
+        /* ]]> */
+        </script>
+        <?php echo $this->headScript() ?>
+    </head>
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+        <div class="page-wrapper">
+            <!-- BEGIN HEADER -->
+            <?php echo $this->partial('backend_header'); ?>
+            <!-- END HEADER -->
+            
+            <!-- BEGIN HEADER & CONTENT DIVIDER -->
+            <div class="clearfix"> </div>
+            <!-- END HEADER & CONTENT DIVIDER -->
+            
+            <!-- BEGIN CONTAINER -->
+            <div class="page-container">
+                <?php echo $this->partial('content'); ?>
+            </div>
+            <!-- END CONTAINER -->
+            
+            <!-- BEGIN FOOTER -->
+            <?php echo $this->partial('backend_footer'); ?>
+            <!-- END FOOTER -->
+        </div>
+    </body>
+</html>

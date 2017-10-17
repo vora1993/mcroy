@@ -1,0 +1,18 @@
+<div class="page-header">
+    <div class="page-header-top">
+        <div class="container">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="<?php echo $this->url("home") ?>">
+                    <img src="<?php echo $this->basePath('data/company/logo.png') ?>" alt="logo" class="logo-default">
+                </a>
+            </div>
+            <!-- END LOGO -->
+            <?php if($this->auth()): ?>
+            <div class="pull-right">
+                <?php echo $this->translate("Hello") ?>, <span><?php echo $this->auth()->getDisplayName(); ?></span> <a href="<?php echo $this->url("frontend_user", array("action" => "logout")) ?>"><?php echo $this->translate("Log Out") ?></a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

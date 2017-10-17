@@ -1,0 +1,87 @@
+<div class="page-header">
+    <div class="page-header-top">
+        <div id="top">
+            <div class="container">
+                <div class="pull-left">	
+            	   	<ul class="list-inline links">
+            			<li><a href="<?php echo $this->url("page", array("action" => "about-us")) ?>"><?php echo $this->translate("About Us") ?></a></li>
+                        <li>|</li>
+            			<li><a href="<?php echo $this->url("page", array("action" => "view", "seo" => "faq")) ?>"><?php echo $this->translate("Faq") ?></a></li>
+                        <li>|</li>
+                        <li><a href="<?php echo $this->url("blog") ?>"><?php echo $this->translate("Blog") ?></a></li>
+                        <li>|</li>
+            			<li><a href="<?php echo $this->url("page", array("action" => "contact-us")) ?>"><?php echo $this->translate("Contact Us") ?></a></li>
+            		</ul>
+            	</div>
+        	</div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN LOGO -->
+                <div class="col-md-3 col-xs-12">
+                    <div class="page-logo">
+                        <a href="<?php echo $this->url("home") ?>">
+                            <img src="<?php echo $this->basePath('data/company/logo.png') ?>" alt="logo" class="logo-default">
+                        </a>
+                    </div>
+                </div>
+                <!-- END LOGO -->
+                
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="menu-toggler"></a>
+                <!-- END RESPONSIVE MENU TOGGLER -->
+                <div class="col-md-9 col-xs-12">
+                    <div class="top-box">
+                        <ul>
+                            <li>
+                                <div class="box-thumb">
+                                    <div class="box-thumb-wrap">
+                                        <i class="box-thumb-icon fa fa-envelope-o"></i> <span><?php echo $this->setting()->company_email ?></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="box-thumb">
+                                    <div class="box-thumb-wrap">
+                                        <i class="box-thumb-icon fa fa-phone"></i> <span><?php echo $this->setting()->company_phone ?></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php if($this->auth()): ?>
+                            <li>
+                                <?php echo $this->translate("Hello") ?>, <a href="<?php echo $this->url("frontend_user", array("action" => "profile")) ?>"><?php echo $this->auth()->getDisplayName(); ?></a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->url("frontend_user", array("action" => "logout")) ?>" class="btn blue btn-outline"><?php echo $this->translate("Log Out"); ?></a>
+                            </li>
+                            <?php else: ?>
+                            <li>
+                            <?php
+                            global $route, $action;
+                            if($route === 'frontend_user' && $action === 'auth') {
+                                $href = "";
+                            } else {
+                                //$href = "#auth";
+                                //$class = "fancybox-button";
+                                $href = $this->url("frontend_user", array("action" => "auth"));
+                            }
+                            ?>
+                                <li class="sign-up">
+                                <a href="<?php echo $href ?>" class="btn-singup"><i class="fa fa-user" aria-hidden="true"></i> <?php echo $this->translate("Sign Up") ?></a> | <a href="<?php echo $href ?>" class="btn-login"><i class="fa fa-sign-in" aria-hidden="true"></i> <?php echo $this->translate("Login") ?></a></li>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+    <div class="page-header-menu">
+        <div class="container">
+            <div class="hor-menu">
+                <?php echo $this->menu(array("group_id" => 1, "ul_id" => "primary-menu", "ul_class" => "nav navbar-nav", "auth" => false)); ?>
+            </div>
+        </div>
+    </div>
+</div>

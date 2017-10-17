@@ -1,0 +1,165 @@
+<div class="row form-auth">
+    <div class="col-md-5 col-sm-6">
+        <!-- BEGIN LOGIN FORM -->
+        <form class="login-form form-horizontal" action="<?php echo $this->url("frontend_user", array("action" => "login")) ?>" method="post">
+            <div class="form-group">
+                <div class="form-wizard-title">
+                    <h3><?php echo $this->translate("Login to") ?> <?php echo $this->setting()->company_name ?></h3>
+                </div>
+            </div>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span> <?php echo $this->translate("Enter any email and password") ?> </span>
+            </div>
+            <div class="alert alert-success display-hide">
+                <button class="close" data-close="alert"></button>
+                <span> <?php echo $this->translate("Successfully logged") ?> </span>
+            </div>
+            <div class="form-group facebook-login">
+                <a class="btn btn-block btn-md btn-social btn-facebook" href="<?php echo $this->url("frontend_user", array("action" => "facebook-auth")) ?>">
+                    <span class="fa fa-facebook"></span> 
+                    <?php echo $this->translate("Login with Facebook") ?>
+                </a>
+            </div>
+            <div class="form-group" style="position: relative;">
+                <hr class="hr_or">
+                <span class="span_or"><?php echo $this->translate("or") ?></span>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-md-4 control-label"><?php echo $this->translate("Email") ?></label>
+                <div class="col-md-8">
+                    <input class="form-control" type="email" autocomplete="off" placeholder="<?php echo $this->translate("Email") ?>" name="identity" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-md-4 control-label"><?php echo $this->translate("Password") ?></label>
+                <div class="col-md-8">
+                    <input class="form-control" type="password" autocomplete="off" placeholder="<?php echo $this->translate("Password") ?>" name="credential" /> 
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <div class="md-checkbox-list">
+                        <div class="md-checkbox">
+                            <input type="checkbox" name="remember" id="checkbox_remember" class="md-check" value="1">
+                            <label for="checkbox_remember">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Remember me") ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="hidden" name="redirect_url" value="<?php echo $this->redirect_url; ?>" />
+                    <button type="submit" class="btn dark"><?php echo $this->translate("Login to") ?> <?php echo $this->setting()->company_name ?></button>
+                </div>
+            </div>
+        </form>
+        <!-- END LOGIN FORM -->
+    </div>
+    <div class="col-md-7 col-sm-6">
+        <!-- BEGIN REGISTER FORM-->
+        <form class="register-form form-horizontal" action="<?php echo $this->url("frontend_user", array("action" => "register")) ?>" method="post">
+            <div class="form-group">
+                <div class="form-wizard-title">
+                    <h3><?php echo $this->translate("Sign up account") ?></h3>
+                </div>
+            </div>
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                <span> <?php echo $this->translate("(*) All field are required") ?> </span>
+            </div>
+            <div class="alert alert-success display-hide">
+                <button class="close" data-close="alert"></button>
+                <span> <?php echo $this->translate("Successfully register") ?> </span>
+            </div>
+            <div class="form-group facebook-login">
+                <a class="btn btn-block btn-social btn-md btn-facebook" href="<?php echo $this->url("frontend_user", array("action" => "facebook-auth")) ?>">
+                    <span class="fa fa-facebook"></span> <?php echo $this->translate("Sign up with Facebook") ?>
+                </a>
+            </div>
+
+            <div class="form-group" style="position: relative;">
+                <hr class="hr_or">
+                <span class="span_or"><?php echo $this->translate("or") ?></span>
+            </div>
+            <div class="form-group">
+                <label for="inputFirstName" class="col-md-4 control-label"><?php echo $this->translate("First name") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="text" name="firstname" class="form-control" placeholder="<?php echo $this->translate("First name") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputLastName" class="col-md-4 control-label"><?php echo $this->translate("Last name") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="text" name="lastname" class="form-control" placeholder="<?php echo $this->translate("Last name") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-md-4 control-label"><?php echo $this->translate("Email") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="text" name="email" class="form-control" placeholder="<?php echo $this->translate("Email") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-md-4 control-label"><?php echo $this->translate("Password") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="<?php echo $this->translate("Password") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPasswordVerify" class="col-md-4 control-label"><?php echo $this->translate("Password Verify") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="password" name="passwordVerify" class="form-control" id="passwordVerify" placeholder="<?php echo $this->translate("Password Verify") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPhone" class="col-md-4 control-label"><?php echo $this->translate("Phone") ?><span class="required"> * </span></label>
+                <div class="col-md-8">
+                    <input type="text" name="phone" class="form-control" placeholder="<?php echo $this->translate("Phone") ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <div class="md-checkbox-list">
+                        <div class="md-checkbox">
+                            <input type="checkbox" name="newsletter" id="checkbox2" class="md-check" value="1">
+                            <label for="checkbox2">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Signup Newsletter") ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="hidden" name="auto_login" value="yes" />
+                    <input type="hidden" name="redirect_url" value="<?php echo $this->redirect_url; ?>" />
+                    <button type="submit" class="btn dark"><?php echo $this->translate("Register") ?></button>
+                </div>
+            </div>            
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/auth.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/bootstrap-social.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/user_login.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/user_register.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+
+JS;
+$this->inlineScript()->captureEnd();
+?>

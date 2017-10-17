@@ -1,0 +1,206 @@
+@media (min-width: 1024px) {
+    .modal-dialog {
+        width: 1000px;
+        margin: 30px auto;
+    }
+}
+@media (min-width: 1200px) {
+    .modal-dialog {
+        width: 1140px;
+        margin: 30px auto;
+    }
+}
+@media (min-width: 768px) {
+    ul#primary-menu > li {
+        float: none;
+        display: inline-block;
+    }
+    ul#primary-menu {
+        display: table;
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {} @media (max-width: 880px) {
+    #menu-mobile,
+    #mobile-header {
+        display: block;
+    }
+    #menu {
+        display: none;
+    }
+    div#mobile-header {
+        background: #043140;
+        padding: 10px;
+        width: 100%;
+        float: left;
+    }
+    #menu-mobile .btn-danger {
+        float: right;
+    }
+    .title-xs {
+        display: block;
+    }
+    .title-lag {
+        display: none;
+    }
+    #compare-tab .nav-tabs>li>a i {
+        display: none;
+    }
+    .search-bank b {
+        margin-bottom: 10px;
+    }
+    .search-bank .input .form-control {
+        margin-bottom: 10px;
+    }
+    button#submit-search {
+        margin-top: 0;
+        position: static;
+        font-size: 12px;
+        top: auto;
+        right: auto;
+        width: 100%;
+    }
+    .display-bank span.display-show {
+        padding-top: 0;
+        padding-bottom: 15px;
+    }
+    h4.bank-title {
+        display: block;
+        text-align: center;
+    }
+    .row-content img {
+        margin-bottom: 15px;
+    }
+    .filters-table-content .row-content {
+        padding: 0;
+    }
+    .filters-table-content .row-content b {
+        font-size: 16px;
+    }
+    .filters-table-content .row-content span {
+        font-size: 13px;
+        font-weight: normal;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+    .content-detail b,
+    .content-detail p {
+        width: 100%;
+    }
+    .content-detail {
+        padding: 0;
+    }
+    .filters-table-content {
+        border: 1px solid #DDD;
+        margin-bottom: 15px;
+        border-radius: 10px 10px 0 0;
+    }
+    .filters-table-content .row-header {
+        border-top: 0;
+    }
+    .display-bank .success {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .display-bank .success a {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+    }
+    .display-bank .success i {
+        text-align: center;
+        display: block;
+        margin: 0 auto 15px;
+    }
+    .content-test {
+        margin-bottom: 80px;
+    }
+    #personal-loan,
+    .compare-disclaimer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .footer-bottom {
+        text-align: center;
+    }
+    #menu-mobile .navbar-toggle {
+        position: relative;
+        float: right;
+        padding: 9px 10px;
+        margin-top: 8px;
+        margin-right: 10px;
+        margin-bottom: 8px;
+        background-color: transparent;
+        background-image: none;
+        border: 1px solid #FFF;
+        border-radius: 4px;
+        color: #FFF;
+        border-color: #FFF;
+    }
+    #menu-mobile .navbar-toggle:hover {
+        background: #FFF;
+        color: #043140;
+    }
+    .action-cart .title-cart h3 {
+        font-size: 13px;
+    }
+    .apply-cart .content-cart {
+        padding: 15px;
+    }
+    .content-action .method img {
+        width: 35px;
+        height: auto;
+    }
+    #page-title h2 {
+        font-size: 26px;
+        line-height: 36px;
+    }
+    .form-group span {
+        margin-bottom: 10px;
+    }
+    #compare-tab .tab-content {
+        padding: 30px 0px;
+    }
+    .filters-content .more-detail {
+        text-align: center;
+    }
+    .filters-content .box__requirement img {
+        width: 20px;
+        height: 20px;
+        margin: 0 !important;
+    }
+    .filters-content .row-content .logo {
+        margin-bottom: 15px;
+    }
+    .filters-content .box__requirement {
+        margin-bottom: 20px;
+    }
+    .body-info {
+        padding: 0px 15px;
+    }
+    h2.title-faq {
+        font-size: 22px;
+        padding-top: 0px;
+        text-align: center;
+    }
+    .content-faq form {
+        padding: 20px 15px 0px;
+    }
+    .content-faq .button-check {
+        padding: 20px 25px;
+    }
+    .header-faq {
+        text-align: center;
+    }
+}
+@media (max-width: 667px) {
+    h2.title-faq {
+        font-size: 18px;
+    }
+    form.register-form {
+        padding: 0;
+    }
+    .filters-content [class*=box__] > span b {
+        font-size: 16px;
+    }
+}

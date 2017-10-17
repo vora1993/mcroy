@@ -1,0 +1,189 @@
+<div class="form-wizard">
+    <div class="page-title">
+        <h4>Calculate how much a business loan will cost your business</h4>
+        <div>Using everyday cash for projects that aren’t every day is a common mistake entrepreneurs make. This can put a lot of stress on your cash flow, especially if your business hits an unexpected bump. A better strategy is to use a business loan for your growth projects.</div>
+        <div>Our business loan calculator will help you to calculate your monthly payments and the interest cost for financing your project. Additionally, you will have the option to view and print a complete loan amortization schedule.</div>
+    </div>
+    <div class="row page-content">
+        <div class="col-md-6">
+            <form>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label"><?php echo $this->translate("Loan Amount ($)"); ?></label>
+                        <div class="input-group">
+                            <input name="amount" type="text" class="form-control nobtngrp">
+                            <span class="input-group-addon">$</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"><?php echo $this->translate("Annual interest rate (%)"); ?></label>
+                        <div class="input-group">
+                            <input name="rate" type="text" class="form-control nobtngrp">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"><?php echo $this->translate("Length of term (months)"); ?></label>
+                        <div class="input-group">
+                            <input name="term" type="text" class="form-control nobtngrp">
+                            <span class="input-group-addon">months</span>
+                        </div>
+                    </div>
+                    <div class="form-group last">
+                        <button type="button" id="submit-prepayment" class="btn btn-lg green-custom margin-bottom-20"><?php echo $this->translate("Calculate") ?></button>
+                        <div class="form-control-static"> All information provided is for illustration purposes only and is subject to the specific criteria of your bank or lender. Please contact us to obtain specific information about our products. For more information, read our terms and conditions for using the business loan calculator. </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="box-container">
+                <div class="box-content">
+                    <h3><?php echo $this->translate("Your loan will cost...") ?></h3>
+                    <div class="container-results">
+                        <div class="container-circle">
+                            <div class="calc-circle"></div>
+                        </div>
+                        <div class="calc-results">
+                            <div class="calc-num-payment">
+                                <?php echo $this->translate("N.A") ?>
+                                <div class="calc-number">
+                                    ...
+                                </div>
+                            </div>
+                            <div class="calc-total row">
+                                <div class="calc-total-payment col-xs-12 col-sm-6">
+                                    <?php echo $this->translate("Total Payments") ?>:
+                                    <div class="calc-number">...</div>
+                                </div>
+                                <div class="calc-total-interest col-xs-12 col-sm-6">
+                                    <?php echo $this->translate("Total Interest") ?>:
+                                    <div class="calc-number">...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h3><?php echo $this->translate("View complete amortization schedule") ?></h3>
+                    <table class="table table-bordered table-striped table-condensed flip-content" id="complete-schedule">
+                        <thead class="flip-content">
+                            <tr>
+                                <th><?php echo $this->translate("#") ?></th>
+                                <th><?php echo $this->translate("Payment Amt.") ?></th>
+                                <th><?php echo $this->translate("Total Interest") ?></th>
+                                <th><?php echo $this->translate("Total Payments") ?></th>
+                                <th><?php echo $this->translate("Balance") ?></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+//$this->headLink()->offsetSetStylesheet(12, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+//$this->inlineScript()->offsetSetFile(4, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+//$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/jquery.ui.touch-punch.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/jquery.accrue.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+function formatNumber (num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+function validateInputs() {
+    if ($("input[name=amount]").val() == "") {
+		toastr.warning("Please enter your loan amount.");
+		$("input[name=amount]").focus();
+		return false;
+	}
+	if ($("input[name=rate]").val() == 0) {
+		toastr.warning("Please enter a valid interest rate.");
+		$("input[name=rate]").focus();
+		return false;
+	}
+    var term = $("input[term]").val();
+	if (term == 0) {
+		toastr.warning("Please enter a valid term.");
+		$("input[name=term]").focus();
+		return false;
+	}
+	return true;
+}    
+$("#submit-prepayment").click(function(event) {
+    event.preventDefault();
+    stat = validateInputs();
+    if(stat) {
+        var original_amount = 0, payment_amount=0, payment_amount_formatted=0, num_payments=0, total_payments=0, total_payments_formatted=0, total_interest=0, total_interest_formatted=0;
+        
+        var amount = $('input[name="amount"]').val();
+        var rate = $('input[name="rate"]').val();
+        var term = $('input[name="term"]').val();
+        
+        amount = ( typeof( amount )!=="undefined" ? amount : 0 ).toString().replace(/[^\d.]/ig, '');
+        rate = ( typeof( rate )!=="undefined" ? rate : 0 ).toString().replace(/[^\d.]/ig, '');
+        term = ( typeof( term )!=="undefined" ? term : 0 );
+        
+        // parse year values passed into the term value
+        if ( term.match("y") ) {
+            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 )*12;
+        } else {
+            term = parseInt( term.replace(/[^\d.]/ig, ''), 10 );
+        }
+        
+        // process the input values
+        var interest_rate_each_year = amount * rate / 100;
+        
+        // Now compute the monthly payment amount.
+        monthly = interest_rate_each_year / term * 12;;
+        
+        // If the result is a finite number, the user's input was good and
+        // we have meaningful results to display
+        if ( amount*rate*term>0 ) {
+            // Fill in the output fields, rounding to 2 decimal places
+            original_amount = amount;
+            payment_amount = monthly;
+            payment_amount_formatted = monthly.toFixed(2);
+            num_payments = term;
+            total_payments = ( monthly * term );
+            total_payments_formatted = ( monthly * term ).toFixed(2); 
+            total_interest = ( ( monthly * term ) - amount );
+            total_interest_formatted = ( ( monthly * term ) - amount ).toFixed(2);
+        } 
+        $(".calc-num-payment").html(num_payments+' payment(s) of'+'<div class="calc-number calc-txt-xsmall">$<span class="format-num-en">'+formatNumber(payment_amount_formatted)+'</span></div>');
+        $(".calc-total-payment").html('Total Payments: <div class="calc-number calc-txt-xsmall">$<span class="format-num-en">'+formatNumber(total_payments_formatted)+'</span></div>');
+        $(".calc-total-interest").html('Total Interest:: <div class="calc-number calc-txt-xsmall">$<span class="format-num-en">'+formatNumber(total_interest_formatted)+'</span></div>');
+        
+        // Start appending the table rows to our output variable.
+        var html = '';
+        var interest_per_payment = payment_amount - (original_amount/num_payments)
+        var counter_payment = 0;
+        var counter_interest = 0;
+        var capital = 0;
+        var counter_balance = parseInt(original_amount);
+        for (var i = 0; i < num_payments; i++) {
+            counter_payment = counter_payment + payment_amount;
+            counter_interest = interest_per_payment;
+            if (i < num_payments - 1) {
+                counter_interest_to_show = counter_interest.toFixed(2);
+            } else {
+                counter_interest_to_show = total_interest_formatted;
+            }
+            capital = payment_amount - counter_interest;
+            counter_balance = counter_balance - capital;
+            
+            html = html + '<tr>';
+            html = html + '<td>'+(i+1)+'</td>';
+            html = html + '<td>$'+formatNumber(payment_amount_formatted)+'</td>';
+            html = html + '<td>$'+formatNumber(counter_interest_to_show)+'</td>';
+            html = html + '<td>$'+formatNumber(counter_payment.toFixed(2))+'</td>';
+            html = html + '<td>$'+formatNumber(counter_balance.toFixed(2))+'</td>';
+            html = html + '</tr>';
+            $("#complete-schedule > tbody").html(html);
+        }
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

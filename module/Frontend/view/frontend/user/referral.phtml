@@ -1,0 +1,152 @@
+<?php
+$title = "My Referral";
+$this->headTitle($title);
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <?php echo $this->partial('frontend_user_sidebar'); ?>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <div class="title"><?php echo $this->translate("Profile Account") ?> - <?php echo $this->translate("Overview") ?></div>
+                <div class="row">
+                    <div class="profile-user">
+                        <p><?php echo $this->translate("My referral Code") ?>: <strong><?php echo $this->user->getRef() ?></strong></p>
+                        <p>Share your referral code to your friend to get 1$ per successful application.</p>
+                        <div class="table-scrollable">
+                                        <table class="table table-bordered table-hover text-center">
+                                                <thead>
+                                                    <tr class="green">
+                                                        <th> <?php echo $this->translate("S/N") ?> </th>
+                                                        <th> <?php echo $this->translate("Name") ?> </th>
+                                                        <th> <?php echo $this->translate("Application") ?> </th>
+                                                        <th> <?php echo $this->translate("Date") ?> </th>
+                                                        <th> <?php echo $this->translate("Credits ($)") ?> </th>
+                                                        <th> <?php echo $this->translate("Action") ?> </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                $sn = 1;
+                                                foreach($this->referrals as $business_loan) {
+                                                    $loan = $this->business_loan(array("id" => $business_loan->getApplication()));
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $sn ?></td>
+                                                            <td><?php echo $loan->getName() ?></td>
+                                                            <td><?php echo "A".$business_loan->getApplication(); ?></td>
+                                                            <td><?php echo date("d M Y", strtotime($business_loan->getDateAdded())) ?></td>
+                                                            <td><?php echo $business_loan->getCredit() ?></td>
+                                                            <td>
+                                                            <?php 
+                                                            switch($business_loan->getStatus()) {
+                                                                case 1:
+                                                                    echo '<button class="btn btn-xs btn-outline white" onclick="withdraw('.$business_loan->getId().')">'.$this->translate("Withdraw").'</button>';
+                                                                break;
+                                                                
+                                                                case 2:
+                                                                    echo $this->translate("Withdraw Pending");
+                                                                break;
+                                                                
+                                                                default:
+                                                                    echo $this->translate("Pending Transfer");
+                                                                break;
+                                                            }
+                                                            ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    $sn++;    
+                                                }
+                                                ?>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                    <p style="margin-top: 25px;"><?php echo $this->translate("History of Payment") ?></p>
+                                    <div class="table-scrollable">
+                                        <table class="table table-bordered table-hover text-center">
+                                                <thead>
+                                                    <tr class="blue">
+                                                        <th> <?php echo $this->translate("S/N") ?> </th>
+                                                        <th> <?php echo $this->translate("Name") ?> </th>
+                                                        <th> <?php echo $this->translate("Application") ?> </th>
+                                                        <th> <?php echo $this->translate("Date") ?> </th>
+                                                        <th> <?php echo $this->translate("Credits ($)") ?> </th>
+                                                        <th> <?php echo $this->translate("Action") ?> </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                $sn = 1;
+                                                foreach($this->histories as $business_loan) {
+                                                    $loan = $this->business_loan(array("id" => $business_loan->getApplication()));
+                                                    if($loan) {
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $sn ?></td>
+                                                            <td><?php echo $loan->getName() ?></td>
+                                                            <td><?php echo "A".$business_loan->getApplication(); ?></td>
+                                                            <td><?php echo date("d M Y", strtotime($business_loan->getDateAdded())) ?></td>
+                                                            <td><?php echo $business_loan->getCredit() ?></td>
+                                                            <td>
+                                                            <?php 
+                                                            switch($business_loan->getStatus()) {
+                                                                case 4:
+                                                                    echo $this->translate("Paid");
+                                                                break;
+                                                                
+                                                                default:
+                                                                    echo $this->translate("Pending");
+                                                                break;
+                                                            }
+                                                            ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    $sn++;    
+                                                }
+                                                ?>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/profile.css'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+function withdraw(id) {
+    $.ajax({
+        type: "POST",
+        url: full_url+"/user/withdraw",
+        data: {id: id},
+        dataType: 'json',
+        beforeSend: function() {
+            App.blockUI({boxed: true});
+        },
+        success: function(itemJson) {
+            App.unblockUI();      
+            if(itemJson['success']) {
+                toastr.success(itemJson.msg);
+                setTimeout(function(){ window.location.reload(); }, 1500);
+            } else {
+                toastr.error(itemJson.msg);
+            }
+        },
+        error : function(xhr, status){
+            console.log(status);
+        },
+    });
+}
+JS;
+$this->inlineScript()->captureEnd();
+?>

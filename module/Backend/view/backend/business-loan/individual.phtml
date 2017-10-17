@@ -1,0 +1,166 @@
+<?php
+$title = $this->translate("Individual Business Loan");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'application_loan', 'action' => "business_loan")); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/business_loan') ?>"><?php echo $this->translate("Business Loan") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $title ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit bordered">
+                    <div class="portlet-title" style="margin-bottom: 0;">
+                        <div class="caption font-dark">
+                            <i class="icon-share-alt font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <a href="javascript:;" onclick="window.history.back()" class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm"> <?php echo $this->translate("Back") ?>
+                                    <i class="fa fa-history"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <!-- BEGIN FORM-->
+                        <form action="" id="form_post" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Type") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static">
+                                        <?php 
+                                        switch ($loan->getType()) {
+                                            case 'business_loan':
+                                                echo "Business Term Loan";
+                                            break;
+                                            
+                                            case 'refinancing':
+                                                echo "Refinancing";
+                                            break;
+                                        }
+                                        ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Loan ID") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getLoanId(); ?></p>
+                                    </div>
+                                </div>
+                                <?php
+                                $loan_package = $this->business_loan_package(array("id" => $loan->getLoanId()));
+                                if($loan_package):
+                                    $bank_id = $loan_package->getBankId();
+                                    $bank = $this->bank(array("id" => $bank_id));
+                                ?>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Loan Title") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan_package->getLoanTitle(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Bank Name") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $bank->getName(); ?></p>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Name") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getName(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Email") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getEmail(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Phone") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getPhone(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Company Name") ?>?</label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getCompanyName(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Interest Rate") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getIntRate(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Loan Amount") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo number_format($loan->getLoanAmount()); ?>$</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Loan Tenure") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo number_format($loan->getLoanTenure()); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Monthly Payment") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getMonthlyPayment(); ?></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-6">
+                                        <p class="form-control-static"><?php echo $loan->getRemark(); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(30, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile(31, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+JS;
+$this->inlineScript()->captureEnd();
+?>

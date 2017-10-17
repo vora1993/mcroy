@@ -1,0 +1,473 @@
+<?php
+$title = "Compare Business Term Loan";
+$this->headTitle($title);
+$compare = $this->compare;
+$personal = $this->loan;
+$count = count($compare);
+$max_loan_compare = $this->setting()->max_loan_compare ? $this->setting()->max_loan_compare : 3;
+$remain = $max_loan_compare - $count;
+$loan_amount = $personal['loan_amount'];
+$loan_tenure = $personal['loan_tenure'];
+?>
+<div id="page-title">
+    <h2><?php echo $title ?></h2>
+</div>
+<div class="container">
+	<div class="row">
+        <div id="content">
+            <section class="compare-table">
+                <section class="compare-row">
+                    <div class="col-sm-3 box personal-loan-details" id="nlf-detail"><h4><?php echo $this->translate("Business Term Loan") ?></h4>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6><?php echo $this->translate("Loan Amount") ?></h6>
+                                <label for="loan_amount" class="nlf-detail-label">$<?php echo number_format($loan_amount) ?></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6><?php echo $this->translate("Loan Tenure") ?></h6>
+                                <label for="loan_tenure" class="nlf-detail-label"><?php echo $loan_tenure ?> years</label>
+                            </div>
+                            <input type="hidden" name="loan_amount" value="<?php echo $loan_amount ?>" />
+                            <input type="hidden" name="loan_tenure" value="<?php echo $loan_tenure ?>" />
+                        </div>
+                    </div>
+                    <?php
+                    if($count > 0) {
+                        $personal_loan = array();
+                        $loans = $this->loans(array("id" => $compare));
+                        foreach ($loans as $loan) {
+                            $bank = $this->bank(array("id" => $loan->getBankId()));
+                            // Image
+                            $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                            if(!file_exists($dir_logo)) {
+                                $dir_logo = 'data/image/no-image-128.png';
+                            }
+                            ?>
+                            <div class="col-sm-3 box">
+                                <div class="card-holder">
+                                    <a href="#"><img alt="<?php echo $loan->getLoanTitle(); ?>" src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getLoanTitle(); ?>"></a>
+                                    <h4 class="name-holder"><a href="#"><?php echo $loan->getLoanTitle() ?></a></h4>
+                                    <button type="button" onclick="Loan.apply(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></button>
+                                    <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $loan->getId(); ?>" data-page="compare"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <?php
+                            // Interest rate
+                            $interest_rate = \Zend\Json\Json::decode ( $loan->getInterestRate() );
+                            if(count($interest_rate) > 0 ) {
+                                foreach ($interest_rate as $key => $value) {
+                                    $condition = $value->condition;
+                                    $year = $value->year;
+                                            
+                                    $condition = str_replace('{m}', $loan_amount, $condition);
+                                    $str = '$result = (bool)('.$condition.');';
+                                    eval($str);
+                                    if($result) {
+                                        $int_rates = $year->{$loan_tenure};
+                                    }
+                                }
+                            }
+                            // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
+                            // Where: r = decimal rate / 12.
+                            $r = ($int_rates / 100) / 12;
+                            $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) -1 ) ) * $loan_amount;
+                                    
+                            $total_amount_payable = $monthly_payment * $loan_tenure * 12;
+                            $total_interest_payable = $total_amount_payable - $loan_amount;
+                            $personal_loan[] = array(
+                                'loan_id'                    => $loan->getId(),
+                                'dir_logo'                   => $dir_logo,
+                                'int_rate'                   => $int_rates,
+                                'loan_amount'                => $loan_amount,
+                                'loan_tenure'                => $loan_tenure,
+                                'monthly_payment'            => $monthly_payment,
+                                'max_tenor'                  => $loan->getMaxTenor(),
+                                'max_loan_amount'            => $loan->getMaxLoanAmount(),
+                                'processing_fee'             => $loan->getProcessingFee(),
+                                'annual_fee'                 => $loan->getAnnualFee(),
+                                'penalty_fee'                => $loan->getPenaltyFee(),
+                                'lock_in_period'             => $loan->getLockInPeriod(),
+                                'min_sales_turnover'         => $loan->getMinSalesTurnover(),
+                                'min_years_of_incorporation' => $loan->getMinYearsOfIncorporation(),
+                                'monthly_payment'            => $monthly_payment,
+                                'total_amount_payable'       => $total_amount_payable,
+                                'total_interest_payable'     => $total_interest_payable,
+                            );
+                        }
+                    }
+                    if($remain > 0){
+                        for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-sm-3 box">
+                                <div class="card-holder">
+                                    <h4>
+                                        <a href="<?php echo $this->url("personal_loan", array("action" => "index")) ?>"><?php echo $this->translate("Add Business Term Loan to Compare") ?></a>
+                                    </h4>
+                                    <div class="card-holder-description">
+                                        <?php echo $this->translate("Add a Business Term Loan for comparison, you will be returned to the Business Term Loan Listing") ?>
+                                    </div>
+                                    <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("personal_loan", array("action" => "index")) ?>"><?php echo $this->translate("Add Business Term Loan") ?></a>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                    <div class="clearfix"></div>
+                </section>
+            </section>
+            <div id="overview-wrapper" class="compare-result">
+                <div class="table-results table__item">
+                    <section class="table--item-title">
+                        <h4 class="title"><i class="icon-pencil overview small"></i> <?php echo $this->translate("Overview") ?></h4>
+                    </section>
+                </div>
+                <div class="table-results content">
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("INT RATES") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['int_rate'] ?>%</div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Max Tenor") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['max_tenor'] ?> years</div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Max Loan Amount") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item">$<?php echo number_format($row['max_loan_amount']) ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Processing Fee") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['processing_fee'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Annual Fee") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['annual_fee'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Penalty Fee") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['penalty_fee'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Lock In Period") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['lock_in_period'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Min Sales Turnover") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['min_sales_turnover'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Min Years Of Incorporation") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['min_years_of_incorporation'] ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div id="repayment-summary-wrapper" class="compare-result">
+                <div class="table-results table__item">
+                    <section class="table--item-title">
+                        <h4 class="title"><i class="icon-refresh repayment-summary small"></i> <?php echo $this->translate("Repayment Summary") ?></h4>
+                    </section>
+                </div>
+                <div class="table-results content">
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Principle Loan Amount") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item">$<?php echo number_format($loan_amount) ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Monthly Instalment") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item">$<?php echo number_format($row['monthly_payment']) ?> years</div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Interest Rate (per annum)") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $row['int_rate'] ?>%</div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Loan Tenure") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item"><?php echo $loan_tenure ?> years</div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Total Amount Payable") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item">$<?php echo number_format($row['total_amount_payable']) ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <div class="row items">
+                        <div class="col-md-3 card-item"><strong><?php echo $this->translate("Total Interest Payable") ?></strong></div>
+                        <?php
+                        if(count($personal_loan) > 0) {
+                            foreach ($personal_loan as $row) {
+                                ?>
+                                <div class="col-md-3 card-item">$<?php echo number_format($row['total_interest_payable']) ?></div>
+                                <?php        
+                            }
+                        }
+                        if($remain > 0){
+                            for($i=1; $i<=$remain; $i++) {
+                            ?>
+                            <div class="col-md-3 card-item"></div>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="compare-shortlist" style="overflow: hidden; display: none;"> 
+    <div class="container">
+        <div class="clearfix">
+            <div class="col-xs-3">
+                <h4><?php echo $this->translate("Compare Business Term Loan") ?></h4>
+                <p><?php echo $this->translate("Apply for the Business Term Loan of your choice right away") ?></p>
+            </div>
+            <?php
+            if(count($personal_loan) > 0) {
+                foreach ($personal_loan as $row) {
+                    ?>
+                    <div class="col-xs-3 compare-table-col">
+                        <a href="#"><img src="<?php echo $this->basePath($row['dir_logo']); ?>" /></a>
+                        <button type="button" onclick="Loan.apply(this)" data-id="<?php echo $row['loan_id']; ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></button>
+                        <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $row['loan_id']; ?>" data-page="compare"><i class="fa fa-times"></i></a>
+                    </div>
+                <?php        
+                }
+            }
+            if($remain > 0){
+                for($i=1; $i<=$remain; $i++) {
+                    ?>
+                    <div class="col-xs-3 compare-table-col"></div>
+                <?php
+                }
+            }
+            ?>    
+        </div>
+    </div>
+</section>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+var scrollTo = $(".compare-table").offset().top;
+var container = $("html,body").offset().top;
+$(window).scroll(function() {
+    var scrollLeft = scrollTo - container;
+    if ($(this).scrollTop() > scrollLeft) {
+        $(".compare-shortlist").slideDown();
+    } else {
+        $(".compare-shortlist").slideUp();
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

@@ -1,0 +1,67 @@
+<?php
+$title = "User Profile";
+$this->headTitle($title);
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <?php echo $this->partial('frontend_user_sidebar'); ?>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <div class="title"><?php echo $this->translate("Profile Account") ?> - <?php echo $this->translate("Overview") ?></div>
+                <div class="row">
+                    <div class="form-user">
+                        <form>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Firt name") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getFirstName(); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Last name") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getLastName(); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Email") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getEmail(); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Phone") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getPhone(); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Date of Birth") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getDateOfBirth() ? date("d-M-Y", strtotime($this->user->getDateOfBirth())) : $this->translate("N.A"); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Gender") ?></label>
+      							<div class="col-xs-9"><p>
+                                  <?php if($this->user->getGender() == 1) {
+                                            echo $this->translate("Male");
+                                        } else if($this->user->getGender() == 2) {
+                                            echo $this->translate("Female");
+                                        } else {
+                                            echo $this->translate("N.A");
+                                        } ?>
+                                  </p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Phone") ?></label>
+      							<div class="col-xs-9"><p><?php echo $this->user->getPhone(); ?></p></div>
+				            </div>
+                            <div class="form-group">
+				                <label class="col-xs-3"><?php echo $this->translate("Newsletter") ?></label>
+      							<div class="col-xs-9"><p><?php echo ($this->user->getNewsletter() == 1) ? 'yes' : 'no'; ?></p></div>
+				            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/profile.css'));
+?>

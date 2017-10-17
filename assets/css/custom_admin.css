@@ -1,0 +1,48 @@
+.thumbnail {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.btn-radius {
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    border-radius: 2px !important;
+}
+
+.mt-repeater-item {
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #CECECE;
+}
+
+.page-content-white .page-content .page-bar {
+    margin-bottom: 20px;
+}
+
+.dashboard-stat .details .title {
+    padding-top: 25px;
+    text-align: right;
+    font-size: 24px;
+    line-height: 26px;
+    letter-spacing: -1px;
+    margin-bottom: 0;
+    font-weight: 300;
+    color: #fff;
+}
+
+.repeater .repeater-cell {
+    display: table;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.repeater .repeater-cell .repeater-btn-inline, .repeater .repeater-cell .repeater-input-inline {
+    display: table-cell;
+}

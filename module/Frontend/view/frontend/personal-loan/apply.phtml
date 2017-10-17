@@ -1,0 +1,225 @@
+<?php
+
+$title = "Apply Business Term Loan";
+
+$this->headTitle($title);
+
+$personal_loan = $this->loan;
+
+?>
+
+<div id="page-apply" class="page-title"><h1><?php echo $title ?></h1></div>
+
+<div id="content">
+
+    <div class="apply-cart">					
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="content-cart">
+
+                    <?php
+
+                    $loan = $this->loan(array("id" => $personal_loan['loan_id']));
+
+                    $bank = $this->bank(array("id" => $loan->getBankId()));
+
+                                
+
+                    // Image
+
+                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+
+                    if(!file_exists($dir_logo)) {
+
+                        $dir_logo = 'data/image/no-image-128.png';
+
+                    }
+
+                    ?>
+
+				    <div class="filters-table-content">
+
+                        <div class="row-header">										
+
+                            <h4 class="bank-title"><a href="#"><?php echo $loan->getLoanTitle(); ?></a></h4>
+
+				        </div>									
+
+				        <div class="row-content">
+
+                            <div class="col-md-3 col-xs-12">
+
+				                <a href="#">
+
+								    <img src="<?php echo $this->basePath($dir_logo) ?>" alt="<?php echo $loan->getLoanTitle() ?>">
+
+								</a>
+
+				            </div>
+
+				            <div class="col-md-3 col-xs-4 box__rate">
+
+								<span class="rate"><b><?php echo $personal_loan['int_rate'] ?>%</b><?php echo $this->translate("Interest Rate") ?></span>
+
+							</div>
+
+							<div class="col-md-3 col-xs-4 box__loan">
+
+			                     <span class="loan"><b><?php echo $personal_loan['loan_tenure'] ?> years</b><?php echo $this->translate("Loan Tenure") ?></span>
+
+							</div>
+
+							<div class="col-md-3 col-xs-4 box__month">
+
+							     <span class="month"><b>$<?php echo number_format($personal_loan['monthly_payment']); ?></b><?php echo $this->translate("Per Month") ?></span>
+
+							</div>
+
+						</div>															
+
+				    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="action-cart">
+
+        <div class="container">
+
+            <div class="row">
+
+				<div class="title-cart"><h3>Let MoneyCompare.sg apply for me</h3></div>
+
+				<div class="content-action">
+
+				    <div class="col-md-2 col-xs-12"></div>
+
+				        <div class="col-md-8 col-xs-12">
+
+				            <div class="row">
+
+				                <div class="method col-sm-6 col-xs-12">
+
+								    <div class="post-thumb">
+
+                                        <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-1.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+
+								    </div>
+
+                                    <div class="post-content">
+
+                                        <h4>Higher Approval Rate</h4>
+
+                                        <p>As a team of ex bankers, we are very familiar with the credit criteria of individual banks with a solid track record of > 60% approval rate</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="method col-sm-6 col-xs-12">
+
+								    <div class="post-thumb">
+
+                                        <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-2.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+
+								    </div>
+
+                                    <div class="post-content">
+
+                                        <h4>Hassle Free Approach</h4>
+
+                                        <p>Leave the application process to our specialist while you focus your resources on your core business.</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="method col-sm-6 col-xs-12">
+
+								    <div class="post-thumb">
+
+                                        <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-3.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+
+								    </div>
+
+                                    <div class="post-content">
+
+                                        <h4>Faster Turnaround Time</h4>
+
+                                        <p>Tired of waiting for unresponsive bankers revert ? Your application is our priority, reduce processing time by 3-5 working days through us!</p>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="method col-sm-6 col-xs-12">
+
+								    <div class="post-thumb">
+
+                                        <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-4.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+
+								    </div>
+
+                                    <div class="post-content">
+
+                                        <h4>Risk Free Process</h4>
+
+                                        <p>No upfront fees, no fees applicable if we're not able to secure financing for your company. Performance guarantee, pay only for results!</p>
+
+                                    </div>
+
+                                </div>
+
+				            </div>
+
+				        </div>								
+
+				    <div class="col-md-2 col-xs-12"></div>
+
+				</div>
+
+                <div class="button-action">
+
+				    <a href="<?php echo $this->url("personal_loan", array("action" => "apply-form")) ?>" class="btn blue btn-lg"><?php echo $this->translate("Apply") ?></a>									
+
+				</div>
+
+				<?php if($loan->getUrl()): ?>
+
+                <div class="text-center"><a href="<?php echo $loan->getUrl(); ?>"><?php echo $this->translate("No thanks, I can apply by myself") ?></a></div>
+
+                <?php endif; ?>
+
+			</div>
+
+        </div>
+
+    </div>			
+
+</div>
+
+<?php
+
+$offStyle = 12;
+
+$offScript = 10;
+
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+
+JS;
+
+$this->inlineScript()->captureEnd();
+
+?>

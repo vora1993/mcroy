@@ -1,0 +1,493 @@
+<?php
+$slider_loan_tenture = '$slider_loan_tenture';
+$slider_loan_percent = '$slider_loan_percent';
+?>
+<form class="form-horizontal form-wizard" action="<?php echo $this->url("loan_application", array("action" => "property-loan", "seo" => $this->seo, "step" => "step", "id" => 1)) ?>" method="POST">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="row property form-wizard-title">
+                <h3>1. <?php echo $this->translate("Are you buying a New home or Refinancing") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>If you are refinancing your mortgage, we will redirect you to the refinancing wizard.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("New Home / Refinancing") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" id="property_home_loan" name="property" value="home_loan" data-value="home_loan" class="md-radiobtn"<?php if($this->property === 'home_loan' || !$this->property) echo ' checked="checked"'; ?>>
+                            <label for="property_home_loan">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("New Home") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" id="property_refinancing" name="property" value="refinancing" data-value="refinancing" class="md-radiobtn"<?php if($this->property === 'refinancing') echo ' checked="checked"'; ?>>
+                            <label for="property_refinancing">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Refinancing") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row property_type form-wizard-title">
+                <h3>2. <?php echo $this->translate("What type of property are you buying") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Loan packages differ between property types. There are also some packages that only apply to uncompleted properties (buildings under construction).</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Property Type") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" onclick="Loan.set_type(this)" id="property_type_hdb_flat" name="property_type" value="HDB Flat" data-value="HDB Flat" class="md-radiobtn"<?php if($this->property_type === 'HDB Flat' || !$this->property_type) echo ' checked="checked"'; ?>>
+                            <label for="property_type_hdb_flat">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("HDB Flat") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" onclick="Loan.set_type(this)" id="property_type_executive_condo" name="property_type" value="Executive Condo" data-value="Executive Condo" class="md-radiobtn"<?php if($this->property_type === 'Executive Condo') echo ' checked="checked"'; ?>>
+                            <label for="property_type_executive_condo">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Executive Condo") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" onclick="Loan.set_type(this)" id="property_type_condo_apartment" name="property_type" value="Condo / Apartment" data-value="Condo / Apartment" class="md-radiobtn"<?php if($this->property_type === 'Condo / Apartment') echo ' checked="checked"'; ?>>
+                            <label for="property_type_condo_apartment">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Condo / Apartment") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" onclick="Loan.set_type(this)" id="property_type_landed_property" name="property_type" value="Landed Property" data-value="Landed Property" class="md-radiobtn"<?php if($this->property_type === 'Landed Property') echo ' checked="checked"'; ?>>
+                            <label for="property_type_landed_property">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Landed Property") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                    
+            <div class="row project_name<?php if(!in_array($this->property_type, array("Executive Condo", "Condo / Apartment"))) echo " hide"; ?>">
+                <h4><?php echo $this->translate("What is the name of project you are purchasing") ?>?</h4>
+                <input type="text" name="project_name" class="input-large" value="<?php echo $this->project_name ?>" />
+            </div>
+                                    
+            <div class="row property_status form-wizard-title">
+                <h3><?php echo $this->translate("Is the property completed or under construction") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="<p>If your uncompleted property is 3 months away (or less) from its TOP (Temporary Occupancy Permit) status, please indicate it as a completed property</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Completion Status") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>      
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" id="property_status_completed" name="property_status" value="Completed" class="md-radiobtn" checked="checked">
+                            <label for="property_status_completed">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Completed") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" id="property_status_under_construction" name="property_status" value="Under Construction" class="md-radiobtn">
+                            <label for="property_status_under_construction">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Under Construction") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
+        <div class="form-group option_fee">
+            <div class="row form-wizard-title">
+                <h3>3. <?php echo $this->translate("How far away are you from purchasing your property") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>If you have already paid the option fee or are about to, you can expect a faster turnaround time after selecting your loan packages.</p><p>The rates you will see next are current rates and are not affected by your answer to this question. You should note however, that banks usually revise their rates monthly.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Intended Purchase Date") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+                                    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" id="option_fee_paid" name="option_fee" value="paid" class="md-radiobtn" checked="checked">
+                            <label for="option_fee_paid">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("I already paid the Option Fee (deposit)") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" id="option_fee_not_paid" name="option_fee" value="not_paid" class="md-radiobtn">
+                            <label for="option_fee_not_paid">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("I have NOT paid the Option Fee (deposit)") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row offer_opts" style="display: none;">
+                                        <div class="col-md-12">
+                                            <h4><?php echo $this->translate("When do you intend to select your unit / make an offer") ?>?</h4>
+                                            <p><?php echo $this->translate("I intend to do so within") ?>:</p>
+                                            <div class="md-radio-list" style="padding-left: 30px; padding-right: 30px;">
+                                                <div class="md-radio">
+                                                    <input type="radio" id="offer_opts_this_week" name="offer_opts" value="this_week" class="md-radiobtn">
+                                                    <label for="offer_opts_this_week">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> <?php echo $this->translate("This week") ?> 
+                                                    </label>
+                                                </div>
+                                                <div class="md-radio">
+                                                    <input type="radio" id="offer_opts_2_weeks" name="offer_opts" value="2_weeks" class="md-radiobtn">
+                                                    <label for="offer_opts_2_weeks">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> <?php echo $this->translate("2 weeks") ?> 
+                                                    </label>
+                                                </div>
+                                                <div class="md-radio">
+                                                    <input type="radio" id="offer_opts_1_month" name="offer_opts" value="1_month" class="md-radiobtn">
+                                                    <label for="offer_opts_1_month">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> <?php echo $this->translate("1 month") ?> 
+                                                    </label>
+                                                </div>
+                                                <div class="md-radio">
+                                                    <input type="radio" id="offer_opts_2_months" name="offer_opts" value="2_months" class="md-radiobtn">
+                                                    <label for="offer_opts_2_months">
+                                                        <span></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span> <?php echo $this->translate("2 months") ?> 
+                                                    </label>
+                                                </div>
+                        <div class="md-radio">
+                            <input type="radio" id="offer_opts_after_2_months" name="offer_opts" value="after_2_months" class="md-radiobtn">
+                            <label for="offer_opts_after_2_months">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("After 2 months") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group with-pie purchase_price">
+            <div class="row form-wizard-title">
+                <h3>4. <?php echo $this->translate("What is the purchase price of the property") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Banks will calculate your home loan based on the property's market valuation or purchase price, whichever is lower.</p><p>If you know that the market valuation of your property is less than the purchase price, please key in the market valuation. If you're unsure of the market valuation, just indicate its purchase price.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Purchase Price / Market Valuation") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i><?php echo $this->translate("Purchase Price ($)") ?></i>
+                        </span>
+                        <input type="text" name="purchase_price" class="form-control" placeholder="<?php echo $this->translate("e.g. 500000, 500k, 1.2m") ?>"> 
+                    </div>
+                </div>
+            </div>
+            <div class="row indented form-wizard-subtitle">
+                <h4 class="font-blue"><?php echo $this->translate("How long do you want your tenure to be") ?>?</h4>
+            </div>
+            <div class="row indented">
+                <div class="col-md-4">
+                    <div class="slider-container">
+                        <div class="slider-loan-tenure" data-min="5" data-max="35" data-value="25" data-soft-cap="30"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="slider-value">
+                        <span class="current info" id="loan_tenure-label">20</span>
+                        <span class="unit">Years</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row indented form-wizard-subtitle">
+                <h4 class="font-blue"><?php echo $this->translate("What % of the price would you like to loan") ?>?</h4>
+            </div>
+            <div class="row indented">
+                <div class="col-md-4">
+                    <div class="slider-container">
+                        <div class="slider-loan-amount" data-min="10" data-max="80" data-value="80" data-soft-cap="80"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="slider-value">
+                        <span class="current info" id="loan_amount-label">80</span>
+                        <span class="unit">Percent</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row indented easy-pie-chart">
+                <div class="number loans" data-percent="80"><span>80%</span></div>
+                <div class="pie-chart-info">
+                    <div style="display: inline-block; margin: 15px 10px;">
+                        <div class="info-heading"><?php echo $this->translate("Loan Amount") ?>
+                            <em><span class="main-percentage">(80%)</span></em>
+                        </div>
+                        <div class="info-amount">
+                            $<span class="loan-amount" id="loan-amount-label">-</span>
+                        </div>
+                    </div>
+                    <div style="display: inline-block; margin: 15px 10px;">
+                        <div class="info-heading minor"><?php echo $this->translate("Downpayment") ?>
+                            <em><span class="minor-percentage">(20%)</span></em>
+                        </div>
+                        <div class="info-amount minor">
+                            $<span class="downpayment" id="downpayment-label">-</span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="loan_amount" value="0" />
+                <input type="hidden" name="loan_tenure" value="20" />
+                <input type="hidden" name="loan_percent" value="80" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row existing_home_loans form-wizard-title">
+                <h3>5. <?php echo $this->translate("Would you prefer a Fixed or Floating rate package") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Floating rates packages are pegged to either SIBOR or SOR index rates and a “spread” is added on to it. The sum of the spread and the SIBOR or SOR rates gives the total interest rate.</p><p>Fixed rates packages have interest rates fixed for a duration of one to five years and are available only to completed properties. They offer stability when it comes to monthly payments but start off higher than floating rates.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Fixed vs Floating Rates") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-12">
+                    <span><?php echo $this->translate("Fixed rates are available only to completed properties"); ?>.</span>
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" id="preferred_rate_package_floating" name="preferred_rate_package" value="Floating" class="md-radiobtn" checked="checked">
+                            <label for="preferred_rate_package_floating">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Floating") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" id="preferred_rate_package_fixed" name="preferred_rate_package" value="Fixed" class="md-radiobtn">
+                            <label for="preferred_rate_package_fixed">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Fixed") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-3 text-right">
+                <button type="submit" class="btn btn-lg green-custom"><?php echo $this->translate("Next") ?></button>
+            </div>
+        </div>
+    </div>   
+</form>
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('input[name=property_status]').on('change', function() {
+   var value =$('input[type="radio"][name="property_status"]:checked').val();
+   if(value === 'Completed') $(".offer_opts h4").html('{$_text_completed}');
+   else  $(".offer_opts h4").html('{$_text_under_construction}');
+});
+$('input[name=option_fee]').on('change', function() {
+   var value =$('input[type="radio"][name="option_fee"]:checked').val();
+   if(value === 'not_paid') $(".offer_opts").show();
+   else  $(".offer_opts").hide();
+});
+
+// Handle number
+Loan.integer();
+Loan.initEasyPieCharts();
+
+$('input[name=purchase_price]').on('blur', function(){
+    $(this).parent().removeClass('focus');
+}).on('focus', function(){
+    $(this).parent().addClass('focus');
+});
+
+$("input[name=purchase_price]").on("keydown", function(evt) {
+    var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+    if(charCode == 8 || charCode == 46 ){
+        return true;
+    }
+    return isEnterNumber(charCode);
+});
+    
+$("input[name=purchase_price]").on("keyup", function() {
+    var val = $(this).val();
+    val = Number(val.replace(/,/g, ""));
+    $(this).val(formatNumber(val, ""));
+    updateLoanAmount();
+});
+
+var {$slider_loan_percent} = $(".slider-loan-amount").slider({
+    value: $(".slider-loan-amount").data("value"),
+    min: $(".slider-loan-amount").data("min"),
+    max: $(".slider-loan-amount").data("max"),
+    orientation: "horizontal",
+    animate: !0,
+    range: "min",
+    create: function(event, ui){
+        var current = $("input[name=loan_percent]").val();
+        $(".slider-loan-amount").find(".ui-slider-handle").html('<span class="arrow_box">'+current+'</span>');
+    },
+    slide: function(event, ui) {
+        $(".slider-loan-amount").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+        $("#loan_amount-label").html(ui.value);
+        $(".easy-pie-chart .number.loans").attr("data-percent", ui.value);
+        $("input[name=loan_percent]").val(ui.value);
+    },
+    change: function(event, ui) {
+        $(".slider-loan-amount").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+        updatePieChart(ui.value);
+        updateLoanAmount();
+    }
+});
+
+var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
+    value: $(".slider-loan-tenure").data("value"),
+    min: $(".slider-loan-tenure").data("min"),
+    max: $(".slider-loan-tenure").data("max"),
+    orientation: "horizontal",
+    animate: !0,
+    range: "min",
+    create: function(event, ui){
+        var current = $("input[name=loan_tenure]").val();
+        $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+current+'</span>');
+    },
+    slide: function(event, ui) {
+        if ("" != $(".slider-loan-tenure").attr("data-soft-cap")) {
+            var o = parseInt($(".slider-loan-tenure").attr("data-soft-cap"));
+            if (ui.value > o) return !1
+        }
+        $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+        $("#loan_tenure-label").html(ui.value);
+        $("input[name=loan_tenure]").val(ui.value);
+    },
+    change: function(event, ui) {
+        $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+        updateSlider();
+        updateLoanAmount();
+    }  
+});
+
+var form = $('.form-wizard');
+form.validate({
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    rules: {
+        property: {
+            required: true
+        },
+        property_type: {
+            required: true
+        },
+        property_status: {
+            required: true
+        },
+        option_fee: {
+            required: true
+        },
+        existing_home_loans: {
+            required: true
+        },
+        purchase_price: {
+            required: true
+        }
+    },
+    
+    invalidHandler: function(event, validator) { //display error alert on form submit              
+        App.scrollTo($(".error"), -15);
+    },
+    
+    errorPlacement: function(error, element) {
+        if(element.attr("name") == "property_type") {
+            $('.property_type').addClass("error");
+        }
+        if(element.attr("name") == "property_status") {
+            $('.property_status').addClass("error");
+        }
+        if(element.attr("name") == "option_fee") {
+            $('.option_fee').addClass("error");
+        }
+        if(element.attr("name") == "purchase_price") {
+            $('.purchase_price').addClass("error");
+        }
+    },
+    
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+                
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+                
+        // serialize the data in the form
+        var serializedData = form.serialize();
+            
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+                
+        // fire off the request to /form.php
+        
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('.form-group .error').removeClass('error');
+                
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true});
+            } 
+            setTimeout(function(){ 
+                App.unblockUI();
+                window.location.href = result.redirect; 
+            }, 1500);
+        });
+                
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+                
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true});
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

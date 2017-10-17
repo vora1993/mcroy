@@ -1,0 +1,546 @@
+<?php
+$title = $this->translate("Edit Property Loan");
+$this->headTitle($title);
+
+function buildTree(Array $data, $parent = 0) {
+    $tree = array();
+    foreach ($data as $d) {
+        if ($d['parent'] == $parent) {
+            $children = buildTree($data, $d['id']);
+            // set a trivial key
+            if (!empty($children)) {
+                $d['_children'] = $children;
+            }
+            $tree[] = $d;
+        }
+    }
+    return $tree;
+}
+
+function printTree($tree, $r = 0, $p = null, $c = null) {
+    foreach ($tree as $i => $t) {
+        $dash = ($t['parent'] == 0) ? '' : str_repeat('-', $r) .' ';
+        if($c == $t['id']) {
+            printf("\t<option value='%d' selected>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        } else {
+            printf("\t<option value='%d'>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        }
+        if ($t['parent'] == $p) {
+            // reset $r
+            $r = 0;
+        }
+        if (isset($t['_children'])) {
+            printTree($t['_children'], ++$r, $t['parent'], $c);
+        }
+    }
+}
+
+$rows = array();
+$categories = $this->categories(array("status" => 1, "type" => "property_loan"));
+if(count($categories) > 0) {
+    foreach ($categories as $category) {
+        $rows[] = array(
+            'id' => $category->getId(),
+            'name' => $category->getName(),
+            'parent' => $category->getParentId(),
+        );
+    }
+}
+
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'index')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Property Loan") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $title ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit bordered">
+                    <div class="portlet-title" style="margin-bottom: 0;">
+                        <div class="caption font-dark">
+                            <i class="icon-share-alt font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <a href="javascript:;" onclick="window.history.back()" class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm"> <?php echo $this->translate("Back") ?>
+                                    <i class="fa fa-history"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <!-- BEGIN FORM-->
+                        <form action="<?php echo $this->url("admin/property_loan", array('action' => "edit", "id" => $this->loan->getId())) ?>" id="form_post" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Category") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select name="category_id" class="form-control">
+                                            <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <?php 
+                                            $tree = buildTree($rows);
+                                            printTree($tree, 0, null, $this->loan->getCategoryId());
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Are you buying a new home or refinancing your property") ?>?</label>
+                                    <div class="col-md-6">
+                                        <div class="mt-radio-inline">
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="property" id="home_loan" class="md-check" value="home_loan"<?php if($this->loan->getProperty() === 'home_loan') echo ' checked="checked"' ?>> 
+                                                <label for="home_loan">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Home Loan") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="property" id="refinancing" class="md-check" value="refinancing"<?php if($this->loan->getProperty() === 'refinancing') echo ' checked="checked"' ?>> 
+                                                <label for="refinancing">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Refinancing") ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Bank / Company") ?>?</label>
+                                    <div class="col-md-6">
+                                        <select name="bank_id" class="form-control">
+                                            <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <?php
+                                            $banks = $this->banks(array("status" => 1));
+                                            if(count($banks) > 0) {
+                                                foreach ($banks as $bank) {
+                                                    if($bank->getId() == $this->loan->getBankId()) {
+                                                        echo '<option value="'.$bank->getId().'" selected>'.$bank->getName().'</option>';
+                                                    } else {
+                                                        echo '<option value="'.$bank->getId().'">'.$bank->getName().'</option>';
+                                                    }
+                                                    
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Title") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="title" class="form-control" value="<?php echo $this->loan->getTitle(); ?>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Promotions") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="promotions" class="form-control" value="<?php echo $this->loan->getPromotions(); ?>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Min Loan Amount") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="min_loan_amount" class="form-control" value="<?php echo $this->loan->getMinLoanAmount(); ?>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("What type of property are you buying") ?>?</label>
+                                    <div class="col-md-6">
+                                        <select name="property_type" class="form-control">
+                                            <option value="HDB Flat"<?php if($this->loan->getType() === 'HDB Flat') echo ' selected'; ?>><?php echo $this->translate("HDB Flat") ?></option>
+                                            <option value="Executive Condo"<?php if($this->loan->getType() === 'Executive Condo') echo ' selected'; ?>><?php echo $this->translate("Executive Condo") ?></option>
+                                            <option value="Condo / Apartment"<?php if($this->loan->getType() === 'Condo / Apartment') echo ' selected'; ?>><?php echo $this->translate("Condo / Apartment") ?></option>
+                                            <option value="Landed Property"<?php if($this->loan->getType() === 'Landed Property') echo ' selected'; ?>><?php echo $this->translate("Landed Property") ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Is the property completed or under construction") ?>?</label>
+                                    <div class="col-md-6">
+                                        <div class="mt-radio-inline">
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="property_status" id="completed" class="md-check" value="Completed"<?php if($this->loan->getPropertyStatus() === 'Completed') echo ' checked="checked"' ?>> 
+                                                <label for="completed">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Completed") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="property_status" id="under_construction" class="md-check" value="Under Construction"<?php if($this->loan->getPropertyStatus() === 'Under Construction') echo ' checked="checked"' ?>> 
+                                                <label for="under_construction">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Under Construction") ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Would you prefer a Fixed or Floating rate package") ?>?</label>
+                                    <div class="col-md-6">
+                                        <select name="property_package" class="form-control">
+                                            <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <option value="Floating"<?php if($this->loan->getPackage() === 'Floating') echo ' selected' ?>><?php echo $this->translate("Floating") ?></option>
+                                            <option value="Fixed"<?php if($this->loan->getPackage() === 'Fixed') echo ' selected' ?>><?php echo $this->translate("Fixed") ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group floating_rate hide">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Floating Type") ?></label>
+                                    <div class="col-md-6">
+                                        <div class="mt-radio-inline">
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="floating_type" id="sibor" class="md-check" value="SIBOR"<?php if($this->loan->getFloatingType() === 'SIBOR') echo ' checked="checked"' ?>> 
+                                                <label for="sibor">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("SIBOR") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="floating_type" id="bank_board_rates" class="md-check" value="Bank Board Rates"<?php if($this->loan->getFloatingType() === 'Bank Board Rates') echo ' checked="checked"' ?>> 
+                                                <label for="bank_board_rates">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Bank Board Rates") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="floating_type" id="sor" class="md-check" value="SOR"<?php if($this->loan->getFloatingType() === 'SOR') echo ' checked="checked"' ?>> 
+                                                <label for="sor">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("SOR") ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Lock in year") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="lock_in_year" class="form-control" value="<?php echo $this->loan->getLockInYear() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Legal subsidy") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="legal_subsidy" class="form-control" value="<?php echo $this->loan->getLegalSubsidy() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Legal Fee Subsidy") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="legal_fee_subsidy" class="form-control" value="<?php echo $this->loan->getLegalFeeSubsidy() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Valuation Subsidy") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="valuation_subsidy" class="form-control" value="<?php echo $this->loan->getValuationSubsidy() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Fire Insurance Subsidy") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="fire_insurance_subsidy" class="form-control" value="<?php echo $this->loan->getFireInsuranceSubsidy() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Subsidy Comment") ?></label>
+                                    <div class="col-md-6">
+                                        <textarea name="subsidy_comment" class="form-control" rows="4"><?php echo $this->loan->getSubsidyComment() ?></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Clawback") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="clawback" class="form-control" value="<?php echo $this->loan->getClawback() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Valuation fee") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="valuation_fee" class="form-control" value="<?php echo $this->loan->getValuationFee() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Late payment fee") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="late_payment_fee" class="form-control" value="<?php echo $this->loan->getLatePaymentFee() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Early repayment fee") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="early_repayment_fee" class="form-control" value="<?php echo $this->loan->getEarlyRepaymentFee() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Cancellation fee") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="cancellation_fee" class="form-control" value="<?php echo $this->loan->getCancellationFee() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Preferred fire insurance from this bank") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="preferred_fire" class="form-control" value="<?php echo $this->loan->getPreferredFire() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Admin fee to use 3rd party fire insurer") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="admin_fee" class="form-control" value="<?php echo $this->loan->getAdminFee() ?>" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-6">
+                                        <textarea name="remark" class="form-control" rows="4"><?php echo $this->loan->getRemark() ?></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Interest 1 year") ?></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="int_year_1" class="form-control" value="<?php echo $this->loan->getIntYear1() ?>" />
+                                    </div>
+                                    <label class="control-label col-md-1"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-4">
+                                        <input type="text" name="remark_year_1" class="form-control" <?php echo $this->loan->getRemarkYear1() ?> />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Interest 2 year") ?></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="int_year_2" class="form-control" value="<?php echo $this->loan->getIntYear2() ?>" />
+                                    </div>
+                                    <label class="control-label col-md-1"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-4">
+                                        <input type="text" name="remark_year_2" class="form-control" value="<?php echo $this->loan->getRemarkYear2() ?>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Interest 3 year") ?></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="int_year_3" class="form-control" value="<?php echo $this->loan->getIntYear3() ?>" />
+                                    </div>
+                                    <label class="control-label col-md-1"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-4">
+                                        <input type="text" name="remark_year_3" class="form-control" value="<?php echo $this->loan->getRemarkYear3() ?>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Interest 4 year") ?></label>
+                                    <div class="col-md-3">
+                                        <input type="text" name="int_year_4" class="form-control" value="<?php echo $this->loan->getIntYear4() ?>" />
+                                    </div>
+                                    <label class="control-label col-md-1"><?php echo $this->translate("Remark") ?></label>
+                                    <div class="col-md-4">
+                                        <input type="text" name="remark_year_4" class="form-control" value="<?php echo $this->loan->getRemarkYear4() ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <input type="hidden" name="status" value="<?php echo $this->loan->getStatus() ?>" />
+                                        <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                                        <button type="button" class="btn btn-outline" onclick="cancel('admin/property-loan')"> <?php echo $this->translate("Cancel") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(30, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile(31, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+tinymce.init({
+    selector: '.editor',
+    height: 300,
+    plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    content_css: full_url+'/assets/css/codepen.min.css',
+    setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
+});
+/*
+$('select[name=property_package]').on('change', function() {
+    $('.floating_rate').addClass('hide');
+    if( this.value === 'Fixed' ) {
+        $('input[name=lock_in_year]').prop('readonly', true);
+    }
+    if( this.value === 'Floating' ) {
+        $('.floating_rate').removeClass('hide');
+        $('input[name=lock_in_year]').prop('readonly', false);
+    }
+});
+
+$("input[name=sibor]").change(function() {
+    if(this.checked) {
+        //Do stuff
+        $('.fixed_rate').removeClass('hide');
+    } else {
+        $('.fixed_rate').addClass('hide');
+    }
+});
+*/
+$( "select[name=property_package], input[name=sibor]" ).trigger( "change" );
+
+var form = $('#form_post');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        category_id: {
+            required: true
+        },
+        bank_id: {
+            required: true
+        },
+        property_type: {
+            required: true
+        },
+        property_status: {
+            required: true
+        },
+        property_package: {
+            required: true
+        },
+        lock_in_year: {
+            number: true
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+        
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_post .form-group').removeClass('has-error');
+        $('#form_post .help-block, #form_post .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/property-loan'; }, 1500);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

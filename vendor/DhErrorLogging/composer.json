@@ -1,0 +1,50 @@
+{
+    "name" : "davidhavl/dherrorlogging",
+    "description" : "Full featured error logging module for ZF2 application",
+    "type" : "library",
+    "keywords": [
+        "zend framework",
+        "zend framework 2",
+        "zf2",
+        "php-error",
+        "exception",
+        "error",
+        "error log",
+        "logger"
+    ],
+    "homepage" : "https://github.com/DavidHavl/DhErrorLogging",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ],
+    "require" : {
+        "zendframework/zend-mvc" : "~2.3",
+        "zendframework/zend-http": "~2.3",
+        "zendframework/zend-modulemanager": "~2.3",
+        "zendframework/zend-config": "~2.3",
+        "zendframework/zend-log": "~2.3",
+        "zendframework/zend-db": "~2.3",
+        "zendframework/zend-view": "~2.3",
+        "zendframework/zend-console": "~2.3",
+        "zendframework/zend-json": "~2.3"
+    },
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name" : "David Havl",
+            "email" : "contact@davidhavl.com",
+            "homepage" : "http://davidhavl.com",
+            "role" : "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DhErrorLogging\\": "src/"
+        },
+        "classmap" : [
+            "./Module.php"
+        ]
+    }
+}

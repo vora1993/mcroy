@@ -1,0 +1,2037 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Mysstore\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-01 15:15+0800\n"
+"PO-Revision-Date: 2016-12-01 15:15+0800\n"
+"Last-Translator: Do Nhu Vy <donhuvy@hotmail.com>\n"
+"Language-Team: Hai Truong IT <haitruonginfotech@gmail.com>\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SearchPath-0: Application\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: Application/src/Application/Controller/IndexController.php:74
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:79
+#: Application/view/partial/backend-sidebar.phtml:39
+#: Backend/view/backend/bank/update-interest-rate.phtml:23
+#: Backend/view/backend/bank/view-interest-rate.phtml:23
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:33
+#: Frontend/view/frontend/personal-loan/apply.phtml:33
+msgid "Interest Rate"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:75
+#: Application/src/Application/Controller/IndexController.php:139
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:80
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:147
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:36
+#: Frontend/view/frontend/personal-loan/apply.phtml:36
+#: Frontend/view/frontend/personal-loan/compare.phtml:27
+#: Frontend/view/frontend/personal-loan/compare.phtml:364
+msgid "Loan Tenure"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:76
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:81
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:39
+#: Frontend/view/frontend/personal-loan/apply.phtml:39
+msgid "Per Month"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:77
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:85
+#: Frontend/view/frontend/personal-loan/compare.phtml:50
+#: Frontend/view/frontend/personal-loan/compare.phtml:438
+msgid "Apply Now"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:86
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:94
+#: Frontend/view/frontend/personal-loan/compare.phtml:127
+msgid "INT RATES"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:90
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:98
+#: Backend/view/backend/bank/add-business-loan.phtml:83
+#: Backend/view/backend/bank/edit-business-loan.phtml:83
+msgid "Max Tenor (Years)"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:94
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:102
+#: Frontend/view/frontend/personal-loan/compare.phtml:307
+msgid "Principle Loan Amount"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:101
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:109
+#: Backend/view/backend/bank/add-business-loan.phtml:90
+#: Backend/view/backend/bank/edit-business-loan.phtml:90
+#: Frontend/view/frontend/personal-loan/compare.phtml:165
+msgid "Max Loan Amount"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:105
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:113
+#: Backend/view/backend/bank/add-business-loan.phtml:97
+#: Backend/view/backend/bank/edit-business-loan.phtml:97
+#: Frontend/view/frontend/personal-loan/compare.phtml:184
+msgid "Processing Fee"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:109
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:117
+#: Frontend/view/frontend/personal-loan/compare.phtml:326
+msgid "Monthly Instalment"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:116
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:124
+#: Backend/view/backend/bank/add-business-loan.phtml:104
+#: Backend/view/backend/bank/edit-business-loan.phtml:104
+#: Frontend/view/frontend/personal-loan/compare.phtml:203
+msgid "Annual Fee"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:120
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:128
+#: Backend/view/backend/bank/add-business-loan.phtml:111
+#: Backend/view/backend/bank/edit-business-loan.phtml:111
+#: Frontend/view/frontend/personal-loan/compare.phtml:222
+msgid "Penalty Fee"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:124
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:132
+#: Frontend/view/frontend/personal-loan/compare.phtml:345
+msgid "Interest Rate (per annum)"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:131
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:139
+#: Backend/view/backend/bank/add-business-loan.phtml:118
+#: Backend/view/backend/bank/edit-business-loan.phtml:118
+#: Frontend/view/frontend/personal-loan/compare.phtml:241
+msgid "Lock In Period"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:135
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:143
+#: Backend/view/backend/bank/add-business-loan.phtml:125
+#: Backend/view/backend/bank/edit-business-loan.phtml:125
+msgid "Minimum Sales Turnover"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:146
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:154
+#: Backend/view/backend/bank/add-business-loan.phtml:132
+#: Backend/view/backend/bank/edit-business-loan.phtml:132
+msgid "Minimum Years of Incorporation"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:151
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:159
+#: Frontend/view/frontend/personal-loan/compare.phtml:383
+msgid "Total Amount Payable"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:160
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:168
+#: Frontend/view/frontend/personal-loan/compare.phtml:402
+msgid "Total Interest Payable"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:167
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:175
+msgid "More Details"
+msgstr ""
+
+#: Application/src/Application/Controller/IndexController.php:168
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:176
+msgid "Less Details"
+msgstr ""
+
+#: Application/src/Application/View/Helper/Menu.php:49
+msgid "Sign Up"
+msgstr ""
+
+#: Backend/src/Backend/Controller/BankController.php:35
+#: Backend/src/Backend/Controller/BankController.php:212
+#: Backend/src/Backend/Controller/SettingController.php:270
+#: Backend/src/Backend/Controller/SettingController.php:309
+#: Backend/src/Backend/Controller/UserController.php:97
+msgid "Successfully added"
+msgstr ""
+
+#: Backend/src/Backend/Controller/BankController.php:58
+#: Backend/src/Backend/Controller/BankController.php:119
+#: Backend/src/Backend/Controller/BankController.php:169
+#: Backend/src/Backend/Controller/BankController.php:215
+#: Backend/src/Backend/Controller/BankController.php:261
+#: Backend/src/Backend/Controller/BankController.php:311
+#: Backend/src/Backend/Controller/BankController.php:413
+#: Backend/src/Backend/Controller/BankController.php:453
+#: Backend/src/Backend/Controller/SettingController.php:71
+#: Backend/src/Backend/Controller/SettingController.php:273
+#: Backend/src/Backend/Controller/SettingController.php:312
+#: Backend/src/Backend/Controller/SettingController.php:342
+#: Backend/src/Backend/Controller/SettingController.php:376
+#: Backend/src/Backend/Controller/SettingController.php:416
+#: Backend/src/Backend/Controller/SettingController.php:459
+#: Backend/src/Backend/Controller/SettingController.php:502
+#: Backend/src/Backend/Controller/SettingController.php:559
+#: Backend/src/Backend/Controller/UserController.php:116
+#: Backend/src/Backend/Controller/UserController.php:185
+#: Backend/src/Backend/Controller/UserController.php:235
+#: Backend/src/Backend/Controller/UserController.php:399
+#: Backend/src/Backend/Controller/UserController.php:439
+#: Backend/src/Backend/Controller/UserController.php:750
+#: Backend/src/Backend/Controller/UserController.php:800
+msgid "Something error. Please check"
+msgstr "Có lỗi xảy ra. Vui lòng kiểm tra lại"
+
+#: Backend/src/Backend/Controller/BankController.php:116
+#: Backend/src/Backend/Controller/BankController.php:166
+#: Backend/src/Backend/Controller/BankController.php:258
+#: Backend/src/Backend/Controller/BankController.php:308
+#: Backend/src/Backend/Controller/BankController.php:410
+#: Backend/src/Backend/Controller/SettingController.php:68
+#: Backend/src/Backend/Controller/SettingController.php:339
+#: Backend/src/Backend/Controller/SettingController.php:413
+#: Backend/src/Backend/Controller/SettingController.php:456
+#: Backend/src/Backend/Controller/SettingController.php:556
+#: Backend/src/Backend/Controller/UserController.php:182
+#: Backend/src/Backend/Controller/UserController.php:232
+#: Backend/src/Backend/Controller/UserController.php:359
+#: Backend/src/Backend/Controller/UserController.php:397
+#: Backend/src/Backend/Controller/UserController.php:436
+#: Backend/src/Backend/Controller/UserController.php:747
+#: Backend/src/Backend/Controller/UserController.php:797
+msgid "Successfully updated"
+msgstr "Cập nhật thành công"
+
+#: Backend/src/Backend/Controller/BankController.php:342
+#: Backend/view/backend/bank/update-interest-rate.phtml:81
+#: Backend/view/backend/bank/update-interest-rate.phtml:121
+msgid "Condition"
+msgstr ""
+
+#: Backend/src/Backend/Controller/BankController.php:344
+#: Backend/view/backend/bank/update-interest-rate.phtml:87
+#: Backend/view/backend/bank/update-interest-rate.phtml:92
+#: Backend/view/backend/bank/update-interest-rate.phtml:127
+#: Backend/view/backend/bank/update-interest-rate.phtml:132
+msgid "Year"
+msgstr ""
+
+#: Backend/src/Backend/Controller/BankController.php:450
+#: Backend/src/Backend/Controller/SettingController.php:499
+msgid "Upload logo successful"
+msgstr "Tải ảnh lên thành công"
+
+#: Backend/src/Backend/Controller/BankController.php:456
+#: Backend/src/Backend/Controller/SettingController.php:505
+msgid "Invalid file formats"
+msgstr ""
+
+#: Backend/src/Backend/Controller/BankController.php:459
+msgid "Please select photo"
+msgstr "Vui lòng chọn ảnh"
+
+#: Backend/src/Backend/Controller/SettingController.php:133
+msgid "Successfully update"
+msgstr ""
+
+#: Backend/src/Backend/Controller/SettingController.php:235
+#: Backend/view/backend/bank/update-interest-rate.phtml:27
+#: Backend/view/backend/user/edit-role.phtml:105
+msgid "Update"
+msgstr "Cập nhật"
+
+#: Backend/src/Backend/Controller/SettingController.php:235
+#: Backend/view/backend/bank/add.phtml:74
+#: Backend/view/backend/bank/edit.phtml:74
+#: Backend/view/backend/setting/edit-company.phtml:86
+#: Backend/view/backend/user/add.phtml:139
+#: Backend/view/backend/user/edit.phtml:127
+#: Backend/view/backend/user/my-profile.phtml:122
+msgid "Remove"
+msgstr "Loại bỏ"
+
+#: Backend/src/Backend/Controller/SettingController.php:373
+msgid "Successfully removed"
+msgstr "Bỏ sản phẩm thành công"
+
+#: Backend/src/Backend/Controller/SettingController.php:508
+msgid "Please select image"
+msgstr ""
+
+#: Backend/src/Backend/Controller/UserController.php:54
+#: Backend/src/Backend/Controller/UserController.php:60
+#: Backend/src/Backend/Controller/UserController.php:66
+#: Backend/src/Backend/Controller/UserController.php:631
+#: Backend/src/Backend/Controller/UserController.php:721
+msgid "has been exist"
+msgstr ""
+
+#: Backend/src/Backend/Controller/UserController.php:362
+#: Backend/src/Backend/Controller/UserController.php:474
+msgid "Something error. Please check."
+msgstr "Có lỗi xảy ra. Vui lòng thử lại."
+
+#: Backend/src/Backend/Controller/UserController.php:402
+msgid "The current password is NOT correct"
+msgstr "Mật khẩu gần đây không đúng"
+
+#: Backend/src/Backend/Controller/UserController.php:471
+msgid "Upload logo successful!"
+msgstr "Tải ảnh lên thành công"
+
+#: Backend/src/Backend/Controller/UserController.php:477
+msgid "Invalid file formats..!"
+msgstr "Định dạng file không hợp lệ"
+
+#: Backend/src/Backend/Controller/UserController.php:480
+msgid "Please select photo."
+msgstr "Vui lòng chọn file ảnh"
+
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:84
+msgid "Compare"
+msgstr ""
+
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:85
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:105
+#: Frontend/view/frontend/personal-loan/apply.phtml:76
+#: Frontend/view/frontend/personal-loan/compare.phtml:50
+#: Frontend/view/frontend/personal-loan/compare.phtml:438
+msgid "Apply"
+msgstr ""
+
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:342
+msgid "Sorry you haven't added any bank to compare"
+msgstr ""
+
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:348
+#: Frontend/src/Frontend/Controller/PersonalLoanController.php:422
+msgid "You have removed this bank compare list"
+msgstr ""
+
+#: Application/view/error/404.phtml:1
+msgid "A 404 error occurred"
+msgstr "Lỗi 404 xảy ra"
+
+#: Application/view/error/404.phtml:10
+msgid "The requested controller was unable to dispatch the request."
+msgstr "Trình điều khiển được yêu cầu không thể xử lý được truy vấn."
+
+#: Application/view/error/404.phtml:13
+msgid ""
+"The requested controller could not be mapped to an existing controller class."
+msgstr ""
+"Trình điều khiển được yêu cầu không thể được ánh xạ đến class trình điều "
+"khiển sẵn có."
+
+#: Application/view/error/404.phtml:16
+msgid "The requested controller was not dispatchable."
+msgstr "Trình điều khiển được yêu cầu không thể xử lý yêu cầu."
+
+#: Application/view/error/404.phtml:19
+msgid "The requested URL could not be matched by routing."
+msgstr "Đường dẫn được yêu cầu không phù hợp với việc định tuyến."
+
+#: Application/view/error/404.phtml:22
+msgid "We cannot determine at this time why a 404 was generated."
+msgstr ""
+"Tại thời điểm này, chúng tôi không thể xác định tại sao lỗi 404 sinh ra."
+
+#: Application/view/error/404.phtml:34
+msgid "Controller"
+msgstr "Trình điều khiển"
+
+#: Application/view/error/404.phtml:41
+#, php-format
+msgid "resolves to %s"
+msgstr "phân giải đến %s"
+
+#: Application/view/error/404.phtml:53 Application/view/error/index.phtml:8
+msgid "Additional information"
+msgstr "Thông tin bổ sung"
+
+#: Application/view/error/404.phtml:56 Application/view/error/404.phtml:81
+#: Application/view/error/index.phtml:11 Application/view/error/index.phtml:36
+msgid "File"
+msgstr "Tập tin"
+
+#: Application/view/error/404.phtml:60 Application/view/error/404.phtml:85
+#: Application/view/error/index.phtml:15 Application/view/error/index.phtml:40
+msgid "Message"
+msgstr "Thông điệp"
+
+#: Application/view/error/404.phtml:64 Application/view/error/404.phtml:89
+#: Application/view/error/index.phtml:19 Application/view/error/index.phtml:44
+msgid "Stack trace"
+msgstr "Vết tiến trình thực thi"
+
+#: Application/view/error/404.phtml:75 Application/view/error/index.phtml:30
+msgid "Previous exceptions"
+msgstr "Ngoại lệ trước"
+
+#: Application/view/error/404.phtml:109 Application/view/error/index.phtml:64
+msgid "No Exception available"
+msgstr "Không tồn tại ngoại lệ nào"
+
+#: Application/view/error/index.phtml:1
+msgid "An error occurred"
+msgstr "Có lỗi xảy ra"
+
+#: Application/view/layout/login.phtml:62
+#: Backend/view/backend/bank/index.phtml:84
+msgid "Logo"
+msgstr ""
+
+#: Application/view/partial/backend-header.phtml:39
+#: Backend/view/backend/user/my-profile.phtml:20
+msgid "My Profile"
+msgstr "Tài khoản của tôi"
+
+#: Application/view/partial/backend-header.phtml:57
+#: Backend/view/backend/user/change-password.phtml:19
+#: Backend/view/backend/user/change-password.phtml:30
+msgid "Change Password"
+msgstr "Đổi mật khẩu"
+
+#: Application/view/partial/backend-header.phtml:58
+msgid "Log Out"
+msgstr "Đăng xuất"
+
+#: Application/view/partial/backend-header.phtml:64
+msgid "View Frontpage"
+msgstr "Xem trang chủ"
+
+#: Application/view/partial/backend-sidebar.phtml:14
+#: Backend/view/backend/backend/index.phtml:11
+#: Backend/view/backend/bank/add-business-loan.phtml:15
+#: Backend/view/backend/bank/add.phtml:15
+#: Backend/view/backend/bank/edit-business-loan.phtml:15
+#: Backend/view/backend/bank/edit.phtml:15
+#: Backend/view/backend/bank/index.phtml:15
+#: Backend/view/backend/bank/update-interest-rate.phtml:15
+#: Backend/view/backend/bank/view-business-loan.phtml:15
+#: Backend/view/backend/bank/view-interest-rate.phtml:15
+#: Backend/view/backend/setting/edit-company.phtml:15
+#: Backend/view/backend/setting/edit-personal-loan.phtml:15
+#: Backend/view/backend/setting/menu.phtml:15
+#: Backend/view/backend/setting/view-company.phtml:16
+#: Backend/view/backend/user/add-role.phtml:15
+#: Backend/view/backend/user/add.phtml:15
+#: Backend/view/backend/user/change-password.phtml:15
+#: Backend/view/backend/user/edit-role.phtml:15
+#: Backend/view/backend/user/edit.phtml:15
+#: Backend/view/backend/user/index.phtml:15
+#: Backend/view/backend/user/my-profile.phtml:16
+#: Backend/view/backend/user/reset-password.phtml:15
+#: Backend/view/backend/user/role.phtml:15
+msgid "Dashboard"
+msgstr "Quản trị"
+
+#: Application/view/partial/backend-sidebar.phtml:22
+#: Application/view/partial/backend-sidebar.phtml:29
+#: Backend/view/backend/bank/add-business-loan.phtml:19
+#: Backend/view/backend/bank/add.phtml:19
+#: Backend/view/backend/bank/edit-business-loan.phtml:19
+#: Backend/view/backend/bank/edit.phtml:19
+#: Backend/view/backend/bank/index.phtml:19
+#: Backend/view/backend/bank/update-interest-rate.phtml:19
+#: Backend/view/backend/bank/view-business-loan.phtml:19
+#: Backend/view/backend/bank/view-interest-rate.phtml:19
+msgid "Banks"
+msgstr ""
+
+#: Application/view/partial/backend-sidebar.phtml:34
+#: Backend/view/backend/bank/view-business-loan.phtml:23
+#: Frontend/view/frontend/personal-loan/compare.phtml:20
+#: Frontend/view/frontend/personal-loan/index.phtml:12
+msgid "Business Term Loan"
+msgstr ""
+
+#: Application/view/partial/backend-sidebar.phtml:47
+#: Backend/view/backend/setting/edit-company.phtml:19
+#: Backend/view/backend/setting/edit-email.phtml:19
+#: Backend/view/backend/setting/edit-personal-loan.phtml:19
+#: Backend/view/backend/setting/menu.phtml:19
+#: Backend/view/backend/setting/view-company.phtml:20
+msgid "Setting"
+msgstr "Cài đặt"
+
+#: Application/view/partial/backend-sidebar.phtml:54
+#: Backend/view/backend/setting/view-company.phtml:24
+msgid "Company"
+msgstr "Công ty"
+
+#: Application/view/partial/backend-sidebar.phtml:59
+#: Application/view/partial/frontend-header.phtml:97
+#: Backend/view/backend/setting/menu.phtml:23
+msgid "Menu"
+msgstr ""
+
+#: Application/view/partial/backend-sidebar.phtml:64
+msgid "Personal Loan"
+msgstr ""
+
+#: Application/view/partial/backend-sidebar.phtml:69
+#: Backend/view/backend/setting/edit-email.phtml:23
+#: Backend/view/backend/user/add.phtml:64
+#: Backend/view/backend/user/change-password.phtml:45
+#: Backend/view/backend/user/edit.phtml:49
+#: Backend/view/backend/user/index.phtml:89
+#: Backend/view/backend/user/my-profile.phtml:47
+#: Backend/view/backend/user/reset-password.phtml:49
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:86
+msgid "Email"
+msgstr "Email"
+
+#: Application/view/partial/backend-sidebar.phtml:77
+#: Application/view/partial/backend-sidebar.phtml:84
+#: Backend/view/backend/user/index.phtml:19
+msgid "Users"
+msgstr "Quản lý người dùng"
+
+#: Application/view/partial/backend-sidebar.phtml:89
+#: Backend/view/backend/user/add-role.phtml:19
+#: Backend/view/backend/user/edit-role.phtml:19
+#: Backend/view/backend/user/role.phtml:19
+msgid "Roles"
+msgstr ""
+
+#: Backend/view/backend/backend/index.phtml:15
+msgid "Statistics"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:2
+msgid "Add New Business Loan"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:23
+msgid "Add Business Loan"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:43
+#: Backend/view/backend/bank/edit-business-loan.phtml:43
+msgid "Bank"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:46
+#: Backend/view/backend/bank/edit-business-loan.phtml:46
+#: Backend/view/backend/bank/view-interest-rate.phtml:45
+#: Backend/view/backend/setting/menu.phtml:58
+#: Backend/view/backend/setting/menu.phtml:126
+#: Backend/view/backend/setting/menu.phtml:143
+#: Backend/view/backend/user/add.phtml:95
+#: Backend/view/backend/user/edit.phtml:80
+#: Backend/view/backend/user/my-profile.phtml:78
+msgid "[select]"
+msgstr "[lựa chọn]"
+
+#: Backend/view/backend/bank/add-business-loan.phtml:62
+#: Backend/view/backend/bank/edit-business-loan.phtml:62
+#: Backend/view/backend/bank/update-interest-rate.phtml:57
+#: Backend/view/backend/bank/view-business-loan.phtml:89
+#: Backend/view/backend/bank/view-interest-rate.phtml:42
+msgid "Loan title"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:69
+#: Backend/view/backend/bank/edit-business-loan.phtml:69
+msgid "Promotions title"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:76
+#: Backend/view/backend/bank/edit-business-loan.phtml:76
+msgid "Benefit title"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:139
+#: Backend/view/backend/bank/edit-business-loan.phtml:139
+msgid "Url"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:146
+#: Backend/view/backend/bank/add.phtml:50
+#: Backend/view/backend/bank/edit-business-loan.phtml:146
+#: Backend/view/backend/bank/edit.phtml:50
+#: Backend/view/backend/bank/index.phtml:87
+#: Backend/view/backend/bank/view-business-loan.phtml:91
+#: Backend/view/backend/user/add-role.phtml:49
+#: Backend/view/backend/user/add.phtml:115
+#: Backend/view/backend/user/edit-role.phtml:89
+#: Backend/view/backend/user/edit.phtml:100
+#: Backend/view/backend/user/index.phtml:93
+#: Backend/view/backend/user/my-profile.phtml:98
+#: Backend/view/backend/user/role.phtml:78
+msgid "Status"
+msgstr "Trạng thái"
+
+#: Backend/view/backend/bank/add-business-loan.phtml:149
+#: Backend/view/backend/bank/add.phtml:53
+#: Backend/view/backend/bank/edit-business-loan.phtml:149
+#: Backend/view/backend/bank/edit.phtml:53
+#: Backend/view/backend/bank/index.phtml:55
+#: Backend/view/backend/bank/index.phtml:122
+#: Backend/view/backend/bank/view-business-loan.phtml:59
+#: Backend/view/backend/bank/view-business-loan.phtml:113
+#: Backend/view/backend/user/add-role.phtml:52
+#: Backend/view/backend/user/add.phtml:118
+#: Backend/view/backend/user/edit-role.phtml:92
+#: Backend/view/backend/user/edit.phtml:103
+#: Backend/view/backend/user/index.phtml:55
+#: Backend/view/backend/user/index.phtml:115
+#: Backend/view/backend/user/my-profile.phtml:101
+#: Backend/view/backend/user/role.phtml:97
+msgid "Active"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:150
+#: Backend/view/backend/bank/add.phtml:54
+#: Backend/view/backend/bank/edit-business-loan.phtml:150
+#: Backend/view/backend/bank/edit.phtml:54
+#: Backend/view/backend/bank/index.phtml:59
+#: Backend/view/backend/bank/index.phtml:126
+#: Backend/view/backend/bank/view-business-loan.phtml:63
+#: Backend/view/backend/bank/view-business-loan.phtml:117
+#: Backend/view/backend/user/add-role.phtml:53
+#: Backend/view/backend/user/add.phtml:119
+#: Backend/view/backend/user/edit-role.phtml:93
+#: Backend/view/backend/user/edit.phtml:104
+#: Backend/view/backend/user/index.phtml:59
+#: Backend/view/backend/user/index.phtml:119
+#: Backend/view/backend/user/my-profile.phtml:102
+#: Backend/view/backend/user/role.phtml:101
+msgid "Deactive"
+msgstr ""
+
+#: Backend/view/backend/bank/add-business-loan.phtml:158
+#: Backend/view/backend/bank/add.phtml:88
+#: Backend/view/backend/bank/edit-business-loan.phtml:159
+#: Backend/view/backend/bank/edit.phtml:100
+#: Backend/view/backend/bank/update-interest-rate.phtml:166
+#: Backend/view/backend/setting/edit-company.phtml:116
+#: Backend/view/backend/setting/edit-email.phtml:66
+#: Backend/view/backend/setting/edit-personal-loan.phtml:58
+#: Backend/view/backend/setting/menu.phtml:157
+#: Backend/view/backend/user/add-role.phtml:100
+#: Backend/view/backend/user/add.phtml:153
+#: Backend/view/backend/user/change-password.phtml:75
+#: Backend/view/backend/user/edit.phtml:153
+#: Backend/view/backend/user/my-profile.phtml:148
+#: Backend/view/backend/user/reset-password.phtml:72
+msgid "Submit"
+msgstr "Xác nhận"
+
+#: Backend/view/backend/bank/add-business-loan.phtml:159
+#: Backend/view/backend/bank/add.phtml:89
+#: Backend/view/backend/bank/edit-business-loan.phtml:160
+#: Backend/view/backend/bank/edit.phtml:101
+#: Backend/view/backend/bank/update-interest-rate.phtml:167
+#: Backend/view/backend/setting/edit-company.phtml:117
+#: Backend/view/backend/setting/edit-email.phtml:67
+#: Backend/view/backend/setting/edit-personal-loan.phtml:59
+#: Backend/view/backend/user/add-role.phtml:101
+#: Backend/view/backend/user/add.phtml:154
+#: Backend/view/backend/user/change-password.phtml:76
+#: Backend/view/backend/user/edit-role.phtml:106
+#: Backend/view/backend/user/edit.phtml:154
+#: Backend/view/backend/user/my-profile.phtml:149
+#: Backend/view/backend/user/reset-password.phtml:73
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: Backend/view/backend/bank/add.phtml:2
+msgid "Add new bank"
+msgstr ""
+
+#: Backend/view/backend/bank/add.phtml:23
+#: Backend/view/backend/bank/index.phtml:35
+#: Backend/view/backend/bank/view-business-loan.phtml:39
+#: Backend/view/backend/user/add-role.phtml:23
+#: Backend/view/backend/user/add.phtml:23
+#: Backend/view/backend/user/index.phtml:35
+#: Backend/view/backend/user/role.phtml:35
+msgid "Add"
+msgstr "Thêm"
+
+#: Backend/view/backend/bank/add.phtml:43
+#: Backend/view/backend/bank/edit.phtml:43
+#: Backend/view/backend/bank/index.phtml:85
+#: Backend/view/backend/bank/update-interest-rate.phtml:46
+#: Backend/view/backend/user/add-role.phtml:42
+#: Backend/view/backend/user/edit-role.phtml:42
+#: Backend/view/backend/user/index.phtml:88
+#: Backend/view/backend/user/role.phtml:76
+msgid "Name"
+msgstr "Tên"
+
+#: Backend/view/backend/bank/add.phtml:60
+#: Backend/view/backend/bank/edit.phtml:60
+#: Backend/view/backend/setting/edit-company.phtml:72
+msgid "Select Logo"
+msgstr "Chọn logo"
+
+#: Backend/view/backend/bank/add.phtml:69
+#: Backend/view/backend/bank/edit.phtml:69
+#: Backend/view/backend/setting/edit-company.phtml:81
+#: Backend/view/backend/user/add.phtml:134
+#: Backend/view/backend/user/edit.phtml:122
+#: Backend/view/backend/user/my-profile.phtml:117
+msgid "Select file"
+msgstr "Chọn file"
+
+#: Backend/view/backend/bank/add.phtml:70
+#: Backend/view/backend/bank/edit.phtml:70
+#: Backend/view/backend/setting/edit-company.phtml:82
+#: Backend/view/backend/user/add.phtml:135
+#: Backend/view/backend/user/edit.phtml:123
+#: Backend/view/backend/user/my-profile.phtml:118
+msgid "Change"
+msgstr "Thay đổi"
+
+#: Backend/view/backend/bank/edit-business-loan.phtml:2
+#: Backend/view/backend/bank/edit-business-loan.phtml:23
+msgid "Edit Business Loan"
+msgstr ""
+
+#: Backend/view/backend/bank/edit.phtml:2
+msgid "Edit bank"
+msgstr ""
+
+#: Backend/view/backend/bank/edit.phtml:23
+#: Backend/view/backend/bank/index.phtml:51
+#: Backend/view/backend/bank/view-business-loan.phtml:55
+#: Backend/view/backend/user/edit-role.phtml:23
+#: Backend/view/backend/user/edit.phtml:23
+#: Backend/view/backend/user/index.phtml:51
+#: Backend/view/backend/user/role.phtml:51
+msgid "Edit"
+msgstr "Sửa"
+
+#: Backend/view/backend/bank/index.phtml:2
+msgid "Bank Management"
+msgstr ""
+
+#: Backend/view/backend/bank/index.phtml:38
+#: Backend/view/backend/bank/view-business-loan.phtml:42
+#: Backend/view/backend/user/index.phtml:38
+#: Backend/view/backend/user/role.phtml:38
+msgid "Back"
+msgstr "Quay lại"
+
+#: Backend/view/backend/bank/index.phtml:45
+#: Backend/view/backend/bank/view-business-loan.phtml:49
+#: Backend/view/backend/user/index.phtml:45
+#: Backend/view/backend/user/role.phtml:45
+msgid "Tools"
+msgstr "Công cụ"
+
+#: Backend/view/backend/bank/index.phtml:63
+#: Backend/view/backend/bank/view-business-loan.phtml:67
+#: Backend/view/backend/user/edit-role.phtml:96
+#: Backend/view/backend/user/edit.phtml:107
+#: Backend/view/backend/user/index.phtml:63
+#: Backend/view/backend/user/role.phtml:55
+msgid "Trash"
+msgstr ""
+
+#: Backend/view/backend/bank/index.phtml:68
+#: Backend/view/backend/bank/view-business-loan.phtml:72
+#: Backend/view/backend/user/index.phtml:72
+#: Backend/view/backend/user/role.phtml:60
+msgid "Reload"
+msgstr "Tải lại"
+
+#: Backend/view/backend/bank/index.phtml:86
+#: Backend/view/backend/bank/view-business-loan.phtml:90
+#: Backend/view/backend/user/index.phtml:92
+#: Backend/view/backend/user/role.phtml:77
+msgid "Creation Date"
+msgstr "Ngày tạo"
+
+#: Backend/view/backend/bank/update-interest-rate.phtml:2
+#: Backend/view/backend/bank/view-interest-rate.phtml:63
+msgid "Update Interest Rate"
+msgstr ""
+
+#: Backend/view/backend/bank/update-interest-rate.phtml:63
+msgid "Promotions"
+msgstr ""
+
+#: Backend/view/backend/bank/update-interest-rate.phtml:109
+#: Backend/view/backend/bank/update-interest-rate.phtml:149
+msgid "Remove Interest Rate row"
+msgstr ""
+
+#: Backend/view/backend/bank/update-interest-rate.phtml:158
+msgid "Add Interest Rate"
+msgstr ""
+
+#: Backend/view/backend/bank/view-business-loan.phtml:2
+msgid "Business Term Loan Management"
+msgstr ""
+
+#: Backend/view/backend/bank/view-business-loan.phtml:88
+msgid "Bank name"
+msgstr ""
+
+#: Backend/view/backend/bank/view-interest-rate.phtml:2
+msgid "Interest Rate Management"
+msgstr ""
+
+#: Backend/view/backend/bank/view-interest-rate.phtml:64
+msgid "View Interest Rate"
+msgstr ""
+
+#: Backend/view/backend/setting/edit-company.phtml:2
+#: Backend/view/backend/setting/edit-company.phtml:23
+msgid "Edit Company"
+msgstr "Cập nhật công ty"
+
+#: Backend/view/backend/setting/edit-email.phtml:2
+msgid "Setting Email"
+msgstr ""
+
+#: Backend/view/backend/setting/edit-email.phtml:15
+msgid "Home"
+msgstr "Trang chủ"
+
+#: Backend/view/backend/setting/edit-email.phtml:52
+msgid "Mail"
+msgstr ""
+
+#: Backend/view/backend/setting/edit-email.phtml:53
+msgid "Smtp"
+msgstr ""
+
+#: Backend/view/backend/setting/edit-personal-loan.phtml:2
+#: Backend/view/backend/setting/edit-personal-loan.phtml:23
+msgid "Edit Personal Loan"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:2
+msgid "Menus Management"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:34
+msgid "Edit Menus"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:37
+msgid "Manage Locations"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:51
+msgid "Create Menu"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:71
+msgid "Select Menu"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:77
+msgid "Add Menu"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:107
+msgid "Add New Menu"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:111
+msgid "Title"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:117
+msgid "Label"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:123
+msgid "Route"
+msgstr ""
+
+#: Backend/view/backend/setting/menu.phtml:140
+msgid "Action"
+msgstr "Hành động"
+
+#: Backend/view/backend/setting/menu.phtml:148
+#: Backend/view/backend/setting/view-company.phtml:48
+msgid "Value"
+msgstr "Giá trị"
+
+#: Backend/view/backend/setting/menu.phtml:156
+msgid "Close"
+msgstr ""
+
+#: Backend/view/backend/setting/view-company.phtml:2
+msgid "View Company Management"
+msgstr ""
+
+#: Backend/view/backend/setting/view-company.phtml:38
+msgid " Edit Company"
+msgstr ""
+
+#: Backend/view/backend/setting/view-company.phtml:46
+msgid "#"
+msgstr ""
+
+#: Backend/view/backend/setting/view-company.phtml:47
+msgid "Company Information"
+msgstr "Thông tin công ty"
+
+#: Backend/view/backend/user/add-role.phtml:2
+#: Backend/view/backend/user/add-role.phtml:34
+msgid "Add User Role"
+msgstr ""
+
+#: Backend/view/backend/user/add-role.phtml:58
+#: Backend/view/backend/user/edit-role.phtml:48
+msgid "Privileges"
+msgstr "Phân quyền"
+
+#: Backend/view/backend/user/add.phtml:2
+msgid "Add new user"
+msgstr ""
+
+#: Backend/view/backend/user/add.phtml:19
+#: Backend/view/backend/user/edit.phtml:19
+#: Backend/view/backend/user/reset-password.phtml:19
+msgid "User"
+msgstr "Người dùng"
+
+#: Backend/view/backend/user/add.phtml:43
+#: Backend/view/backend/user/change-password.phtml:38
+#: Backend/view/backend/user/edit.phtml:42
+#: Backend/view/backend/user/login.phtml:10
+#: Backend/view/backend/user/login.phtml:13
+#: Backend/view/backend/user/my-profile.phtml:40
+#: Backend/view/backend/user/reset-password.phtml:42
+msgid "Username"
+msgstr "Tên đăng nhập"
+
+#: Backend/view/backend/user/add.phtml:50
+#: Backend/view/backend/user/change-password.phtml:59
+#: Backend/view/backend/user/login.phtml:17
+#: Backend/view/backend/user/login.phtml:20
+#: Backend/view/backend/user/reset-password.phtml:56
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: Backend/view/backend/user/add.phtml:57
+#: Backend/view/backend/user/change-password.phtml:66
+#: Backend/view/backend/user/reset-password.phtml:63
+msgid "Password Verify"
+msgstr "Xác nhận mật khẩu"
+
+#: Backend/view/backend/user/add.phtml:71
+#: Backend/view/backend/user/edit.phtml:56
+#: Backend/view/backend/user/index.phtml:90
+#: Backend/view/backend/user/my-profile.phtml:54
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:77
+msgid "Phone"
+msgstr "Điện thoại"
+
+#: Backend/view/backend/user/add.phtml:78
+#: Backend/view/backend/user/edit.phtml:63
+#: Backend/view/backend/user/my-profile.phtml:61
+msgid "First Name"
+msgstr ""
+
+#: Backend/view/backend/user/add.phtml:85
+#: Backend/view/backend/user/edit.phtml:70
+#: Backend/view/backend/user/my-profile.phtml:68
+msgid "Last Name"
+msgstr ""
+
+#: Backend/view/backend/user/add.phtml:92
+#: Backend/view/backend/user/edit.phtml:77
+#: Backend/view/backend/user/index.phtml:91
+#: Backend/view/backend/user/my-profile.phtml:75
+msgid "Role"
+msgstr ""
+
+#: Backend/view/backend/user/add.phtml:108
+#: Backend/view/backend/user/edit.phtml:93
+#: Backend/view/backend/user/my-profile.phtml:91
+msgid "Description"
+msgstr "Mô tả chi tiết"
+
+#: Backend/view/backend/user/add.phtml:125
+#: Backend/view/backend/user/edit.phtml:113
+#: Backend/view/backend/user/my-profile.phtml:108
+msgid "Select Avatar"
+msgstr "Chọn ảnh đại diện"
+
+#: Backend/view/backend/user/change-password.phtml:2
+msgid "Change Password Management"
+msgstr ""
+
+#: Backend/view/backend/user/change-password.phtml:52
+msgid "Current Password"
+msgstr "Mật khẩu gần đây"
+
+#: Backend/view/backend/user/edit-role.phtml:2
+#: Backend/view/backend/user/edit-role.phtml:34
+msgid "Edit User Role"
+msgstr ""
+
+#: Backend/view/backend/user/edit-role.phtml:94
+#: Backend/view/backend/user/edit.phtml:105
+msgid "Pending"
+msgstr "Đang treo"
+
+#: Backend/view/backend/user/edit-role.phtml:95
+#: Backend/view/backend/user/edit.phtml:106
+msgid "Suspend"
+msgstr ""
+
+#: Backend/view/backend/user/edit.phtml:2
+#: Backend/view/backend/user/edit.phtml:34
+msgid "Edit User"
+msgstr ""
+
+#: Backend/view/backend/user/index.phtml:2
+msgid "User Management"
+msgstr ""
+
+#: Backend/view/backend/user/index.phtml:68
+#: Backend/view/backend/user/reset-password.phtml:23
+#: Backend/view/backend/user/reset-password.phtml:34
+msgid "Reset Password"
+msgstr ""
+
+#: Backend/view/backend/user/login.phtml:3
+msgid "Login to your account"
+msgstr "Đăng nhập tài khoản"
+
+#: Backend/view/backend/user/login.phtml:6
+msgid "Enter any username and password"
+msgstr ""
+
+#: Backend/view/backend/user/login.phtml:25
+msgid "Remember me"
+msgstr "Nhớ đăng nhập lần sau"
+
+#: Backend/view/backend/user/login.phtml:28
+msgid "Login"
+msgstr "Đăng nhập"
+
+#: Backend/view/backend/user/my-profile.phtml:2
+msgid "My Profile Management"
+msgstr ""
+
+#: Backend/view/backend/user/my-profile.phtml:32
+msgid "Profile of"
+msgstr "Thông tin của"
+
+#: Backend/view/backend/user/reset-password.phtml:2
+msgid "Reset Password Management"
+msgstr ""
+
+#: Backend/view/backend/user/role.phtml:2
+msgid "Role Management"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:59
+msgid "Full Name"
+msgstr "Tên đầy đủ"
+
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:68
+msgid "NRIC"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:95
+msgid "Remark"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/apply-form.phtml:107
+#: Frontend/view/frontend/personal-loan/apply.phtml:79
+msgid "No thanks, I can apply by myself"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:23
+msgid "Loan Amount"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:104
+msgid "Add Business Term Loan to Compare"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:107
+msgid ""
+"Add a Business Term Loan for comparison, you will be returned to the "
+"Business Term Loan Listing"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:109
+msgid "Add Business Term Loan"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:122
+msgid "Overview"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:146
+msgid "Max Tenor"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:260
+msgid "Min Sales Turnover"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:279
+msgid "Min Years Of Incorporation"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:302
+msgid "Repayment Summary"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:429
+msgid "Compare Business Term Loan"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/compare.phtml:430
+msgid "Apply for the Business Term Loan of your choice right away"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:12
+msgid "Loan"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:13
+msgid "Info"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:14
+msgid "Need Help"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:14
+msgid "Help"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:25
+msgid "I want to borrow"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:36
+msgid "over"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:40
+msgid "years"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:46
+msgid "Caculate My Results"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:80
+msgid "Shortlisted Business Term Loan"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:81
+msgid "Select up to 3 banks for comparison"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:82
+msgid "Clear Shortlist"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/index.phtml:90
+msgid "Compare Now"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/success.phtml:14
+msgid "Thanks you for your application"
+msgstr ""
+
+#: Frontend/view/frontend/personal-loan/success.phtml:15
+msgid ""
+"Our team will contact within 24 hours to help you go through all the "
+"procedure"
+msgstr ""
+
+#~ msgid "Enter any username and password."
+#~ msgstr "Nhập thông tin tên đăng nhập và mật khẩu"
+
+#~ msgid "Successfully updated!"
+#~ msgstr "Cập nhật thành công!"
+
+#~ msgid "Color"
+#~ msgstr "Màu sắc"
+
+#~ msgid "Size"
+#~ msgstr "Kích cỡ"
+
+#~ msgid "Quantity"
+#~ msgstr "Số lượng"
+
+#~ msgid "New Quantity"
+#~ msgstr "Số lượng mới"
+
+#~ msgid "View Customer"
+#~ msgstr "Xem thông tin KH"
+
+#~ msgid "Delete"
+#~ msgstr "Xóa"
+
+#~ msgid "Successfully deleted!"
+#~ msgstr "Xóa thành công!"
+
+#~ msgid "Information"
+#~ msgstr "Thông tin"
+
+#~ msgid "No."
+#~ msgstr "Mã"
+
+#~ msgid "Address"
+#~ msgstr "Địa chỉ"
+
+#~ msgid "Product"
+#~ msgstr "Sản phẩm"
+
+#~ msgid "Total"
+#~ msgstr "Tổng cộng"
+
+#~ msgid "Customer Name"
+#~ msgstr "Tên khách hàng"
+
+#~ msgid "Note"
+#~ msgstr "Ghi chú"
+
+#~ msgid "Order Date: "
+#~ msgstr "Ngày đặt hàng:"
+
+#~ msgid "Order Delivery: "
+#~ msgstr "Ngày giao hàng:"
+
+#~ msgid "Shipping Type: "
+#~ msgstr "Loại vận chuyển:"
+
+#~ msgid "Bill"
+#~ msgstr "Hóa đơn"
+
+#~ msgid "Upload image successful!"
+#~ msgstr "Tải ảnh thành công!"
+
+#~ msgid "Please select attachment."
+#~ msgstr "Vui lòng chọn file đính kèm."
+
+#~ msgid "Please select image."
+#~ msgstr "Vui lòng chọn ảnh."
+
+#~ msgid "Order information"
+#~ msgstr "Thông tin đơn hàng"
+
+#~ msgid "Price"
+#~ msgstr "Giá"
+
+#~ msgid "Subtotal"
+#~ msgstr "Tạm tính"
+
+#~ msgid "Shipping"
+#~ msgstr "Hình thức vận chuyển"
+
+#~ msgid "Intro total"
+#~ msgstr "Tổng số tiền phải thanh toán"
+
+#~ msgid ""
+#~ "Success: You have added <a href=\"%s\">%s</a> to your <a href=\"%s"
+#~ "\">shopping cart</a>!"
+#~ msgstr ""
+#~ "Thành công: bạn đã thêm <a href=\"%s\">%s</a> vào <a href=\"%s\">giỏ "
+#~ "hàng</a>!"
+
+#~ msgid "items"
+#~ msgstr "sản phẩm"
+
+#~ msgid "Cart empty"
+#~ msgstr "Giỏ hàng trống"
+
+#~ msgid "item"
+#~ msgstr "sản phẩm"
+
+#~ msgid "Successfully registered"
+#~ msgstr "Đăng ký tài khoản thành công"
+
+#~ msgid "Thanks you for visit"
+#~ msgstr "Cảm ơn bạn đã ghé thăm website của chúng tôi"
+
+#~ msgid "Please click here"
+#~ msgstr "Click vào đây"
+
+#~ msgid "here"
+#~ msgstr "đây"
+
+#~ msgid "to reset password"
+#~ msgstr "để khôi phục mật khẩu"
+
+#~ msgid "Best regards"
+#~ msgstr "Trân trọng"
+
+#~ msgid "Reset password"
+#~ msgstr "Khôi phục mật khẩu"
+
+#~ msgid "Please check email to reset password"
+#~ msgstr "Vui lòng kiểm tra hộp thư để khôi phục lại mật khẩu của bạn"
+
+#~ msgid "Managed Table - Add Customer"
+#~ msgstr "Thêm mới khách hàng"
+
+#~ msgid "Customer"
+#~ msgstr "Khách hàng"
+
+#~ msgid "Group"
+#~ msgstr "Nhóm"
+
+#~ msgid "Fax"
+#~ msgstr "Fax"
+
+#~ msgid "Web"
+#~ msgstr "Website"
+
+#~ msgid " Submit"
+#~ msgstr "Xác nhận"
+
+#~ msgid "Managed Table - Edit Customer"
+#~ msgstr "Cập nhật khách hàng"
+
+#~ msgid " Update"
+#~ msgstr "Cập nhật"
+
+#~ msgid "Managed Table - Customers"
+#~ msgstr "Quản lý khách hàng"
+
+#~ msgid "Customers"
+#~ msgstr "Quản lý khách hàng"
+
+#~ msgid "Add New"
+#~ msgstr "Thêm mới"
+
+#~ msgid " Tools"
+#~ msgstr "Công cụ"
+
+#~ msgid " View"
+#~ msgstr "Xem"
+
+#~ msgid " Edit"
+#~ msgstr "Sửa"
+
+#~ msgid " Reload"
+#~ msgstr "Tải lại"
+
+#~ msgid "Code"
+#~ msgstr "Mã"
+
+#~ msgid "Managed Table - Inventory"
+#~ msgstr "Quản lý kho hàng"
+
+#~ msgid "Inventory"
+#~ msgstr "Quản lý kho hàng"
+
+#~ msgid "Product Name"
+#~ msgstr "Tên sản phẩm"
+
+#~ msgid "Managed Table - Update Stock"
+#~ msgstr "Cập nhật kho hàng"
+
+#~ msgid "Update Stock"
+#~ msgstr "Cập nhật kho"
+
+#~ msgid "Enter product name or product code here"
+#~ msgstr "Nhập tên sản phẩm hoặc mã sản phẩm"
+
+#~ msgid "Image"
+#~ msgstr "Hình ảnh"
+
+#~ msgid "Current Quantity"
+#~ msgstr "Số lượng gần đây"
+
+#~ msgid "Managed Table - Stock"
+#~ msgstr "Quản lý kho"
+
+#~ msgid "Stock"
+#~ msgstr "Kho hàng"
+
+#~ msgid " View Sku"
+#~ msgstr "Xem SKU"
+
+#~ msgid "Info Stock"
+#~ msgstr "Thông tin kho"
+
+#~ msgid "Managed Table - Add Order Customer"
+#~ msgstr "Thêm mới đơn hàng"
+
+#~ msgid "Orders"
+#~ msgstr "Quản lý đơn hàng"
+
+#~ msgid "Add New Order"
+#~ msgstr "Thêm mới đơn hàng"
+
+#~ msgid "Search"
+#~ msgstr "Tìm kiếm"
+
+#~ msgid "Enter customer name or customer code here"
+#~ msgstr "Nhập tên khách hàng hoặc mã khách hàng ở đây"
+
+#~ msgid "Enter name here"
+#~ msgstr "Nhập tên"
+
+#~ msgid "Enter phone here"
+#~ msgstr "Nhập số điện thoại"
+
+#~ msgid "Enter address here"
+#~ msgstr "Nhập địa chỉ"
+
+#~ msgid "Customer Group"
+#~ msgstr "Loại khách hàng"
+
+#~ msgid "Date Order"
+#~ msgstr "Ngày đặt hàng"
+
+#~ msgid "Date Delivery"
+#~ msgstr "Ngày giao hàng"
+
+#~ msgid "Source"
+#~ msgstr "Nguồn"
+
+#~ msgid "Attachment"
+#~ msgstr "File đính kèm"
+
+#~ msgid "Drop files here or click to upload"
+#~ msgstr "Kéo thả file vào đây hoặc chọn nút tải file"
+
+#~ msgid "Enter product name"
+#~ msgstr "Nhập tên sản phẩm"
+
+#~ msgid "Add Product"
+#~ msgstr "Thêm sản phẩm"
+
+#~ msgid "Sub Total"
+#~ msgstr "Tạm tính"
+
+#~ msgid "Shipping Cost"
+#~ msgstr "Chi phí vận chuyển"
+
+#~ msgid "Managed Table - Add Order"
+#~ msgstr "Thêm mới đơn hàng"
+
+#~ msgid "Factory"
+#~ msgstr "Công nhân"
+
+#~ msgid "Add Order"
+#~ msgstr "Thêm mới đơn hàng"
+
+#~ msgid "Managed Table - Edit Order Customer"
+#~ msgstr "Cập nhật đơn hàng của khách"
+
+#~ msgid "Edit Order Customer"
+#~ msgstr "Cập nhật đơn hàng của khách"
+
+#~ msgid "Create New Order No."
+#~ msgstr "Tạo mã đơn hàng mới"
+
+#~ msgid "Cancel Old Order"
+#~ msgstr "Hủy đơn hàng"
+
+#~ msgid "Order"
+#~ msgstr "Đơn hàng"
+
+#~ msgid "Orders - View Customer"
+#~ msgstr "Quản lý đơn hàng của khách hàng"
+
+#~ msgid "Complete"
+#~ msgstr "Hoàn tất"
+
+#~ msgid "Export to Excel"
+#~ msgstr "Xuất ra file Excel"
+
+#~ msgid "Order late"
+#~ msgstr "Đơn đặt hàng quá 3 ngày"
+
+#~ msgid "Order warning"
+#~ msgstr "Đơn hàng trên 5 đôi chưa thanh toán"
+
+#~ msgid "Order success"
+#~ msgstr "Đơn hàng trên 5 đôi đã thanh toán"
+
+#~ msgid "From"
+#~ msgstr "Từ ngày"
+
+#~ msgid "To"
+#~ msgstr "Đến ngày"
+
+#~ msgid "Order No."
+#~ msgstr "Mã đơn hàng"
+
+#~ msgid "Order Status"
+#~ msgstr "Trạng thái đơn hàng"
+
+#~ msgid "Processing"
+#~ msgstr "Đang xử lý"
+
+#~ msgid "Completed"
+#~ msgstr "Đã hoàn tất"
+
+#~ msgid "Exported"
+#~ msgstr "Đã xuất hóa đơn"
+
+#~ msgid "Trashed"
+#~ msgstr "Đã xóa"
+
+#~ msgid "Created By"
+#~ msgstr "Người tạo"
+
+#~ msgid "Customer name or customer no."
+#~ msgstr "Tên KH hoặc mã KH"
+
+#~ msgid "Customer Address"
+#~ msgstr "Địa chỉ khách hàng"
+
+#~ msgid "Customer Phone"
+#~ msgstr "Điện thoại"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Ngày giao"
+
+#~ msgid "Info Customer"
+#~ msgstr "Thông tin khách hàng"
+
+#~ msgid "Create Order"
+#~ msgstr "Lên đơn hàng"
+
+#~ msgid "Canceled"
+#~ msgstr "Hủy bỏ"
+
+#~ msgid " Export"
+#~ msgstr "Xuất"
+
+#~ msgid "Date Creation"
+#~ msgstr "Ngày tạo"
+
+#~ msgid "Modified By"
+#~ msgstr "Người sửa"
+
+#~ msgid "Customer No."
+#~ msgstr "Mã khách hàng"
+
+#~ msgid "Managed Table - Add Category"
+#~ msgstr "Thêm mới danh mục"
+
+#~ msgid "Add Category"
+#~ msgstr "Thêm mới danh mục"
+
+#~ msgid "Sort Order"
+#~ msgstr "Sắp xếp vị trí"
+
+#~ msgid "Managed Table - Add Product"
+#~ msgstr "Thêm mới sản phẩm"
+
+#~ msgid "Products"
+#~ msgstr "Quản lý sản phẩm"
+
+#~ msgid "Add New Product"
+#~ msgstr "Thêm mới sản phẩm"
+
+#~ msgid "Auto generate after select category."
+#~ msgstr "Tự động tạo mã sau khi đã chọn danh mục sản phẩm."
+
+#~ msgid "Unit"
+#~ msgstr "Đơn vị"
+
+#~ msgid "Category"
+#~ msgstr "Danh mục"
+
+#~ msgid "Introtext"
+#~ msgstr "Mô tả ngắn"
+
+#~ msgid "Images"
+#~ msgstr "Hình ảnh"
+
+#~ msgid "Managed Table - Edit Category"
+#~ msgstr "Cập nhật danh mục"
+
+#~ msgid "Edit Category"
+#~ msgstr "Cập nhật danh mục"
+
+#~ msgid "Update Product Information"
+#~ msgstr "Cập nhật thông tin sản phẩm"
+
+#~ msgid "Update Information"
+#~ msgstr "Cập nhật thông tin"
+
+#~ msgid "Seo Url"
+#~ msgstr "Đường dẫn SEO"
+
+#~ msgid "Meta Keywords"
+#~ msgstr "Từ khóa SEO"
+
+#~ msgid "Meta Description"
+#~ msgstr "Mô tả SEO"
+
+#~ msgid "Managed Table - Products"
+#~ msgstr "Quản lý sản phẩm"
+
+#~ msgid "More"
+#~ msgstr "Thêm"
+
+#~ msgid "Attribute"
+#~ msgstr "Thuộc tính"
+
+#~ msgid "Confirm"
+#~ msgstr "Xác nhận"
+
+#~ msgid "Update Product Attribute"
+#~ msgstr "Cập nhật thuộc tính sản phẩm"
+
+#~ msgid "Update Attribute"
+#~ msgstr "Cập nhật thuộc tính"
+
+#~ msgid "All"
+#~ msgstr "Tất cả"
+
+#~ msgid "Update Product Complete"
+#~ msgstr "Cập nhật hoàn thiện sản phẩm"
+
+#~ msgid "Update Complete"
+#~ msgstr "Hoàn tất cập nhật"
+
+#~ msgid "Stock Keeping Unit"
+#~ msgstr "Kho hàng sản phẩm"
+
+#~ msgid "Update Stock Keeping Unit"
+#~ msgstr "Cập nhật kho hàng sản phẩm"
+
+#~ msgid "Product - View Category"
+#~ msgstr "Quản lý danh mục sản phẩm"
+
+#~ msgid "Managed Table - Add Color"
+#~ msgstr "Thêm mới màu sắc"
+
+#~ msgid "Settings"
+#~ msgstr "Cài đặt"
+
+#~ msgid "Managed Table - Add Order Status"
+#~ msgstr "Thêm mới trang thái đơn hàng"
+
+#~ msgid "Add Order Status"
+#~ msgstr "Thêm trạng thái đơn hàng"
+
+#~ msgid "Add Payment"
+#~ msgstr "Thêm thanh toán"
+
+#~ msgid "Managed Table - Add Size"
+#~ msgstr "Thêm mới thuộc tính kích cỡ"
+
+#~ msgid "Setting - Discount"
+#~ msgstr "Cài đặt chiết khấu"
+
+#~ msgid "Add Discount"
+#~ msgstr "Thêm chiết khấu"
+
+#~ msgid "Add New Discount"
+#~ msgstr "Thêm mới chiết khấu"
+
+#~ msgid "Discount"
+#~ msgstr "Chiết khấu"
+
+#~ msgid "Managed Table - Edit Color"
+#~ msgstr "Cập nhật thuộc tính màu sắc"
+
+#~ msgid "Setting - Edit Company"
+#~ msgstr "Cập nhật thông tin công ty"
+
+#~ msgid "Edit Payment"
+#~ msgstr "Cập nhật thanh toán"
+
+#~ msgid "Managed Table - Edit Size"
+#~ msgstr "Cập nhật thuộc tính kích cỡ"
+
+#~ msgid "Setting - View Customer Group"
+#~ msgstr "Cài đặt loại khách hàng"
+
+#~ msgid "Customer Groups"
+#~ msgstr "Loại khách hàng"
+
+#~ msgid "Setting - View Order Status"
+#~ msgstr "Cài đặt trạng thái đơn hàng"
+
+#~ msgid "Payments Management"
+#~ msgstr "Quản lý thanh toán"
+
+#~ msgid "Payment"
+#~ msgstr "Hình thức thanh toán"
+
+#~ msgid "Shippings Management"
+#~ msgstr "Quản lý vận chuyển"
+
+#~ msgid "Setting - View Size"
+#~ msgstr "Cài đặt kích cỡ"
+
+#~ msgid "Setting - View Unit"
+#~ msgstr "Cài đặt đơn vị"
+
+#~ msgid "Managed Table - Add User Groups"
+#~ msgstr "Thêm mới nhóm người dùng"
+
+#~ msgid "User Groups"
+#~ msgstr "Nhóm người dùng"
+
+#~ msgid "Add User Group"
+#~ msgstr "Thêm mới nhóm người dùng"
+
+#~ msgid "Display Name"
+#~ msgstr "Tên hiển thị"
+
+#~ msgid "Managed Table - User Groups"
+#~ msgstr "Quản lý nhóm người dùng"
+
+#~ msgid " Reset Password"
+#~ msgstr "Reset mật khẩu"
+
+#~ msgid "Cart"
+#~ msgstr "Giỏ hàng"
+
+#~ msgid "Shopping cart"
+#~ msgstr "Giỏ hàng của bạn"
+
+#~ msgid "Unit price"
+#~ msgstr "Đơn giá"
+
+#~ msgid "Sub total"
+#~ msgstr "Tạm tính"
+
+#~ msgid "Shipping cost"
+#~ msgstr "Phí vận chuyển"
+
+#~ msgid "Continue shopping"
+#~ msgstr "Tiếp tục mua hàng"
+
+#~ msgid "Checkout"
+#~ msgstr "Thanh toán"
+
+#~ msgid "Your shopping cart is empty"
+#~ msgstr "Giỏ hàng của bạn rỗng"
+
+#~ msgid "Checkout - Step 1"
+#~ msgstr "Đặt hàng - Tài khoản - Bước 1"
+
+#~ msgid "Login or guest checkout"
+#~ msgstr "Đăng nhập hoặc Đặt hàng không cần đăng ký"
+
+#~ msgid "Successfully logged"
+#~ msgstr "Đăng nhập thành công"
+
+#~ msgid "Username or Email"
+#~ msgstr "Tên đăng nhập hoặc địa chỉ email"
+
+#~ msgid "Forgot your password ?"
+#~ msgstr "Quên mật khẩu?"
+
+#~ msgid "Or Guest checkout"
+#~ msgstr "Hoặc đặt hàng mà không cần đăng ký"
+
+#~ msgid "Continue"
+#~ msgstr "Tiếp tục"
+
+#~ msgid "Checkout - Step 2"
+#~ msgstr "Đặt hàng - Địa chỉ giao hàng - Bước 2"
+
+#~ msgid "Address guest shipping"
+#~ msgstr "Địa chỉ giao hàng của quý khách"
+
+#~ msgid "Province"
+#~ msgstr "Tỉnh/Thành phố"
+
+#~ msgid "District"
+#~ msgstr "Quận/huyện"
+
+#~ msgid "Ward"
+#~ msgstr "Phường, xã"
+
+#~ msgid "Checkout - Step 3"
+#~ msgstr "Đặt hàng - Xác nhận đơn hàng - Bước 3"
+
+#~ msgid "Delivery information"
+#~ msgstr "Địa chỉ giao hàng/Thanh toán"
+
+#~ msgid "Change shipping"
+#~ msgstr "Thay đổi địa chỉ"
+
+#~ msgid "Confirm order"
+#~ msgstr "Xác nhận đơn hàng"
+
+#~ msgid "Checkout - Success"
+#~ msgstr "Đặt hàng - Thành công"
+
+#~ msgid "Result order"
+#~ msgstr "Kết quả đặt hàng"
+
+#~ msgid "Successfully order"
+#~ msgstr "Đặt hàng thành công"
+
+#~ msgid ""
+#~ "Thank you for verifying your order. We have sent you an email. Please go "
+#~ "to your email now"
+#~ msgstr ""
+#~ "Đơn hàng của bạn đang được xử lý. Chúng tôi đã gửi cho bạn email về chi "
+#~ "tiết đơn hàng. Cảm ơn bạn rất nhiều!!!"
+
+#~ msgid "Feedback"
+#~ msgstr "Phản hồi"
+
+#~ msgid "E-Mail"
+#~ msgstr "Email"
+
+#~ msgid "Subject"
+#~ msgstr "Chủ đề"
+
+#~ msgid "New products"
+#~ msgstr "Mẫu mới"
+
+#~ msgid "Zoom"
+#~ msgstr "Phóng to"
+
+#~ msgid "View"
+#~ msgstr "Xem ngay"
+
+#~ msgid "Detail"
+#~ msgstr "Xem chi tiết"
+
+#~ msgid "About Us"
+#~ msgstr "Về chúng tôi"
+
+#~ msgid "Over"
+#~ msgstr "Hơn"
+
+#~ msgid "Items are available here"
+#~ msgstr "Sản phẩm đang chờ bạn"
+
+#~ msgid "Products empty"
+#~ msgstr "Hiện tại chưa có sản phẩm ở danh mục này. Vui lòng quay lại sau!!!"
+
+#~ msgid "Add to cart"
+#~ msgstr "Mua ngay"
+
+#~ msgid "More details"
+#~ msgstr "Xem chi tiết"
+
+#~ msgid "My account"
+#~ msgstr "Tài khoản của tôi"
+
+#~ msgid "Change password"
+#~ msgstr "Thay đổi mật khẩu"
+
+#~ msgid "My Account Page"
+#~ msgstr "Trang tài khoản cá nhân"
+
+#~ msgid "Forgot password"
+#~ msgstr "Quên mật khẩu"
+
+#~ msgid "Forgot Password"
+#~ msgstr "Quên mật khẩu"
+
+#~ msgid "My Account"
+#~ msgstr "Tải khoản của tôi"
+
+#~ msgid "Edit your account information"
+#~ msgstr "Chỉnh sửa thông tin cá nhân"
+
+#~ msgid "Change your password"
+#~ msgstr "Thay đổi mật khẩu của bạn"
+
+#~ msgid "Modify your address book entries"
+#~ msgstr "Chỉnh sửa danh sách địa chỉ"
+
+#~ msgid "Modify your wish list"
+#~ msgstr "Chỉnh sửa danh sách yêu thích"
+
+#~ msgid "My Orders"
+#~ msgstr "Đơn hàng của tôi"
+
+#~ msgid "View your order history"
+#~ msgstr "Xem lịch sử đơn hàng"
+
+#~ msgid "Your Transactions"
+#~ msgstr "Giao dịch của bạn"
+
+#~ msgid "Free shipping"
+#~ msgstr "Vận chuyển"
+
+#~ msgid "Express delivery withing 3 days"
+#~ msgstr "Giao hàng tốc độ"
+
+#~ msgid "Buy cart"
+#~ msgstr "Thanh toán"
+
+#~ msgid "Speed"
+#~ msgstr "Tiện lợi nhanh chóng"
+
+#~ msgid "Live support"
+#~ msgstr "Hổ trợ"
+
+#~ msgid "Categories"
+#~ msgstr "Danh mục"
+
+#~ msgid "Lists"
+#~ msgstr "Danh sách"
+
+#~ msgid "Hello"
+#~ msgstr "Chào"
+
+#~ msgid "Log In / Register"
+#~ msgstr "Đăng nhập / Đăng ký"
+
+#~ msgid "Log In"
+#~ msgstr "Đăng nhập"
+
+#~ msgid "Register"
+#~ msgstr "Đăng ký"
+
+#~ msgid "Or login with"
+#~ msgstr "Hoặc đăng nhập bằng"
+
+#~ msgid "no worries, click"
+#~ msgstr "đừng lo, click vào"
+
+#~ msgid "to reset your password."
+#~ msgstr "để khôi phục lại mật khẩu."
+
+#~ msgid "Register account"
+#~ msgstr "Đăng ký tài khoản"
+
+#~ msgid "Required field."
+#~ msgstr "Vui lòng điền đầy đủ thông tin"
+
+#~ msgid "Successfully register"
+#~ msgstr "Đăng ký thành công"
+
+#~ msgid "View Cart"
+#~ msgstr "Xem giỏ hàng"
+
+#~ msgid "Address book"
+#~ msgstr "Danh sách địa chỉ"
+
+#~ msgid "Wish list"
+#~ msgstr "Danh sách yêu thích"
+
+#~ msgid "Newsletter"
+#~ msgstr "Nhận thông báo"
+
+#~ msgid "Setting - View Shipping"
+#~ msgstr "Cài đặt vận chuyển"
+
+#~ msgid "Export to Pdf"
+#~ msgstr "Xuất ra file PDF"
+
+#~ msgid "24/7 customer care available"
+#~ msgstr "24/7 các ngày trong tuần"
+
+#~ msgid "More detail"
+#~ msgstr "Xem chi tiết"
+
+#~ msgid " Processing"
+#~ msgstr "Đang thực hiện"
+
+#~ msgid " Complete"
+#~ msgstr "Hoàn tất"
+
+#~ msgid " Add Product"
+#~ msgstr "Thêm sản phẩm"
+
+#~ msgid "Update Customer or Product"
+#~ msgstr "Cập nhật sản phẩm hoặc khách hàng"
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Ứng dung khung"
+
+#~ msgid "All rights reserved."
+#~ msgstr "Bảo lưu mọi quyền."
+
+#~ msgid "Welcome to %sZend Framework 2%s"
+#~ msgstr "Chào mừng bạn sử dụng %sZend Framework 2%s"
+
+#~ msgid ""
+#~ "Congratulations! You have successfully installed the %sZF2 Skeleton "
+#~ "Application%s. You are currently running Zend Framework version %s. This "
+#~ "skeleton can serve as a simple starting point for you to begin building "
+#~ "your application on ZF2."
+#~ msgstr ""
+#~ "Xin chúc mừng! Bạn đã cài đặt thành công %sZF2 Skeleton Application%s. "
+#~ "Bạn hiện đang sử dụng Zend Framework phiên bản %s. Ứng dung khung có thể "
+#~ "phục vụ bạn như một điểm bắt đầu đơn giản để bạn bắt tay vào việc xây "
+#~ "dựng ứng dụng riêng của mình trên nền ZF2."
+
+#~ msgid "Fork Zend Framework 2 on GitHub"
+#~ msgstr "Rẽ nhánh Zend Framework 2 trên GitHub"
+
+#~ msgid "Follow Development"
+#~ msgstr "Theo dõi Quá trình phát triển"
+
+#~ msgid ""
+#~ "Zend Framework 2 is under active development. If you are interested in "
+#~ "following the development of ZF2, there is a special ZF2 portal on the "
+#~ "official Zend Framework website which provides links to the ZF2 %swiki%s, "
+#~ "%sdev blog%s, %sissue tracker%s, and much more. This is a great resource "
+#~ "for staying up to date with the latest developments!"
+#~ msgstr ""
+#~ "Zend Framework 2 đang trong quá trình phát triển năng động. Nếu bạn quan "
+#~ "tâm đến việc theo dõi quá trình phát triển của ZF2, có cổng thông tin đặc "
+#~ "biệt danh cho ZF2 trên trang chính thức của website Zend Framework - nơi "
+#~ "sẽ cung cấp đường dẫn tới %swiki%s, %sdev blog%s, %sissue tracker%s của "
+#~ "ZF2, và hơn nhiều thứ khác nữa. Đó là nguồn tài nguyên tuyệt vời để nắm "
+#~ "bắt các thông tin mới nhất trong quá trình phát triển!"
+
+#~ msgid "ZF2 Development Portal"
+#~ msgstr "Cổng thông tin Tiến trình phát triển ZF2"
+
+#~ msgid "Discover Modules"
+#~ msgstr "Khám phá các mô-đun"
+
+#~ msgid ""
+#~ "The community is working on developing a community site to serve as a "
+#~ "repository and gallery for ZF2 modules. The project is available %son "
+#~ "GitHub%s. The site is currently live and currently contains a list of "
+#~ "some of the modules already available for ZF2."
+#~ msgstr ""
+#~ "Côngn đồng đang phát triển trang dành cho chính cộng đồng, đó là các kho "
+#~ "mã nguồn và nơi trưng bày các mô-đun ZF2. Dự án sẵn có trên %son GitHub"
+#~ "%s. Nơi nay đang hoạt động và hiện tại chứa danh sách vài mô-đun sẵn có "
+#~ "cho ZF2."
+
+#~ msgid "Explore ZF2 Modules"
+#~ msgstr "Khám phá các mô-đun dành cho ZF2"
+
+#~ msgid "Help &amp; Support"
+#~ msgstr "Hướng dẫn &amp; Hỗ trợ"
+
+#~ msgid ""
+#~ "If you need any help or support while developing with ZF2, you may reach "
+#~ "us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
+#~ "feedback you may have regarding the beta releases. Alternatively, you may "
+#~ "subscribe and post questions to the %smailing lists%s."
+#~ msgstr ""
+#~ "Nếu bạn có bất kỳ hướng dẫn hay trợ giúp trong quá trình phát triển ZF2, "
+#~ "bạn có thể gặp chúng tôi qua IRC: %s#zftalk on Freenode%s. Chúng tôi sẵn "
+#~ "long lắng nghe bất kỳ câu hỏi hoặc phản hồi nào của bạn liên quan đến "
+#~ "phiên bản thử nghiệm. Một cách khác, bạnn có thể đăng ký theo dõi và gửi "
+#~ "câu hỏi đến %smailing lists%s."
+
+#~ msgid "Ping us on IRC"
+#~ msgstr "Hỏi chúng tôi trên IRC"
+
+#~ msgid "Exception"
+#~ msgstr "Ngoại lệ"

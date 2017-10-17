@@ -1,0 +1,710 @@
+<div class="form-wizard">
+    <div class="title-mortgage">Mortgage Calculator</div>
+    <div id="personalInfo" style="display: block;">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>1. <?php echo $this->translate("Type of Property") ?>?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    <input type="radio" id="prop_type_private_property" name="prop_type" value="Private Property" class="md-radiobtn" checked="checked">
+                                    <label for="prop_type_private_property">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("Private Property") ?> 
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="prop_type_hdb" name="prop_type" value="HDB" class="md-radiobtn">
+                                    <label for="prop_type_hdb">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("HDB") ?> 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>2. <?php echo $this->translate("Rate Package") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p><b>SIBOR</b> stand for the Singapore Interbank Offered Rate and is the rate of interest which banks borrow funds from other banks in the  Singapore wholesale (or 'Interbank') money market. SIBOR is published in the  Singapore Business Time daily.</p><p>An interest rate <b>SWAP</b> is an instrument for swapping the rate of  interest you pay on a loan or receive on a deposit in an agreed  amount, for a specified period of time. SWAP mid rates are published  in the Singapore Business Times daily.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Rate Package") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-control nobtngrp floatrate" id="rate_pack" name="rate_pack">
+                                <option value="Floating rate / SIBOR"><?php echo $this->translate("Floating rate / SIBOR") ?></option>
+                                <option value="Fixed rate"><?php echo $this->translate("Fixed rate") ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>3. <?php echo $this->translate("Loan Amount") ?>?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input name="person_name" type="text" id="loanamt" class="form-control" onkeyup="return enter_check(event);">
+                                <span class="input-group-addon">
+                                    <i>S$</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>4. <?php echo $this->translate("Loan Tenure") ?>?</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-control nobtngrp totaltenure" id="agejoint" name="agejoint">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group tenure-range">
+                    <div class="row form-wizard-title">
+                        <h3>5. <?php echo $this->translate("Interest rate %p.a. of your home loan") ?></h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label"><?php echo $this->translate("Year 1") ?></label>
+                            <div class="slider-container">
+                                <div class="calcProgress calcProgressForm repaycalc slider-range2 ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider1" data-maxval="5" data-initval="1"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 0%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: -5%;"><span class="arrow_box">1 %</span></a></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label"><?php echo $this->translate("Year 2") ?></label>
+                            <div class="slider-container">
+                                <div class="calcProgress calcProgressForm  repaycalc slider-range2 ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider2" data-maxval="5" data-initval="1"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 0%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: -5%;"><span class="arrow_box">1 %</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label"><?php echo $this->translate("Year 3") ?></label>
+                            <div class="slider-container">
+                                <div class="calcProgress calcProgressForm repaycalc slider-range2 ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider3" data-maxval="5" data-initval="1"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 0%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: -5%;"><span class="arrow_box">1 %</span></a></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 hide">
+                            <label class="control-label"><?php echo $this->translate("Year 4 &amp; onwards") ?></label>
+                            <div class="slider-container">
+                                <div class="calcProgress calcProgressForm  repaycalc slider-range2 ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="slider4" data-maxval="5" data-initval="1"><div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 0%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: -5%;"><span class="arrow_box">1 %</span></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <button type="button" id="submit-reset" class="btn grey-mint btn-lg pull-left font-white">Reset</button>  
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <button type="button" id="submit-prepayment" class="btn btn-lg green-custom pull-right">View Prepayment Schedule</button>   
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="repayDet" class="repayWrap" style="display: none;">
+        <form class="form-horizontal">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="col-md-4 form-wizard-title">
+                            <h3><?php echo $this->translate("Loan Amount") ?></h3>
+                        </div>
+                        <div class="col-md-8">
+                            <label id="loan_amt" class="firstTxt"></label>
+                        </div>                        
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="col-md-4 form-wizard-title">
+                            <h3><?php echo $this->translate("Cancellation fee") ?></h3>
+                        </div>
+                        <div class="col-md-8">
+                            <label id="cancellation_fee" class="firstTxt">100</label>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div class="col-md-4 form-wizard-title">
+                            <h3><?php echo $this->translate("Loan Tenure") ?></h3>
+                        </div>
+                        <div class="col-md-8">
+                            <label id="loan_tenure" class="firstTxt"></label>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3><?php echo $this->translate("Interest rate (%p.a.) of your home loan") ?></h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Year 1: <label id="year1">1.23</label>%</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Year 2: <label id="year2">1.43</label>%</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Year 3: <label id="year3">1.53</label>%</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Year 4: <label id="year4">1.63</label>%</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped table-condensed flip-content" id="tbl_repayment"> 
+                                <thead>
+                                    <tr>
+                                        <th><?php echo $this->translate("Year") ?></th>
+                				        <th><?php echo $this->translate("Month") ?></th>
+                				        <th><?php echo $this->translate("(A) Monthly Instalment ($)") ?></th>
+                				        <th><?php echo $this->translate("(B) Interest ($)") ?></th>
+                				        <th><?php echo $this->translate("(C) Outstanding balance in CA ($)") ?></th>
+                                        <th><?php echo $this->translate("(D) Interest Adjustment on CA ($)") ?></th>
+                                        <th><?php echo $this->translate("(E) = (B) - (D) Net interest ($)") ?></th>
+                                        <th><?php echo $this->translate("(C) = (A) - (B) Principal ($)") ?></th>
+                                        <th><?php echo $this->translate("Balance ($)") ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <button type="button" id="submit-back" class="btn grey-mint btn-lg pull-right uppercase"><?php echo $this->translate("Back") ?></button> 
+                </div>
+            </div>
+            
+            <div class="formDisclaimer">
+                <h4>Disclaimer:</h4>
+				<ul class="numLst disclaimer">
+    									<li>The information set out herein is based on the 3 months Singapore Interbank Offered Rate (SIBOR) on the first business day of the month as published in the Business Times. Such Information is provided for illustrative purposes only and may not be complete. The information does not take into account considerations or conditions which may be specifically applicable to your loan.</li>
+    									<li>Nothing contained in the illustration shall constitute an offer of credit facilities by Citibank Singapore Limited.</li>
+    									<li>Citibank will not be liable for damage and/or loss that may be suffered by anyone howsoever arching in relation to the information set out herein.</li>
+    									<li>Full disclaimers terms and conditions apply to banking products and services provided by Citibank.</li>
+    									<li>Please note that Citibank may use the information that you have submitted to contact you regarding our Citibank home loan packages.</li>
+				</ul>
+				<h4>Important Information:</h4>
+				<p class="disclaimer">The Board Rate (if any) quoted to you applies only to the loan package you enquired about. The Board Rate may differ from the Bank's Board Rates applicable to other home loan packages &/or banking products. The Board Rate is subject to change by the Bank from time to time, depending on the Bank's internal cost of funds, against which the said Board Rate is benchmarked. Upon commitment AND disbursement of your loan, we will inform you of any change in the applicable Board Rate by giving you 30 days' notice.</p>
+				<p class="disclaimer">For an Index Linked (SIBOR) package, the interest rate quoted to you is benchmarked against the Singapore Interbank Offered Rate ("SIBOR"). Accordingly, the interest rate quoted to you is indicative and is subject to any fluctuations in SIBOR. The effective interest rate in respect of your loan will be set out in the Bank's facility letter to you and will be computed based on the applicable SIBOR on the specified reference date(s) and shall include any other pricing component which will vary according to your home loan package. The Bank is not required to give you advance notice of the SIBOR which are applicable to your loan.</p>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+$this->headLink()->offsetSetStylesheet(12, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile(4, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/jquery.ui.touch-punch.min.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+var mn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var d = new Date();
+var day = d.getDate();
+var month = d.getMonth();
+var year = d.getFullYear();
+
+var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+var day1 = currentDate.getDate();
+var month1 = currentDate.getMonth();
+var year1 = currentDate.getFullYear();
+
+
+var repayArr=[];
+var colPrinciple = 0;
+var colMonthlyInstallment = 1;
+var colInterestOnPrinciple = 2;
+var colInitialSavingAndMontlySaving = 3;
+var colQualifiedAmount = 4;
+var colInterestRebate = 5;
+var colNetInterest = 6;
+var colPrinciplePayment = 7;
+var colOverallNetInterest = 8;
+var colBalance = 9;
+
+$(".slider-range2").each(function() {
+		var mx =  Number($(this).attr("data-maxVal"));
+		var intvalue = Number($(this).attr("data-initVal"));
+		$(this).slider({
+			range: "min",
+			min: 1,
+			max: mx,
+			step : 0.1,
+			animate: true,
+			slide: function( event, ui ) {
+				$(this).find('a').html("<span class='arrow_box'>"+ui.value+" %</span>");
+			}, 
+				change: function( event, ui ) {
+				$(this).find('a').html("<span class='arrow_box'>"+ui.value+" %</span>");
+			}
+		});
+		$(this).slider("option","value",intvalue);
+	});
+
+var tbl = 0;
+function init()
+	{
+		$(".slider-range").each(function() {
+			var mx =  Number($(this).attr("data-maxVal"));
+			var intvalue = Number($(this).attr("data-initVal"));
+				$(this).slider({
+				range: "min",
+				min: 1,	
+				max: mx,
+				step : 1,
+				animate: true,
+				slide: function( event, ui ) {
+					$(this).find('a').html("<span class='arrow_box'>$"+ui.value+"</span>");
+					slideNum = $(this).attr("id").split('slider')[1];
+					calculateValue(slideNum, ui.value);	
+				}, 
+					change: function( event, ui ) {
+					$(this).find('a').html("<span class='arrow_box'>$"+ui.value+"</span>");
+					slideNum = $(this).attr("id").split('slider')[1];
+					calculateValue(slideNum, ui.value);	
+				}
+			});
+			$(this).slider("option","value",intvalue);
+		});
+			
+	}
+
+function enter_check(e)
+{
+	
+	var e=window.event || e;
+	var keyunicode=e.charCode || e.keyCode;	
+	if (keyunicode==13)
+	{
+		if(!validateInputs())
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}
+function validateInputs() {
+    var prop_type = $('input[type="radio"][name="prop_type"]:checked').val();
+    if(!prop_type)
+	{
+		toastr.warning("Please choose type of property");
+		$("#priv_prop").focus();
+		return false;
+	}
+	if ($("#loanamt").val() == "") {
+		toastr.warning("Please enter your loan amount.");
+		$("#loanamt").focus();
+		return false;
+	}
+	if ($("#loanamt").val() == 0) {
+		toastr.warning("Please enter a valid loan amount.");
+		$("#loanamt").focus().select();
+		return false;
+	}
+    var intval=$(".intTxt");
+	for(var i=0;i<intval.length;i++)
+	{
+		if(intval[i]=="")
+		{
+			toastr.warning("Please enter interest rate for year "+ (i+1));
+			$(intval[i]).focus();
+			return false;
+		}
+	}
+	return true;
+}
+
+function PMT(fv, pv, rate, nper, type)
+{
+    return((-fv - pv * Math.pow(1 + rate, nper)) / ((1 / rate + type) * (Math.pow(1 + rate, nper) - 1)));
+} 
+
+function addSeparator(valueAmt,digit)
+{
+		var separator = ",";
+			var new_txt = "";
+			var flag = 0;
+			var decimalPart = String(valueAmt).split(".")[1];
+
+			if (decimalPart == null)
+			{
+				decimalPart = "00";
+
+			}
+			else
+			{
+				if (decimalPart.length == 1)
+				{
+					decimalPart +=  "0";
+				}
+			}
+			var txt = String(valueAmt).split(".")[0];
+			var substr = txt;
+			/////////////////////////////////////////////////////
+			do
+			{
+				substr = txt.substring(0,1);
+				if (substr=="0")
+				{
+					txt = txt.slice(1,txt.length);
+				}
+				else if (substr != "0")
+				{
+					flag = 1;
+					if (txt.length == 0)
+					{
+						txt = "0";
+					}
+				}
+			} while (flag == 0);
+			while (txt.length>digit)
+			{
+				new_txt = separator + txt.substring(txt.length - digit,txt.length) + new_txt;
+				txt = txt.substring(0,txt.length - digit);
+			}
+			new_txt = txt.substring(0) + new_txt;
+			/*if (Number(decimalPart)>0)
+			{
+				return new_txt+"."+decimalPart;
+			}
+			else
+			{
+				return new_txt+"."+decimalPart;
+			}*/
+			return new_txt+"."+decimalPart;
+
+			//
+}
+function updateTableValues(LoanTenor)
+{
+	var resultArr=[[]];
+	for (index = 0; index <= 9; index++)
+	{
+			resultArr[0][index] = 0;
+		
+	} //
+	var colMonthlyInstallmentAmt=0;
+	var colInterestOnPrincipleAmt=0;
+	var colNetInterestAmt=0;
+	var colInterestRebateAmt=0;
+	var colPrinciplePaymentAmt=0;
+	$("#tbl_repayment tr").not(":eq(0)").remove();
+	for(var index=1;index<repayArr.length;index++)
+	{
+		if(index<=36)
+		{
+
+			var val=Number(repayArr[index][colBalance])<0?'-':addSeparator((newArray[index][colBalance]).toFixed(2),3);
+			var year=(index%12==1)?Math.floor(index/12)+1:""
+			var cls=(index%2==0)?"grayBg":"whiteBg"
+			$('#tbl_repayment').append('<tr class="'+cls+'"><td>'+year	+'</td>'+'<td>'+index	+'</td><td>'+addSeparator((repayArr[index][colMonthlyInstallment]).toFixed(2),3)+'</td><td>'+addSeparator((repayArr[index][colInterestOnPrinciple]).toFixed(2),3)+'</td><td>'+addSeparator((repayArr[index][colInitialSavingAndMontlySaving]).toFixed(2),3)+'</td><td>'+addSeparator((repayArr[index][colInterestRebate]).toFixed(2),3)+'</td><td>'+addSeparator((repayArr[index][colNetInterest]).toFixed(2),3)+'</td><td>'+addSeparator((repayArr[index][colPrinciplePayment]).toFixed(2),3)+'</td><td>'+val+'</td></tr>');
+			
+			colMonthlyInstallmentAmt=colMonthlyInstallmentAmt+repayArr[index][colMonthlyInstallment];
+			colInterestOnPrincipleAmt=colInterestOnPrincipleAmt+repayArr[index][colInterestOnPrinciple];
+			colInterestRebateAmt=colInterestRebateAmt+repayArr[index][colInterestRebate];
+			colNetInterestAmt=colNetInterestAmt+repayArr[index][colNetInterest];
+			colPrinciplePaymentAmt=colPrinciplePaymentAmt+repayArr[index][colPrinciplePayment];
+		}else
+		{
+			resultArr[0][colMonthlyInstallment]=resultArr[0][colMonthlyInstallment]+repayArr[index][colMonthlyInstallment];
+			resultArr[0][colInterestOnPrinciple]=resultArr[0][colInterestOnPrinciple]+repayArr[index][colInterestOnPrinciple];
+			resultArr[0][colNetInterest]=resultArr[0][colNetInterest]+repayArr[index][colNetInterest];
+			resultArr[0][colInterestRebate]=resultArr[0][colInterestRebate]+repayArr[index][colInterestRebate];		
+			resultArr[0][colPrinciplePayment]=resultArr[0][colPrinciplePayment]+repayArr[index][colPrinciplePayment];
+		}	
+	}
+	colMonthlyInstallmentAmt=colMonthlyInstallmentAmt+resultArr[0][colMonthlyInstallment]
+	colInterestOnPrincipleAmt=colInterestOnPrincipleAmt+resultArr[0][colInterestOnPrinciple]
+	colNetInterestAmt=colNetInterestAmt+resultArr[0][colNetInterest]
+	colInterestRebateAmt=colInterestRebateAmt+resultArr[0][colInterestRebate]
+	colPrinciplePaymentAmt=colPrinciplePaymentAmt+resultArr[0][colPrinciplePayment]
+	if(LoanTenor>3)
+	{
+		$('#tbl_repayment').append('<tr><td colspan="2">Year 4 to Year '+LoanTenor+'</td><td>'+addSeparator((resultArr[0][colMonthlyInstallment]).toFixed(2),3)	+'</td><td>'+addSeparator((resultArr[0][colInterestOnPrinciple]).toFixed(2)	,3)+'</td><td></td><td>'+addSeparator((resultArr[0][colInterestRebate]).toFixed(2),3)	+'</td><td>'+addSeparator((resultArr[0][colNetInterest]).toFixed(2),3)+'</td><td>'+addSeparator((resultArr[0][colPrinciplePayment]).toFixed(2),3)+'</td><td></td><tr>');	
+	}
+	$('#tbl_repayment').append('<tr><td colspan="2">Total</td><td>'+addSeparator((colMonthlyInstallmentAmt).toFixed(2),3)+'</td><td>'+addSeparator((colInterestOnPrincipleAmt).toFixed(2),3)+'</td><td></td><td>'+addSeparator((colInterestRebateAmt).toFixed(2),3)	+'</td><td>'+addSeparator((colNetInterestAmt).toFixed(2),3)+'</td><td>'+addSeparator((colPrinciplePaymentAmt).toFixed(2),3)	+'</td><td></td><tr>');
+	
+}
+
+function GenerateDataArray(newRateArray, newAdjustArray, oldRateArray, oldAdjustArray, LoanAmount, LoanTenor, MonthlySaving, InitialSaving)
+{
+		tbl++;
+		var _l12;
+		var _l16;
+		newArray =[];
+		oldArray = [];
+		newArray[0] = [];
+		oldArray[0] = [];
+		
+
+		for (index = colPrinciple; index <= colOverallNetInterest; index++)
+		{
+			newArray[0][index] = 0;
+			oldArray[0][index] = 0;
+		} // end of for
+		var _l22 = LoanAmount;
+		var _l2;
+		var _l11;
+		var _l17;
+		var _l4;
+		var _l3;
+		var _l5;
+		var _l10;
+		var _l14;
+		var _l13;
+		newArray[0][colPrinciple] = LoanAmount;
+		oldArray[0][colPrinciple] = LoanAmount;
+		newArray[0][colInitialSavingAndMontlySaving] = InitialSaving;
+		oldArray[0][colInitialSavingAndMontlySaving] = InitialSaving;
+	//	alert("newArray[0][colInitialSavingAndMontlySaving] "+newArray[0][colInitialSavingAndMontlySaving] );
+		var _l19 = 1;
+
+		for (index = 1; index <= LoanTenor* 12; index++)
+		{
+			_l12 = Math.ceil(index / 12);
+			_l16 = index % 12;
+			switch (_l12)
+			{
+				case 1:
+				{
+					_l2 = newRateArray[1];
+					_l4 = newAdjustArray[1];
+					_l3 = oldRateArray[1];
+					_l5 = oldAdjustArray[1];
+					break;
+				} 
+				case 2:
+				{
+					_l2 = newRateArray[2];
+					_l4 = newAdjustArray[2];
+					_l3 = oldRateArray[2];
+					_l5 = oldAdjustArray[2];
+					break;
+				} 
+				case 3:
+				{
+					_l2 = newRateArray[3];
+					_l4 = newAdjustArray[3];
+					_l3 = oldRateArray[3];
+					_l5 = oldAdjustArray[3];
+					break;
+				} 
+				case 4:
+				{
+					_l2 = newRateArray[4];
+					_l4 = newAdjustArray[4];
+					_l3 = oldRateArray[4];
+					_l5 = oldAdjustArray[4];
+					break;
+				} 
+				default:
+				{
+					_l2 = newRateArray[0];
+					_l4 = newAdjustArray[0];
+					_l3 = oldRateArray[0];
+					_l5 = oldAdjustArray[0];
+				} 
+			} // End of switch
+			newArray[index] = [];
+			newArray[index][colPrinciple] = newArray[index - 1][colPrinciple] - newArray[index - 1][colPrinciplePayment];
+			oldArray[index] = [];
+			oldArray[index][colPrinciple] = oldArray[index - 1][colPrinciple] - oldArray[index - 1][colPrinciplePayment];
+			_l10 = LoanTenor - _l12 + 1;
+			_l14 = newArray[index][colPrinciple];
+			_l13 = oldArray[index][colPrinciple];
+			if (index == _l19)
+			{
+				newArray[index][colMonthlyInstallment] = -PMT(0, _l14, _l2 / 12, _l10 * 12, 0);
+				oldArray[index][colMonthlyInstallment] = -PMT(0, _l13, _l3 / 12, _l10 * 12, 0);
+				_l11 = _l2;
+			}
+			else if (_l16 == 1)
+			{
+				if (_l11 == _l2)
+				{
+					newArray[index][colMonthlyInstallment] = newArray[index - 1][colMonthlyInstallment];
+				}
+				else
+				{
+					newArray[index][colMonthlyInstallment] = -PMT(0, _l14, _l2 / 12, _l10 * 12, 0);
+				} // end if
+				if (_l17 == _l3)
+				{
+					oldArray[index][colMonthlyInstallment] = oldArray[index - 1][colMonthlyInstallment];
+				}
+				else
+				{
+					oldArray[index][colMonthlyInstallment] = -PMT(0, _l13, _l3 / 12, _l10 * 12, 0);
+				} // end if
+				_l11 = _l2;
+				_l17 = _l3;
+			}
+			else
+			{
+				newArray[index][colMonthlyInstallment] = newArray[index - 1][colMonthlyInstallment];
+				oldArray[index][colMonthlyInstallment] = oldArray[index - 1][colMonthlyInstallment];
+			} // end if
+			newArray[index][colInterestOnPrinciple] = newArray[index][colPrinciple] * (_l2 / 12);
+			oldArray[index][colInterestOnPrinciple] = oldArray[index][colPrinciple] * (_l3 / 12);
+			newArray[index][colInitialSavingAndMontlySaving] =(index==1)?newArray[index - 1][colInitialSavingAndMontlySaving]: newArray[index - 1][colInitialSavingAndMontlySaving] + MonthlySaving;
+			oldArray[index][colInitialSavingAndMontlySaving] = (index==1)?oldArray[index - 1][colInitialSavingAndMontlySaving] :oldArray[index - 1][colInitialSavingAndMontlySaving] + MonthlySaving;
+			if (newArray[index][colPrinciple] > newArray[index][colInitialSavingAndMontlySaving])
+			{
+				newArray[index][colQualifiedAmount] = newArray[index][colInitialSavingAndMontlySaving];
+			} // end if
+			if (newArray[index][colInitialSavingAndMontlySaving] > newArray[index][colPrinciple])
+			{
+				newArray[index][colQualifiedAmount] = newArray[index][colPrinciple];
+			} // end if
+			if (newArray[index][colInitialSavingAndMontlySaving] == newArray[index][colPrinciple])
+			{
+				newArray[index][colQualifiedAmount] = newArray[index][colPrinciple];
+			} // end if
+			if (oldArray[index][colPrinciple] > oldArray[index][colInitialSavingAndMontlySaving])
+			{
+				oldArray[index][colQualifiedAmount] = oldArray[index][colInitialSavingAndMontlySaving];
+			} // end if
+			if (oldArray[index][colInitialSavingAndMontlySaving] > oldArray[index][colPrinciple])
+			{
+				oldArray[index][colQualifiedAmount] = oldArray[index][colPrinciple];
+			} // end if
+			if (oldArray[index][colInitialSavingAndMontlySaving] == oldArray[index][colPrinciple])
+			{
+				oldArray[index][colQualifiedAmount] = oldArray[index][colPrinciple];
+			} // end if
+			newArray[index][colInterestRebate] = newArray[index][colQualifiedAmount] * (_l4 / 12);
+			oldArray[index][colInterestRebate] = oldArray[index][colQualifiedAmount] * (_l5 / 12);
+			newArray[index][colNetInterest] = newArray[index][colInterestOnPrinciple] - newArray[index][colInterestRebate];
+			oldArray[index][colNetInterest] = oldArray[index][colInterestOnPrinciple] - oldArray[index][colInterestRebate];
+			newArray[index][colPrinciplePayment] = newArray[index][colMonthlyInstallment] - newArray[index][colNetInterest];
+			oldArray[index][colPrinciplePayment] = oldArray[index][colMonthlyInstallment] - oldArray[index][colInterestOnPrinciple];
+			newArray[index][colOverallNetInterest] = newArray[index][colNetInterest];
+			oldArray[index][colOverallNetInterest] = oldArray[index][colNetInterest];
+			newArray[index][colBalance] = newArray[index][colPrinciple]-newArray[index][colPrinciplePayment];
+			oldArray[index][colBalance] = oldArray[index][colPrinciple]-oldArray[index][colPrinciplePayment];
+
+			if (newArray[index][colPrinciple] - newArray[index][colPrinciplePayment] < 0)
+			{
+				newArray[index][colMonthlyInstallment] = newArray[index][colMonthlyInstallment] + (newArray[index][colPrinciple] - newArray[index][colPrinciplePayment]);
+				newArray[index][colPrinciplePayment] = newArray[index][colPrinciple];
+				break;
+			} // end if
+    } // end of for
+	repayArr = newArray;
+	updateTableValues(LoanTenor)
+}
+
+function setDropDown(atenure){
+	$('.totaltenure').html("");
+	for(var i=1;i<=atenure;i++)
+	{
+	  $('.totaltenure').append($('<option>', {  value:i,   text : i}));
+	}
+}
+function rtePackage(rate1,rate2){
+	$('.floatrate').html("");
+	var packageRate1 = '<option value="'+rate1+'">'+rate1+'</option><option value="'+rate2+'">'+rate2+'</option>';
+	$('.floatrate').append(packageRate1);
+}
+
+$("#submit-reset").click(function(){
+	$("#name").val("");
+	$("#contactno").val("");
+	$("#nricno").val("");
+	$("#loanamt").val("");
+	$('input[name="prop_type"]').prop('checked', false);
+	$(".slider-range2").slider("option", "value",1);
+
+	setDropDown(35);
+	rtePackage('Floating rate / SIBOR', 'Fixed rate')
+});
+
+$("#submit-prepayment").click(function(){
+    stat = validateInputs();
+    if(stat) {
+        var adjustFactor=0.7
+		$("#repayDet").fadeIn('5000');
+        var intval = []
+		var newRateArray = [];
+		var newAdjustArray = [];
+        for(var i=1;i<=4;i++)
+        {
+            intval[i-1] = ($('#slider'+i).slider("option", "value"));
+            intval[3] = intval[2];
+        }
+        for(var i=0;i<intval.length;i++)
+        {
+			newRateArray[i+1]=intval[i]/100;		
+			newRateArray[0]=(i==intval.length-1)?newRateArray[i+1]:0;
+			newAdjustArray[i+1]=((Number(intval[i])*adjustFactor)/100).toFixed(3);
+
+			newAdjustArray[0]=(i==intval.length-1)?newAdjustArray[i+1]:0;
+		}
+        oldRateArray = [0.045,0.045,0.045,0.045,0.045];		
+		oldAdjustArray = [0.0045,0.0045,0.0045,0.0045,0.0045];
+		$("#loan_amt").html(addSeparator($("#loanamt").val(),3));
+		$("#loan_tenure").html($('.totaltenure :selected').val());
+        for(var i=0;i<intval.length;i++)
+		{
+			$("#year"+(i+1)).html(intval[i])
+		}
+		inital=Number($("#ini_save").val());
+        GenerateDataArray(newRateArray, newAdjustArray, oldRateArray, oldAdjustArray,Number($("#loanamt").val()), Number($('.totaltenure :selected').val()), 0, 0);
+
+		if (tbl == 1)
+		{
+			$("#tbl_repayment tr th:nth-child(5), #tbl_repayment tr th:nth-child(6), #tbl_repayment tr th:nth-child(7)").remove();
+		}
+		$("#tbl_repayment tr").each(function(){
+			if ($("td",this).length == 9)
+			{
+				$("td:nth-child(5), td:nth-child(6), td:nth-child(7)",this).remove();
+			}
+			else {
+				$("td:nth-child(4), td:nth-child(5), td:nth-child(6)",this).remove();
+			}
+		})
+		$("#tbl_repayment td").each(function(){
+			if ($(this).html() == ''){
+				$(this).html('&nbsp;');
+			}
+		})
+
+		$("#stps .step-2").addClass('active');
+		$("html, body").animate({"scrollTop":$(".repayWrap").offset().top},800);
+    }
+});
+
+$("#submit-back").click(function(){
+    $("#repayDet").hide();
+    $("#personalInfo").fadeIn('5000');
+    $("html, body").animate({"scrollTop":$("#stps").offset().top},800);
+    $("#stps .step-2").removeClass('active');
+})
+
+$(window,document).load(function(){
+		init();
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

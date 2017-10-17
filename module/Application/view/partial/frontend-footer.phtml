@@ -1,0 +1,88 @@
+<footer id="footer">
+	<div class="container">
+        <div class="footer-top">
+            <div class="row">
+                <div class="col-lg-4 col-md-3 hidden-sm hidden-xs">
+                    <h3><?php echo $this->setting()->owner_name ?></h3>
+                    <div class="fanpage">
+                        <?php if($this->setting()->facebook_link): ?>
+                        <div class="fb-page" data-href="<?php echo $this->setting()->facebook_link ?>" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="<?php echo $this->setting()->facebook_link ?>" class="fb-xfbml-parse-ignore"><a href="<?php echo $this->setting()->facebook_link ?>"><?php echo $this->setting()->company_name ?></a></blockquote></div>
+                        <?php endif;?>
+                    </div>
+				</div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+        			<h5>LOANS</h5>
+        			<ul class="list-unstyled">
+        				<li><a href="#">Micro Loan</a></li>
+        				<li><a href="#">Working Capital Loan</a></li>
+        				<li><a href="#">Commercial Property Loan</a></li>
+        				<li><a href="#">Commercial Property Refinancing</a></li>
+        				<li><a href="#">Commercial Equity Loan</a></li>
+        				<li><a href="#">Home Loan</a></li>
+        				<li><a href="#">Home Loan Refinancing</a></li>
+        				<li><a href="#">Home Equity Loan</a></li>
+        			</ul>
+        		</div>
+        		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+        			<h5>other services</h5>
+        			<ul class="list-unstyled">		
+        				<li><a href="#">Corporate FD Rates</a></li>
+        				<li><a href="#">SME Corporate Account</a></li>
+        				<li><a href="#">Business Valuation</a></li>
+        				<li><a href="#">Alternative Funding</a></li>
+        				<li><a href="#">Learn</a></li>
+        				<li><a href="#">Frequently Asked Question</a></li>
+        			</ul>
+        		</div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 contact-details">
+        			<h5><?php echo $this->translate("Contact Details") ?></h5>
+        			<ul>			
+        				<li><i class="fa fa-map-marker" aria-hidden="true"></i><?php echo $this->setting()->company_address ?></li>
+        				<li><i class="fa fa-phone" aria-hidden="true"></i><?php echo $this->setting()->company_phone ?></li>
+        				<li><i class="fa fa-fax" aria-hidden="true"></i><?php echo $this->setting()->company_fax ?></li>
+        				<li><i class="fa fa-globe" aria-hidden="true"></i><?php echo $this->setting()->company_url ?></li>
+        				<li><i class="fa fa-envelope" aria-hidden="true"></i><?php echo $this->setting()->company_email ?></li>
+        			</ul>
+        		</div>
+            </div>
+        </div>
+        <div class="footer-middle">
+            <div class="row">
+                <div class="col-md-12 hidden-sm hidden-xs">
+                    <div class="social-footer text-center">
+                        <?php if($this->setting()->twitter_link): ?><a href="<?php echo $this->setting()->twitter_link ?>"><i class="fa fa-twitter"></i></a><?php endif; ?>
+            			<?php if($this->setting()->facebook_link): ?><a href="<?php echo $this->setting()->facebook_link ?>"><i class="fa fa-facebook"></i></a><?php endif; ?>
+            			<?php if($this->setting()->instagram_link): ?><a href="<?php echo $this->setting()->instagram_link ?>"><i class="fa fa-instagram"></i></a><?php endif; ?>
+					    <?php if($this->setting()->linkedin_link): ?><a href="<?php echo $this->setting()->linkedin_link ?>"><i class="fa fa-linkedin"></i></a><?php endif; ?>
+            		</div>
+				</div>
+            </div>
+        </div>
+	</div>
+</footer>
+<div class="footer-bottom">
+	<div class="container">
+        <div class="row">
+            <div class="power col-xs-12"><p>Copyright &copy; 2017 <?php echo $this->setting()->company_name; ?>. All rights reserved. Use of this site constitutes acceptance of our <a>Term of Use</a> and <a>Privacy Policy</a></p></div>
+        </div>
+    </div>
+</div>
+<div class="scroll-to-top">
+    <i class="icon-arrow-up"></i>
+</div>
+
+<?php echo $this->inlineScript() ?>
+
+<script type="text/javascript">
+$('.easy-sidebar-toggle').click(function(e) {
+    e.preventDefault();
+    $('body').toggleClass('toggled');
+    $('.navbar.easy-sidebar').removeClass('toggled');
+});
+$('html').on('swiperight', function(){
+    $('body').addClass('toggled');
+});
+$('html').on('swipeleft', function(){
+    $('body').removeClass('toggled');
+});
+</script>

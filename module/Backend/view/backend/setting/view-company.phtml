@@ -1,0 +1,91 @@
+<?php
+$title = $this->translate("View Company Management");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'setting', 'action' => 'company')); ?>
+<!-- END SIDEBAR -->
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/setting') ?>"><?php echo $this->translate("Setting") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Company") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit portlet-datatable bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-settings font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn dark" href="<?php echo $this->url('admin/setting', array('action' => 'edit-company')) ?>"><i class="fa fa-pencil"></i><?php echo $this->translate(" Edit Company") ?></a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-hover">
+                                <thead class="box-red">
+                                    <tr>
+                                        <th> <?php echo $this->translate("#") ?> </th>
+                                        <th> <?php echo $this->translate("Company Information") ?> </th>
+                                        <th> <?php echo $this->translate("Value") ?> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $company_array_key = array('company_name', 'company_address', 'company_zip', 'company_country', 'company_state', 'company_currency', 'owner_name', 'company_phone', 'company_fax', 'company_email', 'company_url', 'company_logo', 'company_reg_no', 'gst_reg_no');
+                                ?>
+                                <?php foreach ($this->settings as $key => $setting):?>
+                                    <?php if(in_array($setting->getKey(), $company_array_key)): ?>
+                                    <tr>
+                                        <td><?php echo $key + 1 ?></td>
+                                        <td><?php echo $setting->getName() ?></td>
+                                        <td>
+                                        <?php if($setting->getKey() === 'company_logo'): ?>
+                                        <?php
+                                        $logo = $setting->getValue();
+                                        if ($logo) {
+                                            if (!file_exists('data/company/m_'.$logo)) {
+                                                $image_logo = $this->basePath('data/company/'.$logo);
+                                            } else {
+                                                $image_logo = $this->basePath('data/company/m_'.$logo);
+                                            }
+                                        } else {
+                                            $image_logo = $this->basePath('data/company/logo.png');
+                                        }
+                                        ?>
+                                        <img id="photo" alt="logo" src="<?php echo $image_logo ?>">
+                                        <?php else: ?>
+                                        <?php echo $setting->getValue() ?>
+                                        <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endif;?>
+                                <?php endforeach;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->

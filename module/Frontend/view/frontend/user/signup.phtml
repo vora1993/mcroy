@@ -1,0 +1,39 @@
+<?php
+$title = "Sign up account";
+$this->headTitle($title);
+?>
+<div id="page-title">
+    <h2><?php echo $title; ?></h2>
+</div>
+<div class="clearfix"></div>
+<section class="city"></section>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+var redirect_url = '{$this->redirect_url}';
+$(document).ready(function () {
+    if ($(".auth-button").size() > 0) {
+        $(".auth-button").fancybox({
+            groupAttr: 'data-rel',
+            prevEffect: 'none',
+            nextEffect: 'none',
+            closeBtn: false,
+            closeClick: false, // prevents closing when clicking INSIDE fancybox
+            helpers: {
+                overlay: {closeClick: false} // prevents closing when clicking OUTSIDE fancybox
+            },
+            beforeLoad: function(current, previous) {
+                $(".fancybox-close").remove();
+                $(".login #auth .register-form").show();
+                $(".login #auth .login-form").hide(); 
+                $(".register-form input[name=redirect_url]").val(redirect_url);
+            }
+        }).trigger("click");
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

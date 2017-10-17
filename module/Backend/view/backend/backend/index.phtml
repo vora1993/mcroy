@@ -1,0 +1,135 @@
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'dashboard')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Statistics") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <h3 class="page-title"> Dashboard
+            <small>dashboard & statistics</small>
+        </h3>
+        <!-- END PAGE TITLE-->
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue-oleo" href="<?php echo $this->url("admin/bank") ?>">
+                    <div class="visual">
+                        <i class="fa fa-bank"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Bank & Company") ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="<?php echo $this->url("admin/business_loan") ?>">
+                    <div class="visual">
+                        <i class="icon-pie-chart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Business Loan") ?></div>                    
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="<?php echo $this->url("admin/property_loan") ?>">
+                    <div class="visual">
+                        <i class="icon-share-alt"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Property Loan") ?></div>                
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="<?php echo $this->url("admin/application_loan", array("action" => "business_loan")) ?>">
+                    <div class="visual">
+                        <i class="icon-calculator"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Application") ?></div>
+                        <div class="desc"><?php echo $this->translate("Business Loan") ?></div>        
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="<?php echo $this->url("admin/application_loan", array("action" => "property_loan")) ?>">
+                    <div class="visual">
+                        <i class="icon-calculator"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Application") ?></div>
+                        <div class="desc"><?php echo $this->translate("Property Loan") ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 red-thunderbird" href="#">
+                    <div class="visual">
+                        <i class="icon-drawer"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("CRM") ?></div>                    
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 grey-mint" href="<?php echo $this->url("admin/post") ?>">
+                    <div class="visual">
+                        <i class="icon-pin"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Blog") ?></div>                
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="<?php echo $this->url("admin/infographic") ?>">
+                    <div class="visual">
+                        <i class="icon-bar-chart"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Infographic") ?></div>         
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 yellow-casablanca" href="<?php echo $this->url("admin/user") ?>">
+                    <div class="visual">
+                        <i class="icon-user"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("User") ?></div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <a class="dashboard-stat dashboard-stat-v2 purple-soft" href="<?php echo $this->url('admin/setting', array('action' => 'view-company')) ?>">
+                    <div class="visual">
+                        <i class="icon-settings"></i>
+                    </div>
+                    <div class="details">
+                        <div class="title"><?php echo $this->translate("Setting") ?></div>                    
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->

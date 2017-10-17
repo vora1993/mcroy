@@ -1,0 +1,42 @@
+<?php
+$title = "Mortgage Calculator";
+$this->headTitle($title);
+?>
+<div class="title-property">
+    <div class="container">
+        <h2><?php echo $title ?></h2>
+        <div class="portlet-head">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="stepproperty">
+                        <ul class="stepproperty-row" id="stps">
+                            <div class="stepproperty-step" style="width: 50%;">
+                                <div class="stepproperty-circle step-1">01</div>
+                                <p><?php echo $this->translate("Loan Calculator") ?></p>
+                            </div>
+                            <div class="line-stepproperty line-stepproperty1" style="left: 43%;"></div>
+                            <div class="stepproperty-step step-2" style="width: 50%;">
+                                <div class="stepproperty-circle">02</div>
+                                <p><?php echo $this->translate("Repayment Schedule") ?></p>
+                            </div>                
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="page-content-inner">
+        <div class="blog-page blog-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="blog-single-content blog-container page-mortgage">
+                        <?php echo $this->partial('mortgage_calculator'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

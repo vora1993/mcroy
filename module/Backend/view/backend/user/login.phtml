@@ -1,0 +1,35 @@
+<!-- BEGIN LOGIN FORM -->
+<form class="login-form" action="<?php echo $this->url("admin/user", array("action" => "login")) ?>" method="post">
+    <h3 class="form-title"><?php echo $this->translate("Login to your account") ?></h3>
+    <div class="alert alert-danger display-hide">
+        <button class="close" data-close="alert"></button>
+        <span> <?php echo $this->translate("Enter any username and password") ?> </span>
+    </div>
+    <div class="form-group">
+        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+        <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Identity") ?></label>
+        <div class="input-icon">
+            <i class="fa fa-user"></i>
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo $this->translate("Identity") ?>" name="identity" /> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate("Credential") ?></label>
+        <div class="input-icon">
+            <i class="fa fa-lock"></i>
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="<?php echo $this->translate("Credential") ?>" name="credential" /> 
+        </div>
+    </div>
+    <div class="form-actions">
+        <div class="md-checkbox">
+            <input type="checkbox" name="remember" id="remember_me" class="md-check allow" value="1"> 
+            <label for="remember_me">
+                <span></span>
+                <span class="check"></span>
+                <span class="box"></span> <?php echo $this->translate("Remember me") ?>
+            </label>
+        </div>
+        <button type="submit" class="btn blue pull-right"> <?php echo $this->translate("Login") ?> <i class="fa fa-sign-in"></i></button>
+    </div>
+</form>
+<!-- END LOGIN FORM -->

@@ -1,0 +1,93 @@
+<?php
+$title = "Apply Alternative Funding Factoring";
+$this->headTitle($title);
+$alternative_funding = $this->loan;
+?>
+<div id="page-title"><h2><?php echo $title ?></h2></div>
+<div id="content">
+    <div class="apply-cart">					
+        <div class="container">
+            <div class="row">
+                <div class="content-cart">
+                    <?php
+                    $loan = $this->loan(array("id" => $alternative_funding['loan_id']));
+                    $bank = $this->bank(array("id" => $loan->getBankId()));
+                                
+                    // Image
+                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                    if(!file_exists($dir_logo)) {
+                        $dir_logo = 'data/image/no-image-128.png';
+                    }
+                    ?>
+				    <div class="filters-table-content">
+                        <div class="row-header">										
+                            <h4 class="bank-title"><a href="#"><?php echo $loan->getLoanTitle(); ?></a></h4>
+				        </div>									
+				        <div class="row-content">
+                            <div class="col-md-3 col-xs-12">
+				                <a href="#">
+								    <img src="<?php echo $this->basePath($dir_logo) ?>" alt="<?php echo $loan->getLoanTitle() ?>">
+								</a>
+				            </div>
+				            <div class="col-md-3 col-xs-4 box__rate">
+								<span class="rate"><b><?php echo $alternative_funding['int_rate'] ?>%</b><?php echo $this->translate("Interest Rate") ?></span>
+							</div>
+							<div class="col-md-3 col-xs-4 box__loan">
+			                     <span class="loan"><b><?php echo $alternative_funding['loan_tenure'] ?> years</b><?php echo $this->translate("Loan Tenure") ?></span>
+							</div>
+							<div class="col-md-3 col-xs-4 box__month">
+							     <span class="month"><b>$<?php echo number_format($alternative_funding['monthly_payment']); ?></b><?php echo $this->translate("Per Month") ?></span>
+							</div>
+						</div>															
+				    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="action-cart">
+        <div class="container">
+            <div class="row">
+				<div class="title-cart"><h3>Let MoneyCompare.sg apply for me</h3></div>
+				<div class="content-action">
+				    <div class="col-md-3 col-xs-12"></div>
+				        <div class="col-md-6 col-xs-12">
+									<div class="row">
+										<div class="method col-sm-6 col-xs-12">
+											<img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-1.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+											<b>Easier to get approval</b>
+										</div>
+										<div class="method col-sm-6 col-xs-12">
+											<img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-2.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+											<b>Reliable</b>
+										</div>
+										<div class="method col-sm-6 col-xs-12">
+											<img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-3.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+											<b>Fast and Efficient</b>
+										</div>
+										<div class="method col-sm-6 col-xs-12">
+											<img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-4.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
+											<b>Get more Opprtunities</b>
+										</div>
+									</div>
+				        </div>								
+				    <div class="col-md-3 col-xs-12"></div>
+				</div>
+                <div class="button-action">
+				    <a href="<?php echo $this->url("alternative_funding", array("action" => "factoring-apply-form")) ?>" class="btn yellow-gold btn-lg"><?php echo $this->translate("Apply") ?></a>									
+				</div>
+				<?php if($loan->getUrl()): ?>
+                <div class="text-center"><a href="<?php echo $loan->getUrl(); ?>" class="btn dark"><?php echo $this->translate("No thanks, I can apply by myself") ?></a></div>
+                <?php endif; ?>
+			</div>
+        </div>
+    </div>			
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom1.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+JS;
+$this->inlineScript()->captureEnd();
+?>

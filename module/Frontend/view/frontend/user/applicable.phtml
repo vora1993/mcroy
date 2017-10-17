@@ -1,0 +1,109 @@
+<?php
+$title = "My Applicable";
+$this->headTitle($title);
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <?php echo $this->partial('frontend_user_sidebar'); ?>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <div class="title"><?php echo $this->translate("Profile Account") ?> - <?php echo $this->translate("My Applications") ?></div>
+                <div class="row">
+                    <div class="form-user">
+                        <h3><?php echo $this->translate("Business Loan") ?></h3>
+                                    <div class="table-scrollable">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th> # </th>
+                                                    <th> <?php echo $this->translate("Loan Title") ?> </th>
+                                                    <th> <?php echo $this->translate("Int Rate") ?> </th>
+                                                    <th> <?php echo $this->translate("Loan Amount") ?> </th>
+                                                    <th> <?php echo $this->translate("Loan Tenure") ?> </th>
+                                                    <th> <?php echo $this->translate("Monthly Payment") ?> </th>
+                                                    <th> <?php echo $this->translate("Creation Date") ?> </th>
+                                                    <th> <?php echo $this->translate("Status") ?> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if(count($business_loans) > 0) {
+                                                    foreach($business_loans as $k => $row) {
+                                                        $loan = $this->loan(array("id" => $row->getLoanId()));
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo ($k+1) ?></td>
+                                                            <td><?php echo $loan->getLoanTitle(); ?></td>
+                                                            <td><?php echo $row->getIntRate() ?>%</td>
+                                                            <td>$<?php echo number_format($row->getLoanAmount()) ?></td>
+                                                            <td><?php echo $row->getLoanTenure() ?>years</td>
+                                                            <td>$<?php echo number_format($row->getMonthlyPayment()) ?></td>
+                                                            <td><?php echo date("d-m-Y H:i:s", strtotime($row->getDateAdded())) ?></td>
+                                                            <td><?php echo $this->status($row); ?></td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                } else {
+                                                    echo '<tr class="text-center"><td colspan="8">'.$this->translate("You haven't applied any form yet?").'</td></tr>';
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <h3><?php echo $this->translate("Property Loan") ?></h3>
+                                    <div class="table-scrollable">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th> # </th>
+                                                    <th> <?php echo $this->translate("Type") ?> </th>
+                                                    <th> <?php echo $this->translate("Int Rate") ?> </th>
+                                                    <th> <?php echo $this->translate("Loan Amount") ?> </th>
+                                                    <th> <?php echo $this->translate("Loan Tenure") ?> </th>
+                                                    <th> <?php echo $this->translate("Monthly Payment") ?> </th>
+                                                    <th> <?php echo $this->translate("Creation Date") ?> </th>
+                                                    <th> <?php echo $this->translate("Status") ?> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if(count($property_loans) > 0) {
+                                                    foreach($property_loans as $k => $row) {
+                                                        switch ($row->getType()) {
+                                                            case 'home_loan':
+                                                                $type = "Home Loan";
+                                                            break;
+                                                            
+                                                            case 'refinancing':
+                                                                $type = "Refinancing";
+                                                            break;
+                                                        }
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo ($k+1) ?></td>
+                                                            <td><?php echo $type; ?></td>
+                                                            <td><?php echo $row->getIntRate() ?>%</td>
+                                                            <td>$<?php echo number_format($row->getLoanAmount()) ?></td>
+                                                            <td><?php echo $row->getLoanTenure() ?>years</td>
+                                                            <td>$<?php echo number_format($row->getMonthlyPayment()) ?></td>
+                                                            <td><?php echo date("d-m-Y H:i:s", strtotime($row->getDateAdded())) ?></td>
+                                                            <td><?php echo $this->status($row); ?></td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                } else {
+                                                    echo '<tr class="text-center"><td colspan="8">'.$this->translate("You haven't applied any form yet?").'</td></tr>';
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/profile.css'));
+?>

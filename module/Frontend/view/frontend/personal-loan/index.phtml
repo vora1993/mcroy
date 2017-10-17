@@ -1,0 +1,489 @@
+<?php
+$title = "Business Term Loan";
+$this->headTitle($title);
+$min_loan_amount = $this->setting()->min_loan_amount;
+$max_loan_amount = $this->setting()->max_loan_amount;
+$max_loan_tenure = $this->setting()->max_loan_tenure;
+?>
+<div id="page-title"><h2><?php echo $title ?></h2></div>
+<div id="content" style="margin-top: -64px;">
+    <div id="compare-tab">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#business"><i class="fa fa-percent"></i> <span class="title-lag"><?php echo $this->translate("Business Term Loan") ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
+		    <li><a data-toggle="tab" href="#info"><i class="fa fa-comments-o"></i> <?php echo $this->translate("Faq") ?> </a></li>
+		    <li><a data-toggle="tab" href="#need"><i class="fa fa-question-circle"></i><span class="title-lag"><?php echo $this->translate("Need Help") ?></span><span class="title-xs"><?php echo $this->translate("Help") ?></span></a></li>
+        </ul>
+
+        <div class="tabs-bank"></div>
+
+        <div class="tab-content">
+            <div class="container">
+                <div class="row">
+                    <div id="business" class="tab-pane fade active in">
+                        <div class="col-md-12">
+                            <div class="search-bank">
+                                <form method="post" action="<?php echo $this->url("personal_loan", array("action" => "index")) ?>" id="form_loan">
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-12"  style="margin-bottom: 15px;">
+                                                <div class="row">
+                                                    <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("I want to borrow") ?></b>
+
+                						    	<div class="col-md-7 col-xs-12">
+
+                                                    <div class="input-group">
+
+                                                        <input type="text" name="loan_amount" value="50000" id="loan_amount" class="form-control" placeholder="50000" />
+
+                                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+
+                                                    </div>
+
+                						    	</div>
+
+                						    </div>
+
+                   	                    </div>
+
+                                        <div class="col-md-6 col-xs-12"  style="margin-bottom: 15px;">
+
+                					    	<div class="row">
+
+                						    	<b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("over") ?></b>
+
+                						    	<div class="col-md-7 col-xs-12">
+
+                							    	<div class="input-group">
+
+                                                        <input type="text" name="loan_tenure" value="3" id="loan_tenure" class="form-control" placeholder="3" />
+
+                							    	    <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("years") ?></i></span>
+
+                                                    </div>
+
+                						    	</div>
+
+                						    </div>
+
+                                        </div>
+
+                                         <div class="col-md-6 col-xs-12"  style="margin-bottom: 15px;">
+
+                                            <div class="row">
+
+                                                <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("Minimum Sale turn over") ?></b>
+
+                                                <div class="col-md-7 col-xs-12">
+
+                                                    <div class="input-group">
+
+                                                        <input type="text" name="min_sales_turnover" value="50000" id="min_sales_turnover" class="form-control" placeholder="50000" />
+
+                                                        <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-12"  style="margin-bottom: 15px;">
+
+                                            <div class="row">
+
+                                                <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("Year of Incorporation") ?></b>
+
+                                                <div class="col-md-7 col-xs-12">
+
+                                                    <div class="input-group">
+
+                                                        <input type="text" name="min_years_of_incorporation" value="3" id="min_years_of_incorporation" class="form-control" placeholder="3" />
+
+                                                        <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("years") ?></i></span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    </div>
+                                   
+                                    <div class="col-md-3 col-xs-12">
+
+                                        <button type="button" id="submit-search" class="btn_calculate"><?php echo $this->translate("Calculate My Results") ?></button>
+
+                                    </div>
+                                    
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-9 col-xs-12">
+                            <div class="filters-table-container" id="results"></div>
+                        </div>
+                        <div id="column-right" class="col-sm-3 col-xs-12">
+                            <div class="box-featured-bank">
+                                <div class="featured-bank lowest-interest">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/brand-4.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">HSBC's Personal Loan</h4>
+                                        <span class="amout-bank">(7%)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-processing">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/brand-1.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">POSB Personal Loan</h4>
+                                        <span class="amout-bank">(0)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-penalty">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/brand-3.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">Standard  Chartered CashOne</h4>
+                                        <span class="amout-bank">(0)</span>
+                                    </div>
+                                </div>
+                                <div class="featured-bank lowest-annual">
+                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <div class="item-bank">
+                                    <div class="img-bank">
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/brand-2.png') ?>" title="" alt="" />
+                                    </div>
+                                        <h4 class="name-bank">Citibank Ready Credit</h4>
+                                        <span class="amout-bank">(0)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="info" class="tab-pane fade">
+        				<div class="body-info">
+                            <div class="header-faq">
+                                <div class="col-sm-9"><h2 class="title-faq">FREQUENTLY ASKED QUESTIONS</h2></div>
+                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/icon-faq.jpg') ?>"></div> 
+                            </div>
+                            <div class="content-faq">
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse1">1. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse2">2. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse3">3. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse4">4. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse4" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse5">5. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse5" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="panel-group">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse6">6. WHAT CAN I USE BUSINESS LOAN FOR?</a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapse6" class="panel-collapse collapse">
+                                      <div class="panel-body">
+                                        A business loan is a loan specifically intended for business purposes. <br/><br/>
+                                        Basically anything for your business, be it getting inventories/stocks, paying salaries or even giving your employees a trip! Most clients however, require loans to expand their businesses, or to get by difficult situations.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+
+                    <div id="need" class="tab-pane fade">
+                        <div class="body-info">
+                            <div class="header-faq">
+                                <div class="col-sm-9"><h2 class="title-faq">Have questions? Ask us!</h2></div>
+                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/question-notebook.png') ?>"></div> 
+                            </div>
+                            <div class="content-faq">                               
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" name="firstname" class="form-control" placeholder="Question title">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea name="firstname" class="form-control" placeholder="Details"></textarea>
+                                    </div>
+                                    <div class="form-group">                                       
+                                        <select class="form-control">
+                                            <option value="">Question Categories</option>
+                                            <option value="Option 1">Option 1</option>
+                                            <option value="Option 2">Option 2</option>
+                                            <option value="Option 3">Option 3</option>
+                                            <option value="Option 4">Option 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group button-check">
+                                        <div class="md-checkbox-list">
+                                            <div class="md-checkbox">
+                                                <input type="checkbox" name="newsletter" id="checkbox2" class="md-check" value="1">
+                                                <label for="checkbox2">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span> Email me when I receive an answer to this question 
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn red">submit question</button>
+                                    </div>
+                                </form>
+                            </div>    
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="compare-disclaimer">
+            <div class="container">
+               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
+            </div>
+		</div>
+
+        <?php echo $this->partial('frontend_sub_footer'); ?>
+
+    </div>
+
+</div>
+
+<section class="shortlist" style="overflow: hidden; display: none;"> 
+    <div class="container" id="shortlisted-holder">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="shortlist-info-container">
+                            <div class="shortlist-info" id="compare-title"><span>0</span> <?php echo $this->translate("Shortlisted Business Term Loan") ?></div>
+                            <p><?php echo $this->translate("Select up to 3 banks for comparison") ?></p>
+                            <a class="clear-shortlist" href="javascript:;" onclick="Loan.clear_compare(this)"><i class="fa fa-times-circle"></i> <?php echo $this->translate("Clear Shortlist") ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" id="compare-holder"></div>
+            <div class="col-xs-2">
+                <div class="row">
+                    <a class="btn blue btn-lg text-uppercase fancybox-button" href="#compare" onclick="Loan.popup()"><?php echo $this->translate("Compare Now") ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+echo $this->partial('compare');
+
+$offStyle = 12;
+$offScript = 10;
+//$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+var BACKSPACE_KEY = 8;
+var DELETE_KEY = 46;
+var MAX_LOAN_AMOUNT = {$max_loan_amount};
+var MAX_LOAN_TENURE = {$max_loan_tenure};
+$(document).ready(function() {
+    Loan.load_compare();
+    $('.btn_calculate').on('click', function() {
+        var loan_amount = formatIntNumber($("input[name=loan_amount]").val());
+        var loan_tenure = $("input[name=loan_tenure]").val();
+
+        var min_sales_turnover = formatIntNumber($("input[name=min_sales_turnover]").val());
+        var min_years_of_incorporation = $("input[name=min_years_of_incorporation]").val();
+
+        if(loan_amount > 0 && loan_tenure > 0) {
+            $.ajax({
+                type: "POST",
+                url: $("#form_loan").attr("action"),
+                data: {loan_amount: loan_amount, loan_tenure: loan_tenure, min_sales_turnover: min_sales_turnover, min_years_of_incorporation: min_years_of_incorporation},
+                dataType: 'json',
+                beforeSend: function() {
+                    App.blockUI({boxed: true});
+                },
+                success: function(itemJson) {
+                    App.unblockUI();
+                    $('#results').html(itemJson.html);
+                    $(".summary-details").hide();
+                    $(".btn-less-detail").hide();
+                    $(".btn-more-detail").on('click', function(){
+                        $(this).closest(".row-footer").find(".summary-details").slideDown();
+                        $(this).hide();
+                        $(this).next().show();
+                    });
+
+                    $(".btn-less-detail").on('click', function(){
+                        $("p").slideDown();
+                        $(this).closest(".row-footer").find(".summary-details").slideUp();
+                        $(this).hide();
+                        $(this).prev().show();
+                    });
+                },
+
+                error : function(xhr, status){
+                    console.log(status);
+                },
+            });
+        }
+    });
+
+    
+
+    $("#loan_amount, #min_sales_turnover").val(formatNumber($("#loan_amount, #min_sales_turnover").val(), ""));
+
+    $("#loan_amount, #min_sales_turnover").on("keydown", function(evt) {
+        var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+        if(charCode == BACKSPACE_KEY || charCode == DELETE_KEY ){
+            return true;
+        }
+        return isEnterNumber(charCode);
+    });
+
+    
+
+    $("#loan_amount, #min_sales_turnover").on("keyup", function() {
+        var val = $(this).val();
+        val = Number(val.replace(/,/g, ""));
+        if (val > MAX_LOAN_AMOUNT) {
+            $(this).val(formatNumber(MAX_LOAN_AMOUNT, ""));
+            toastr.warning("No unsecured loans above $ {$max_loan_amount}");
+        } else {
+            $(this).val(formatNumber(val, ""));
+        }
+    });
+
+
+    $("#loan_tenure, #min_years_of_incorporation").on("keydown", function(evt) {
+
+        var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+
+        if(charCode == BACKSPACE_KEY || charCode == DELETE_KEY ){
+
+            return true;
+
+        }
+
+        return isEnterNumber(charCode);
+
+    });
+
+    $("#loan_tenure, #min_years_of_incorporation").on("keyup", function() {
+
+        var val = $(this).val();
+
+        if (val > MAX_LOAN_TENURE) {
+
+            toastr.warning("No unsecured loans above {$max_loan_tenure} years");
+
+            $(this).val(MAX_LOAN_TENURE);
+
+        }
+
+    });
+  
+
+    // Trigger
+
+    $( "#loan_amount, #loan_tenure, #min_sales_turnover, #min_years_of_incorporation" ).trigger( "change" );
+
+    $( ".btn_calculate" ).trigger( "click" );
+
+});
+
+JS;
+
+$this->inlineScript()->captureEnd();
+
+?>

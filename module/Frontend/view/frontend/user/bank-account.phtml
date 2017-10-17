@@ -1,0 +1,45 @@
+<?php
+$title = "My Bank Account";
+$this->headTitle($title);
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <?php echo $this->partial('frontend_user_sidebar'); ?>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <div class="title"><?php echo $this->translate("Profile Account") ?> - <?php echo $this->translate("My Bank Account") ?></div>
+                <p>Update your bank account here to receive the money from your referral.</p>
+                <a class="btn default" href="<?php echo $this->url("frontend_user", array("action" => "edit-bank-account")) ?>"><?php echo $this->translate("Edit") ?></a>    
+                <?php if($this->bank): ?>
+                <table class="table table-striped table-bordered table-hover" style="width: auto; margin-top: 25px;">
+                    <tbody>
+                        <tr>
+                            <td><?php echo $this->translate("Bank") ?></td>
+                            <td><?php echo $this->bank->getBank() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo $this->translate("Account Number") ?></td>
+                            <td><?php echo $this->bank->getAcctNo() ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo $this->translate("Name") ?></td>
+                            <td><?php echo $this->bank->getName() ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>            
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/profile.css'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+JS;
+$this->inlineScript()->captureEnd();
+?>

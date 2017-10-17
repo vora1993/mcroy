@@ -1,0 +1,50 @@
+<?php
+$title = $post->getPostTitle();
+$this->headTitle($title);
+?>
+<div class="page-title">
+    <?php
+    if(file_exists('assets/img/bg-'.$post->getSeo().'.png')) {
+        $bg_src = 'assets/img/bg-'.$post->getSeo().'.png';
+    } else {
+        $bg_src = 'assets/img/bg-about-us.png';
+    }
+    ?>
+    <div class="image-title"><img src="<?php echo $this->basePath($bg_src) ?>" class="img-responsive"></div>
+    <div class="container">
+        <h2><?php echo $title ?></h2>
+    </div>
+</div>
+<?php 
+if($post->getFeaturedImage()) {
+    $class = "col-md-6";
+} else {
+    $class = "col-md-12";
+}
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="blog-page blog-content">
+            <div class="row">
+                <div class="<?php echo $class ?>">
+                    <div class="blog-single-content blog-container">
+                        <?php echo $post->getPostContent() ?>
+                    </div>
+                </div>
+                <?php if($post->getFeaturedImage()): ?>
+                <div class="<?php echo $class ?>">
+                    <img src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" class="img-responsive img-centre" />
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="about-bottom">
+    <div class="container">
+        <h2>Lorem ipsum dolor,<br>consectetuer adipiscing elit. </h2>
+		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
+		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
+		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
+    </div>
+</div>

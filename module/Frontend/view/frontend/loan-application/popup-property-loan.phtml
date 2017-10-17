@@ -1,0 +1,279 @@
+<?php
+$count = $this->count;
+$max_loan_compare = $this->setting()->max_loan_compare ? $this->setting()->max_loan_compare : 3;
+$remain = $max_loan_compare - $count;
+?>
+<div id="popup-compare">
+    <div id="compare" class="business-compare" style="display: none;">
+        <div class="container">
+        	<div class="row">
+                <div id="content">
+                    <section class="compare-table">
+                        <div class="compare-row">
+                            <div class="col-md-3 box"></div>
+                            <?php if($count > 0): ?>
+                            <?php 
+                            $loans = $this->loans;
+                            foreach ($loans as $loan) {
+                                $bank = $this->bank(array("id" => $loan->getBankId()));
+                                // Image
+                                $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                                if(!file_exists($dir_logo)) {
+                                    $dir_logo = 'data/image/no-image-128.png';
+                                }
+                                ?>
+                                <div class="col-md-3 box">
+                                    <div class="card-holder">
+                                        <a href="#"><img alt="<?php echo $loan->getTitle(); ?>" src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getTitle(); ?>"></a>
+                                        <h4 class="name-holder"><a href="#"><?php echo $loan->getTitle() ?></a></h4>
+                                        <button type="button" onclick="Loan.apply(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></button>
+                                        <a href="javascript:;" onclick="Loan.clear_select(this)" data-id="<?php echo $loan->getId(); ?>" data-page="compare"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </div>
+                                <?php
+                                $personal_loan[] = array(
+                                    'loan_id'                    => $loan->getId(),
+                                    'dir_logo'                   => $dir_logo,
+                                    'type' => $loan->getType(),
+                                    'property_status' => $loan->getPropertyStatus(),
+                                    'package' => $loan->getPackage(),
+                                    'lock_in_year' => $loan->getLockInYear() ? $loan->getLockInYear() : "No Lock In",
+                                    'legal_subsidy' => $loan->getLegalSubsidy(),
+                                    'legal_fee_subsidy' => $loan->getLegalFeeSubsidy(),
+                                    'valuation_subsidy' => $loan->getValuationSubsidy(),
+                                    'fire_insurance_subsidy' => $loan->getFireInsuranceSubsidy(),
+                                    'subsidy_comment' => $loan->getSubsidyComment(),
+                                    'clawback' => $loan->getClawback()
+                                );
+                            }
+                            ?>
+                            <?php endif; ?>
+                            <?php
+                            if($remain > 0) {
+                                for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 box">
+                                        <div class="card-holder">
+                                            <h4>
+                                                <?php echo $this->translate("Add Property Loan to Compare") ?>
+                                            </h4>
+                                            <div class="card-holder-description">
+                                                <?php echo $this->translate("Add a Business Term Loan for comparison, you will be returned to the Business Term Loan Listing") ?>
+                                            </div>
+                                            <a class="btn blue btn-block btn-outline" href="#"><?php echo $this->translate("Add Property Loan") ?></a>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            <div class="clearfix"></div>
+                        </div>
+                    </section>
+                    <div id="overview-wrapper" class="compare-result">
+                        <div class="table-results table__item">
+                            <section class="table--item-title">
+                                <h4 class="title"><i class="icon-pencil overview small"></i> <?php echo $this->translate("Overview") ?></h4>
+                            </section>
+                        </div>
+                        <div class="table-results content">
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Type") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['type'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Property Status") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['property_status'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Package") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['package'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Lock In Year") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['lock_in_year'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                                    
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Legal Subsidy") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['legal_subsidy'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Legal Fee Subsidy") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['legal_fee_subsidy'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Valuation Subsidy") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['valuation_subsidy'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Fire Insurance Subsidy") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['fire_insurance_subsidy'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Subsidy Comment") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['subsidy_comment'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <div class="row items">
+                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Clawback") ?></strong></div>
+                                <?php
+                                if(count($personal_loan) > 0) {
+                                    foreach ($personal_loan as $row) {
+                                        ?>
+                                        <div class="col-md-3 card-item"><?php echo $row['clawback'] ?></div>
+                                        <?php        
+                                    }
+                                }
+                                if($remain > 0){
+                                    for($i=1; $i<=$remain; $i++) {
+                                    ?>
+                                    <div class="col-md-3 card-item"></div>
+                                    <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>

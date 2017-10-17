@@ -1,0 +1,123 @@
+<?php
+$title = $this->post->getPostTitle();
+$this->headTitle($title);
+//$this->doctype(\Zend\View\Helper\Doctype::XHTML_RDFA);
+$this->headMeta()->setProperty('og:locale', 'en_US');
+$this->headMeta()->setProperty('og:type', 'article');
+$this->headMeta()->setProperty('og:title', $title);
+$this->headMeta()->setProperty('og:description', $this->post->getPostExcerpt());
+$this->headMeta()->setProperty('og:url', "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+$this->headMeta()->setProperty('og:site_name', $this->setting()->company_name);
+?>
+<div class="container">
+                        <div class="page-content-inner">
+                            <div class="blog-page blog-content-2">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="blog-single-content blog-container">
+                                            <div class="blog-single-head">
+                                                <h1 class="blog-single-head-title"><?php echo $this->post->getPostTitle() ?></h1>
+                                                <div class="blog-single-head-meta">
+                                                    <div class="blog-single-head-social">
+                                                        <div class="addthis_inline_share_toolbox"></div>
+                                                    </div>
+                                                    <div class="blog-single-head-date">
+                                                        <i class="icon-calendar font-blue"></i>
+                                                        <a href="javascript:;"><?php echo date("M d, Y", strtotime($this->post->getPostDate())) ?></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="blog-single-img">
+                                                <?php
+                                                $featured_image_src = 'data/image/'.$post->getFeaturedImage();
+                                                if(file_exists($featured_image_src)) {
+                                                    $image_thumb_src = $featured_image_src;
+                                                } else {
+                                                    $image_thumb_src = 'data/image/no-image.png';
+                                                }
+                                                ?>
+                                                <img src="<?php echo $this->basePath($image_thumb_src) ?>"> 
+                                            </div>
+                                            <?php if($this->post->getPostContent()): ?>
+                                            <div class="blog-single-desc">
+                                                <?php echo $this->post->getPostContent(); ?>
+                                            </div>
+                                            <?php endif;?>
+                                            <div class="blog-single-comment">
+                                                <div class="fb-comments" data-href='<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>' data-numposts="5" data-width="100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="blog-single-sidebar blog-container">
+                                            <div class="blog-single-sidebar-products widget">
+                                                <div class="row">
+                                                    <div class="col-md-12"><h3><?php echo $this->translate("Find the Best Loans, Insurance & Credit Cards") ?></h3></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"><label><?php echo $this->translate("What are you looking for?") ?></label></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <select class="form-control" name="products">
+                                                            <option value="<?php echo $this->url("personal_loan") ?>"><?php echo $this->translate("Business Term Loan") ?></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="javascript:;" class="btn dark btn-block" onclick="redirect(this)"><?php echo $this->translate("Get Started") ?> <i class="fa fa-angle-right"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="blog-single-sidebar-newsletter widget">
+                                                <div class="row">
+                                                    <div class="col-md-12"><h3><?php echo $this->translate("Get Our Weekly Newsletter") ?></h3></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12"><h4><?php echo $this->translate("We value your privacy. We never share your email with 3rd parties. Unsubscribe at any time.") ?></h4></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="text" name="email_newsletter" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="javascript:;" class="btn dark btn-block" onclick="email_newsletter(this)"><?php echo $this->translate("Subscribe") ?> <i class="fa fa-send"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<?php
+$this->headMeta()->setProperty('og:image', $this->serverUrl().$this->basePath($image_thumb_src));
+$this->headMeta()->setProperty('og:image:width', 800);
+$this->headMeta()->setProperty('og:image:height', 484);
+$this->headMeta()->setProperty('twitter:card', 'summary');
+$this->headMeta()->setProperty('twitter:description', $this->post->getPostExcerpt());
+$this->headMeta()->setProperty('twitter:title', $title);
+$this->headMeta()->setProperty('twitter:site', $this->setting()->company_name);
+$this->headMeta()->setProperty('twitter:image', $this->serverUrl().$this->basePath($image_thumb_src));
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/blog.css'));
+$this->inlineScript()->offsetSetFile($offScript++, '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5301c95928ec6521');
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+function redirect(button) {
+    var route = $('select[name=products]').val();
+    window.location.href = full_url + '/' + route;
+}
+
+function email_newsletter(button) {
+    toastr.info("Comming soon");
+}
+JS;
+$this->inlineScript()->captureEnd();
+?>

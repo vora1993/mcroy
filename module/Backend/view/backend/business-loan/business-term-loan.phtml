@@ -1,0 +1,314 @@
+<?php
+$title = $this->translate("Business Loan Management");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'business_loan', 'action' => 'business-term-loan')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/business_loan') ?>"><?php echo $this->translate("Business Loan") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Business Term Loan") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit portlet-datatable bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-pie-chart font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <a href="javascript:;" onclick="window.history.back()" class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm"> <?php echo $this->translate("Back") ?>
+                                    <i class="fa fa-history"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        
+                            <table class="table table-bordered table-hover table-checkable" id="table_page">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" class="group-checkable" data-set="#table_page .checkboxes" />
+                                                <span></span>
+                                            </label>
+                                        </th>
+                                        <th class="hide"> <?php echo $this->translate("User") ?> </th>
+                                        <th> <?php echo $this->translate("Loan Title") ?> </th>
+                                        <th class="hide"> <?php echo $this->translate("Bank / Company") ?> </th>
+                                        <th> <?php echo $this->translate("Amount") ?> </th>
+                                        <th> <?php echo $this->translate("Year") ?> </th>
+                                        <th> <?php echo $this->translate("Int Rate") ?> </th>
+                                        <th> <?php echo $this->translate("Ref Code") ?> </th>
+                                        <th> <?php echo $this->translate("Referrer") ?> </th>
+                                        <th> <?php echo $this->translate("Ref Amt") ?> </th>
+                                        <th> <?php echo $this->translate("Creation Date") ?> </th>
+                                        <th> <?php echo $this->translate("Actions") ?> </th>
+                                        <th> <?php echo $this->translate("Status") ?> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if(count($this->loans) > 0): ?>
+                                    <?php foreach ($this->loans as $loan):
+                                    $bank_id = $this->loan(array("id" => $loan->getLoanId()))->getBankId();
+                                    $bank = $this->bank(array("id" => $bank_id));
+                                    $user = $this->user(array("id" => $loan->getUserId()));
+                                    $referral = $this->referral(array("type" => "business_loan", "application" => $loan->getId()));
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" class="checkboxes" value="<?php echo $loan->getId() ?>" />
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td class="hide"><a href="<?php echo $this->url("admin/user", array("action" => "edit", "id" => $loan->getUserId())) ?>"> <?php echo $this->user(array("id" => $loan->getUserId()))->getDisplayName() ?></a></td>
+                                        <td><a href="<?php echo $this->url("admin/business_loan", array("action" => "edit", "id" => $loan->getLoanId())) ?>"> <?php echo $this->loan(array("id" => $loan->getLoanId()))->getLoanTitle() ?></a></td>
+                                        <td class="hide"><a href="<?php echo $this->url("admin/bank", array("action" => "edit", "id" => $bank->getId())) ?>"> <?php echo $bank->getName() ?></a></td>
+                                        <td><?php echo number_format($loan->getLoanAmount()) ?></td>
+                                        <td><?php echo $loan->getLoanTenure() ?></td>
+                                        <td><?php echo $loan->getIntRate() ?></td>
+                                        <td><?php echo $user->getRef(); ?></td>
+                                        <td><?php echo $user->getDisplayName(); ?></td>
+                                        <td><?php echo $referral ? number_format($referral->getCredit()) : ''; ?></td>
+                                        <td><?php echo date("d-m-Y H:i", strtotime($loan->getDateAdded())); ?></td>
+                                        <td>
+                                            <?php if($loan->getStatus() != 1): ?>
+                                            <div class="btn-group">
+                                                <button class="btn btn-xs dark dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> <?php echo $this->translate("Actions") ?>
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <a href="javascript:;" data-id="<?php echo $loan->getId() ?>" onclick="set_status(this, 1)">
+                                                            <i class="icon-check"></i> <?php echo $this->translate("Approved") ?> </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" data-id="<?php echo $loan->getId() ?>" onclick="set_status(this, 2)">
+                                                            <i class="icon-close"></i> <?php echo $this->translate("Cancelled") ?> </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" data-id="<?php echo $loan->getId() ?>" onclick="set_status(this, 3)">
+                                                            <i class="icon-ban"></i> <?php echo $this->translate("Rejected") ?> </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo $this->status($loan); ?></td>
+                                    </tr>
+                                    <?php endforeach;?>
+                                    <?php endif;?>
+                                </tbody>
+                            </table>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+
+<div class="modal fade" id="credit_form" tabindex="-1" role="credit_form" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"><?php echo $this->translate("Add Credit") ?></h4>
+            </div>
+            <div class="modal-body">
+                <label><?php echo $this->translate("Amount") ?></label>
+                <input type="text" class="form-control" name="credit" value="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal"><?php echo $this->translate("Close") ?></button>
+                <button type="button" name="approved" class="btn green"><?php echo $this->translate("Approved") ?></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/datatables/datatables.min.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/datatable.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/datatables/datatables.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+// handle set status
+function apply_status(id, action, credit) {
+    $.ajax({
+        type: "POST",
+        url: full_url+"/admin/business-loan/set-status",
+        data: {id: id, action: action, credit: credit},
+        dataType: 'json',
+        beforeSend: function() {
+            App.blockUI({boxed: true});
+        },
+        success: function(itemJson) {
+            App.unblockUI();      
+            if(itemJson['success']) {
+                toastr.success(itemJson.msg);
+                setTimeout(function(){ window.location.reload(); }, 1500);
+            } else {
+                toastr.error(itemJson.msg);
+            }
+        },
+        error : function(xhr, status){
+            console.log(status);
+        },
+    });
+}
+
+function set_status(button, status) {
+    var id = $(button).data("id");
+    switch(status) {
+        case 1:
+            action = "approved";
+        break;
+        
+        case 2:
+            action = "cancelled";
+        break;
+        
+        case 3:
+            action = "rejected";
+        break;
+        
+        default:
+            action = "pending";
+        break;
+    }
+    var credit = 0;
+    if(action === 'approved') {
+        $('#credit_form').modal('show');
+        $("button[name=approved]").on("click", function(){ 
+            var credit = $("input[name=credit]").val();
+            if(credit % 1 === 0) {
+                apply_status(id, action, credit);
+            } else {
+                toastr.warning("Please key in number.");
+            }
+        }); 
+    } else {
+        apply_status(id, action, credit); 
+    }  
+}
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "date-sg-pre": function ( a ) {
+        var sgDatea = a.split('-');
+        var sgDateb = sgDatea[2].split(' ');
+        var sgDatec = sgDateb[1].split(':');
+        return (sgDateb[0] + sgDatea[1] + sgDatea[0] + sgDatec[0] + sgDatec[1] ) * 1;
+    },
+        
+    "date-sg-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    },
+        
+    "date-sg-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    }
+});
+
+jQuery(document).ready(function() {
+    var table = $('#table_page');
+    table.dataTable({
+        // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+        "language": {
+            "aria": {
+                "sortAscending": ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            },
+            "emptyTable": "No data available in table",
+            "info": "Showing _START_ to _END_ of _TOTAL_ records",
+            "infoEmpty": "No records found",
+            "infoFiltered": "(filtered1 from _MAX_ total records)",
+            "lengthMenu": "Show _MENU_",
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "paginate": {
+                "previous":"Prev",
+                "next": "Next",
+                "last": "Last",
+                "first": "First"
+            }
+        },
+        
+        // setup responsive extension: http://datatables.net/extensions/responsive/
+        responsive: true,
+
+        "columnDefs": [ {
+            "targets": 0,
+            "orderable": false,
+            "searchable": false
+        }],
+        
+        "lengthMenu": [
+            [25, 50, 100, -1],
+            [25, 50, 100, "All"] // change per page values here
+        ],
+        // set the initial value
+        "pageLength": 25,            
+        "pagingType": "bootstrap_full_number",
+        "columnDefs": [
+            {"orderable": false,"targets": [0,11]},
+            {"type": "date-sg", "targets": 10 }
+        ],
+        "order": [
+            [10, "desc"]
+        ] // set first column as a default sort by asc
+    });
+    
+    var tableWrapper = jQuery('#table_page_wrapper');
+    table.find('.group-checkable').change(function () {
+        var set = jQuery(this).attr("data-set");
+        var checked = jQuery(this).is(":checked");
+        jQuery(set).each(function () {
+            if (checked) {
+                $(this).prop("checked", true);
+                $(this).parents('tr').addClass("active");
+            } else {
+                $(this).prop("checked", false);
+                $(this).parents('tr').removeClass("active");
+            }
+        });
+    });
+    
+    table.on('change', 'tbody tr .checkboxes', function () {
+        $(this).parents('tr').toggleClass("active");
+    });
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

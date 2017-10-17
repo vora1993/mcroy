@@ -1,0 +1,456 @@
+<?php
+$this->headTitle("Homepage");
+?>
+<?php 
+if(count($this->sliders) > 0) { ?>
+    <div id="slideshow">
+    <?php foreach ($this->sliders as $slider) { ?>
+        <div class="item">
+    		<img src="<?php echo $this->basePath('data/image/'.$slider->getUrl()) ?>"/>
+    	</div>
+    <?php
+    }
+    ?>
+    </div>
+    <?php
+}
+?>
+
+<div id="brand-home">
+	<div class="container">
+        <div class="brand-desc">
+            <p>We Trusted by <b>Thousand of Client</b></p>
+            <span>Lorem ipsum dolor sit amet consectetur adipiscing elit</span>
+        </div>
+		<div class="brand">
+			<div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-1.png') ?>"/>
+			</div>
+			<div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-2.png') ?>"/>
+			</div>
+            <div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-3.png') ?>"/>
+			</div>
+            <div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-4.png') ?>"/>
+			</div>	
+            <div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-5.png') ?>"/>
+			</div>
+            <div class="item">
+                <img src="<?php echo $this->basePath('data/brand/brand-6.png') ?>"/>
+			</div>								
+		</div>
+	</div>
+</div>
+
+<div id="services-home">
+    <div class="services-desc">
+        <div class="container">
+            <p>Our <b>Broad Range</b> of Services</p>
+            <span>Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</span>
+        </div>
+    </div>
+	<div class="services-content">
+		<div class="box-services">
+			<div class="row">
+                <div class="item_services">
+                    <div class="item">
+                        <div class="image"><img src="<?php echo $this->basePath("assets/img/floating_1.jpg") ?>" /></div>
+                        <div class="caption">
+                            <h3 class="name"><a href="">Business Term Loan</a></h3>
+                            <div class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</div>
+                            <div class="group-btn"><a href="<?php echo $this->url("personal_loan") ?>" class="btn white-custom btn-block btn-lg margin-top-20"><?php echo $this->translate("Apply Now") ?></a></div>    
+			             </div>
+                    </div>
+				</div>
+                <div class="item_services">
+                    <div class="item">
+                        <div class="image"><img src="<?php echo $this->basePath("assets/img/floating_2.jpg") ?>" /></div>
+                        <div class="caption">
+                            <h3 class="name"><a href="">Property Loan</a></h3>
+                            <div class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</div>
+                            <div class="group-btn"><a href="<?php echo $this->url("personal_loan") ?>" class="btn white-custom btn-block btn-lg margin-top-20"><?php echo $this->translate("Apply Now") ?></a></div>    
+			             </div>
+                    </div>
+				</div>
+                <div class="item_services">
+                    <div class="item">
+                        <div class="image"><img src="<?php echo $this->basePath("assets/img/floating_3.jpg") ?>" /></div>
+                        <div class="caption">
+                            <h3 class="name"><a href="">Bank Account</a></h3>
+                            <div class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.</div>
+                            <div class="group-btn"><a href="<?php echo $this->url("personal_loan") ?>" class="btn white-custom btn-block btn-lg margin-top-20"><?php echo $this->translate("Apply Now") ?></a></div>    
+			             </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="total">
+    <div class="container">
+        <div class="total-content">
+            <h3 class="heading-total">We have served over 406 people in Singapore</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna.</p>
+            <div class="total-group">
+                <div class="row">
+ 					<div class="col-sm-6 col-xs-12">
+     					<div class="total-item">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <div class="caption-total">
+                                <span data-counter="counterup" data-value="406">0</span>
+								<span>Served People</span>
+								<p>Lorem ipsum dolor sit amet, consectetuer elit dolor. Cum sociis natoque penatibus et magnis dis parturient. </p>
+                            </div> 
+						</div>
+ 					</div>
+ 					<div class="col-sm-6 col-xs-12">
+     					<div class="total-item">
+							<i class="fa fa-money" aria-hidden="true"></i>
+							<div class="caption-total">
+								<span data-counter="counterup" data-value="254">0</span>
+								<span>Refinancing Savings</span>
+								<p>Lorem ipsum dolor sit amet, consectetuer elit dolor. Cum sociis natoque penatibus et magnis dis parturient. </p>
+							</div> 
+						</div>
+ 					</div>
+ 					<div class="col-sm-6 col-xs-12">
+     					<div class="total-item">
+							<i class="fa fa-check" aria-hidden="true"></i>
+                            <div class="caption-total">
+							    <span data-counter="counterup" data-value="850">0</span>
+								<span>Loan Approved</span>
+								<p>Lorem ipsum dolor sit amet, consectetuer elit dolor. Cum sociis natoque penatibus et magnis dis parturient. </p>
+                            </div> 
+                        </div>
+                    </div>
+ 					<div class="col-sm-6 col-xs-12">
+     					<div class="total-item">
+							<i class="fa fa-life-ring" aria-hidden="true"></i>
+							<div class="caption-total">
+								<span data-counter="counterup" data-value="645">0</span>
+								<span>Insurance Savings</span>
+								<p>Lorem ipsum dolor sit amet, consectetuer elit dolor. Cum sociis natoque penatibus et magnis dis parturient. </p>
+							</div> 
+						</div>
+ 					</div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+
+<div id="why-use" class="text-center font-white">
+    <div class="container">
+		<div class="row">
+            <h3 class="margin-bottom-40"><?php echo $this->translate("Why use") ?> <?php echo $this->setting()->company_name ?>?</h3>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <img src="<?php echo $this->basePath("assets/img/why_1.png") ?>" />
+                <h4>We are <b>#1 in Singapore</b></h4>
+		        <div class="line-why"></div>
+				<p>The #1 financial comparison site in Singapore. Thousands of consumers have trusted us with their financial decisions.</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <img src="<?php echo $this->basePath("assets/img/why_2.png") ?>" />
+                <h4>We are <b>free to use</b></h4>
+				<div class="line-why"></div>
+				<p>Whether you want to find, compare or apply, all our services are 100% free. Even our consultation over the phone is free.</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <img src="<?php echo $this->basePath("assets/img/why_3.png") ?>" />
+                <h4>We are <b>fast & hassle-free</b></h4>
+				<div class="line-why"></div>
+				<p>Complete your application in the comfort from your home, with the help of our friendly credit card experts.</p>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <img src="<?php echo $this->basePath("assets/img/why_4.png") ?>" />
+                <h4>We are <b>the experts</b></h4>
+				<div class="line-why"></div>
+				<p>We have done the homework to help you find the best credit cards, home loans, fixed deposits and more with easy-to-use comparisons.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="subscribe">
+    <div class="container">
+		<div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="subscribe">
+                    <form action="<?php echo $this->url("frontend_user", array("action" => "add-subscribe")) ?>" class="form-horizontal" id="form_subscribe" method="post">
+                        <img src="<?php echo $this->basePath("assets/img/homesubrice.png") ?>" class="img-responsive" />
+                        <div class="caption-sub">
+                            <i class="fa fa-envelope-o"></i>
+                            <div class="box-sub">
+                                <h4><?php echo $this->translate("Get News Updates Every Week") ?></h4>
+                                <span>Receive the latest deals and offers email.</span>
+		                    </div>
+		                    <input name="subscribe_email" class="form-control input-lg" placeholder="<?php echo $this->translate("Enter your email here") ?>" />
+							<button type="submit" class="btn btn-lg green-custom btn-block margin-top-10"><?php echo $this->translate("Subscribe") ?></button>
+		                </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="box-lastet-loan">
+                    <div class="title-last-loan">Latest Business Loan Rates from as low as</div>
+                    <div class="content-action">
+                        <ul>
+                            <li>
+                                <div class="rate">
+                                    <div><span data-counter="counterup" data-value="2.14">0</span>%</div>
+                                    <div><?php echo $this->translate("Interest Rate") ?></div>
+                                </div>
+                                <div class="image"><img src="<?php echo $this->basePath("data/bank/3/m_1480039893.png") ?>" class="img-responsive" /></div>
+                            </li>
+                            <li>
+                                <div class="rate">
+                                    <div><span data-counter="counterup" data-value="3.50">0</span>%</div>
+                                    <div><?php echo $this->translate("Interest Rate") ?></div>
+                                </div>
+                                <div class="image"><img src="<?php echo $this->basePath("data/bank/4/m_1480039975.png") ?>" /></div>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn-viewall-loan"><?php echo $this->translate("View All Business Loan") ?></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="box-lastet-loan">
+                    <div class="title-last-loan">Latest Property Loan Rates from as low as</div>
+                    <div class="content-action">
+                        <ul>
+                            <li>
+                                <div class="rate">
+                                    <div><span data-counter="counterup" data-value="1.48">0</span>%</div>
+                                    <div><?php echo $this->translate("Interest Rate") ?></div>
+                                </div>
+                                <div class="image"><img src="<?php echo $this->basePath("data/bank/1/m_1.png") ?>" class="img-responsive" /></div>
+                            </li>
+                            <li>
+                                <div class="rate">
+                                    <div><span data-counter="counterup" data-value="1.26">0</span>%</div>
+                                    <div><?php echo $this->translate("Interest Rate") ?></div>
+                                </div>
+                                <div class="image"><img src="<?php echo $this->basePath("data/bank/2/m_2.png") ?>" /></div>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn-viewall-loan"><?php echo $this->translate("View All Business Loan") ?></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="lastest-news">
+	<div class="container">
+		<div class="row">
+            <h3><?php echo $this->translate("Latest News") ?></h3>
+			<div class="news-content">
+				<?php 
+                if(count($this->posts) > 0) {
+                    foreach ($this->posts as $post) {
+                        ?>
+                        <div class="col-sm-4 col-xs-12">
+        					<div class="item-news">
+        						<div class="image">
+        							<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
+        						</div>
+        
+        						<div class="caption">
+        							<h4><?php echo $post->getPostTitle() ?></h4>
+        							<span class="date-news"><i class="fa fa-calendar"></i> May 22, 2016</span>
+        							<?php
+                                            $introtext = $post->getPostExcerpt();
+                                            if(strlen($introtext) > 150) {
+                                                // truncate string
+                                                $stringCut = substr($introtext, 0, 150);
+                                                
+                                                // make sure it ends in a word so assassinate doesn't become ass...
+                                                $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
+                                            }
+                                            ?>
+                                    <p><?php echo $introtext; ?></p>
+        						</div>
+        						<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
+        					</div>
+        				</div>
+                        <?php
+                    }
+                }
+                ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="financial" class="font-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 hidden-sm hidden-xs"><div class="image-financial"><img src="<?php echo $this->basePath('assets/img/financial-image.png') ?>" class="img-responsive"></div></div>
+            <div class="col-md-6 col-xs-12 financial-caption">
+                <h3><?php echo $this->translate("Business Term Loan") ?></h3>
+                <h4><?php echo $this->translate("Let us help you to start your business") ?></h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn green-custom">Sign for an account</a> <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn blue"><?php echo $this->translate("Login") ?></a>
+            </div>
+        </div>		
+    </div>
+</div>
+
+<div id="testimonials">
+    <div class="container">
+        <h3>Words <b>From Our Customers</b></h3>
+        <h4>We love to hear</h4>
+        <div class="row">
+    		<div class="box-content">
+            	<?php 
+                if(count($this->testimonials) > 0) {
+                    foreach ($this->testimonials as $testimonial) {
+                        ?>
+                        <div class="item col-xs-12">
+                        	<div class="content-test">
+                        		<p><?php echo $testimonial->getContent() ?></p>
+                            	<div class="image-test" style="background: url('<?php echo $this->basePath('data/image/'.$testimonial->getUrl()) ?>') no-repeat center center;"></div>
+                            	<span><b><?php echo $testimonial->getName() ?></b><i><?php echo $testimonial->getPosition() ?></i></span>
+                            </div>
+                		</div>
+                        <?php
+                    }
+                }
+                ?>
+    		</div>
+        </div>
+	</div>
+</div>
+
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/counterup/jquery.waypoints.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/counterup/jquery.counterup.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('#slideshow').owlCarousel({
+	items: 3,
+	autoPlay: 5000,
+	singleItem: true,
+	navigation: true,
+	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+	pagination: false
+});
+
+$('#brand-home .brand').owlCarousel({
+    items: 7,
+   	autoPlay: 5000,
+   	navigation: true,
+   	navigationText: ['<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>', '<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>'],
+   	pagination: false
+});
+
+
+$('#testimonials .box-content').owlCarousel({
+	items: 1,
+	autoPlay: 5000,
+	navigation: true,
+	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+	pagination: true
+});
+
+$('.floating-box').owlCarousel({
+	items: 3,
+	autoPlay: 5000,
+	navigation: true,
+	navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+	pagination: false
+});
+
+var form_subscribe = $('#form_subscribe');
+form_subscribe.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        subscribe_email: {
+            required: true,
+            email: true
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+        
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_subscribe .form-group').removeClass('has-error');
+        $('#form_subscribe .help-block, #form_subscribe .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                toastr.success(result.msg);
+                form_subscribe.trigger("reset");
+            } else {
+                toastr.warning(result.msg);
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

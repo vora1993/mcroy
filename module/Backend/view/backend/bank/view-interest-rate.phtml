@@ -1,0 +1,97 @@
+<?php
+$title = $this->translate("Interest Rate Management");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'business_loan', 'action' => 'interest-rate')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/bank') ?>"><?php echo $this->translate("Banks") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Interest Rate") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered form-fit">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="fa fa-bank font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form class="form-horizontal form-bordered" action="#" method="post">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><?php echo $this->translate("Loan type"); ?></label>
+                                    <div class="col-md-4">
+                                        <select name="type" class="form-control">
+                                            <option value="1"<?php if($this->id == 1) echo " selected"; ?>><?php echo $this->translate("Business Loan") ?></option>
+                                            <!--<option value="2"<?php if($this->id == 2) echo " selected"; ?>><?php echo $this->translate("Property Loan") ?></option>-->
+                                        </select>    
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><?php echo $this->translate("Loan title"); ?></label>
+                                    <div class="col-md-4">
+                                        <select name="bank_id" class="form-control">
+                                            <option value=""><?php echo $this->translate("[select]"); ?></option>
+                                            <?php 
+                                            if(count($this->loans) > 0) {
+                                                foreach ($this->loans as $bank) {
+                                                    ?>
+                                                    <option value="<?php echo $bank->getId() ?>"><?php echo $bank->getLoanTitle() ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="button" onclick="Bank.update_interest_rate()" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Update Interest Rate") ?></button>
+                                        <button type="button" onclick="Bank.view_interest_rate(this)" class="btn dark ladda-button" data-style="expand-left"><i class="fa fa-eye"></i> <?php echo $this->translate("View Interest Rate") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions" id="interest-rate"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('select[name=type]').on('change', function() {
+   var id = $(this).val();
+   if(id > 0) window.location.href = full_url + '/admin/bank/view-interest-rate/'+id;
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

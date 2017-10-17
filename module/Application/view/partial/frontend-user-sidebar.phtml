@@ -1,0 +1,77 @@
+<?php
+$user_avatar = $this->user->getAvatar();
+if ($user_avatar) {
+    $user_id = $this->user->getId();
+    if (file_exists('data/user/'.$user_id.'/l_'.$user_avatar)) {
+        $image_avatar = 'data/user/'.$user_id.'/l_'.$user_avatar;
+    } else {
+        $image_avatar = 'data/user/'.$user_id.'/'.$user_avatar;
+    }
+} else {
+    $image_avatar = 'data/user/no-avatar-256.png';
+}
+$referral_code_url = $this->serverUrl().$this->basePath().$this->url("frontend_user", array("action" => "auth"))."?ref=".$this->user->getRef();
+$share_referral_code_url = "http://www.facebook.com/sharer.php?s=100&p[title]='Share your referral code to your friend to get 1$ per successful application'&p[summary]='Share your referral code to your friend to get 1$ per successful application'&p[url]=".$referral_code_url."&p[images][0]=YOUR_IMAGE_TO_SHARE_OBJECT";
+?>
+<div class="user-profile">
+    <ul>
+        <li><a href="javascript:;"><?php echo $this->user->getDisplayName() ?></a></li>
+        <?php
+        $routeMatch = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+        $routeName  = $routeMatch->getMatchedRouteName();
+        $actionName = strtolower($routeMatch->getParam('action', ''));	// get the action name
+        ?>
+        <li<?php if($routeName === 'frontend_user' && $actionName === 'profile') echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user") ?>"><i class="fa fa-home"></i> <?php echo $this->translate("Overview") ?> </a>
+        </li>
+        <li<?php if($routeName === 'frontend_user' && $actionName === 'applicable') echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user", array("action" => "applicable")) ?>"><i class="fa fa-database"></i> <?php echo $this->translate("My Application") ?> </a>
+        </li>
+        <li<?php if($routeName === 'frontend_user' && $actionName === 'referral') echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user", array("action" => "referral")) ?>"><i class="fa fa-share-alt"></i> <?php echo $this->translate("My Referral") ?> </a>
+        </li>
+        <li<?php if($routeName === 'frontend_user' && ($actionName === 'bank-account' || $actionName === 'edit-bank-account')) echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user", array("action" => "bank-account")) ?>"><i class="fa fa-user-circle-o"></i> <?php echo $this->translate("My Bank Account") ?> </a>
+        </li>
+        <li<?php if($routeName === 'frontend_user' && $actionName === 'edit-profile') echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user", array("action" => "edit-profile")) ?>"><i class="fa fa-pencil"></i> <?php echo $this->translate("Edit Profile") ?> </a>
+        </li>
+        <li<?php if($routeName === 'frontend_user' && $actionName === 'change-password') echo ' class="active"' ?>>
+            <a href="<?php echo $this->url("frontend_user", array("action" => "change-password")) ?>"><i class="fa fa-lock"></i> <?php echo $this->translate("Change Password") ?> </a>
+        </li>
+    </ul>
+</div>
+<!-- END BEGIN PROFILE SIDEBAR -->
+<input type="hidden" id="hidden_text" value="<?php echo $referral_code_url; ?>" />
+<div id="clipboard" style="display: none;">
+    <p>Share on my referral code</p>
+    <p>You can <a href="javascript:;" onclick="copy()" class="btn btn-xs red-thunderbird"><?php echo $this->translate("Copy") ?></a> Or <a href="<?php echo $share_referral_code_url; ?>" target="_blank" class="btn btn-xs blue-steel"><?php echo $this->translate("Share on Facebook") ?></a></p>
+</div>
+<script type="text/javascript">
+    function copy() {
+        var s = copyToClipboard();
+        if(s) toastr.success("Copied");
+    }
+    function copyToClipboard() {
+        var target = jQuery('#hidden_text');
+
+        // make it visible, so can be focused
+        target.attr('type', 'text');
+        target.focus();
+        // select all the text
+        target[0].setSelectionRange(0, target.val().length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            succeed = false;
+        }
+
+        // hide input again
+        target.attr('type', 'hidden');
+
+        return succeed;
+    }
+</script>

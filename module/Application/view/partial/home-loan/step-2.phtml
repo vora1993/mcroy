@@ -1,0 +1,293 @@
+<?php
+$slider_loan_tenture = '$slider_loan_tenture';
+$slider_loan_percent = '$slider_loan_percent';
+?>
+<form class="form-horizontal form-wizard" action="<?php echo $this->url("home_loan", array("action" => "step", "id" => 2)) ?>" method="POST">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="row existing_home_loans form-wizard-title">
+                <h3>3. <?php echo $this->translate("How many existing home loans do you have") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Your loan % is restricted based on the number of home loans you are currently servicing.</p><p>The maximum loan % you qualify for is:<ul><li>80% (1st housing loan)</li><li>50% (2nd housing loan)</li><li>40% (3rd housing loan and beyond)</li></ul></p>" data-html="true" data-original-title="<span><?php echo $this->translate("Existing Home Loans") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-12">
+                    <span><?php echo $this->translate("HDB buyers cannot have any other outstanding home loans"); ?></span>
+                    <div class="property-type">
+                        <a href="javascript:;" onclick="Loan.set_exist(this)" data-value="0" class="property-type-box circle active">
+                            <i class="icon-check hide"></i>
+                            <span class="number"><?php echo $this->translate("0") ?></span>
+                        </a>
+                        <a href="javascript:;" onclick="Loan.set_exist(this)" data-value="1" class="property-type-box circle<?php if($this->property_type === 'HDB Flat') echo ' disabled'; ?>">
+                            <i class="icon-check hide"></i>
+                            <span class="number"><?php echo $this->translate("1") ?></span>
+                        </a>
+                        <a href="javascript:;" onclick="Loan.set_exist(this)" data-value="2+" class="property-type-box circle<?php if($this->property_type === 'HDB Flat') echo ' disabled'; ?>">
+                            <i class="icon-check hide"></i>
+                            <span class="number"><?php echo $this->translate("2+") ?></span>
+                        </a>
+                    </div>
+                    <input type="hidden" name="existing_home_loans" value="0" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group with-pie purchase_price">
+            <div class="row form-wizard-title">
+                <h3>4. <?php echo $this->translate("What is the purchase price of the property") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Banks will calculate your home loan based on the property's market valuation or purchase price, whichever is lower.</p><p>If you know that the market valuation of your property is less than the purchase price, please key in the market valuation. If you're unsure of the market valuation, just indicate its purchase price.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Purchase Price / Market Valuation") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i><?php echo $this->translate("Purchase Price ($)") ?></i>
+                        </span>
+                        <input type="text" name="purchase_price" class="form-control" placeholder="<?php echo $this->translate("e.g. 500000, 500k, 1.2m") ?>"> 
+                    </div>
+                </div>
+            </div>
+            <div class="row indented form-wizard-subtitle">
+                <h4 class="font-blue"><?php echo $this->translate("How long do you want your tenure to be") ?>?</h4>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Your loan tenure is the full duration of your loan repayment period. A shorter tenure means you pay less interest but higher monthly instalments, while a longer tenure means you pay more interest, but lower monthly instalments.</p><p>The maximum loan tenure is 35 years (for private properties and ECs) and 30 years (for HDB flats).</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Loan Tenure") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-4">
+                    <div class="slider-container">
+                        <div class="slider-loan-tenure" data-min="5" data-max="35" data-value="25" data-soft-cap="30"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="slider-value">
+                        <span class="current info" id="loan_tenure-label">20</span>
+                        <span class="unit">Years</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row indented form-wizard-subtitle">
+                <h4 class="font-blue"><?php echo $this->translate("What % of the price would you like to loan") ?>?</h4>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>You can borrow up to 80% for your 1st home loan; 50% for your 2nd; or 40% if it's your 3rd and beyond.</p><p>To qualify for the maximum loan %, your loan tenure cannot exceed 30 years (for private properties and ECs) and 25 years (for HDB flats). The borrower's age also cannot cross 65 at the end of the loan tenure.</p><p>Violating any of these conditions will result in a 20% reduction in your loan %.</p><p><strong style='color: #CC6055'>A MoneyCompare Mortgage Specialist will be able to advise you further on this, after you proceed to Step 5.</strong></p>" data-html="true" data-original-title="<span><?php echo $this->translate("Loan Tenure") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-4">
+                    <div class="slider-container">
+                        <div class="slider-loan-amount" data-min="10" data-max="80" data-value="80" data-soft-cap="80"></div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="slider-value">
+                        <span class="current info" id="loan_amount-label">80</span>
+                        <span class="unit">Percent</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row indented easy-pie-chart">
+                <div class="number loans" data-percent="80"></div>
+                <div class="pie-chart-info">
+                    <div class="info-heading"><?php echo $this->translate("Loan Amount") ?>
+                        <em><span class="main-percentage">(80%)</span></em>
+                    </div>
+                    <div class="info-amount">
+                        $<span class="loan-amount" id="loan-amount-label">-</span>
+                    </div>
+                    <div class="info-heading minor"><?php echo $this->translate("Downpayment") ?>
+                        <em><span class="minor-percentage">(20%)</span></em>
+                    </div>
+                    <div class="info-amount minor">
+                        $<span class="downpayment" id="downpayment-label">-</span>
+                    </div>
+                </div>
+                <input type="hidden" name="loan_amount" value="0" />
+                <input type="hidden" name="loan_tenure" value="20" />
+                <input type="hidden" name="loan_percent" value="80" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row existing_home_loans form-wizard-title">
+                <h3>5. <?php echo $this->translate("Would you prefer a Fixed or Floating rate package") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Floating rates packages are pegged to either SIBOR or SOR index rates and a “spread” is added on to it. The sum of the spread and the SIBOR or SOR rates gives the total interest rate.</p><p>Fixed rates packages have interest rates fixed for a duration of one to five years and are available only to completed properties. They offer stability when it comes to monthly payments but start off higher than floating rates.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Fixed vs Floating Rates") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row indented">
+                <div class="col-md-12">
+                    <span><?php echo $this->translate("Fixed rates are available only to completed properties"); ?>.</span>
+                    <div class="md-radio-list">
+                        <div class="md-radio">
+                            <input type="radio" id="preferred_rate_package_floating" name="preferred_rate_package" value="Floating" class="md-radiobtn" checked="checked">
+                            <label for="preferred_rate_package_floating">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Floating") ?> 
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input type="radio" id="preferred_rate_package_fixed" name="preferred_rate_package" value="Fixed" class="md-radiobtn">
+                            <label for="preferred_rate_package_fixed">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> <?php echo $this->translate("Fixed") ?> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <input type="hidden" name="property_type" value="<?php echo $this->property_type ?>" />
+                <a class="btn grey-mint btn-lg" href="<?php echo $this->url("home_loan", array("action" => "step", "id" => 1)) ?>"><?php echo $this->translate("Back") ?></a>
+                <button type="submit" class="btn btn-lg blue"><?php echo $this->translate("Next Step") ?> <i class="fa fa-caret-right"></i></button>
+            </div>
+        </div>
+    </div>  
+</form>
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+// Handle number
+Loan.integer();
+Loan.initEasyPieCharts();
+
+$('input[name=purchase_price]').on('blur', function(){
+    $(this).parent().removeClass('focus');
+}).on('focus', function(){
+    $(this).parent().addClass('focus');
+});
+
+$("input[name=purchase_price]").on("keydown", function(evt) {
+    var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+    if(charCode == 8 || charCode == 46 ){
+        return true;
+    }
+    return isEnterNumber(charCode);
+});
+    
+$("input[name=purchase_price]").on("keyup", function() {
+    var val = $(this).val();
+    val = Number(val.replace(/,/g, ""));
+    $(this).val(formatNumber(val, ""));
+    updateLoanAmount();
+});
+
+var {$slider_loan_percent} = $(".slider-loan-amount").slider({
+    value: $(".slider-loan-amount").data("value"),
+    min: $(".slider-loan-amount").data("min"),
+    max: $(".slider-loan-amount").data("max"),
+    orientation: "horizontal",
+    animate: !0,
+    range: "min",
+    slide: function(event, ui) {
+        $("#loan_amount-label").html(ui.value);
+        $(".easy-pie-chart .number.loans").attr("data-percent", ui.value);
+        $("input[name=loan_percent]").val(ui.value);
+    },
+    change: function(event, ui) {
+        updatePieChart(ui.value);
+        updateLoanAmount();
+    }
+});
+
+var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
+    value: $(".slider-loan-tenure").data("value"),
+    min: $(".slider-loan-tenure").data("min"),
+    max: $(".slider-loan-tenure").data("max"),
+    orientation: "horizontal",
+    animate: !0,
+    range: "min",
+    slide: function(event, ui) {
+        if ("" != $(".slider-loan-tenure").attr("data-soft-cap")) {
+            var o = parseInt($(".slider-loan-tenure").attr("data-soft-cap"));
+            if (ui.value > o) return !1
+        }
+        $("#loan_tenure-label").html(ui.value);
+        $("input[name=loan_tenure]").val(ui.value);
+    },
+    change: function(event, ui) {
+        updateSlider();
+        updateLoanAmount();
+    }  
+});
+
+var form = $('.form-wizard');
+form.validate({
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    rules: {
+        existing_home_loans: {
+            required: true
+        },
+        purchase_price: {
+            required: true
+        }
+    },
+    
+    invalidHandler: function(event, validator) { //display error alert on form submit              
+        App.scrollTo($(".error"), -15);
+    },
+    
+    errorPlacement: function(error, element) {
+        if(element.attr("name") == "purchase_price") {
+            $('.purchase_price').addClass("error");
+        }
+    },
+    
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+                
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+                
+        // serialize the data in the form
+        var serializedData = form.serialize();
+            
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+                
+        // fire off the request to /form.php
+        
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('.form-group .error').removeClass('error');
+                
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true});
+            } 
+            setTimeout(function(){ 
+                App.unblockUI();
+                window.location.href = result.redirect; 
+            }, 1500);
+        });
+                
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+                
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true});
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

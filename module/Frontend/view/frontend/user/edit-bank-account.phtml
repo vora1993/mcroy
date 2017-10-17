@@ -1,0 +1,147 @@
+<?php
+$title = "Edit My Bank Account";
+$this->headTitle($title);
+?>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <?php echo $this->partial('frontend_user_sidebar'); ?>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <p>Update your bank account here to receive the money from your referral.</p>
+                <!-- BEGIN FORM-->
+                                    <form action="<?php echo $this->url("frontend_user", array("action" => "edit-bank-account")) ?>" id="form_user" class="form-horizontal form-bordered">
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3"><?php echo $this->translate("Bank") ?><span class="required"> * </span></label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="bank" class="form-control" value="<?php echo $this->bank->getBank() ?>" /> 
+                                                </div>
+                                            </div>
+                                                                
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3"><?php echo $this->translate("Account Number") ?><span class="required"> * </span></label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="acct_no" class="form-control" value="<?php echo $this->bank->getAcctNo() ?>" /> 
+                                                </div>
+                                            </div>
+                                                                
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3"><?php echo $this->translate("Name") ?></label>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="name" class="form-control" value="<?php echo $this->bank->getName() ?>" /> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button type="submit" class="btn input-small dark"><?php echo $this->translate("Submit") ?></button>
+                                                    <button type="button" class="btn input-small btn-outline" onclick="cancel('user/bank-account')"><?php echo $this->translate("Cancel") ?></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- END FORM-->
+            </div>
+        </div>
+    </div>            
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/profile.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+var form = $('#form_user');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        bank: {
+            required: true,
+            minlength: 2
+        },
+        acct_no: {
+            required: true,
+            minlength: 2
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+    
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_user .form-group').removeClass('has-error');
+        $('#form_user .help-block, #form_user .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something Error. Please check.");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                } else {
+                    toastr.warning(result.msg);
+                }
+                window.location.reload();
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

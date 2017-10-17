@@ -1,0 +1,350 @@
+<?php
+$title = "Apply Bank Account";
+$this->headTitle($title);
+
+$category_id = $loan['category_id'];
+$loan = $loan['loan'];
+?>
+<div id="page-apply" class="page-title"><h1><?php echo $title ?></h1></div>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal form-business-account" action="<?php echo $this->url("bank_account", array("action" => "apply-form")); ?>" method="POST">
+                    <div class="form-title"><h3><?php echo $this->translate("Bank Details and Package Details"); ?></h3></div>
+                    <div class="form-body">
+                        <?php
+                        $bank = $this->bank(array("id" => $loan->getBankId()));
+                        $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";
+                        
+                        $category = $this->category(array("id" => $category_id));
+                        if($category->getName() === 'Fixed Deposit') {
+                            $interest_rate = $loan->getIntRate();
+                            // A = P x (1 + r/n)nt 
+                            // I = A - P 
+                            if($loan->getInterestRate()) {
+                                $interest_rates = \Zend\Json\Json::decode($loan->getInterestRate());
+                                if(count($interest_rates) > 0) {
+                                    foreach ($interest_rates as $value) {
+                                        if($value->tier == $loan_tenure) {
+                                            $interest_rate = $value->percentage;
+                                        }
+                                    }
+                                }
+                            }
+                            // Formula:
+                            // A = P x (1 + r/n)nt 
+                            // I = A - P 
+                            // First, converting R percent to r a decimal
+                            // r = R/100 = 0.35%/100 = 0.0035 per year.
+                            $r = $interest_rate / 100;
+                            //Putting time into years for simplicity,
+                            //3 months / 12 months/year = 0.25 years.
+                            $t = $loan_tenure / 12;
+                            // Solving our equation
+                            $A = $loan_amount * (1 + ($r * $t));
+                            $I = round($A - $loan_amount, 2);
+                        } else {
+                            $int_rates = $loan->getIntRate();
+                        }
+                                            
+                        $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                        if(!file_exists($dir_logo)) {
+                            $dir_logo = 'data/image/no-image-64.png';
+                        }
+                        
+                        ?>
+                        <div class="filters-content sponsored">
+                            <div class="row-header">
+                                <h4 class="bank-title" style="background-color: <?php echo $bank_color; ?>"><a href="#"><?php echo $loan->getLoanTitle(); ?></a></h4>
+                            </div>
+                            <div class="row row-content">
+                                <div class="col-md-2">
+                                    <a href="#"><img src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" class="logo"></a>
+                                </div>
+                                <div class="col-md-3">
+                                    <div><span class="month"><b>$<?php echo number_format($loan->getInitialDepositAmount()); ?></b> <?php echo $this->translate("Deposit Amount") ?></span></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div><span class="interest"><b><?php echo $int_rates ?></b> <?php echo $this->translate("Interest Rates") ?></span></div>
+                                </div>
+                            </div>
+                            <div class="row row-footer">
+                                <div class="col-md-12 more-info">
+                                    <div class="row margin-bottom-20">
+                                        <div class="content-row-footer">
+                                            <ul>
+                                                <li>
+                                                    <div class="col-row-footer-5 text-left padding-left-30">Important Stuff You Need To Know</div>
+                                                    <div class="col-row-footer-4"></div>
+                                                    <div class="col-row-footer-1"><a data-target="#content-row-footer2" data-toggle="collapse" aria-expanded="true"><i class="fa fa-minus-circle" aria-hidden="true"></i><i class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+                                                    <div id="content-row-footer2" class="content-row-collapse collapse in">
+                                                        <ul>
+                                                            <?php if($loan->getTenor()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Tenor") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo nl2br($loan->getTenor()) ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getCitizenship()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Citizenship") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo nl2br($loan->getCitizenship()) ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getAge()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Age") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo nl2br($loan->getAge()) ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getMinimumBalance()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Minimum Balance") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo $loan->getMinimumBalance() ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getChequeBookFees()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Cheque Book Fees") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo $loan->getChequeBookFees() ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getInternetBankingFees()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Internet Banking Fees") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo $loan->getInternetBankingFees() ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getAnnualFee()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Annual Fee") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo $loan->getAnnualFee() ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getServiceFee()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Service Fee") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo nl2br($loan->getServiceFee()) ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                            <?php if($loan->getHighlight()): ?>
+                                                            <li>
+                                                                <div class="col-row-footer-5 text-left"><?php echo $this->translate("Highlight") ?></div>
+                                                                <div class="col-row-footer-4 text-right"><?php echo $loan->getHighlight() ?></div>
+                                                                <div class="col-row-footer-1"></div>
+                                                            </li>
+                                                            <?php endif; ?>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row margin-bottom-20 wcu">
+                                        <div class="col-md-12 text-center uppercase"><h3>Why Choose Us</h3></div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="wcu-item">
+                                                <img src="<?php echo $this->basePath("data/image/wcu-1.png") ?>" />
+                                                <div class="wcu-info">
+                                                     <h4>Higher Approval Rate</h4>
+                                                     <p>As a team of ex bankers, we are very familiar with the credit criteria of invidual banks with a solid track record of > 60% approval rate</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="wcu-item">
+                                                <img src="<?php echo $this->basePath("data/image/wcu-2.png") ?>" />
+                                                <div class="wcu-info">
+                                                     <h4>Hassle Free Approach</h4>
+                                                     <p>Leave the application process to our specialist while you focus your resources on your ore business</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="wcu-item">
+                                                <img src="<?php echo $this->basePath("data/image/wcu-3.png") ?>" />
+                                                <div class="wcu-info">
+                                                     <h4>Faster Tournaround Time</h4>
+                                                     <p>Tired of waiting for unresponsive bankers revert? Your application is our priority, reduce processing time by 3-5 woking days through us!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="wcu-item">
+                                                <img src="<?php echo $this->basePath("data/image/wcu-4.png") ?>" />
+                                                <div class="wcu-info">
+                                                     <h4>Risk Free Process</h4>
+                                                     <p>No upfront fees, no fees applicable if we're not able to recure financing for your company. Performance guarantee, pay only for results!</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix" style="margin-bottom: 45px;"></div>
+            
+                    <div class="form-title"><h3><?php echo $this->translate("Remark"); ?></h3></div>
+                    <div class="form-body" style="padding-top: 0px !important; padding-bottom: 15px !important;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label"><?php echo $this->translate("Company") ?></label>
+                                    <input type="text" id="company" name="company" class="form-control">
+                                </div>
+                                <div class="form-group phone" style="margin-top: 0;">
+                                    <label class="control-label"><?php echo $this->translate("Phone") ?></label>
+                                    <input type="text" id="phone" name="phone" value="<?php echo $this->auth()->getPhone(); ?>" class="form-control">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group" style="padding-top: 25px;">
+                                    <textarea name="message" class="form-control" rows="6" placeholder="<?php echo $this->translate("Have any feedback or compliments? We'd love to hear from you") ?>"></textarea>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-3 text-right">
+                                <input type="hidden" name="category_id" value="<?php echo $category_id; ?>" />
+                                <button type="submit" class="btn btn-lg green-custom"><?php echo $this->translate("Submit") ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    </div>   
+</div>
+
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->captureStart();
+echo <<<JS
+jQuery.validator.addMethod(
+    "phone",
+    function(phone_number, element) {
+        return this.optional(element) || /^\d{8,}$/.test(phone_number.replace(/\s/g, ''));
+    },
+    "Please enter numbers only"
+);
+
+var form = $('.form-business-account');
+var error = $('.alert-danger', form);
+var success = $('.alert-success', form);
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block help-block-error', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    rules: {
+        phone: {
+            required: true,
+            phone: true
+        }
+    },
+
+    invalidHandler: function(event, validator) { //display error alert on form submit              
+        App.scrollTo(error, -200);
+    },
+
+    errorPlacement: function(error, element) {
+        if (element.is(':checkbox')) {
+            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+        } else if (element.is(':radio')) {
+            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+        } else {
+            error.insertAfter(element); // for other inputs, just perform default behavior
+        }
+    },
+
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    unhighlight: function(element) { // revert the change done by hightlight
+        $(element)
+            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label
+            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+    },
+
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+                
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+                
+        // serialize the data in the form
+        var serializedData = form.serialize();
+            
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+                
+        // fire off the request to /form.php
+        
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+                
+        // Clear Message
+        $('.form-group').removeClass('has-error');
+        $('.help-block, .alert').hide();
+                
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true, message: 'Loading...' });
+            } 
+            setTimeout(function(){ 
+                App.unblockUI();
+                window.location.href = full_url+result.redirect; 
+            }, 1500);
+        });
+                
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+                
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true, message: 'Loading...' });
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>
