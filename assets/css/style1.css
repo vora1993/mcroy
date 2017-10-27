@@ -398,16 +398,16 @@
 .news-content .item-news {
     background: #0991cc;
     /* For browsers that do not support gradients */
-    
+
     background: -webkit-linear-gradient(left top, #1e4293, #00b7e6);
     /* For Safari 5.1 to 6.0 */
-    
+
     background: -o-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Opera 11.1 to 12.0 */
-    
+
     background: -moz-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Firefox 3.6 to 15 */
-    
+
     background: linear-gradient(to bottom right, #1e4293, #00b7e6);
     /* Standard syntax bg-home-10*/
 }
@@ -1463,12 +1463,13 @@ output {
 .search-bank-fixed .search-bank .lb-loan {
     padding-top: 10px;
 }
-.page-mortgage {
+.page-mortgage, .page-eligibility {
     width: 100%;
     float: left;
     border: 2px solid #f6f6f6;
 }
-.page-mortgage .form-wizard {
+.page-mortgage .form-wizard,
+.page-eligibility .form-wizard {
     width: 100%;
     float: left;
 }
@@ -1483,7 +1484,8 @@ output {
     margin-bottom: 20px;
     margin-top: 0;
 }
-.page-mortgage .form-actions {
+.page-mortgage .form-actions,
+.page-eligibility .form-actions {
     padding: 0 15px 20px;
 }
 .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
