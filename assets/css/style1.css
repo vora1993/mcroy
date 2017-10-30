@@ -1958,7 +1958,8 @@ td {
     .form-wizard .slider-container {
         margin-bottom: 10px;
     }
-    .page-mortgage .form-actions button {
+    .page-mortgage .form-actions button,
+    .page-eligibility .form-actions button {
         margin-bottom: 15px;
     }
 }
