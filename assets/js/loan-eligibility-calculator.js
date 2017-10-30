@@ -188,7 +188,11 @@ $("#submit-prepayment").click(function(){
     var loanAmount = caculateLoanAmount();
     var DSR = caculateDSR();
     if (DSR > 60){
-      return alert("Can't get loan and would you like our consultant to contact you?");
+      return swal({
+        text: "Can't get loan and would you like our consultant to contact you?",
+        type: 'warning',
+        confirmButtonText: 'Ok'
+      });
     }
 
     $('#loan_amt').text(addSeparator(loanAmount, 3));
