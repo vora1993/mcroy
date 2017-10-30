@@ -1,5 +1,8 @@
 var interestRate = 6.75;
-var tenor = 5;
+var tenor = 5 * 12;
+var maxDSR = 60 / 100;
+var defaultFutureValue = 0;
+var totalOfPeriods = 12;
 var investIndustryType =  {
   'Professionals': 15.18,
   'Services': 15.18,
@@ -28,8 +31,9 @@ function enter_check(e)
 
   return true;
 }
+
 function validateInputs() {
-  var prop_type = $('input[type="radio"][name="industry_type"]:checked').val();
+  var prop_type = $('select[name="industry_type"]').val();
   if(!prop_type)
   {
     toastr.warning("Please choose type of industry");
@@ -45,9 +49,41 @@ function validateInputs() {
   return true;
 }
 
-function PMT(fv, pv, rate, nper, type)
+function PV(rate, per, nper, pmt, fv)
 {
-  return((-fv - pv * Math.pow(1 + rate, nper)) / ((1 / rate + type) * (Math.pow(1 + rate, nper) - 1)));
+
+  nper = parseFloat(nper);
+  pmt = parseFloat(pmt);
+  fv = parseFloat(fv);
+  rate = eval((rate)/(per * 100));
+
+  if (( pmt == 0 ) || ( nper == 0 )) {
+    alert("Why do you want to test me with zeros?");
+    return(0);
+  }
+
+  if ( rate == 0 ) // Interest rate is 0
+  {
+    pv_value = -(fv + (pmt * nper));
+  } else {
+    x = Math.pow(1 + rate, -nper);
+    y = Math.pow(1 + rate, nper);
+    pv_value = - ( x * ( fv * rate - pmt + y * pmt )) / rate;
+  }
+  pv_value = conv_number(pv_value,2);
+  return (pv_value);
+
+}
+
+function conv_number(expr, decplaces)
+{
+  var str = "" + Math.round(eval(expr) * Math.pow(10,decplaces));
+  while (str.length <= decplaces) {
+    str = "0" + str;
+  }
+  var decpoint = str.length - decplaces;
+
+  return (str.substring(0,decpoint) + "." + str.substring(decpoint,str.length));
 }
 
 function addSeparator(valueAmt, digit)
@@ -98,46 +134,66 @@ function addSeparator(valueAmt, digit)
   return new_txt+"."+decimalPart;
 }
 
-function caculateMonthlyCommmitement() {
-  var hirePurchaseLoan = getNumber($('#purchase_loan').val());
-  var propertyLoan = getNumber($('#property_loan').val());
-  var businessTermLoan = getNumber($('#business_term_loan').val());
-  var othersLoan = getNumber($('#others').val());
-
-  return hirePurchaseLoan + propertyLoan + businessTermLoan + othersLoan;
+function monthlyCommmitement() {
+  return getNumber($('#monthly-commmitement').val());
 }
 
 function caculateMonthlyIncome() {
-  var monthlyTurnover = getNumber($('#monthly_turnover').val());
-  console.log(monthlyTurnover);
-  var industryType =  $('input[type="radio"][name="industry_type"]:checked').val();
-  console.log(industryType);
+  var monthlyTurnover = getNumber($('#monthly-turnover').val());
+  var industryType =  $('select[name="industry_type"]').val();
   var incomeFactor = investIndustryType[industryType];
-  console.log(incomeFactor);
-  return Number((monthlyTurnover * incomeFactor).toFixed(2));
+  return Number((monthlyTurnover * incomeFactor * 1.2 / 100).toFixed(2));
+}
+
+function caculateLoanAmount() {
+  var installmentAmount = ( maxDSR * caculateMonthlyIncome() ) - monthlyCommmitement();
+  var loanAmount = PV(interestRate, totalOfPeriods, tenor, installmentAmount * -1, defaultFutureValue);
+  return loanAmount;
+}
+
+function installmentMonthlyAmount() {
+  var companyBusinessTermLoan = getNumber($('#business-term-loan').val());
+  var mortgageLoan = getNumber($('#mortgage-loan').val());
+  var hirePurchaseLoan = getNumber($('#purchase-loan').val());
+  var privateLenderLoan = getNumber($('#private-lender-loan').val());
+  return companyBusinessTermLoan || mortgageLoan || hirePurchaseLoan || privateLenderLoan;
+}
+
+function caculateAdjustedCommitement() {
+  return (monthlyCommmitement() + installmentMonthlyAmount());
+}
+
+function caculateDSR() {
+  return Number(( caculateAdjustedCommitement() / caculateMonthlyIncome() * 100).toFixed(2));
 }
 
 function getNumber(value){
-  console.log(value);
-  return ( typeof( value )!=="undefined" ? value : 0 ).toString().replace(/[^\d.]/ig, '');
+  var number = ( typeof( value ) !== "undefined" && value != "" ? value : 0 ).toString().replace(/[^\d.]/ig, '');
+  return parseFloat(number)
 }
 
 $("#submit-reset").click(function(){
   $("#monthly-turnover").val("");
-  $("#purchase_loan").val("");
-  $("#property_loan").val("");
-  $("#business_term_loan").val("");
-  $("#others").val("");
-  $('input[name="industry_type"]').prop('checked', false);
+  $("#monthly-commmitement").val("");
+  $("#business-term-loan").val("");
+  $("#mortgage-loan").val("");
+  $("#purchase-loan").val("");
+  $("#private-lender-loan").val("");
+  $('#industry_type').val("");
 });
 
 $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
-    var monthlyCommitement = caculateMonthlyCommmitement();
-    var grossMonthlyIncome = caculateMonthlyIncome();
-    console.log(grossMonthlyIncome);
-    // $("html, body").animate({"scrollTop":$(".repayWrap").offset().top},800);
+    var loanAmount = caculateLoanAmount();
+    var DSR = caculateDSR();
+    if (DSR > 60){
+      return alert("Can't get loan and would you like our consultant to contact you?");
+    }
+
+    $('#loan_amt').text(addSeparator(loanAmount, 3));
+    $(".result-loan-eligibility-calculator").show();
+    $("html, body").animate({"scrollTop":$(".result-loan-eligibility-calculator").offset().top},800);
   }
 });
 
@@ -146,8 +202,4 @@ $("#submit-back").click(function(){
   $("#personalInfo").fadeIn('5000');
   $("html, body").animate({"scrollTop":$("#stps").offset().top},800);
   $("#stps .step-2").removeClass('active');
-})
-
-$(window,document).load(function(){
-
 });
