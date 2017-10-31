@@ -33,6 +33,18 @@ function enter_check(e)
 }
 
 function validateInputs() {
+  if ($("#monthly-turnover").val() == "") {
+    toastr.warning("Please enter your company monthly turnover.");
+    $("#monthly-turnover").focus();
+    return false;
+  }
+
+  if ($("#monthly-commmitement").val() == "") {
+    toastr.warning("Please enter your monthly commmitement.");
+    $("#monthly-commmitement").focus();
+    return false;
+  }
+
   var prop_type = $('select[name="industry_type"]').val();
   if(!prop_type)
   {
@@ -40,13 +52,13 @@ function validateInputs() {
     $("#priv_prop").focus();
     return false;
   }
-  if ($("#monthly-turnover").val() == "") {
-    toastr.warning("Please enter your company monthly turnover.");
-    $("#monthly-turnover").focus();
-    return false;
-  }
 
   return true;
+}
+
+function PMT(fv, pv, rate, nper, type)
+{
+    return((-fv - pv * Math.pow(1 + rate, nper)) / ((1 / rate + type) * (Math.pow(1 + rate, nper) - 1)));
 }
 
 function PV(rate, per, nper, pmt, fv)
@@ -70,7 +82,7 @@ function PV(rate, per, nper, pmt, fv)
     y = Math.pow(1 + rate, nper);
     pv_value = - ( x * ( fv * rate - pmt + y * pmt )) / rate;
   }
-  pv_value = conv_number(pv_value,2);
+  pv_value = conv_number(pv_value, 2);
   return (pv_value);
 
 }
@@ -146,17 +158,14 @@ function caculateMonthlyIncome() {
 }
 
 function caculateLoanAmount() {
-  var installmentAmount = ( maxDSR * caculateMonthlyIncome() ) - monthlyCommmitement();
+  var installmentAmount = Number((( maxDSR * caculateMonthlyIncome() ) - monthlyCommmitement()).toFixed(2));
   var loanAmount = PV(interestRate, totalOfPeriods, tenor, installmentAmount * -1, defaultFutureValue);
   return loanAmount;
 }
 
 function installmentMonthlyAmount() {
-  var companyBusinessTermLoan = getNumber($('#business-term-loan').val());
-  var mortgageLoan = getNumber($('#mortgage-loan').val());
-  var hirePurchaseLoan = getNumber($('#purchase-loan').val());
-  var privateLenderLoan = getNumber($('#private-lender-loan').val());
-  return companyBusinessTermLoan || mortgageLoan || hirePurchaseLoan || privateLenderLoan;
+  var loanAmount = getNumber($('#loan-amount').val());
+  return PMT(defaultFutureValue, loanAmount * -1, (interestRate * 0.01) / 12, tenor, 0);
 }
 
 function caculateAdjustedCommitement() {
@@ -164,7 +173,7 @@ function caculateAdjustedCommitement() {
 }
 
 function caculateDSR() {
-  return Number(( caculateAdjustedCommitement() / caculateMonthlyIncome() * 100).toFixed(2));
+  return Number(( (caculateAdjustedCommitement() / caculateMonthlyIncome()) * 100).toFixed(2));
 }
 
 function getNumber(value){
@@ -187,6 +196,7 @@ $("#submit-prepayment").click(function(){
   if(stat) {
     var loanAmount = caculateLoanAmount();
     var DSR = caculateDSR();
+
     if (DSR > 60){
       return swal({
         text: "Can't get loan and would you like our consultant to contact you?",
@@ -195,9 +205,8 @@ $("#submit-prepayment").click(function(){
       });
     }
 
-    $('#loan_amt').text(addSeparator(loanAmount, 3));
-    $(".result-loan-eligibility-calculator").show();
-    $("html, body").animate({"scrollTop":$(".result-loan-eligibility-calculator").offset().top},800);
+    $('#loan-amount').val(addSeparator(loanAmount, 3));
+    $("html, body").animate({"scrollTop":$(".loan-amount-result").offset().top},800);
   }
 });
 

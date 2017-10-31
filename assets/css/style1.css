@@ -1488,12 +1488,16 @@ output {
 .page-eligibility .form-actions {
     padding: 0 15px 20px;
 }
+#monthly-commmitement-body{
+    margin-top: 15px;
+}
 #monthly-commmitement-body .form-inline{
     margin-bottom: 15px;
 }
 #monthly-commmitement-body .form-inline .control-label{
     text-align: left;
 }
+
 .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
     text-transform: none;
 }

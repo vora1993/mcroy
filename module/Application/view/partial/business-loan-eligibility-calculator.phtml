@@ -20,10 +20,11 @@
                   </div>
               </div>
               <div class="form-group">
-                  <div class="row form-wizard-title">
-                      <h3>2. <?php echo $this->translate("Monthly Commmitement") ?>?</h3>
-                      <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Lorem Ipsum is also known as: Greeked text, blind text, placeholder text, dummy content, filler text, lipsum, and mock-content." data-html="true" data-original-title="<span><?php echo $this->translate("Monthly Commmitement") ?></span>"><i class="fa fa-question-circle"></i></a>
-                  </div>
+                <div class="row form-wizard-title">
+                    <h3>2. <?php echo $this->translate("Monthly Commmitement") ?>?</h3>
+                    <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Lorem Ipsum is also known as: Greeked text, blind text, placeholder text, dummy content, filler text, lipsum, and mock-content." data-html="true" data-original-title="<span><?php echo $this->translate("Monthly Commmitement") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#monthly-commmitement-body"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="input-group col-md-6">
@@ -32,32 +33,7 @@
                               <i>S$</i>
                           </span>
                       </div>
-                    </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="row form-wizard-title">
-                      <h3>3. <?php echo $this->translate("What Industry Are You In") ?>?</h3>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <div class="input-group col-md-6">
-                            <select class="form-control nobtngrp floatrate" id="industry_type" name="industry_type">
-                              <?php foreach(array("Professionals", "Services", "Logistics & Transportation", "Food & Bev", "Wholesale", "Import & Export", "Trading", "Manufacturing", "Construction", "Retail") as $industry) { ?>
-                                    <option type="radio" name="industry_type" value="<?php echo $industry; ?>"><?php echo $this->translate($industry); ?></option>
-                                  </div>
-                               <?php } ?>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <div class="row form-wizard-title">
-                      <h3><?php echo $this->translate("Input your monthly installment") ?>: </h3>
-                      <a href="javascript:;" data-toggle="collapse" data-target="#monthly-commmitement-body"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                  </div>
-                  <div class="row collapse" id="monthly-commmitement-body">
+                    <div class="collapse" id="monthly-commmitement-body">
                       <div class="row col-md-12 form-inline clearfix">
                         <label class="row control-label col-md-5">1. <?php echo $this->translate("Total monthly installment for Company Business Term Loan"); ?></label>
                         <div class="input-group">
@@ -88,7 +64,38 @@
                             <span class="input-group-addon">S$</span>
                         </div>
                       </div>
+                    </div>
                   </div>
+                </div>
+              </div>
+              <div class="form-group loan-amount-result">
+                  <div class="row form-wizard-title">
+                      <h3>3. <?php echo $this->translate("What Industry Are You In") ?>?</h3>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="input-group col-md-6">
+                            <select class="form-control nobtngrp floatrate" id="industry_type" name="industry_type">
+                              <?php foreach(array("Professionals", "Services", "Logistics & Transportation", "Food & Bev", "Wholesale", "Import & Export", "Trading", "Manufacturing", "Construction", "Retail") as $industry) { ?>
+                              <option type="radio" name="industry_type" value="<?php echo $industry; ?>"><?php echo $this->translate($industry); ?></option>
+                               <?php } ?>
+                            </select>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <div class="row form-wizard-title">
+                    <h3>4. <?php echo $this->translate("Loan Amount") ?></h3>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-group col-md-6">
+                      <input name="loan_amount" id="loan-amount" type="text" class="form-control nobtngrp">
+                      <span class="input-group-addon">S$</span>
+                    </div>
+                  </div>
+                </div>
               </div>
           </div>
           <div class="form-actions">
@@ -100,28 +107,6 @@
               </div>
           </div>
       </form>
-  </div>
-
-  <div class="result-loan-eligibility-calculator" style="display: none;">
-    <div class="col-xs-12">
-      <hr />
-    </div>
-    <form class="row form-horizontal">
-      <div class="form-body">
-        <h3 class="text-center"><?php echo $this->translate("View Business Loan Eligibility Calculator") ?></h3>
-        <div class="form-group">
-          <div class="row col-sm-6">
-              <div class="row col-md-4 form-wizard-title">
-                  <h3><?php echo $this->translate("Loan Amount") ?></h3>
-              </div>
-              <div class="input-group col-md-8">
-                <label id="loan_amt" class="firstTxt">1</label>
-                <span class="input-group-addon">S$</span>
-              </div>
-          </div>
-        </div>
-      </div>
-    </form>
   </div>
 </div>
 <?php
