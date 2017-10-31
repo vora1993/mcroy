@@ -189,6 +189,7 @@ $("#submit-reset").click(function(){
   $("#purchase-loan").val("");
   $("#private-lender-loan").val("");
   $('#industry_type').val("");
+  $('#loan-amount').val("");
 });
 
 $('#monthly-commmitement-individual').click(function(){
