@@ -202,7 +202,6 @@ $('#monthly-commmitement-individual').click(function(){
 $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
-    var loanAmount = caculateLoanAmount();
     var DSR = caculateDSR();
 
     if (DSR > 60){
@@ -213,6 +212,7 @@ $("#submit-prepayment").click(function(){
       });
     }
 
+    var loanAmount = caculateLoanAmount();
     $('#loan-amount').val(addSeparator(loanAmount, 3));
     $("html, body").animate({"scrollTop":$(".loan-amount-result").offset().top},800);
   }
