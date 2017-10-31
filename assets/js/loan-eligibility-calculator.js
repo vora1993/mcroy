@@ -211,6 +211,12 @@ $("#submit-prepayment").click(function(){
         type: 'warning',
         confirmButtonText: 'Ok'
       });
+    } else if ($('#loan-amount').val() !== "" ) {
+      return swal({
+        text: "You can get loan.",
+        type: 'success',
+        confirmButtonText: 'Ok'
+      });
     }
 
     var loanAmount = caculateLoanAmount();
