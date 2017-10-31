@@ -192,7 +192,11 @@ $("#submit-reset").click(function(){
 });
 
 $('#monthly-commmitement-individual').click(function(){
-  $('#monthly-commmitement-body').slideToggle();
+  $('#monthly-commmitement-body').slideToggle(function() {
+    visible = $("#monthly-commmitement-body").is(":visible");
+    $("#monthly-commmitement-individual i").toggleClass('fa-plus', !visible);
+    $("#monthly-commmitement-individual i").toggleClass('fa-minus', visible);
+  });
 });
 
 $("#submit-prepayment").click(function(){
