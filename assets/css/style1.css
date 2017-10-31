@@ -1962,6 +1962,9 @@ td {
     .page-eligibility .form-actions button {
         margin-bottom: 15px;
     }
+    .page-eligibility .form-actions{
+        margin-top: 0px;
+    }
 }
 @media (max-width: 639px) {
     .top-box {
