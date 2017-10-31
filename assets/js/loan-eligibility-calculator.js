@@ -191,6 +191,10 @@ $("#submit-reset").click(function(){
   $('#industry_type').val("");
 });
 
+$('#monthly-commmitement-individual').click(function(){
+  $('#monthly-commmitement-body').slideToggle();
+});
+
 $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
