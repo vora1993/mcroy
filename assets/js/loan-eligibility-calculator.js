@@ -181,6 +181,26 @@ function getNumber(value){
   return parseFloat(number)
 }
 
+function caculateMonthlyCommmitement(){
+  return ( getNumber($('#business-term-loan').val()) + getNumber($('#mortgage-loan').val()) + getNumber($('#purchase-loan').val()) + getNumber($('#private-lender-loan').val()) );
+}
+
+function resetAllMonthlyIndividualCommitment(){
+  $('#business-term-loan').val("");
+  $('#mortgage-loan').val("");
+  $('#purchase-loan').val("");
+  $('#private-lender-loan').val("");
+}
+
+$('#monthly-commmitement').on('keyup', function(){
+  resetAllMonthlyIndividualCommitment();
+});
+
+$('#business-term-loan, #mortgage-loan, #purchase-loan, #private-lender-loan').on('keyup', function(){
+  var summaryCommitement = caculateMonthlyCommmitement();
+  $('#monthly-commmitement').val(summaryCommitement);
+});
+
 $("#submit-reset").click(function(){
   $("#monthly-turnover").val("");
   $("#monthly-commmitement").val("");
@@ -204,22 +224,38 @@ $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
     var DSR = caculateDSR();
-
+    var loanAmount = $('#loan-amount').val();
     if (DSR > 60){
       return swal({
-        text: "Can't get loan and would you like our consultant to contact you?",
+        html: "<p>Can't get loan, would you like our consultant to contact you for alternative funding?</p><br/><small><strong>*disclaimer</strong>: Note that above serves as a general guideline and other factors like key man credit bureau, financial statement analysis, etc will be taken into consideration for bank approval criteria.</small>",
         type: 'warning',
-        confirmButtonText: 'Ok'
+        showCancelButton: true,
+        confirmButtonColor: '#8dc63f',
+        cancelButtonColor: '#525e64',
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancel',
+        confirmButtonClass: 'btn green-custom btn-lg',
+        cancelButtonClass: 'btn grey-mint font-white btn-lg margin-top-sm',
+      }).then(function () {
+        window.location.href = base_path + '/page/contact-us';
       });
-    } else if ($('#loan-amount').val() !== "" ) {
+    } else if (loanAmount !== "" ) {
       return swal({
-        text: "You can get loan.",
+        html: "<p>Congratulation! Based on our MoneyCompare Algorithm, you are liable for S$" + addSeparator(loanAmount, 3) + " loan amount.</p><p>Apply through <a href='http://moneycompare.sg/'>MoneyCompare.SG</a>, we will send you an email on the approving bank names!</p>",
         type: 'success',
-        confirmButtonText: 'Ok'
+        showCancelButton: true,
+        confirmButtonColor: '#8dc63f',
+        cancelButtonColor: '#525e64',
+        confirmButtonText: 'Apply Myself!',
+        cancelButtonText: 'Cancel',
+        confirmButtonClass: 'btn green-custom btn-lg',
+        cancelButtonClass: 'btn grey-mint font-white btn-lg margin-top-sm',
+      }).then(function () {
+        window.location.href = base_path + '/loan-application/business-loan/business-term-loan';
       });
     }
 
-    var loanAmount = caculateLoanAmount();
+    loanAmount = caculateLoanAmount();
     $('#loan-amount').val(addSeparator(loanAmount, 3));
     $("html, body").animate({"scrollTop":$(".loan-amount-result").offset().top},800);
   }
