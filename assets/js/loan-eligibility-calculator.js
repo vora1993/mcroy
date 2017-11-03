@@ -239,7 +239,7 @@ $('body').on('click', '.directors-noa', function(){
   var formSize = $('.directors-notice-box').length;
 
   $el.find('input[type="radio"]').attr('name', 'noa_type_'+ formSize);
-  $el.appendTo($(this).closest(".form-group"));
+  $el.insertAfter($(this).closest(".form-group"));
 });
 
 $('body').on('click', '.directors-noa-minus', function(){
