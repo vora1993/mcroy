@@ -1,7 +1,8 @@
 <div class="form-wizard">
   <div class="title-mortgage"><?php echo $this->translate("Business Loan Eligibility Calculator"); ?></div>
   <div id="personalInfo" style="display: block;">
-      <form class="form-horizontal">
+      <form class="form-horizontal" id="business-loan-eligibility">
+          <input type="hidden" name="_token" value="<?php echo md5(uniqid(rand(), true)); ?>" >
           <div class="form-body">
               <div class="form-group">
                   <div class="row form-wizard-title">

@@ -181,6 +181,14 @@ function getNumber(value){
   return parseFloat(number)
 }
 
+function collectData(){
+  $.ajax({
+    method: "POST",
+    url: base_path + '/page/business-loan-eligibility-calculator',
+    data: $('#business-loan-eligibility').serialize(),
+  })
+}
+
 function caculateMonthlyCommmitement(){
   return ( getNumber($('#business-term-loan').val()) + getNumber($('#mortgage-loan').val()) + getNumber($('#purchase-loan').val()) + getNumber($('#private-lender-loan').val()) );
 }
@@ -240,6 +248,7 @@ $("#submit-prepayment").click(function(){
         window.location.href = base_path + '/page/contact-us';
       });
     } else if (loanAmount !== "" ) {
+      collectData();
       return swal({
         html: "<p>Congratulation! Based on our MoneyCompare Algorithm, you are liable for S$" + addSeparator(loanAmount, 3) + " loan amount.</p><p>Apply through <a href='http://moneycompare.sg/'>MoneyCompare.SG</a>, we will send you an email on the approving bank names!</p>",
         type: 'success',

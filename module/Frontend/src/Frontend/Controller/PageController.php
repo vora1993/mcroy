@@ -4,6 +4,7 @@ namespace Frontend\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container as Session;
+use Zend\Db\Sql\Expression;
 
 class PageController extends AbstractActionController
 {
@@ -135,6 +136,11 @@ class PageController extends AbstractActionController
     if ($request->isPost())
     {
       $params = $request->getPost();
+      $messages = array();
+      $response = $this->getResponse();
+
+      $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
+
       $data = array(
         'monthly_turnover' => $params['monthly_turnover'],
         'monthly_commmitement' => $params['monthly_commmitement'],
@@ -150,5 +156,23 @@ class PageController extends AbstractActionController
         'noa_type' => $params['noa_type']
       );
       $user_id = $user ? $user->getId() : NULL;
+
+      $business_loan_eligibility = new \Application\Entity\BusinessLoanEligibility;
+      $business_loan_eligibility->setUserId($user_id);
+      $business_loan_eligibility->setData(json_encode($data));
+      $business_loan_eligibility->setDateAdded(new Expression('NOW()'));
+      $business_loan_eligibility->setDateModified(new Expression('NOW()'));
+      $business_loan_eligibility->setToken($params['_token']);
+      $added = $model_business_loan_eligibility->insert($business_loan_eligibility);
+      if ($added) {
+        $messages['success'] = true;
+      } else {
+        $messages['success'] = false;
+        $messages['msg'] = $translator->translate("Something error. Please check");
+      }
+
+      $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+      return $response;
     }
   }
+}
