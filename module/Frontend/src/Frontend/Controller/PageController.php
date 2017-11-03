@@ -153,13 +153,14 @@ class PageController extends AbstractActionController
         'premises_type' => $params['premises_type'],
         'rental_amount' => $params['rental_amount'],
         'director_type' => $params['director_type'],
+        'property_owned_type' => $params['property_owned_type'],
         'noa_type' => $params['noa_type']
       );
       $user_id = $user ? $user->getId() : NULL;
 
       $business_loan_eligibility = new \Application\Entity\BusinessLoanEligibility;
       $business_loan_eligibility->setUserId($user_id);
-      $business_loan_eligibility->setData(json_encode($data));
+      $business_loan_eligibility->setData(\Zend\Json\Json::encode($data));
       $business_loan_eligibility->setDateAdded(new Expression('NOW()'));
       $business_loan_eligibility->setDateModified(new Expression('NOW()'));
       $business_loan_eligibility->setToken($params['_token']);
