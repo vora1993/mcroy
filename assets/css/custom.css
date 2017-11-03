@@ -640,6 +640,10 @@ a:hover, a:focus {
     color: #ffffff;
 }
 
+#business-loan-eligibility .md-radio input[type=radio]{
+    left: 0;
+}
+
 .loan-sidebar {
     float: left;
     width: 300px;

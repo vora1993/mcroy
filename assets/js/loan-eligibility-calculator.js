@@ -3,18 +3,18 @@ var tenor = 5 * 12;
 var maxDSR = 60 / 100;
 var defaultFutureValue = 0;
 var totalOfPeriods = 12;
-var investIndustryType =  {
-  'Professionals': 15.18,
-  'Services': 15.18,
-  'Logistics & Transportation': 14.65,
-  'Food & Bev': 10.7,
-  'Wholesale': 9.99,
-  'Import & Export': 9.99,
-  'Trading': 9.99,
-  'Manufacturing': 8.41,
-  'Construction ': 5.64,
-  'Retail': 4.11
-};
+// var investIndustryType =  {
+//   'Professionals': 15.18,
+//   'Services': 15.18,
+//   'Logistics & Transportation': 14.65,
+//   'Food & Bev': 10.7,
+//   'Wholesale': 9.99,
+//   'Import & Export': 9.99,
+//   'Trading': 9.99,
+//   'Manufacturing': 8.41,
+//   'Construction ': 5.64,
+//   'Retail': 4.11
+// };
 
 function enter_check(e)
 {
@@ -150,10 +150,16 @@ function monthlyCommmitement() {
   return getNumber($('#monthly-commmitement').val());
 }
 
+function getIncomeFactor(value){
+  return _.find(investIndustryType, function(industry){
+    return industry.industry == value
+  });
+}
+
 function caculateMonthlyIncome() {
   var monthlyTurnover = getNumber($('#monthly-turnover').val());
   var industryType =  $('select[name="industry_type"]').val();
-  var incomeFactor = investIndustryType[industryType];
+  var incomeFactor = getNumber(getIncomeFactor(industryType).income_factor);
   return Number((monthlyTurnover * incomeFactor * 1.2 / 100).toFixed(2));
 }
 
@@ -185,7 +191,7 @@ function collectData(){
   $.ajax({
     method: "POST",
     url: base_path + '/page/business-loan-eligibility-calculator',
-    data: $('#business-loan-eligibility').serialize(),
+    data: {data: $('#business-loan-eligibility').serialize()},
   })
 }
 
@@ -208,6 +214,37 @@ $('#business-term-loan, #mortgage-loan, #purchase-loan, #private-lender-loan').o
   var summaryCommitement = caculateMonthlyCommmitement();
   $('#monthly-commmitement').val(summaryCommitement);
 });
+
+$('input[name="premises_type"]').on('change', function(){
+  if ($(this).val() == 'rented'){
+    $('#rented-section-box').removeClass('hidden');
+  } else {
+    $('#rental-amount').val("");
+    $('#rented-section-box').addClass('hidden');
+  }
+});
+
+$('input[name="director_type"]').on('change', function(){
+  if ($(this).val() == 'yes'){
+    $('#director-property-box').removeClass('hidden');
+  } else {
+    $('#property_owned_type').val("");
+    $('#director-property-box').addClass('hidden');
+  }
+});
+
+$('body').on('click', '.directors-noa', function(){
+  var $el = $(this).closest('.form-group.directors-notice-box').clone();
+  $el.find('.directors-noa-minus').removeClass('hidden');
+  var formSize = $('.directors-notice-box').length;
+
+  $el.find('input[type="radio"]').attr('name', 'noa_type_'+ formSize);
+  $el.appendTo($(this).closest(".form-group"));
+});
+
+$('body').on('click', '.directors-noa-minus', function(){
+  $(this).closest('.form-group.directors-notice-box').remove();
+})
 
 $("#submit-reset").click(function(){
   $("#monthly-turnover").val("");

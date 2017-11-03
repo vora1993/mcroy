@@ -133,6 +133,8 @@ class PageController extends AbstractActionController
 
   public function businessLoanEligibilityCalculatorAction() {
     $request = $this->getRequest();
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $income_factor = $application_model_setting->fetchRow(array('key' => 'income_factor'));
     if ($request->isPost())
     {
       $params = $request->getPost();
@@ -141,21 +143,7 @@ class PageController extends AbstractActionController
 
       $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
 
-      $data = array(
-        'monthly_turnover' => $params['monthly_turnover'],
-        'monthly_commmitement' => $params['monthly_commmitement'],
-        'business_term_loan' => $params['business_term_loan'],
-        'mortgage_loan' => $params['mortgage_loan'],
-        'purchase_loan' => $params['purchase_loan'],
-        'private_lender_loan' => $params['private_lender_loan'],
-        'industry_type' => $params['industry_type'],
-        'loan_amount' => $params['loan_amount'],
-        'premises_type' => $params['premises_type'],
-        'rental_amount' => $params['rental_amount'],
-        'director_type' => $params['director_type'],
-        'property_owned_type' => $params['property_owned_type'],
-        'noa_type' => $params['noa_type']
-      );
+      $data = $params['data'];
       $user_id = $user ? $user->getId() : NULL;
 
       $business_loan_eligibility = new \Application\Entity\BusinessLoanEligibility;
@@ -163,7 +151,7 @@ class PageController extends AbstractActionController
       $business_loan_eligibility->setData(\Zend\Json\Json::encode($data));
       $business_loan_eligibility->setDateAdded(new Expression('NOW()'));
       $business_loan_eligibility->setDateModified(new Expression('NOW()'));
-      $business_loan_eligibility->setToken($params['_token']);
+      $business_loan_eligibility->setToken($params['data']['_token']);
       $added = $model_business_loan_eligibility->insert($business_loan_eligibility);
       if ($added) {
         $messages['success'] = true;
@@ -175,5 +163,7 @@ class PageController extends AbstractActionController
       $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
       return $response;
     }
+
+    return array('income_factor' => \Zend\Json\Json::encode ( $income_factor->getValue() ));
   }
 }
