@@ -234,14 +234,7 @@ $('body').on('change', '.local-property input[type="radio"]', function(){
 });
 
 $("#submit-reset").click(function(){
-  $("#monthly-turnover").val("");
-  $("#monthly-commitment").val("");
-  $("#business-term-loan").val("");
-  $("#mortgage-loan").val("");
-  $("#purchase-loan").val("");
-  $("#private-lender-loan").val("");
-  $('#industry_type').val("");
-  $('#loan-amount').val("");
+  $("#business-loan-eligibility input[type='text']").val("");
 });
 
 $('#monthly-commitment-individual').click(function(){
