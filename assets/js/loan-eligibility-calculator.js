@@ -3,22 +3,9 @@ var tenor = 5 * 12;
 var maxDSR = 60 / 100;
 var defaultFutureValue = 0;
 var totalOfPeriods = 12;
-// var investIndustryType =  {
-//   'Professionals': 15.18,
-//   'Services': 15.18,
-//   'Logistics & Transportation': 14.65,
-//   'Food & Bev': 10.7,
-//   'Wholesale': 9.99,
-//   'Import & Export': 9.99,
-//   'Trading': 9.99,
-//   'Manufacturing': 8.41,
-//   'Construction ': 5.64,
-//   'Retail': 4.11
-// };
 
 function enter_check(e)
 {
-
   var e=window.event || e;
   var keyunicode=e.charCode || e.keyCode;
   if (keyunicode==13)
@@ -28,7 +15,6 @@ function enter_check(e)
       return false;
     }
   }
-
   return true;
 }
 
@@ -58,12 +44,11 @@ function validateInputs() {
 
 function PMT(fv, pv, rate, nper, type)
 {
-    return((-fv - pv * Math.pow(1 + rate, nper)) / ((1 / rate + type) * (Math.pow(1 + rate, nper) - 1)));
+  return((-fv - pv * Math.pow(1 + rate, nper)) / ((1 / rate + type) * (Math.pow(1 + rate, nper) - 1)));
 }
 
 function PV(rate, per, nper, pmt, fv)
 {
-
   nper = parseFloat(nper);
   pmt = parseFloat(pmt);
   fv = parseFloat(fv);
@@ -84,7 +69,6 @@ function PV(rate, per, nper, pmt, fv)
   }
   pv_value = conv_number(pv_value, 2);
   return (pv_value);
-
 }
 
 function conv_number(expr, decplaces)
@@ -136,14 +120,14 @@ function addSeparator(valueAmt, digit)
       }
     }
   } while (flag == 0);
-  while (txt.length>digit)
+  while (txt.length > digit)
   {
     new_txt = separator + txt.substring(txt.length - digit,txt.length) + new_txt;
     txt = txt.substring(0,txt.length - digit);
   }
   new_txt = txt.substring(0) + new_txt;
 
-  return new_txt+"."+decimalPart;
+  return new_txt + "." + decimalPart;
 }
 
 function monthlyCommitment() {
@@ -288,12 +272,6 @@ $(".nav-tabs").on("click", "a", function (e) {
     $(this).tab('show');
   }
 })
-.on("click", "span", function () {
-    var anchor = $(this).siblings('a');
-    $(anchor.attr('href')).remove();
-    $(this).parent().remove();
-    $(".nav-tabs li").children('a').first().click();
-});
 
 $('.add-applicant').click(function (e) {
   e.preventDefault();
@@ -326,11 +304,4 @@ $('.add-applicant').click(function (e) {
   html_clone.find('.director-property-box').removeClass('hidden');
   $('.tab-content').append('<div class="tab-pane panel-body" id="' + tabId + '">' + html_clone.html() + '</div>');
   $('.nav-tabs li:nth-child(' + id + ') a').click();
-});
-
-$("#submit-back").click(function(){
-  $("#repayDet").hide();
-  $("#personalInfo").fadeIn('5000');
-  $("html, body").animate({"scrollTop":$("#stps").offset().top},800);
-  $("#stps .step-2").removeClass('active');
 });
