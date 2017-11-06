@@ -140,19 +140,31 @@ class PageController extends AbstractActionController
       $params = $request->getPost();
       $messages = array();
       $response = $this->getResponse();
+      $data = $params;
 
       $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
+      $business_loan_eligibility = $model_business_loan_eligibility->fetchRow(array('token' => $params['_token']));
 
-      $data = $params['data'];
+      if (!empty($business_loan_eligibility)){
+        $id = $business_loan_eligibility->getId();
+      } else {
+        $business_loan_eligibility = new \Application\Entity\BusinessLoanEligibility;
+        $business_loan_eligibility->setDateAdded(new Expression('NOW()'));
+        $business_loan_eligibility->setToken($params['_token']);
+      }
+
       $user_id = $user ? $user->getId() : NULL;
-
-      $business_loan_eligibility = new \Application\Entity\BusinessLoanEligibility;
       $business_loan_eligibility->setUserId($user_id);
       $business_loan_eligibility->setData(\Zend\Json\Json::encode($data));
-      $business_loan_eligibility->setDateAdded(new Expression('NOW()'));
       $business_loan_eligibility->setDateModified(new Expression('NOW()'));
-      $business_loan_eligibility->setToken($params['data']['_token']);
-      $added = $model_business_loan_eligibility->insert($business_loan_eligibility);
+
+      if (!empty($id)){
+        $business_loan_eligibility->setId($id);
+        $added = $model_business_loan_eligibility->update($business_loan_eligibility);
+      } else{
+        $added = $model_business_loan_eligibility->insert($business_loan_eligibility);
+      }
+
       if ($added) {
         $messages['success'] = true;
       } else {

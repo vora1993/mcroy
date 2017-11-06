@@ -304,7 +304,7 @@ a:hover, a:focus {
 }
 
 .page-eligibility .form-wizard .form-wizard-title h3 {
-    padding: 10px 5px 10px 0px;
+    padding: 10px 5px 10px 15px;
 }
 
 .form-auth .form-wizard-title h3 {
@@ -1479,10 +1479,14 @@ a:hover, a:focus {
     font-size: 16px;
 }
 
-.page-mortgage .form-body,
-.page-eligibility .form-body {
+.page-mortgage .form-body{
     padding-left: 35px;
     padding-right: 35px;
+}
+
+.page-eligibility .form-body {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .nobtngrp {
@@ -2009,6 +2013,10 @@ ul.stay-connected > li.instagram {
     padding: 0;
     list-style-type: none;
     text-align: left;
+}
+
+.margin-top-sm {
+    margin-top: 15px;
 }
 
 .swal2-modal button.styled.margin-top-sm {

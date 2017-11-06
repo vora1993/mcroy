@@ -191,7 +191,7 @@ function collectData(){
   $.ajax({
     method: "POST",
     url: base_path + '/page/business-loan-eligibility-calculator',
-    data: {data: $('#business-loan-eligibility').serialize()},
+    data: $('#business-loan-eligibility').serialize(),
   })
 }
 
@@ -224,27 +224,14 @@ $('input[name="premises_type"]').on('change', function(){
   }
 });
 
-$('input[name="director_type"]').on('change', function(){
+$('body').on('change', '.local-property input[type="radio"]', function(){
   if ($(this).val() == 'yes'){
-    $('#director-property-box').removeClass('hidden');
+    $(this).closest('.form-group').next().removeClass('hidden');
   } else {
     $('#property_owned_type').val("");
-    $('#director-property-box').addClass('hidden');
+    $(this).closest('.form-group').next().addClass('hidden');
   }
 });
-
-$('body').on('click', '.directors-noa', function(){
-  var $el = $(this).closest('.form-group.directors-notice-box').clone();
-  $el.find('.directors-noa-minus').removeClass('hidden');
-  var formSize = $('.directors-notice-box').length;
-
-  $el.find('input[type="radio"]').attr('name', 'noa_type_'+ formSize);
-  $el.insertAfter($(this).closest(".form-group"));
-});
-
-$('body').on('click', '.directors-noa-minus', function(){
-  $(this).closest('.form-group.directors-notice-box').remove();
-})
 
 $("#submit-reset").click(function(){
   $("#monthly-turnover").val("");
@@ -268,9 +255,8 @@ $('#monthly-commmitement-individual').click(function(){
 $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
-    var DSR = caculateDSR();
-    var loanAmount = $('#loan-amount').val();
-    if (DSR > 60){
+    var loanAmount = caculateLoanAmount();
+    if (loanAmount < 0){
       return swal({
         html: "<p>Can't get loan, would you like our consultant to contact you for alternative funding?</p><br/><small><strong>*disclaimer</strong>: Note that above serves as a general guideline and other factors like key man credit bureau, financial statement analysis, etc will be taken into consideration for bank approval criteria.</small>",
         type: 'warning',
@@ -300,11 +286,53 @@ $("#submit-prepayment").click(function(){
         window.location.href = base_path + '/loan-application/business-loan/business-term-loan';
       });
     }
-
-    loanAmount = caculateLoanAmount();
-    $('#loan-amount').val(addSeparator(loanAmount, 3));
-    $("html, body").animate({"scrollTop":$(".loan-amount-result").offset().top},800);
   }
+});
+
+$(".nav-tabs").on("click", "a", function (e) {
+  e.preventDefault();
+  if (!$(this).hasClass('add-applicant')) {
+    $(this).tab('show');
+  }
+})
+.on("click", "span", function () {
+    var anchor = $(this).siblings('a');
+    $(anchor.attr('href')).remove();
+    $(this).parent().remove();
+    $(".nav-tabs li").children('a').first().click();
+});
+
+$('.add-applicant').click(function (e) {
+  e.preventDefault();
+  var id = $(".nav-tabs").children().length; //think about it ;)
+  var tabId = 'applicant_' + id;
+  $(this).closest('li').before('<li><a href="#applicant_' + id + '">Director ' + id + '</a></li>');
+  var html_clone = $('.tab-content').find('.tab-pane').last().clone();
+
+  $.each(html_clone.find(":input"), function() {
+    var thisid = $(this).attr('id');
+    thisid = thisid.replace(/\d+/, id);
+    var thisname = $(this).attr('name');
+    thisname = thisname.replace(/\d+/, id);
+
+    $(this).attr('name', thisname);
+    $(this).attr('id', thisid);
+    if ($(this).attr('type') == 'text'){
+      $(this).val('');
+    }
+  });
+
+  $.each(html_clone.find("label"), function() {
+    var thisfor = $(this).attr('for');
+    if (thisfor && (thisfor !== '') ){
+       thisfor = thisfor.replace(/\d+/, id);
+      $(this).attr('for', thisfor);
+    }
+  });
+
+  html_clone.find('.director-property-box').removeClass('hidden');
+  $('.tab-content').append('<div class="tab-pane panel-body" id="' + tabId + '">' + html_clone.html() + '</div>');
+  $('.nav-tabs li:nth-child(' + id + ') a').click();
 });
 
 $("#submit-back").click(function(){

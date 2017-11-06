@@ -1463,7 +1463,7 @@ output {
 .search-bank-fixed .search-bank .lb-loan {
     padding-top: 10px;
 }
-.page-mortgage, .page-eligibility {
+.page-mortgage {
     width: 100%;
     float: left;
     border: 2px solid #f6f6f6;
@@ -1472,6 +1472,10 @@ output {
 .page-eligibility .form-wizard {
     width: 100%;
     float: left;
+}
+
+.page-eligibility .director-box input{
+    float: none;
 }
 .title-mortgage {
     color: #193d5a;
