@@ -39,9 +39,9 @@ function validateInputs() {
     return false;
   }
 
-  if ($("#monthly-commmitement").val() == "") {
-    toastr.warning("Please enter your monthly commmitement.");
-    $("#monthly-commmitement").focus();
+  if ($("#monthly-commitement").val() == "") {
+    toastr.warning("Please enter your monthly commitement.");
+    $("#monthly-commitement").focus();
     return false;
   }
 
@@ -146,8 +146,8 @@ function addSeparator(valueAmt, digit)
   return new_txt+"."+decimalPart;
 }
 
-function monthlyCommmitement() {
-  return getNumber($('#monthly-commmitement').val());
+function monthlyCommitement() {
+  return getNumber($('#monthly-commitement').val());
 }
 
 function getIncomeFactor(value){
@@ -164,7 +164,7 @@ function caculateMonthlyIncome() {
 }
 
 function caculateLoanAmount() {
-  var installmentAmount = Number((( maxDSR * caculateMonthlyIncome() ) - monthlyCommmitement()).toFixed(2));
+  var installmentAmount = Number((( maxDSR * caculateMonthlyIncome() ) - monthlyCommitement()).toFixed(2));
   var loanAmount = PV(interestRate, totalOfPeriods, tenor, installmentAmount * -1, defaultFutureValue);
   return loanAmount;
 }
@@ -175,7 +175,7 @@ function installmentMonthlyAmount() {
 }
 
 function caculateAdjustedCommitement() {
-  return (monthlyCommmitement() + installmentMonthlyAmount());
+  return (monthlyCommitement() + installmentMonthlyAmount());
 }
 
 function caculateDSR() {
@@ -195,7 +195,7 @@ function collectData(){
   })
 }
 
-function caculateMonthlyCommmitement(){
+function caculateMonthlyCommitement(){
   return ( getNumber($('#business-term-loan').val()) + getNumber($('#mortgage-loan').val()) + getNumber($('#purchase-loan').val()) + getNumber($('#private-lender-loan').val()) );
 }
 
@@ -206,13 +206,13 @@ function resetAllMonthlyIndividualCommitment(){
   $('#private-lender-loan').val("");
 }
 
-$('#monthly-commmitement').on('keyup', function(){
+$('#monthly-commitement').on('keyup', function(){
   resetAllMonthlyIndividualCommitment();
 });
 
 $('#business-term-loan, #mortgage-loan, #purchase-loan, #private-lender-loan').on('keyup', function(){
-  var summaryCommitement = caculateMonthlyCommmitement();
-  $('#monthly-commmitement').val(summaryCommitement);
+  var summaryCommitement = caculateMonthlyCommitement();
+  $('#monthly-commitement').val(summaryCommitement);
 });
 
 $('input[name="premises_type"]').on('change', function(){
@@ -235,7 +235,7 @@ $('body').on('change', '.local-property input[type="radio"]', function(){
 
 $("#submit-reset").click(function(){
   $("#monthly-turnover").val("");
-  $("#monthly-commmitement").val("");
+  $("#monthly-commitement").val("");
   $("#business-term-loan").val("");
   $("#mortgage-loan").val("");
   $("#purchase-loan").val("");
@@ -244,11 +244,11 @@ $("#submit-reset").click(function(){
   $('#loan-amount').val("");
 });
 
-$('#monthly-commmitement-individual').click(function(){
-  $('#monthly-commmitement-body').slideToggle(function() {
-    visible = $("#monthly-commmitement-body").is(":visible");
-    $("#monthly-commmitement-individual i").toggleClass('fa-plus', !visible);
-    $("#monthly-commmitement-individual i").toggleClass('fa-minus', visible);
+$('#monthly-commitement-individual').click(function(){
+  $('#monthly-commitement-body').slideToggle(function() {
+    visible = $("#monthly-commitement-body").is(":visible");
+    $("#monthly-commitement-individual i").toggleClass('fa-plus', !visible);
+    $("#monthly-commitement-individual i").toggleClass('fa-minus', visible);
   });
 });
 
