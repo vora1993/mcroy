@@ -41,38 +41,38 @@ $this->headTitle($title);
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Title") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="post_title" data-required="1" class="form-control" value="<?php echo $this->post->getPostTitle() ?>" /> 
+                                        <input type="text" name="post_title" data-required="1" class="form-control" value="<?php echo $this->post->getPostTitle() ?>" />
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Seo") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="seo" class="form-control" value="<?php echo $this->post->getSeo() ?>" /> 
+                                        <input type="text" name="seo" class="form-control" value="<?php echo $this->post->getSeo() ?>" />
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Date") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="post_date" class="form-control date-picker" data-date-format="dd/mm/yyyy" value="<?php echo date("d/m/Y", strtotime($this->post->getPostDate())) ?>" /> 
+                                        <input type="text" name="post_date" class="form-control date-picker" data-date-format="dd/mm/yyyy" value="<?php echo date("d/m/Y", strtotime($this->post->getPostDate())) ?>" />
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Excerpt") ?></label>
                                     <div class="col-md-9">
                                         <textarea name="post_excerpt" class="form-control" rows="4"><?php echo $this->post->getPostExcerpt() ?></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Content") ?></label>
                                     <div class="col-md-9">
                                         <textarea name="post_content" class="form-control tinymce"><?php echo $this->post->getPostContent() ?></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Featured Image") ?></label>
                                     <div class="col-md-6">
@@ -106,7 +106,7 @@ $this->headTitle($title);
                                         <img id="photo" alt="featured image" src="<?php echo $this->basePath($image_src) ?>" width="128" height="128" />
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Featured") ?></label>
                                     <div class="col-md-6">
@@ -116,7 +116,7 @@ $this->headTitle($title);
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Attachment") ?></label>
                                     <div class="col-md-6">
@@ -165,7 +165,7 @@ $this->headTitle($title);
                 </div>
             </div>
         </div>
-    </div>            
+    </div>
 </div>
 <!-- END CONTENT -->
 <?php
@@ -206,7 +206,7 @@ $('#photoupload').on("change", function(){
                 $('#featured_image').val(result.name);
             } else {
                 toastr.warning(result.msg);
-            } 
+            }
         }
     }
     // Add any event handlers here...
@@ -227,12 +227,12 @@ $('#attachment_upload').on("change", function(){
                 var all_name = $('input[name=attachment]').val();
                 all_name = all_name+","+result.name;
                 $('input[name=attachment]').val(all_name);
-                
+
                 $("#attachment_files").append('<li data-filename="'+result.name+'">'+result.name+'<a href="javascript:;" onclick="delete_attachment(this)"><i class="fa fa-remove font-red"></i></a></li>');
                 toastr.success("File uploaded.");
             } else {
                 toastr.warning(result.msg);
-            } 
+            }
         }
     }
     // Add any event handlers here...
@@ -246,25 +246,25 @@ function delete_attachment(button) {
         $.ajax({
             type: 'POST',
             url: full_url + '/admin/page/delete-attachment',
-            data: {name:name}, 
+            data: {name:name},
             success: function(data) {
                 if(data.success) {
                     $(button).parent().remove();
-                    var curent='';  
+                    var curent='';
                     $('#attachment_files > li').each(function(){
-                        curent = curent+','+$(this).attr('data-filename'); 
+                        curent = curent+','+$(this).attr('data-filename');
                     });
-                    $('input[name=attachment]').val(curent); 
-                } 
+                    $('input[name=attachment]').val(curent);
+                }
             },
             error: function(xhr) { // if error occured
                 toastr.error("Error occured. Please try again.");
             },
-            dataType: 'json'  
+            dataType: 'json'
         });
     }
 }
-        
+
 tinymce.baseURL = "{$this->basePath('assets/plugins/tinymce/js/tinymce')}";
 tinymce.PluginManager.add('mce_mlib', function(editor, url) {
 	var tinyedit_id = editor.id;
@@ -302,6 +302,7 @@ tinymce.PluginManager.add('mce_mlib', function(editor, url) {
 tinymce.init({
     selector: '.tinymce',
     height: 300,
+    valid_elements : '*[*]',
     menubar: false,
     statusbar: false,
     plugins: 'mce_mlib advlist table link textcolor code',
@@ -345,7 +346,7 @@ form.validate({
             required: true
         }
     },
-    
+
     highlight: function(element) { // hightlight error inputs
         $(element)
             .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -363,16 +364,16 @@ form.validate({
     submitHandler: function (form) {
         // setup some local variables
         var form = $(form);
-        
+
         // let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-        
+
         // serialize the data in the form
         var serializedData = form.serialize();
-        
+
         // let's disable the inputs for the duration of the ajax request
         inputs.prop("disabled", true);
-        
+
         // fire off the request to /form.php
 
         request = $.ajax({
@@ -380,11 +381,11 @@ form.validate({
             type: "post",
             data: serializedData
         });
-        
+
         // Clear Message
         $('#form_post .form-group').removeClass('has-error');
         $('#form_post .help-block, #form_post .alert').remove();
-        
+
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
@@ -403,13 +404,13 @@ form.validate({
                 }
             }
         });
-        
+
         // callback handler that will be called on failure
         request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
             toastr.error("The following error occured: " + textStatus, errorThrown);
         });
-        
+
         // callback handler that will be called regardless
         // if the request failed or succeeded
         request.always(function () {

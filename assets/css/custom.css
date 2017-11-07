@@ -1,9 +1,10 @@
 /* here you can put your own css to customize and override the theme */
-/*body {
-    font-family: 'TrajanPro', Sans-Serif;
+body {
+    /*font-family: 'TrajanPro', Sans-Serif;
     font-family: 'Open Sans' sans-serif;
-    font-size: 12px;
-}*/
+    font-size: 12px;*/
+    -webkit-font-smoothing: antialiased;
+}
 a {
     color: #12aaeb;
 }
@@ -111,7 +112,7 @@ a:hover, a:focus {
     padding: 0 20px !important;
     border-bottom: 0 !important;
     border-radius: 8px 8px 0 0 !important;
-    
+
     -webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;
@@ -168,7 +169,7 @@ a:hover, a:focus {
 }
 
 .stepwizard {
-    display: table;     
+    display: table;
     width: 100%;
     position: relative;
     float: left;
@@ -186,7 +187,7 @@ a:hover, a:focus {
     z-order: 0;
 }
 
-.stepwizard-step {    
+.stepwizard-step {
     display: table-cell;
     text-align: center;
     position: relative;
@@ -288,7 +289,7 @@ a:hover, a:focus {
 }
 
 .form-wizard .form-wizard-title,
-.form-auth .form-wizard-title {    
+.form-auth .form-wizard-title {
     margin-bottom: 0;
 }
 
@@ -640,7 +641,7 @@ a:hover, a:focus {
     float: left;
     width: 300px;
     margin-right: 20px;
-} 
+}
 
 .loan-content {
     overflow: hidden;
@@ -734,7 +735,7 @@ a:hover, a:focus {
     -ms-transition: 0.3s ease;
     width: 100%;
     float: left;
-    
+
     -webkit-border-top-left-radius: 50px;
     -webkit-border-bottom-right-radius: 50px;
     -moz-border-radius-topleft: 50px;
@@ -1090,7 +1091,7 @@ a:hover, a:focus {
 
 .owl-controls .owl-page.active span {
     background: #12aaeb;
-} 
+}
 
 .owl-controls .owl-page span {
     background: #b3b3b3;
@@ -1246,7 +1247,7 @@ a:hover, a:focus {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-   
+
 }
 .calc-circle::after {
     position: absolute;
@@ -1260,7 +1261,7 @@ a:hover, a:focus {
     -moz-border-radius: 50%;
     border-radius: 50%;
     border: 3px solid #c1edff;
-   
+
 }
 
 .calc-results {
@@ -1307,7 +1308,7 @@ a:hover, a:focus {
     display: table;
     width: 100%;
     margin: 0 auto 30px;
-} 
+}
 
 
 .page-business-loan-calculator .form-wizard h3{
@@ -1492,8 +1493,8 @@ a:hover, a:focus {
 }
 
 .page-calculator .page-title {
-    background: #f6f6f6;   
-    padding: 20px 35px;    
+    background: #f6f6f6;
+    padding: 20px 35px;
 }
 
 .page-calculator .page-content {
@@ -1589,7 +1590,7 @@ a:hover, a:focus {
 }
 
 .shortlist {
-    border-top: 1px solid #193d5a;    
+    border-top: 1px solid #193d5a;
 }
 
 .compare-arrow {
@@ -2000,6 +2001,71 @@ ul.stay-connected > li.instagram {
     padding: 0;
     list-style-type: none;
     text-align: left;
+}
+
+.margin-top-sm {
+    margin-top: 15px;
+}
+
+.swal2-modal button.styled.margin-top-sm {
+    margin-top: 15px;
+}
+
+.page-content-justified{
+    text-align: justify;
+}
+
+.faq-panel{
+    border-bottom: solid 1px #e7e6e2;
+    padding: 0;
+    font-size: 14px;
+}
+
+.faq-panel-header{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.faq-panel .faq-panel-header a .fa-caret-down{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-up{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-down{
+    display: inline-block;
+}
+
+.faq-panel .faq-panel-header a i{
+    color: #78aa43;
+}
+
+.faq-panel .faq-panel-header a{
+    display: block;
+    padding: 20px 0 20px 0px;
+    color: #312f2e;
+    position: relative;
+    text-align: left;
+}
+
+.faq-panel .faq-panel-header a span{
+    padding-left: 10px;
+}
+
+.faq-panel-body{
+    margin: 15px 0 25px;
+    font-size: 20px;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.page-content-wrapper .about-bottom{
+    padding-top: 0px;
 }
 
 @media (max-width: 1280px) {

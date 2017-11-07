@@ -3,48 +3,90 @@ $title = $post->getPostTitle();
 $this->headTitle($title);
 ?>
 <div class="page-title">
-    <?php
-    if(file_exists('assets/img/bg-'.$post->getSeo().'.png')) {
-        $bg_src = 'assets/img/bg-'.$post->getSeo().'.png';
-    } else {
-        $bg_src = 'assets/img/bg-about-us.png';
-    }
-    ?>
-    <div class="image-title"><img src="<?php echo $this->basePath($bg_src) ?>" class="img-responsive"></div>
-    <div class="container">
-        <h2><?php echo $title ?></h2>
-    </div>
+  <?php
+  if(file_exists('assets/img/bg-'.$post->getSeo().'.png')) {
+    $bg_src = 'assets/img/bg-'.$post->getSeo().'.png';
+  } else {
+    $bg_src = 'assets/img/bg-about-us.png';
+  }
+  ?>
+  <div class="image-title"><img src="<?php echo $this->basePath($bg_src) ?>" class="img-responsive"></div>
+  <div class="container">
+    <h2><?php echo $title ?></h2>
+  </div>
 </div>
-<?php 
+<?php
 if($post->getFeaturedImage()) {
-    $class = "col-md-6";
+  $class = "col-md-6";
 } else {
-    $class = "col-md-12";
+  $class = "col-md-12";
 }
 ?>
 <div class="container">
-    <div class="page-content-inner">
-        <div class="blog-page blog-content">
-            <div class="row">
-                <div class="<?php echo $class ?>">
-                    <div class="blog-single-content blog-container">
-                        <?php echo $post->getPostContent() ?>
-                    </div>
-                </div>
-                <?php if($post->getFeaturedImage()): ?>
-                <div class="<?php echo $class ?>">
-                    <img src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" class="img-responsive img-centre" />
-                </div>
-                <?php endif; ?>
-            </div>
+  <div class="page-content-inner">
+    <div class="blog-page blog-content">
+      <div class="row">
+        <div class="<?php echo $class ?>">
+          <div class="blog-single-content blog-container">
+           <?php echo $post->getPostContent(); ?>
+          </div>
         </div>
+        <?php if($post->getFeaturedImage()): ?>
+          <div class="<?php echo $class ?>">
+            <img src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" class="img-responsive img-centre" />
+          </div>
+        <?php endif; ?>
+      </div>
     </div>
+  </div>
 </div>
 <div class="about-bottom">
     <div class="container">
-        <h2>Lorem ipsum dolor,<br>consectetuer adipiscing elit. </h2>
-		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
-		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
-		<p>Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. </p>
+        <h2><?php echo $this->translate("Latest News") ?></h2>
+    <div class="news-content">
+        <?php
+                if(count($this->posts) > 0) {
+                    foreach ($this->posts as $post) {
+                        ?>
+                        <div class="item">
+                  <div class="item-news">
+                    <div class="image">
+                      <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
+                    </div>
+
+                    <div class="caption">
+                      <h4><?php echo $post->getPostTitle() ?></h4>
+                      <span class="date-news"><i class="fa fa-calendar"></i> May 22, 2016</span>
+                      <?php
+                                            $introtext = $post->getPostExcerpt();
+                                            if(strlen($introtext) > 150) {
+                                                // truncate string
+                                                $stringCut = substr($introtext, 0, 150);
+
+                                                // make sure it ends in a word so assassinate doesn't become ass...
+                                                $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
+                                            }
+                                            ?>
+                                    <p><?php echo $introtext; ?></p>
+                    </div>
+                    <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
+                  </div>
+                </div>
+                        <?php
+                    }
+                }
+                ?>
+      </div>
+        <div class="text-center"><a href="<?php echo $this->url("blog") ?>" class="btn btn-secondary"><?php echo $this->translate("View All News") ?></a></div>
     </div>
 </div>
+<?php
+  $offStyle = 12;
+  $offScript = 10;
+  $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+  $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+  $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/news-article-slider.js'));
+?>
