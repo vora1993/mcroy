@@ -34,7 +34,11 @@ class PageController extends AbstractActionController
 
     $application_model_page = $this->getServiceLocator()->get('application_model_page');
     $post = $application_model_page->fetchRow(array('seo' => $seo));
-    return array("post" => $post);
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
   }
 
   public function faqForBusinessLoanAction() {

@@ -15,7 +15,7 @@ $this->headTitle($title);
         <h2><?php echo $title ?></h2>
     </div>
 </div>
-<?php 
+<?php
 if($post->getFeaturedImage()) {
     $class1 = "col-md-7";
     $class2 = "col-md-5";
@@ -114,7 +114,7 @@ if($post->getFeaturedImage()) {
     <div class="container">
         <h2><?php echo $this->translate("Latest News") ?></h2>
 		<div class="news-content">
-				<?php 
+				<?php
                 if(count($this->posts) > 0) {
                     foreach ($this->posts as $post) {
                         ?>
@@ -123,7 +123,7 @@ if($post->getFeaturedImage()) {
         						<div class="image">
         							<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
         						</div>
-        
+
         						<div class="caption">
         							<h4><?php echo $post->getPostTitle() ?></h4>
         							<span class="date-news"><i class="fa fa-calendar"></i> May 22, 2016</span>
@@ -132,7 +132,7 @@ if($post->getFeaturedImage()) {
                                             if(strlen($introtext) > 150) {
                                                 // truncate string
                                                 $stringCut = substr($introtext, 0, 150);
-                                                
+
                                                 // make sure it ends in a word so assassinate doesn't become ass...
                                                 $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
                                             }
@@ -157,102 +157,86 @@ $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plug
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/news-article-slider.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
-$('.blog-page .brand').owlCarousel({
-    items: 7,
-   	autoPlay: 5000,
-    center: true,
-   	navigation: true,
-   	navigationText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-   	pagination: false
-});
-$('.news-content').owlCarousel({
-    items: 4,
-   	autoPlay: 5000,
-    center: true,
-   	navigation: true,
-   	navigationText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-   	pagination: false
-});
-
 var form_subscribe = $('#form_subscribe');
 form_subscribe.validate({
-    errorElement: 'span', //default input error message container
-    errorClass: 'help-block', // default input error message class
-    focusInvalid: false, // do not focus the last invalid input
-    ignore: "",
-    rules: {
-        subscribe_email: {
-            required: true,
-            email: true
-        }
-    },
-    
-    highlight: function(element) { // hightlight error inputs
-        $(element)
-            .closest('.form-group').addClass('has-error'); // set error class to the control group
-    },
+errorElement: 'span', //default input error message container
+errorClass: 'help-block', // default input error message class
+focusInvalid: false, // do not focus the last invalid input
+ignore: "",
+rules: {
+  subscribe_email: {
+    required: true,
+    email: true
+  }
+},
 
-    success: function(label) {
+highlight: function(element) { // hightlight error inputs
+  $(element)
+        .closest('.form-group').addClass('has-error'); // set error class to the control group
+      },
+
+      success: function(label) {
         label.closest('.form-group').removeClass('has-error');
         label.remove();
-    },
+      },
 
-    errorPlacement: function(error, element) {
-        //error.insertAfter(element);
-    },
+      errorPlacement: function(error, element) {
+    //error.insertAfter(element);
+  },
 
-    submitHandler: function (form) {
-        // setup some local variables
-        var form = $(form);
-        
-        // let's select and cache all the fields
-        var inputs = form.find("input, select, button, textarea");
-        
-        // serialize the data in the form
-        var serializedData = form.serialize();
-        
-        // let's disable the inputs for the duration of the ajax request
-        inputs.prop("disabled", true);
-        
-        // fire off the request to /form.php
+  submitHandler: function (form) {
+    // setup some local variables
+    var form = $(form);
 
-        request = $.ajax({
-            url: form.attr("action"),
-            type: "post",
-            data: serializedData
-        });
-        
-        // Clear Message
-        $('#form_subscribe .form-group').removeClass('has-error');
-        $('#form_subscribe .help-block, #form_subscribe .alert').remove();
-        
-        // callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
-            var result = $.parseJSON(response);
-            if(result.success) {
-                toastr.success(result.msg);
-                form_subscribe.trigger("reset");
-            } else {
-                toastr.warning(result.msg);
-            }
-        });
-        
-        // callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
-            // log the error to the console
-            toastr.error("The following error occured: " + textStatus, errorThrown);
-        });
-        
-        // callback handler that will be called regardless
-        // if the request failed or succeeded
-        request.always(function () {
-            // reenable the inputs
-            inputs.prop("disabled", false);
-        });
-    }
+    // let's select and cache all the fields
+    var inputs = form.find("input, select, button, textarea");
+
+    // serialize the data in the form
+    var serializedData = form.serialize();
+
+    // let's disable the inputs for the duration of the ajax request
+    inputs.prop("disabled", true);
+
+    // fire off the request to /form.php
+
+    request = $.ajax({
+      url: form.attr("action"),
+      type: "post",
+      data: serializedData
+    });
+
+    // Clear Message
+    $('#form_subscribe .form-group').removeClass('has-error');
+    $('#form_subscribe .help-block, #form_subscribe .alert').remove();
+
+    // callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR) {
+      var result = $.parseJSON(response);
+      if(result.success) {
+        toastr.success(result.msg);
+        form_subscribe.trigger("reset");
+      } else {
+        toastr.warning(result.msg);
+      }
+    });
+
+    // callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        toastr.error("The following error occured: " + textStatus, errorThrown);
+      });
+
+    // callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // reenable the inputs
+        inputs.prop("disabled", false);
+      });
+  }
 });
 JS;
 $this->inlineScript()->captureEnd();

@@ -3,7 +3,11 @@
         <div class="footer-top">
             <div class="row">
                 <div class="col-lg-4 col-md-3 hidden-sm hidden-xs">
-                    <h3><?php echo $this->setting()->owner_name ?></h3>
+                    <div class="page-logo">
+                        <a href="<?php echo $this->url("home") ?>">
+                            <img src="<?php echo $this->basePath('data/company/logo.png') ?>" alt="logo" class="logo-default">
+                        </a>
+                    </div>
                     <div class="fanpage">
                         <?php if($this->setting()->facebook_link): ?>
                         <div class="fb-page" data-href="<?php echo $this->setting()->facebook_link ?>" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="<?php echo $this->setting()->facebook_link ?>" class="fb-xfbml-parse-ignore"><a href="<?php echo $this->setting()->facebook_link ?>"><?php echo $this->setting()->company_name ?></a></blockquote></div>
@@ -25,7 +29,7 @@
         		</div>
         		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
         			<h5>other services</h5>
-        			<ul class="list-unstyled">		
+        			<ul class="list-unstyled">
         				<li><a href="#">Corporate FD Rates</a></li>
         				<li><a href="#">SME Corporate Account</a></li>
         				<li><a href="#">Business Valuation</a></li>
@@ -36,7 +40,7 @@
         		</div>
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 contact-details">
         			<h5><?php echo $this->translate("Contact Details") ?></h5>
-        			<ul>			
+        			<ul>
         				<li><i class="fa fa-map-marker" aria-hidden="true"></i><?php echo $this->setting()->company_address ?></li>
         				<li><i class="fa fa-phone" aria-hidden="true"></i><?php echo $this->setting()->company_phone ?></li>
         				<li><i class="fa fa-fax" aria-hidden="true"></i><?php echo $this->setting()->company_fax ?></li>

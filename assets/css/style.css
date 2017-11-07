@@ -101,12 +101,12 @@ p {
     font-family: 'Lato', sans-serif;
 }
 .box-thumb .box-thumb-body .box-thumb-subtitle {
-   
+
 }
 
 /***
 
-General typography 
+General typography
 
 ***/
 
@@ -262,11 +262,11 @@ header {
 }
 /*
 
-.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.active > a, 
+.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.active > a,
 
-.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.active > a:hover, 
+.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.active > a:hover,
 
-.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.current > a, 
+.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.current > a,
 
 .page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li.current > a:hover {
 
@@ -278,7 +278,7 @@ header {
 
 
 
-.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li > a, 
+.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li > a,
 
 .page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li > a:hover {
 
@@ -364,7 +364,7 @@ header {
 .tabs-bank {
     width: 100%;
     float: left;
-    
+
 }
 #compare-tab .nav-tabs {
     display: table;
@@ -431,7 +431,7 @@ header {
 }
 
 .footer-bottom a {
-    color: #7f9fb9;
+    color: #8dc63f;
 }
 .footer-bottom a:hover {
     color: #FFF;
@@ -540,7 +540,7 @@ footer .newsletter .social-footer {
 }
 .social-footer a i{
     margin-right: 0;
-      color: #292929; 
+      color: #292929;
        font-size: 20px;
        width: 16px;
        height: 16px;
@@ -552,8 +552,8 @@ footer .newsletter .social-footer {
      background: #292929;
 }
 .social-footer a:hover i{
-    color: #FFF!important;  
-   
+    color: #FFF!important;
+
 }
 
 
@@ -815,7 +815,7 @@ button#submit-search:hover {
 }
 .filters-table-head [class*="head-title-"] a,
 .filters-table-head [class*="head-title-"] a:focus {
-    text-decoration: none; 
+    text-decoration: none;
     color: #fff !important;
 }
 .filters-table-head div.active .fa {
@@ -1207,7 +1207,7 @@ span.note-cart {
     width: 100%;
     text-align: left;
 }
-.filters-content .row-header .bank-title a, 
+.filters-content .row-header .bank-title a,
 .filters-content .row-header .bank-title a:hover {
     color: #fff;
 }
@@ -1843,7 +1843,7 @@ h2.heading-floating {
     -o-background-size: cover;
     background-size: cover;
     color: #193d5a;
-}   
+}
 
 #total .total-content h3 {
     font-size: 40px;
