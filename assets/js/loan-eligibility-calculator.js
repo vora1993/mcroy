@@ -260,8 +260,7 @@ $('input[name="premises_type"]').on('change', function(){
   }
 });
 
-$('body').on('change', '.director-noa', function() {
-  console.log('xxxx');
+$('body').on('keyup change', '.director-noa', function() {
   var averageNOA = caculateAverageNOA();
   $('#total-average-all-directors').text("$" + addSeparator(averageNOA, 3));
 });
@@ -365,4 +364,4 @@ $('.add-applicant').click(function (e) {
   $('.nav-tabs li:nth-child(' + id + ') a').click();
 });
 
-AutoNumeric.multiple('.page-eligibility input[type="text"]', { currencySymbol : '$' });
+AutoNumeric.multiple('.page-eligibility input[type="text"]', { currencySymbol : '$', minimumValue: 0 });
