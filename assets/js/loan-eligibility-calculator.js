@@ -3,6 +3,10 @@ var tenor = 5 * 12;
 var maxDSR = 60 / 100;
 var defaultFutureValue = 0;
 var totalOfPeriods = 12;
+var baseAverageNOACompare = 30000;
+var baseNetProfitCompare  = 100000;
+var baseAnnualDepreciationCompare = 70000;
+var baseInterestExpenseCompare = 50000;
 
 function enter_check(e)
 {
@@ -19,27 +23,21 @@ function enter_check(e)
 }
 
 function validateInputs() {
-  if ($("#monthly-turnover").val() == "") {
-    toastr.warning("Please enter your company monthly turnover.");
-    $("#monthly-turnover").focus();
-    return false;
-  }
-
-  if ($("#monthly-commitment").val() == "") {
-    toastr.warning("Please enter your monthly commitment.");
-    $("#monthly-commitment").focus();
-    return false;
-  }
-
-  var prop_type = $('select[name="industry_type"]').val();
-  if(!prop_type)
-  {
-    toastr.warning("Please choose type of industry");
-    $("#priv_prop").focus();
-    return false;
-  }
-
-  return true;
+  var passed = true;
+  $.each($('#business-loan-eligibility input:visible'), function(){
+    var $this = $(this);
+    if ($this.attr('type') == 'text'){
+      var attr = $this.attr('required');
+      var required = typeof attr !== typeof undefined && attr !== false;
+      if ($this.val() == "" && required ) {
+        toastr.warning($this.attr('data-message'));
+        $this.focus();
+        passed = false;
+        return false;
+      }
+    }
+  });
+  return passed;
 }
 
 function PMT(fv, pv, rate, nper, type)
@@ -140,15 +138,60 @@ function getIncomeFactor(value){
   });
 }
 
+function getNetProfit() {
+  return getNumber($('#company-net-profit').val());
+}
+
+function getAnnualDepreciation() {
+  return getNumber($('#annual-depreciation').val());
+}
+
+function getAnnualInterest() {
+  return getNumber($('#annual-interest').val());
+}
+
 function caculateMonthlyIncome() {
   var monthlyTurnover = getNumber($('#monthly-turnover').val());
+  var incomeFactor = caculateIncomeFactor();
+  return Number((monthlyTurnover * incomeFactor * 1.2 / 100).toFixed(2));
+}
+
+function caculateIncomeFactor(){
   var industryType =  $('select[name="industry_type"]').val();
   var incomeFactor = getNumber(getIncomeFactor(industryType).income_factor);
-  return Number((monthlyTurnover * incomeFactor * 1.2 / 100).toFixed(2));
+
+  // Base on directors’ information
+  if (caculateAverageNOA() > baseAverageNOACompare) {
+    incomeFactor += 0.8;
+  } else {
+    incomeFactor -= 0.5;
+  }
+
+  // Base on Financial Information
+  if (getNetProfit() >= baseNetProfitCompare) {
+    incomeFactor += 0.75;
+  } else {
+    incomeFactor += 0.5;
+  }
+
+  if (getAnnualDepreciation() > baseAnnualDepreciationCompare) {
+    incomeFactor += 0.75;
+  } else {
+    incomeFactor += 0.5;
+  }
+
+  if (getAnnualInterest() > baseInterestExpenseCompare) {
+    incomeFactor += 0.75;
+  } else {
+    incomeFactor += 0.5;
+  }
+
+  return incomeFactor;
 }
 
 function caculateLoanAmount() {
   var installmentAmount = Number((( maxDSR * caculateMonthlyIncome() ) - monthlyCommitment()).toFixed(2));
+  console.log(installmentAmount);
   var loanAmount = PV(interestRate, totalOfPeriods, tenor, installmentAmount * -1, defaultFutureValue);
   return loanAmount;
 }
@@ -164,6 +207,15 @@ function caculateAdjustedCommitment() {
 
 function caculateDSR() {
   return Number(( (caculateAdjustedCommitment() / caculateMonthlyIncome()) * 100).toFixed(2));
+}
+
+function caculateAverageNOA() {
+  var sumComputeNOA = 0;
+  $.each($('input[id*="_noa_type_"]'), function(){
+    var $this = $(this);
+    sumComputeNOA += getNumber($this.val());
+  });
+  return Number((sumComputeNOA / $('input[id*="_noa_type_"]').length).toFixed(2));
 }
 
 function getNumber(value){
@@ -206,6 +258,12 @@ $('input[name="premises_type"]').on('change', function(){
     $('#rental-amount').val("");
     $('#rented-section-box').addClass('hidden');
   }
+});
+
+$('body').on('change', '.director-noa', function() {
+  console.log('xxxx');
+  var averageNOA = caculateAverageNOA();
+  $('#total-average-all-directors').text("$" + addSeparator(averageNOA, 3));
 });
 
 $('body').on('change', '.local-property input[type="radio"]', function(){
@@ -278,7 +336,7 @@ $('.add-applicant').click(function (e) {
   var id = $(".nav-tabs").children().length; //think about it ;)
   var tabId = 'applicant_' + id;
   $(this).closest('li').before('<li><a href="#applicant_' + id + '">Director ' + id + '</a></li>');
-  var html_clone = $('.tab-content').find('.tab-pane').last().clone();
+  var html_clone = $('.tab-content').find('.tab-pane').last().clone(true);
 
   $.each(html_clone.find(":input"), function() {
     var thisid = $(this).attr('id');
@@ -296,12 +354,15 @@ $('.add-applicant').click(function (e) {
   $.each(html_clone.find("label"), function() {
     var thisfor = $(this).attr('for');
     if (thisfor && (thisfor !== '') ){
-       thisfor = thisfor.replace(/\d+/, id);
+      thisfor = thisfor.replace(/\d+/, id);
       $(this).attr('for', thisfor);
     }
   });
 
   html_clone.find('.director-property-box').removeClass('hidden');
   $('.tab-content').append('<div class="tab-pane panel-body" id="' + tabId + '">' + html_clone.html() + '</div>');
+  AutoNumeric.multiple( '#' + tabId + ' input[type="text"]', { currencySymbol : '$' });
   $('.nav-tabs li:nth-child(' + id + ') a').click();
 });
+
+AutoNumeric.multiple('.page-eligibility input[type="text"]', { currencySymbol : '$' });
