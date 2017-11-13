@@ -1,0 +1,12 @@
+{
+	"presets": [
+		"latest"
+	],
+	"plugins": [
+		"transform-object-assign"
+	],
+	"comments": true,
+	"sourceMaps": true,
+	"compact" : false,
+	"minified" : false
+}

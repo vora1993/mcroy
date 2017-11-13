@@ -308,6 +308,20 @@ a:hover, a:focus {
     padding: 10px 5px 10px 15px;
 }
 
+.page-eligibility .nav-tabs li a{
+    color: #193d5a;
+    background-color: #c2c2c2;
+}
+
+.page-eligibility .nav>li>a:focus,
+.page-eligibility .nav>li>a:hover{
+    background-color: #c2c2c2;
+}
+
+.page-eligibility .nav-tabs li.active a{
+    background-color: white;
+}
+
 .form-auth .form-wizard-title h3 {
     margin-bottom: 0 !important;
     color: #fff !important;
