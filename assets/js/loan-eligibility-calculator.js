@@ -7,6 +7,7 @@ var baseAverageNOACompare = 30000;
 var baseNetProfitCompare  = 100000;
 var baseAnnualDepreciationCompare = 70000;
 var baseInterestExpenseCompare = 50000;
+var AutoNumericOptions = { currencySymbol : '$', minimumValue: 0, modifyValueOnWheel: false };
 
 function enter_check(e)
 {
@@ -360,8 +361,8 @@ $('.add-applicant').click(function (e) {
 
   html_clone.find('.director-property-box').removeClass('hidden');
   $('.tab-content').append('<div class="tab-pane panel-body" id="' + tabId + '">' + html_clone.html() + '</div>');
-  AutoNumeric.multiple( '#' + tabId + ' input[type="text"]', { currencySymbol : '$' });
+  AutoNumeric.multiple( '#' + tabId + ' input[type="text"]', AutoNumericOptions);
   $('.nav-tabs li:nth-child(' + id + ') a').click();
 });
 
-AutoNumeric.multiple('.page-eligibility input[type="text"]', { currencySymbol : '$', minimumValue: 0 });
+AutoNumeric.multiple('.page-eligibility input[type="text"]', AutoNumericOptions);
