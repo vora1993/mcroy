@@ -53,15 +53,20 @@ if(count($this->sliders) > 0) { ?>
       <?php
       foreach ($widget_2 as $k => $wg) {
         ?>
-        <div class="item_services">
-          <div class="item">
-            <div class="image"><img src="../../assets/img/service-<?php echo $k+1 ?>.png" /></div>
-            <div class="caption">
-              <h3 class="name"><a href="<?php echo $wg->getLink() ?>"><?php echo $wg->getName() ?></a></h3>
-              <div class="desc">
+        <div class="item_services col-md-6">
+          <div class="item card">
+            <div class="card--header">
+              <h3 class="name card--header header--text"><a href="<?php echo $wg->getLink() ?>"><?php echo $wg->getName() ?></a></h3>
+            </div>
+            <div class="caption card--body">
+              <div class="card--image-wrapper col-xs-12 col-md-4">
+                <img class="card--image" src="../../assets/img/service-<?php echo $k+1 ?>.png" />
+              </div>
+              <div class="desc card--content col-xs-12 col-md-8">
                 <?php echo $wg->getContent(); ?>
               </div>
-              <div class="group-btn"><a class="btn blue-custom btn-block btn-lg margin-top-20" href="<?php echo $wg->getLink() ?>"><?php echo $wg->getLabelLink() ?></a></div>
+              <div class="clearfix"></div>
+              <div class="group-btn--card"><a class="card--btn margin-top-20" href="<?php echo $wg->getLink() ?>"><?php echo $wg->getLabelLink() ?></a></div>
             </div>
           </div>
         </div>
