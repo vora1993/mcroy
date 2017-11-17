@@ -37,16 +37,14 @@ $this->headTitle($title);
 
                     </div>
                     <div class="portlet-body">
-                        <div>
-                            <p>xxxx</p>
-                        </div>
                         <!-- BEGIN FORM-->
                         <form action="<?php echo $this->url("admin/setting", array('action' => 'edit-income-factor-addon')) ?>" id="form_setting" class="form-horizontal">
                             <div class="form-body">
                                 <div class="form-group">
-                                    <div class="col-md-4 text-right"><strong>Name</strong></div>
-                                    <div class="col-md-4 text-center"><strong>Value Compare</strong></div>
-                                    <div class="col-md-4 text-center"><strong>Income Factor Rate</strong></div>
+                                    <div class="col-md-3 text-right"><strong>Name</strong></div>
+                                    <div class="col-md-3 text-center"><strong>Value Compare ($)</strong></div>
+                                    <div class="col-md-3 text-center"><strong>Is more than Value Compare (%)</strong></div>
+                                    <div class="col-md-3 text-center"><strong>Is less than Value Compare (%)</strong></div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <?php
@@ -55,12 +53,15 @@ $this->headTitle($title);
                                     <?php if(in_array($setting->getKey(), $other_array_key)): ?>
                                     <?php $addon_income_factor = \Zend\Json\Json::decode($setting->getValue()); ?>
                                     <div class="form-group">
-                                        <label class="control-label col-md-4"><?php echo $this->translate($setting->getName()) ?></label>
-                                        <div class="col-md-4">
+                                        <label class="control-label col-md-3"><?php echo $this->translate($setting->getName()) ?></label>
+                                        <div class="col-md-3">
                                             <input type="text" name="<?php echo $setting->getKey(); ?>[value_compare]" class="form-control number" value="<?php echo $addon_income_factor->value_compare; ?>" required />
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="text" name="<?php echo $setting->getKey(); ?>[income_factor_rate]" class="form-control number" value="<?php echo $addon_income_factor->income_factor_rate; ?>" required />
+                                        <div class="col-md-3">
+                                            <input type="text" name="<?php echo $setting->getKey(); ?>[is_more_than]" class="form-control number" value="<?php echo $addon_income_factor->is_more_than; ?>" required />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" name="<?php echo $setting->getKey(); ?>[is_less_than]" class="form-control number" value="<?php echo $addon_income_factor->is_less_than; ?>" required />
                                         </div>
                                     </div>
                                     <?php endif;?>
