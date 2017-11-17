@@ -138,7 +138,8 @@ class PageController extends AbstractActionController
   public function businessLoanEligibilityCalculatorAction() {
     $request = $this->getRequest();
     $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
-    $income_factor = $application_model_setting->fetchRow(array('key' => 'income_factor'));
+    $income_factor_addons = $application_model_setting->fetchAll(array('key' => array('base_average_noa_compare', 'base_net_profit_compare', 'base_annual_depreciation_compare', 'base_interest_expense_compare', 'income_factor')));
+
     if ($request->isPost())
     {
       $params = $request->getPost();
@@ -180,6 +181,6 @@ class PageController extends AbstractActionController
       return $response;
     }
 
-    return array('income_factor' => \Zend\Json\Json::encode ( $income_factor->getValue() ));
+    return array('income_factor_addons' => $income_factor_addons);
   }
 }

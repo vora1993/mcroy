@@ -293,6 +293,7 @@
       </form>
   </div>
 </div>
+
 <?php
 $this->headLink()->offsetSetStylesheet(12, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/sweetalert2/sweetalert2.min.css'));
@@ -304,5 +305,8 @@ $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/plugins/unders
 $this->inlineScript()->offsetSetFile(102, $this->basePath('assets/plugins/autoNumeric/autoNumeric.min.js'));
 ?>
 <?php $this->headScript()->captureStart(); ?>
-var investIndustryType = JSON.parse(<?php echo $this->income_factor; ?>);
+var incomeFactorAddons = {};
+<?php foreach ($this->income_factor_addons as $key => $setting) { ?>
+  incomeFactorAddons['<?php echo $setting->getKey(); ?>'] = <?php echo $setting->getValue(); ?>;
+<?php } ?>
 <?php $this->headScript()->captureEnd(); ?>
