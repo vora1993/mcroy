@@ -961,6 +961,49 @@ class SettingController extends AbstractActionController
     return array('income_factor' => $income_factor);
   }
 
+  public function editIncomeFactorAddonAction() {
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $settings = $application_model_setting->fetchAll();
+    if($settings) {
+      $translator = $this->getServiceLocator()->get('translator');
+
+      $request = $this->getRequest();
+      $response = $this->getResponse();
+      $messages = array();
+      if ($request->isPost()) {
+        $post = $request->getPost();
+        $error = 0;
+
+        $now = new Expression('NOW()');
+        $array_key = array('base_average_noa_compare', 'base_net_profit_compare', 'base_annual_depreciation_compare', 'base_interest_expense_compare');
+        foreach ($settings as $setting) {
+          if(in_array($setting->getKey(), $array_key)) {
+            $setting->setId($setting->getId());
+            $setting->setValue(\Zend\Json\Json::encode($post[$setting->getKey()]));
+            $setting->setDateModified($now);
+            $edited = $application_model_setting->update($setting);
+            if(!$edited) $error = $error + 1;
+          }
+        }
+
+        if(!$error) {
+          $messages['success'] = true;
+          $messages['msg']     = $translator->translate("Successfully updated");
+        } else {
+          $messages['success'] = false;
+          $messages['msg']     = $translator->translate("Something error. Please check");
+        }
+
+        $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+        return $response;
+      }
+
+      return array('settings' => $settings);
+    } else {
+      return $this->redirect()->toRoute("setting");
+    }
+  }
+
   function clearHtml($html) {
     $html = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $html);
     $html = preg_replace("/<div>(.*?)<\/div>/", "$1", $html);

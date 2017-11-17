@@ -3,10 +3,38 @@ var tenor = 5 * 12;
 var maxDSR = 60 / 100;
 var defaultFutureValue = 0;
 var totalOfPeriods = 12;
-var baseAverageNOACompare = 30000;
-var baseNetProfitCompare  = 100000;
-var baseAnnualDepreciationCompare = 70000;
-var baseInterestExpenseCompare = 50000;
+if (!_.isEmpty(incomeFactorAddons.base_average_noa_compare)) {
+  var baseAverageNOACompare = incomeFactorAddons.base_average_noa_compare.value_compare;
+  var averageNOARate = incomeFactorAddons.base_average_noa_compare.income_factor_rate;
+} else {
+  var baseAverageNOACompare = 30000;
+  var averageNOARate = 0.75;
+}
+
+if (!_.isEmpty(incomeFactorAddons.base_net_profit_compare)) {
+  var baseNetProfitCompare = incomeFactorAddons.base_net_profit_compare.value_compare;
+  var netProfitRate = incomeFactorAddons.base_net_profit_compare.income_factor_rate;
+} else {
+  var baseNetProfitCompare = 100000;
+  var netProfitRate = 0.5;
+}
+
+if (!_.isEmpty(incomeFactorAddons.base_annual_depreciation_compare)) {
+  var baseAnnualDepreciationCompare = incomeFactorAddons.base_annual_depreciation_compare.value_compare;
+  var annualDepreciationRate = incomeFactorAddons.base_annual_depreciation_compare.income_factor_rate;
+} else {
+  var baseAnnualDepreciationCompare = 70000;
+  var annualDepreciationRate = 0.5;
+}
+
+if (!_.isEmpty(incomeFactorAddons.base_interest_expense_compare)) {
+  var baseInterestExpenseCompare = incomeFactorAddons.base_interest_expense_compare.value_compare;
+  var interestExpenseRate = incomeFactorAddons.base_interest_expense_compare.income_factor_rate;
+} else {
+  var baseInterestExpenseCompare = 50000;
+  var interestExpenseRate = 0.5;
+}
+
 var AutoNumericOptions = { currencySymbol : '$', minimumValue: 0, modifyValueOnWheel: false };
 
 function enter_check(e)
@@ -134,7 +162,7 @@ function monthlyCommitment() {
 }
 
 function getIncomeFactor(value){
-  return _.find(investIndustryType, function(industry){
+  return _.find(incomeFactorAddons.income_factor, function(industry){
     return industry.industry == value
   });
 }
@@ -176,13 +204,13 @@ function caculateIncomeFactor(){
   }
 
   if (getAnnualDepreciation() > baseAnnualDepreciationCompare) {
-    incomeFactor += 0.75;
+    incomeFactor -= 0.75;
   } else {
-    incomeFactor += 0.5;
+    incomeFactor -= 0.5;
   }
 
   if (getAnnualInterest() > baseInterestExpenseCompare) {
-    incomeFactor += 0.75;
+    incomeFactor -= 0.75;
   } else {
     incomeFactor += 0.5;
   }
