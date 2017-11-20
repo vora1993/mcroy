@@ -266,8 +266,12 @@ function collectData(){
   })
 }
 
+function getValueAutoNumberic(element){
+  return AutoNumeric.getAutoNumericElement($(element)[0]).getNumber();
+}
+
 function caculateMonthlyCommitment(){
-  return ( getNumber($('#business-term-loan').val()) + getNumber($('#mortgage-loan').val()) + getNumber($('#purchase-loan').val()) + getNumber($('#private-lender-loan').val()) );
+  return ( getValueAutoNumberic('#business-term-loan') + getValueAutoNumberic('#mortgage-loan') + getValueAutoNumberic('#purchase-loan') + getValueAutoNumberic('#private-lender-loan') );
 }
 
 function resetAllMonthlyIndividualCommitment(){
