@@ -90,7 +90,6 @@ function PV(rate, per, nper, pmt, fv)
   rate = eval((rate)/(per * 100));
 
   if (( pmt == 0 ) || ( nper == 0 )) {
-    alert("Why do you want to test me with zeros?");
     return(0);
   }
 
@@ -228,7 +227,6 @@ function caculateIncomeFactor(){
 
 function caculateLoanAmount() {
   var installmentAmount = Number((( maxDSR * caculateMonthlyIncome() ) - monthlyCommitment()).toFixed(2));
-  console.log(installmentAmount);
   var loanAmount = PV(interestRate, totalOfPeriods, tenor, installmentAmount * -1, defaultFutureValue);
   return loanAmount;
 }
@@ -273,10 +271,10 @@ function caculateMonthlyCommitment(){
 }
 
 function resetAllMonthlyIndividualCommitment(){
-  $('#business-term-loan').val("");
-  $('#mortgage-loan').val("");
-  $('#purchase-loan').val("");
-  $('#private-lender-loan').val("");
+  AutoNumeric.getAutoNumericElement($("#business-term-loan")[0]).set('');
+  AutoNumeric.getAutoNumericElement($("#mortgage-loan")[0]).set('');
+  AutoNumeric.getAutoNumericElement($("#purchase-loan")[0]).set('');
+  AutoNumeric.getAutoNumericElement($("#private-lender-loan")[0]).set('');
 }
 
 $('#monthly-commitment').on('keyup', function(){
@@ -285,7 +283,7 @@ $('#monthly-commitment').on('keyup', function(){
 
 $('#business-term-loan, #mortgage-loan, #purchase-loan, #private-lender-loan').on('keyup', function(){
   var summaryCommitment = caculateMonthlyCommitment();
-  $('#monthly-commitment').val(summaryCommitment);
+  AutoNumeric.getAutoNumericElement($("#monthly-commitment")[0]).set(summaryCommitment);
 });
 
 $('input[name="premises_type"]').on('change', function(){
@@ -313,6 +311,13 @@ $('body').on('change', '.local-property input[type="radio"]', function(){
 
 $("#submit-reset").click(function(){
   $("#business-loan-eligibility input[type='text']").val("");
+  $('#business-loan-eligibility .nav.nav-tabs li').not('li:first, li:last').remove();
+  $('#business-loan-eligibility .nav.nav-tabs li:first').addClass('active');
+  $('#business-loan-eligibility .tab-content.director-box .tab-pane.panel-body').not('div:first').remove();
+  $('#business-loan-eligibility .tab-content.director-box .tab-pane.panel-body:first').addClass('active');
+  $.each(autoNumbericArr, function(){
+    this.set('');
+  });
 });
 
 $('#monthly-commitment-individual').click(function(){
@@ -327,7 +332,15 @@ $("#submit-prepayment").click(function(){
   stat = validateInputs();
   if(stat) {
     var loanAmount = caculateLoanAmount();
-    if (loanAmount < 0){
+    var noaChecker = false;
+    $.each($('input[id*="_noa_type_2017"]'), function(){
+      var $this = $(this);
+      var noa2017Value = getNumber($this.val());
+      if (noa2017Value == 0){
+        return noaChecker = true;
+      }
+    })
+    if (loanAmount < 0 || noaChecker){
       return swal({
         html: "<p>Can't get loan, would you like our consultant to contact you for alternative funding?</p><br/><small><strong>*disclaimer</strong>: Note that above serves as a general guideline and other factors like key man credit bureau, financial statement analysis, etc will be taken into consideration for bank approval criteria.</small>",
         type: 'warning',
@@ -401,4 +414,4 @@ $('.add-applicant').click(function (e) {
   $('.nav-tabs li:nth-child(' + id + ') a').click();
 });
 
-AutoNumeric.multiple('.page-eligibility input[type="text"]', AutoNumericOptions);
+var autoNumbericArr = AutoNumeric.multiple('.page-eligibility input[type="text"]', AutoNumericOptions);
