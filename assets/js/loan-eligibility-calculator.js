@@ -4,9 +4,9 @@ var maxDSR = 60 / 100;
 var defaultFutureValue = 0;
 var totalOfPeriods = 12;
 if (!_.isEmpty(incomeFactorAddons.base_average_noa_compare)) {
-  var baseAverageNOACompare = incomeFactorAddons.base_average_noa_compare.value_compare;
-  var isLessThanAverageNOARate = incomeFactorAddons.base_average_noa_compare.is_less_than;
-  var isMoreThanAverageNOARate = incomeFactorAddons.base_average_noa_compare.is_more_than;
+  var baseAverageNOACompare = getNumber(incomeFactorAddons.base_average_noa_compare.value_compare);
+  var isLessThanAverageNOARate = getNumber(incomeFactorAddons.base_average_noa_compare.is_less_than);
+  var isMoreThanAverageNOARate = getNumber(incomeFactorAddons.base_average_noa_compare.is_more_than);
 } else {
   var baseAverageNOACompare = 30000;
   var isLessThanAverageNOARate = -0.5;
@@ -14,9 +14,9 @@ if (!_.isEmpty(incomeFactorAddons.base_average_noa_compare)) {
 }
 
 if (!_.isEmpty(incomeFactorAddons.base_net_profit_compare)) {
-  var baseNetProfitCompare = incomeFactorAddons.base_net_profit_compare.value_compare;
-  var isLessThanNetProfitRate = incomeFactorAddons.base_net_profit_compare.is_less_than;
-  var isMoreThanNetProfitRate = incomeFactorAddons.base_net_profit_compare.is_more_than;
+  var baseNetProfitCompare = getNumber(incomeFactorAddons.base_net_profit_compare.value_compare);
+  var isLessThanNetProfitRate = getNumber(incomeFactorAddons.base_net_profit_compare.is_less_than);
+  var isMoreThanNetProfitRate = getNumber(incomeFactorAddons.base_net_profit_compare.is_more_than);
 } else {
   var baseNetProfitCompare = 100000;
   var isLessThanNetProfitRate = 0.5;
@@ -24,9 +24,9 @@ if (!_.isEmpty(incomeFactorAddons.base_net_profit_compare)) {
 }
 
 if (!_.isEmpty(incomeFactorAddons.base_annual_depreciation_compare)) {
-  var baseAnnualDepreciationCompare = incomeFactorAddons.base_annual_depreciation_compare.value_compare;
-  var isLessThanAnnualDepreciationRate = incomeFactorAddons.base_annual_depreciation_compare.is_less_than;
-  var isMoreThanAnnualDepreciationRate = incomeFactorAddons.base_annual_depreciation_compare.is_more_than;
+  var baseAnnualDepreciationCompare = getNumber(incomeFactorAddons.base_annual_depreciation_compare.value_compare);
+  var isLessThanAnnualDepreciationRate = getNumber(incomeFactorAddons.base_annual_depreciation_compare.is_less_than);
+  var isMoreThanAnnualDepreciationRate = getNumber(incomeFactorAddons.base_annual_depreciation_compare.is_more_than);
 } else {
   var baseAnnualDepreciationCompare = 70000;
   var isLessThanAnnualDepreciationRate = -0.5;
@@ -34,9 +34,9 @@ if (!_.isEmpty(incomeFactorAddons.base_annual_depreciation_compare)) {
 }
 
 if (!_.isEmpty(incomeFactorAddons.base_interest_expense_compare)) {
-  var baseInterestExpenseCompare = incomeFactorAddons.base_interest_expense_compare.value_compare;
-  var isLessThanInterestExpenseRate = incomeFactorAddons.base_interest_expense_compare.is_less_than;
-  var isMoreThanInterestExpenseRate = incomeFactorAddons.base_interest_expense_compare.is_more_than;
+  var baseInterestExpenseCompare = getNumber(incomeFactorAddons.base_interest_expense_compare.value_compare);
+  var isLessThanInterestExpenseRate = getNumber(incomeFactorAddons.base_interest_expense_compare.is_less_than);
+  var isMoreThanInterestExpenseRate = getNumber(incomeFactorAddons.base_interest_expense_compare.is_more_than);
 } else {
   var baseInterestExpenseCompare = 50000;
   var isLessThanInterestExpenseRate = 0.5;
