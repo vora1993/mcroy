@@ -340,7 +340,7 @@ $("#submit-prepayment").click(function(){
     $.each($('input[id*="_noa_type_2017"]'), function(){
       var $this = $(this);
       var noa2017Value = getValueAutoNumberic('#' + $this.attr('id'));
-      if (noa2017Value == 0){
+      if (noa2017Value <= 0){
         return noaChecker = true;
       }
     })
