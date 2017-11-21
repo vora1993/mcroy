@@ -363,19 +363,17 @@
     display: block;
     background-image: repeating-linear-gradient(
         135deg,
-        #F29B91 0px,
-        #F09290 15px,
-        transparent 15px,
-        transparent 25px,
-        #83B3DB 25px, #84ADCB 40px,
-        transparent 40px,
-        transparent 50px
+        red 0, red 1em, transparent 0, transparent 2em,
+        #58a 0, #58a 3em, transparent 0, transparent 4em
     );
+}
+#form_subscribe .btn.text-upcase{
+    text-transform: uppercase;
 }
 .caption-sub {
     width: 100%;
     float: left;
-    padding: 35px 30px;
+    padding: 80px 10px;
 }
 .caption-sub > i {
     font-size: 40px;
@@ -384,9 +382,8 @@
     padding-top: 7px;
 }
 .box-sub {
-    width: 70%;
+    width: 100%;
     float: left;
-    padding-left: 15px;
     margin-bottom: 10px;
 }
 .box-sub h4 {
@@ -402,11 +399,11 @@
     color: #193d5a;
 }
 .caption-sub > input {
-    width: 68%;
+    width: 58%;
     float: left;
 }
 .caption-sub > button {
-    width: 30%;
+    width: 40%;
     float: right;
     margin: 0 !important;
 }
@@ -424,7 +421,7 @@
     font-size: 16px;
     color: #193d5a;
     text-transform: uppercase;
-    padding: 20px 15px;
+    padding: 5px 15px 0px 15px;
     font-weight: 600;
 }
 .content-action .image {
@@ -458,7 +455,7 @@
     float: left;
     position: absolute;
     bottom: -20px;
-    left: 13px;
+    left: 5%;
     background: #193d5a;
     color: #fff;
     text-align: center;
@@ -1744,6 +1741,14 @@ td {
     color: #667482;
 }
 
+
+.md-radio label {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1199px) {
     .page-header .page-header-menu .hor-menu .navbar-nav > li > a {
         padding: 16px 13px 15px;
@@ -1795,6 +1800,9 @@ td {
     }
     .tit-login {
         font-size: 20px;
+    }
+    #form_subscribe .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-lg {
+        padding: 12px 15px 10px;
     }
 }
 @media (max-width: 991px) {
@@ -2038,6 +2046,19 @@ td {
     .page-mortgage .form-actions button {
         margin-bottom: 15px;
     }
+    .margin-top-xs-35 {
+        margin-top: 35px;
+    }
+    .margin-bottom-xs-15{
+        margin-bottom: 15px;
+    }
+    .caption-sub{
+        padding: 30px 10px;
+    }
+    .caption-sub > input.input-lg {
+        width: 58% !important;
+        float: left;
+    }
 }
 @media (max-width: 639px) {
     .top-box {
@@ -2151,10 +2172,10 @@ td {
     .box-services .item {
         padding: 0 15px;
     }
-}
-.md-radio label {
-    float: left;
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px;
+    .box-services .item .name{
+        font-size: 25px;
+    }
+    .brand.owl-carousel .owl-buttons .owl-next{
+        right: 0px;
+    }
 }
