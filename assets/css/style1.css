@@ -1804,6 +1804,9 @@ td {
     #form_subscribe .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-lg {
         padding: 12px 15px 10px;
     }
+    .margin-bottom-xs-15 .col-md-4:last-child .title-last-loan{
+        padding: 5px 9px 0px 9px;
+    }
 }
 @media (max-width: 991px) {
     .page-header .page-header-top .page-logo {
