@@ -43,7 +43,7 @@ if (!_.isEmpty(incomeFactorAddons.base_interest_expense_compare)) {
   var isMoreThanInterestExpenseRate = -0.75;
 }
 
-var AutoNumericOptions = { currencySymbol : '$', minimumValue: 0, modifyValueOnWheel: false };
+var AutoNumericOptions = { currencySymbol : '$', modifyValueOnWheel: false };
 
 function enter_check(e)
 {
@@ -165,7 +165,7 @@ function addSeparator(valueAmt, digit)
 }
 
 function monthlyCommitment() {
-  return getNumber($('#monthly-commitment').val());
+  return getValueAutoNumberic('#monthly-commitment');
 }
 
 function getIncomeFactor(value){
@@ -175,19 +175,19 @@ function getIncomeFactor(value){
 }
 
 function getNetProfit() {
-  return getNumber($('#company-net-profit').val());
+  return getValueAutoNumberic('#company-net-profit');
 }
 
 function getAnnualDepreciation() {
-  return getNumber($('#annual-depreciation').val());
+  return getValueAutoNumberic('#annual-depreciation');
 }
 
 function getAnnualInterest() {
-  return getNumber($('#annual-interest').val());
+  return getValueAutoNumberic('#annual-interest');
 }
 
 function caculateMonthlyIncome() {
-  var monthlyTurnover = getNumber($('#monthly-turnover').val());
+  var monthlyTurnover = getValueAutoNumberic('#monthly-turnover');
   var incomeFactor = caculateIncomeFactor();
   return Number((monthlyTurnover * incomeFactor * 1.2 / 100).toFixed(2));
 }
@@ -232,7 +232,7 @@ function caculateLoanAmount() {
 }
 
 function installmentMonthlyAmount() {
-  var loanAmount = getNumber($('#loan-amount').val());
+  var loanAmount = getValueAutoNumberic('#loan-amount');
   return PMT(defaultFutureValue, loanAmount * -1, (interestRate * 0.01) / 12, tenor, 0);
 }
 
@@ -248,13 +248,13 @@ function caculateAverageNOA() {
   var sumComputeNOA = 0;
   $.each($('input[id*="_noa_type_"]'), function(){
     var $this = $(this);
-    sumComputeNOA += getNumber($this.val());
+    sumComputeNOA += getValueAutoNumberic('#' + $this.attr('id'));
   });
   return Number((sumComputeNOA / $('input[id*="_noa_type_"]').length).toFixed(2));
 }
 
 function getNumber(value){
-  var number = ( typeof( value ) !== "undefined" && value != "" ? value : 0 ).toString().replace(/[^\d.]/ig, '');
+  var number = ( typeof( value ) !== "undefined" && value != "" ? value : 0 ).toString().replace(/[^\d.-]/ig, '');
   return parseFloat(number)
 }
 
@@ -339,7 +339,7 @@ $("#submit-prepayment").click(function(){
     var noaChecker = false;
     $.each($('input[id*="_noa_type_2017"]'), function(){
       var $this = $(this);
-      var noa2017Value = getNumber($this.val());
+      var noa2017Value = getValueAutoNumberic('#' + $this.attr('id'));
       if (noa2017Value == 0){
         return noaChecker = true;
       }
