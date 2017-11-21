@@ -1706,6 +1706,7 @@ a.compare.active {
 #slideshow {
     width: 100%;
     margin: 0;
+    text-align: center;
 }
 div#brand {
     width: 100%;
