@@ -369,6 +369,7 @@
 }
 #form_subscribe .btn.text-upcase{
     text-transform: uppercase;
+    padding: 9px 26px 8px;
 }
 .caption-sub {
     width: 100%;
