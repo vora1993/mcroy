@@ -2100,9 +2100,9 @@ ul.links-quote li a:hover {
 }
 
 #lastest-news {
-   background-image: url('../img/bg-news.png');
-   background-repeat: no-repeat;
-   background-size: 100% 100%;
+    background-image: url('../img/bg-news.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     padding: 120px 0 90px;
     float: left;
     width: 100%;
@@ -2474,6 +2474,11 @@ h2.title-faq {
     top: 0.9125em;
     color: #ffffff !important;
 }
+#lastest-news .owl-carousel .owl-wrapper,
+#lastest-news .owl-carousel .owl-item,
+#lastest-news .owl-carousel .owl-item .col-xs-12 {
+    display: flex !important;
+}
 @media (max-width: 991px) {
     .page-header .page-header-menu {
         padding-bottom: 20px;
@@ -2481,4 +2486,13 @@ h2.title-faq {
     .page-header .page-header-menu .hor-menu .navbar-nav > li.dropdown-user {
         float: left;
     }
+}
+@media (min-width: 768px) {
+  #lastest-news .news-content {
+      display: flex;
+  }
+
+  #lastest-news .news-content .col-sm-4.col-xs-12 {
+      display: flex;
+  }
 }
