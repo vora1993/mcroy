@@ -56,14 +56,14 @@ if($post->getFeaturedImage()) {
 
               <div class="caption">
                 <h4><?php echo $post->getPostTitle() ?></h4>
-                <span class="date-news"><i class="fa fa-calendar"></i> May 22, 2016</span>
+                <span class="date-news"><i class="fa fa-calendar"></i> <?php echo date("F jS, Y", strtotime($post->getPostDate())); ?></span>
                 <?php
                 $introtext = $post->getPostExcerpt();
                 if(strlen($introtext) > 150) {
-                                                // truncate string
+                  // truncate string
                   $stringCut = substr($introtext, 0, 150);
 
-                                                // make sure it ends in a word so assassinate doesn't become ass...
+                  // make sure it ends in a word so assassinate doesn't become ass...
                   $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
                 }
                 ?>
