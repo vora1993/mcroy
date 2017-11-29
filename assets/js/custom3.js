@@ -31,13 +31,13 @@ function updateLoanAmount() {
         t = getActualAmount($("input[name=purchase_price]").val()),
         n = parseInt(t * (e / 100)),
         i = parseInt(t * ((100 - e) / 100));
-    
+
     var uppayment = formatNumber(n, '');
     var downpayment = formatNumber(i, '');
-    $("input[name=loan_amount]").length > 0 && $("input[name=loan_amount]").val(n), 
-    $("span#loan-amount-label").length > 0 && (isNaN(n) ? $("span#loan-amount-label").html("-") : $("span#loan-amount-label").html(uppayment)), 
-    $("span#downpayment-label").length > 0 && (isNaN(n) ? $("span#downpayment-label").html("-") : $("span#downpayment-label").html(downpayment)), 
-    $("span.main-percentage").length > 0 && $("span.main-percentage").html("(" + e + "%)"), 
+    $("input[name=loan_amount]").length > 0 && $("input[name=loan_amount]").val(n),
+    $("span#loan-amount-label").length > 0 && (isNaN(n) ? $("span#loan-amount-label").html("-") : $("span#loan-amount-label").html(uppayment)),
+    $("span#downpayment-label").length > 0 && (isNaN(n) ? $("span#downpayment-label").html("-") : $("span#downpayment-label").html(downpayment)),
+    $("span.main-percentage").length > 0 && $("span.main-percentage").html("(" + e + "%)"),
     $("span.minor-percentage").length > 0 && $("span.minor-percentage").html("(" + (100 - e) + "%)")
 }
 
@@ -63,11 +63,11 @@ function maxLoanTenureValue() {
 }
 
 function updateSlider() {
-    $(".slider-loan-amount").slider("value", maxLoanTenureValue()), 
+    $(".slider-loan-amount").slider("value", maxLoanTenureValue()),
     $(".slider-loan-amount").attr("data-soft-cap", maxLoanTenureValue());
 }
 
-// Loan functions 
+// Loan functions
 var Loan = {
     'filter' : function(button) {
         var loan_amount  = $("input[name=loan_amount]").val();
@@ -90,7 +90,7 @@ var Loan = {
                 success: function(json) {
                     if (json['success']) {
     				    l.stop();
-                    	window.location.href = json['redirect']; 
+                    	window.location.href = json['redirect'];
     				}
                 },
                 error : function(xhr, ajaxOptions, thrownError){
@@ -118,7 +118,7 @@ var Loan = {
     			},
                 success: function(json) {
                     if (json['success']) {
-    				    window.location.href = json['redirect']; 
+    				    window.location.href = json['redirect'];
     				} else {
     				    toastr.warning(json['msg']);
     				}
@@ -233,7 +233,7 @@ var Loan = {
                 var pointOne  = $(".page-header").innerHeight();
                 var window_h  = window.innerHeight;
                 var elementOffset = window_h - 52;
-                
+
                 if(scrollTop > elementOffset ) {
                     $('.selectlist').removeClass('fixed');
                 } else {
@@ -245,12 +245,12 @@ var Loan = {
     'set_type': function(button) {
         var $this  = $(button);
         var value  = $this.data("value");
-        /*var active = $this.hasClass('active') ? true : false;
-        
+        var active = $this.hasClass('active') ? true : false;
+
         $(".property-type > a").removeClass("active");
-        $this.addClass("active");*/
+        $this.addClass("active");
         $('input[name=property_type]').val(value);
-        
+
         if(value === 'Executive Condo' || value === 'Condo / Apartment') {
             $(".project_name").removeClass("hide");
         } else {
@@ -266,7 +266,7 @@ var Loan = {
         } else {
             $(".property-type > a").removeClass("active");
             $this.addClass("active");
-            $('input[name=existing_home_loans]').val(value);    
+            $('input[name=existing_home_loans]').val(value);
         }
     },
     'integer': function() {
@@ -274,7 +274,7 @@ var Loan = {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
                 // Allow: Ctrl+A, Command+A
-                (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+                (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
                 // Allow: home, end, left, right, down, up
                 (e.keyCode >= 35 && e.keyCode <= 40)) {
                 // let it happen, don't do anything
@@ -308,14 +308,14 @@ var Loan = {
             $(this).hide();
             $(this).next().show();
         });
-    
+
         $(".btn-less-detail").on('click', function(){
             $("p").slideDown();
             $(this).closest(".row-footer").find(".more-info").slideUp();
             $(this).hide();
             $(this).prev().show();
         });
-        
+
         $(".btn-less-detail").trigger("click");
     },
     sort: function(a) {
@@ -344,7 +344,7 @@ var Loan = {
         Loan.detail();
     }
 }
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
     if (jQuery().datepicker) {
         $('.date-picker').datepicker({
             rtl: App.isRTL(),

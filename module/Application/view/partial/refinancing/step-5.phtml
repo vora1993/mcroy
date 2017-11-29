@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <h2 style="color: #8dc63f; text-transform: uppercase; font-weight: bold; font-size: 21px;">You're about to experience the best home loan.</h2>
+        <p><i>Our team will contact you shortly to help you with your selection and application.</i></p>
+    </div>
+    <div class="col-md-6">
+        <img src="<?php echo $this->basePath('assets/img/home-loan.jpg') ?>" class="img-responsive" />
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+        <form class="form-horizontal form-wizard" action="<?php echo $this->url("loan_application", array("action" => "property-loan", "seo" => $this->seo, "step" => "step", "id" => 5)) ?>" method="POST">
+            <div class="form-body">
+                <div class="form-group">
+                    <textarea name="message" class="form-control" rows="6" placeholder="<?php echo $this->translate("Have any feedback or compliments? We'd love to hear from you") ?>"></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                        <button type="submit" class="btn btn-lg blue"><?php echo $this->translate("Submit") ?></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 need-help">
+        <h3><?php echo $this->translate("Get Our Instant Response?") ?>?</h3>
+        <ul>
+            <li><i class="fa fa-envelope"></i> <?php echo $this->setting()->company_email ?></li>
+            <li><i class="fa fa-phone"></i> <?php echo $this->setting()->company_phone ?></li>
+        </ul>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+var form = $('.form-wizard');
+form.validate({
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+
+        // serialize the data in the form
+        var serializedData = form.serialize();
+
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+
+        // Clear Message
+        $('.form-group .error').removeClass('error');
+
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true});
+            }
+            setTimeout(function(){
+                App.unblockUI();
+                window.location.href = result.redirect;
+            }, 1500);
+        });
+
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true});
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>
