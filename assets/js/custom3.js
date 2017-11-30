@@ -1,3 +1,27 @@
+var RESIDENCY_RATE = {
+    'Singaporean': {
+        '0': 3,
+        '1': 7,
+        '2+': 10
+    },
+    'Singapore PR': {
+        '0': 5,
+        '1': 10,
+        '2+': 10
+    },
+    'Foreigner': {
+        '0': 15,
+        '1': 15,
+        '2+': 15
+    }
+};
+
+var DEFAULT_FEE = 5400;
+var mortgageStampDuty = 500;
+var valuationFee = 300;
+var legalFee = 2000;
+var fireInsurance = 200;
+
 function cancel(route) {
     window.location.href = full_url + '/' + route;
 }
@@ -63,8 +87,14 @@ function maxLoanTenureValue() {
 }
 
 function updateSlider() {
-    $(".slider-loan-amount").slider("value", maxLoanTenureValue()),
+    $(".slider-loan-amount").slider("value", maxLoanTenureValue());
     $(".slider-loan-amount").attr("data-soft-cap", maxLoanTenureValue());
+    $("#loan_amount-label").text(maxLoanTenureValue());
+}
+
+function getNumber(value){
+  var number = ( typeof( value ) !== "undefined" && value != "" ? value : 0 ).toString().replace(/[^\d.-]/ig, '');
+  return parseFloat(number)
 }
 
 // Loan functions
@@ -247,7 +277,7 @@ var Loan = {
         var value  = $this.data("value");
         var active = $this.hasClass('active') ? true : false;
 
-        $(".property-type > a").removeClass("active");
+        $this.closest(".property-type").find("a").removeClass("active");
         $this.addClass("active");
         $('input[name=property_type]').val(value);
 
@@ -264,10 +294,37 @@ var Loan = {
         if(disabled) {
             $this.removeClass("active");
         } else {
-            $(".property-type > a").removeClass("active");
+            $this.closest(".property-type").find("a").removeClass("active");
             $this.addClass("active");
             $('input[name=existing_home_loans]').val(value);
+            updateSlider();
         }
+    },
+    'set_property': function(button) {
+        var $this  = $(button);
+        var value  = $this.data("value");
+        var disabled = $this.hasClass('disabled') ? true : false;
+        if(disabled) {
+            $this.removeClass("active");
+        } else {
+            $this.closest(".property-type").find("a").removeClass("active");
+            $this.addClass("active");
+            $('input[name=existing_property]').val(value);
+        }
+        this.totalCostOutlay();
+    },
+    'set_residency': function(button) {
+        var $this  = $(button);
+        var value  = $this.data("value");
+        var disabled = $this.hasClass('disabled') ? true : false;
+        if(disabled) {
+            $this.removeClass("active");
+        } else {
+            $this.closest(".property-type").find("a").removeClass("active");
+            $this.addClass("active");
+            $('input[name=residency]').val(value);
+        }
+        this.totalCostOutlay();
     },
     'integer': function() {
         $(".integer").keydown(function (e) {
@@ -342,6 +399,33 @@ var Loan = {
         b.find("i").remove();
         b.append(d);
         Loan.detail();
+    },
+    caculateStampDutyFee: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var residency = $('input[name="residency"]').val();
+        var existingProperty = $('input[name="existing_property"]').val();
+        var stampDutyFee = ( purchasePrice * RESIDENCY_RATE[residency][existingProperty] / 100 ) - DEFAULT_FEE;
+        stampDutyFeeValue = Number(stampDutyFee.toFixed(2));
+        if (stampDutyFeeValue >= 0){
+            stampDutyFee = formatNumber(stampDutyFeeValue, '$');
+        } else{
+            stampDutyFee = formatNumber(stampDutyFeeValue * -1, '-$');
+        }
+
+        $('#stamp-duty-fee').text(stampDutyFee);
+        return stampDutyFeeValue;
+    },
+    totalCostOutlay: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var stampDutyFee = this.caculateStampDutyFee();
+        var totalCostOutlay = stampDutyFee + mortgageStampDuty + valuationFee + legalFee + fireInsurance + ( purchasePrice * 20 / 100 );
+        totalCostOutlayValue = Number(totalCostOutlay.toFixed(2));
+        if (totalCostOutlayValue >= 0){
+            totalCostOutlay = formatNumber(totalCostOutlayValue, '$');
+        } else{
+            totalCostOutlay = formatNumber(totalCostOutlayValue * -1, '-$');
+        }
+        $('#total-costs-outlay-amount').text(totalCostOutlay);
     }
 }
 jQuery(document).ready(function() {
@@ -352,4 +436,8 @@ jQuery(document).ready(function() {
             autoclose: true
         });
     }
+
+    $('#purchase_price').on('change', function(){
+
+    });
 });

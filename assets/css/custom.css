@@ -190,7 +190,7 @@ a:hover, a:focus {
     display: table-cell;
     text-align: center;
     position: relative;
-    width: 33.33333%;
+    /*width: 33.33333%;*/
 }
 
 .stepwizard-step:first-child:before {
@@ -341,7 +341,13 @@ a:hover, a:focus {
     margin: 4px 0;
 }
 
+.form-horizontal #total-costs-outlay .control-label{
+    text-align: left;
+}
 
+.inline-block{
+    display: inline-block;
+}
 
 .form-wizard h3 {
     font-weight: 600;
@@ -613,6 +619,17 @@ a:hover, a:focus {
     padding: 0 !important;
 }
 
+.form-wizard #total-costs-outlay .property-type .property-type-box{
+    width: 140px;
+}
+
+.form-wizard #total-costs-outlay .property-type-box > span.number{
+    padding: 0;
+    width: 90%;
+    height: 40px;
+    line-height: 40px;
+}
+
 .form-wizard .property-type > a:hover,
 .form-wizard .property-type > a:hover > span {
     border-color: #043140;
@@ -716,7 +733,7 @@ a:hover, a:focus {
     -moz-border-radius-topright: 35px;
     border-top-right-radius: 35px;
     display: inline;
-    padding: 8px 20px 8px 10px;
+    padding: 8px 20px 4px 10px;
     font-size: 18px;
     font-weight: 600;
 }
@@ -2005,6 +2022,34 @@ ul.stay-connected > li.instagram {
 
 .mx-auto{
     margin: 0 auto;
+}
+.btn-fullwidth{
+    width: 100%;
+}
+
+.mg-top-sm{
+    margin-top: 30px;
+}
+
+.mg-bottom-xs{
+    margin-bottom: 15px;
+}
+.form-wizard #complete-total-costs .tooltip-icon{
+    margin-top: 0px;
+}
+
+.loan-sidebar-portlet button,
+.loan-sidebar-portlet input,
+.loan-sidebar-portlet optgroup,
+.loan-sidebar-portlet select,
+.loan-sidebar-portlet textarea{
+    float: none;
+}
+
+.home_loan .page-title h2{
+    top: 50%;
+    margin-top: -16px;
+    padding-top: 0px;
 }
 @media (max-width: 1280px) {
     .box-services .item {

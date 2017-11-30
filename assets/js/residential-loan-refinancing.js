@@ -32,9 +32,10 @@ $("input[name=purchase_price]").on("keyup", function() {
   val = Number(val.replace(/,/g, ""));
   $(this).val(formatNumber(val, ""));
   updateLoanAmount();
+  Loan.totalCostOutlay();
 });
 
-var {$slider_loan_percent} = $(".slider-loan-amount").slider({
+var $slider_loan_percent = $(".slider-loan-amount").slider({
   value: $(".slider-loan-amount").data("value"),
   min: $(".slider-loan-amount").data("min"),
   max: $(".slider-loan-amount").data("max"),
@@ -46,6 +47,10 @@ var {$slider_loan_percent} = $(".slider-loan-amount").slider({
     $(".slider-loan-amount").find(".ui-slider-handle").html('<span class="arrow_box">'+current+'</span>');
   },
   slide: function(event, ui) {
+    if ("" != $(".slider-loan-amount").attr("data-soft-cap")) {
+      var o = parseInt($(".slider-loan-amount").attr("data-soft-cap"));
+      if (ui.value > o) return !1
+    }
     $(".slider-loan-amount").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
     $("#loan_amount-label").html(ui.value);
     $(".easy-pie-chart .number.loans").attr("data-percent", ui.value);
@@ -58,7 +63,7 @@ var {$slider_loan_percent} = $(".slider-loan-amount").slider({
   }
 });
 
-var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
+var $slider_loan_tenture = $(".slider-loan-tenure").slider({
   value: $(".slider-loan-tenure").data("value"),
   min: $(".slider-loan-tenure").data("min"),
   max: $(".slider-loan-tenure").data("max"),
@@ -74,9 +79,10 @@ var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
       var o = parseInt($(".slider-loan-tenure").attr("data-soft-cap"));
       if (ui.value > o) return !1
     }
-  $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
-  $("#loan_tenure-label").html(ui.value);
-  $("input[name=loan_tenure]").val(ui.value);
+
+    $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+    $("#loan_tenure-label").html(ui.value);
+    $("input[name=loan_tenure]").val(ui.value);
 },
 change: function(event, ui) {
   $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
@@ -181,3 +187,11 @@ form.validate({
           });
       }
     });
+
+$('#expected-total-costs-outlay').click(function(){
+  $('#total-costs-outlay').slideToggle(function() {
+    visible = $("#total-costs-outlay").is(":visible");
+    $("#expected-total-costs-outlay i").toggleClass('fa-plus', !visible);
+    $("#expected-total-costs-outlay i").toggleClass('fa-minus', visible);
+  });
+});
