@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <?php echo $this->headTitle($this->translate($this->setting()->company_name))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
+        <meta content="<?php echo $this->setting()->company_description ?>" name="description" />
+        <meta content="<?php echo $this->setting()->owner_name ?>" name="author" />
+        <meta property="fb:app_id" content="<?php echo $this->setting()->facebook_app_id ?>" />
+        <link rel="icon" href="<?php echo $this->basePath('favicon.ico') ?>" type="image/x-icon">
+        <link rel="shortcut icon" href="<?php echo $this->basePath('favicon.ico') ?>" type="image/vnd.microsoft.icon">
+        <?php
+        $offStyle = 1;
+        $this->headLink()->offsetSetStylesheet($offStyle++, 'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all')
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/pace/themes/pace-theme-flash.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/font-awesome/css/font-awesome.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/simple-line-icons/simple-line-icons.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap/css/bootstrap.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/select2/css/select2.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/select2/css/select2-bootstrap.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/ladda/ladda-themeless.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/icheck/skins/all.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/fancybox/source/jquery.fancybox.css'));
+
+        $offStyle = 21;
+        $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/components-md.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/plugins-md.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/layout3.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/themes/default.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/fonts.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/custom.css'));
+        ?>
+        <?php echo $this->headLink();?>
+
+        <!-- Scripts -->
+        <?php
+        $this->headScript()->offsetSetFile(1, $this->basePath('assets/plugins/pace/pace.min.js', 'text/javascript'));
+
+        $offScript = 1;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/excanvas.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap/js/bootstrap.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/js.cookie.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.blockui.min.js'));
+        // offScript 1 ~ 10
+        $offScript = 21;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/fancybox/source/jquery.fancybox.pack.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/icheck/icheck.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/select2/js/select2.full.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/ladda/spin.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/ladda/ladda.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/app.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/layout3.min.js'));?>
+
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var server_url = '<?php echo $this->serverUrl() ?>';
+        var base_path = '<?php echo $this->basePath() ?>';
+        var full_url = '<?php echo $this->serverUrl().$this->basePath() ?>';
+        /* ]]> */
+        </script>
+        <?php echo $this->headScript() ?>
+    </head>
+    <?php
+    $routeMatch = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+    $routeName  = $routeMatch->getMatchedRouteName();
+    $actionName = strtolower($routeMatch->getParam('action', ''));  // get the action name
+    ?>
+    <body class="<?php echo $routeName; ?>">
+        <?php if($this->setting()->facebook_app_id): ?>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=<?php echo $this->setting()->facebook_app_id ?>";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <?php endif;?>
+        <div class="page-wrapper">
+            <div class="page-wrapper-row">
+                <div class="page-wrapper-top">
+                    <!-- BEGIN HEADER -->
+                    <?php echo $this->partial('loan_header'); ?>
+                    <!-- END HEADER -->
+                </div>
+            </div>
+
+            <div class="page-wrapper-row full-height">
+                <div class="page-wrapper-middle">
+                    <div class="page-container">
+                        <div class="page-content-wrapper">
+                            <div class="page-content"><?php echo $this->partial('content'); ?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-wrapper-row">
+                <div class="page-wrapper-bottom">
+                    <!-- BEGIN FOOTER -->
+                    <?php echo $this->partial('loan_footer'); ?>
+                    <!-- END FOOTER -->
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

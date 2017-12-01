@@ -17,7 +17,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_home_loan">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("New Home") ?> 
+                                <span class="box"></span> <?php echo $this->translate("New Home") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -25,13 +25,13 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_refinancing">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Refinancing") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Refinancing") ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-        
+
             <div class="row property_type form-wizard-title">
                 <h3>2. <?php echo $this->translate("What type of property are you buying") ?>?</h3>
                 <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Loan packages differ between property types. There are also some packages that only apply to uncompleted properties (buildings under construction).</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Property Type") ?></span>"><i class="fa fa-question-circle"></i></a>
@@ -44,7 +44,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_type_hdb_flat">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("HDB Flat") ?> 
+                                <span class="box"></span> <?php echo $this->translate("HDB Flat") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -52,7 +52,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_type_executive_condo">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Executive Condo") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Executive Condo") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -60,7 +60,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_type_condo_apartment">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Condo / Apartment") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Condo / Apartment") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -68,22 +68,22 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_type_landed_property">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Landed Property") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Landed Property") ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-                                    
+
             <div class="row project_name<?php if(!in_array($this->property_type, array("Executive Condo", "Condo / Apartment"))) echo " hide"; ?>">
                 <h4><?php echo $this->translate("What is the name of project you are purchasing") ?>?</h4>
                 <input type="text" name="project_name" class="input-large" value="<?php echo $this->project_name ?>" />
             </div>
-                                    
+
             <div class="row property_status form-wizard-title">
                 <h3><?php echo $this->translate("Is the property completed or under construction") ?>?</h3>
                 <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="<p>If your uncompleted property is 3 months away (or less) from its TOP (Temporary Occupancy Permit) status, please indicate it as a completed property</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Completion Status") ?></span>"><i class="fa fa-question-circle"></i></a>
-            </div>      
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="md-radio-list">
@@ -92,7 +92,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_status_completed">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Completed") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Completed") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -100,20 +100,19 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="property_status_under_construction">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Under Construction") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Under Construction") ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-                                
-        <div class="form-group option_fee">
+
             <div class="row form-wizard-title">
                 <h3>3. <?php echo $this->translate("How far away are you from purchasing your property") ?>?</h3>
                 <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>If you have already paid the option fee or are about to, you can expect a faster turnaround time after selecting your loan packages.</p><p>The rates you will see next are current rates and are not affected by your answer to this question. You should note however, that banks usually revise their rates monthly.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Intended Purchase Date") ?></span>"><i class="fa fa-question-circle"></i></a>
             </div>
-                                    
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="md-radio-list">
@@ -122,7 +121,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="option_fee_paid">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("I already paid the Option Fee (deposit)") ?> 
+                                <span class="box"></span> <?php echo $this->translate("I already paid the Option Fee (deposit)") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -130,7 +129,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="option_fee_not_paid">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("I have NOT paid the Option Fee (deposit)") ?> 
+                                <span class="box"></span> <?php echo $this->translate("I have NOT paid the Option Fee (deposit)") ?>
                             </label>
                         </div>
                     </div>
@@ -146,7 +145,7 @@ $slider_loan_percent = '$slider_loan_percent';
                                                     <label for="offer_opts_this_week">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> <?php echo $this->translate("This week") ?> 
+                                                        <span class="box"></span> <?php echo $this->translate("This week") ?>
                                                     </label>
                                                 </div>
                                                 <div class="md-radio">
@@ -154,7 +153,7 @@ $slider_loan_percent = '$slider_loan_percent';
                                                     <label for="offer_opts_2_weeks">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> <?php echo $this->translate("2 weeks") ?> 
+                                                        <span class="box"></span> <?php echo $this->translate("2 weeks") ?>
                                                     </label>
                                                 </div>
                                                 <div class="md-radio">
@@ -162,7 +161,7 @@ $slider_loan_percent = '$slider_loan_percent';
                                                     <label for="offer_opts_1_month">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> <?php echo $this->translate("1 month") ?> 
+                                                        <span class="box"></span> <?php echo $this->translate("1 month") ?>
                                                     </label>
                                                 </div>
                                                 <div class="md-radio">
@@ -170,7 +169,7 @@ $slider_loan_percent = '$slider_loan_percent';
                                                     <label for="offer_opts_2_months">
                                                         <span></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> <?php echo $this->translate("2 months") ?> 
+                                                        <span class="box"></span> <?php echo $this->translate("2 months") ?>
                                                     </label>
                                                 </div>
                         <div class="md-radio">
@@ -178,14 +177,14 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="offer_opts_after_2_months">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("After 2 months") ?> 
+                                <span class="box"></span> <?php echo $this->translate("After 2 months") ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="form-group with-pie purchase_price">
             <div class="row form-wizard-title">
                 <h3>4. <?php echo $this->translate("What is the purchase price of the property") ?>?</h3>
@@ -197,7 +196,7 @@ $slider_loan_percent = '$slider_loan_percent';
                         <span class="input-group-addon">
                             <i><?php echo $this->translate("Purchase Price ($)") ?></i>
                         </span>
-                        <input type="text" name="purchase_price" class="form-control" placeholder="<?php echo $this->translate("e.g. 500000, 500k, 1.2m") ?>"> 
+                        <input type="text" name="purchase_price" class="form-control" placeholder="<?php echo $this->translate("e.g. 500000, 500k, 1.2m") ?>">
                     </div>
                 </div>
             </div>
@@ -272,7 +271,7 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="preferred_rate_package_floating">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Floating") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Floating") ?>
                             </label>
                         </div>
                         <div class="md-radio">
@@ -280,29 +279,29 @@ $slider_loan_percent = '$slider_loan_percent';
                             <label for="preferred_rate_package_fixed">
                                 <span></span>
                                 <span class="check"></span>
-                                <span class="box"></span> <?php echo $this->translate("Fixed") ?> 
+                                <span class="box"></span> <?php echo $this->translate("Fixed") ?>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="form-actions">
         <div class="row">
             <div class="col-md-3 text-right">
                 <button type="submit" class="btn btn-lg green-custom"><?php echo $this->translate("Next") ?></button>
             </div>
         </div>
-    </div>   
+    </div>
 </form>
 <?php
 $offStyle = 12;
 $offScript = 30;
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js')); 
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js')); 
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 $('input[name=property_status]').on('change', function() {
@@ -333,7 +332,7 @@ $("input[name=purchase_price]").on("keydown", function(evt) {
     }
     return isEnterNumber(charCode);
 });
-    
+
 $("input[name=purchase_price]").on("keyup", function() {
     var val = $(this).val();
     val = Number(val.replace(/,/g, ""));
@@ -389,7 +388,7 @@ var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
         $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
         updateSlider();
         updateLoanAmount();
-    }  
+    }
 });
 
 var form = $('.form-wizard');
@@ -416,11 +415,11 @@ form.validate({
             required: true
         }
     },
-    
-    invalidHandler: function(event, validator) { //display error alert on form submit              
+
+    invalidHandler: function(event, validator) { //display error alert on form submit
         App.scrollTo($(".error"), -15);
     },
-    
+
     errorPlacement: function(error, element) {
         if(element.attr("name") == "property_type") {
             $('.property_type').addClass("error");
@@ -435,50 +434,50 @@ form.validate({
             $('.purchase_price').addClass("error");
         }
     },
-    
+
     submitHandler: function(form) {
         // form validation success, call ajax form submit
         // setup some local variables
         var form = $(form);
-                
+
         // let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-                
+
         // serialize the data in the form
         var serializedData = form.serialize();
-            
+
         // let's disable the inputs for the duration of the ajax request
         inputs.prop("disabled", true);
-                
+
         // fire off the request to /form.php
-        
+
         request = $.ajax({
             url: form.attr("action"),
             type: "post",
             data: serializedData
         });
-        
+
         // Clear Message
         $('.form-group .error').removeClass('error');
-                
+
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
             if(result.success) {
                 App.blockUI({boxed: true});
-            } 
-            setTimeout(function(){ 
+            }
+            setTimeout(function(){
                 App.unblockUI();
-                window.location.href = result.redirect; 
+                window.location.href = result.redirect;
             }, 1500);
         });
-                
+
         // callback handler that will be called on failure
         request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
             console.log("The following error occured: " + textStatus, errorThrown);
         });
-                
+
         // callback handler that will be called regardless
         // if the request failed or succeeded
         request.always(function () {

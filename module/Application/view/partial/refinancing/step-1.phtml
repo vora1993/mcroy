@@ -1,0 +1,267 @@
+<form class="form-horizontal form-wizard form-refinancing" action="<?php echo $this->url("refinancing", array("action" => "step", "id" => 1)) ?>" method="POST">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="row property_type form-wizard-title">
+                <h3>1. <?php echo $this->translate("What is the property type you be refinancing") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Loan packages differ depending on property type.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Property Type") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="property-type">
+                        <a href="javascript:;" onclick="Loan.set_type(this)" data-value="HDB Flat" class="property-type-box active">
+                            <i class="icon-check"></i>
+                            <img src="<?php echo $this->basePath("/assets/img/hdb-flat.png") ?>" />
+                            <span><?php echo $this->translate("HDB Flat") ?></span>
+                        </a>
+                        <a href="javascript:;" onclick="Loan.set_type(this)" data-value="Executive Condo" class="property-type-box">
+                            <i class="icon-check"></i>
+                            <img src="<?php echo $this->basePath("/assets/img/executive.png") ?>" />
+                            <span><?php echo $this->translate("Executive Condo") ?></span>
+                        </a>
+                        <a href="javascript:;" onclick="Loan.set_type(this)" data-value="Condo / Apartment" class="property-type-box">
+                            <i class="icon-check"></i>
+                            <img src="<?php echo $this->basePath("/assets/img/condo-apt.png") ?>" />
+                            <span><?php echo $this->translate("Condo / Apartment") ?></span>
+                        </a>
+                        <a href="javascript:;" onclick="Loan.set_type(this)" data-value="Landed Property" class="property-type-box">
+                            <i class="icon-check"></i>
+                            <img src="<?php echo $this->basePath("/assets/img/landed.png") ?>" />
+                            <span><?php echo $this->translate("Landed Property") ?></span>
+                        </a>
+                    </div>
+                    <input type="hidden" name="property_type" value="HDB Flat" />
+                </div>
+            </div>
+
+            <div class="row property form-wizard-title">
+                <h3>2. <?php echo $this->translate("Your property is currently with which Financial Institution/ Banks") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>If you are refinancing your mortgage, we will redirect you to the refinancing wizard.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("New Home / Refinancing") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row">
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <select class="form-control nobtngrp floatrate" id="current_bank_name" name="current_bank_name">
+                            <option value="">Select current bank or institution</option>
+                            <option value="HDB Loan">HDB Concessionary Loan</option>
+                            <option value="ANZ">ANZ</option>
+                            <option value="Bank of China">Bank of China</option>
+                            <option value="Citibank">Citibank</option>
+                            <option value="CIMB">CIMB</option>
+                            <option value="DBS">DBS</option>
+                            <option value="Hong Leong Finance">Hong Leong Finance</option>
+                            <option value="HSBC">HSBC</option>
+                            <option value="Maybank">Maybank</option>
+                            <option value="OCBC">OCBC</option>
+                            <option value="RHB">RHB</option>
+                            <option value="Standard Chartered">Standard Chartered</option>
+                            <option value="UOB">UOB</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row property_status form-wizard-title">
+                <h3>3. <?php echo $this->translate("What is your outstanding loan amount") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p><p>Minimum loan amount to be eligible for refinancing is at least S$100,000.</p></p>" data-html="true" data-original-title="<span><?php echo $this->translate("Outstanding Loan Amount") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+
+            <div class="row">
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i><?php echo $this->translate("$") ?></i>
+                            </span>
+                            <input type="text" name="remaining_loan_amount" class="form-control" placeholder="<?php echo $this->translate("e.g. 500000, 500k, 1.2m") ?>">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group option_fee">
+            <div class="row form-wizard-title">
+                <h3>4. <?php echo $this->translate("What is your current interest rate") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>The higher the interest rate, the more savings you will enjoy! If unsure, input an estimate. This will allows us to calculate the total interest savings if you refinance.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Current Interest Rate") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+
+            <div class="row">
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="text" name="current_interest_rate" class="form-control" placeholder="<?php echo $this->translate("Interest Rate") ?>">
+                            <span class="input-group-addon">
+                                <i><?php echo $this->translate("%") ?></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group option_fee">
+            <div class="row form-wizard-title">
+                <h3>5. <?php echo $this->translate("What is your remaining tenor") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Input remaining tenor for us to calculate the total interest savings you will enjoy for refinancing.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Remaining Tenor") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+
+            <div class="row">
+                <input type="hidden" name="loan_tenure" value="20" />
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="slider-container">
+                            <div class="slider-loan-tenure" data-min="5" data-max="35" data-value="5" data-soft-cap="35"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="slider-value">
+                            <span class="current info" id="loan_tenure-label">5</span>
+                            <span class="unit">Years</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row property form-wizard-title">
+            <h3>6. <?php echo $this->translate("Are you still under locked-in period") ?>?</h3>
+            <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>If you are refinancing your mortgage, we will redirect you to the refinancing wizard.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("New Home / Refinancing") ?></span>"><i class="fa fa-question-circle"></i></a>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="md-radio-list">
+                    <div class="md-radio">
+                        <input type="radio" id="locked_in_no" name="locked_in" value="No" data-value="home_loan" class="md-radiobtn"<?php if($this->property === 'home_loan' || !$this->property) echo ' checked="checked"'; ?>>
+                        <label for="locked_in_no">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span> <?php echo $this->translate("No, i’m out of locked-in period") ?>
+                        </label>
+                    </div>
+                    <div class="md-radio">
+                        <input type="radio" id="locked_in_yes" name="locked_in" value="Yes" data-value="Yes" class="md-radiobtn"<?php if($this->property === 'refinancing') echo ' checked="checked"'; ?>>
+                        <label for="locked_in_yes">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span> <?php echo $this->translate("Still under locked-in period") ?>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-lg blue"><?php echo $this->translate("Next Step") ?> <i class="fa fa-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/residential-loan-refinancing.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('input[name=property_status]').on('change', function() {
+   var value =$('input[type="radio"][name="property_status"]:checked').val();
+   if(value === 'Completed') $(".offer_opts h4").html('{$_text_completed}');
+   else  $(".offer_opts h4").html('{$_text_under_construction}');
+});
+$('input[name=option_fee]').on('change', function() {
+   var value =$('input[type="radio"][name="option_fee"]:checked').val();
+   if(value === 'not_paid') $(".offer_opts").show();
+   else  $(".offer_opts").hide();
+});
+var form = $('.form-wizard');
+form.validate({
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    rules: {
+        property_type: {
+            required: true
+        },
+        property_status: {
+            required: true
+        },
+        option_fee: {
+            required: true
+        }
+    },
+
+    invalidHandler: function(event, validator) { //display error alert on form submit
+        App.scrollTo($(".error"), -15);
+    },
+
+    errorPlacement: function(error, element) {
+        if(element.attr("name") == "property_type") {
+            $('.property_type').addClass("error");
+        }
+        if(element.attr("name") == "property_status") {
+            $('.property_status').addClass("error");
+        }
+        if(element.attr("name") == "option_fee") {
+            $('.option_fee').addClass("error");
+        }
+    },
+
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+
+        // serialize the data in the form
+        var serializedData = form.serialize();
+
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+
+        // Clear Message
+        $('.form-group .error').removeClass('error');
+
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true});
+            }
+            setTimeout(function(){
+                App.unblockUI();
+                window.location.href = result.redirect;
+            }, 1500);
+        });
+
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true});
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>
