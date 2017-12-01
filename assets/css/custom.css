@@ -995,7 +995,8 @@ a:hover, a:focus {
 }
 
 .home_loan .page-title,
-.loan_application .page-title {
+.loan_application .page-title,
+.refinancing .page-title {
     background: url('../img/bg-title-home-loan.png') no-repeat top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -2050,7 +2051,8 @@ ul.stay-connected > li.instagram {
     float: none;
 }
 
-.home_loan .page-title h2{
+.home_loan .page-title h2,
+.refinancing .page-title h2{
     top: 50%;
     margin-top: -16px;
     padding-top: 0px;

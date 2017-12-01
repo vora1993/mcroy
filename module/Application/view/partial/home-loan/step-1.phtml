@@ -184,6 +184,11 @@
     </div>
 </form>
 <?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
 $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/residential-loan-refinancing.js'));
 $this->inlineScript()->captureStart();

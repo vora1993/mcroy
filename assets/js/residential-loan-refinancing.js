@@ -9,6 +9,13 @@ $('input[name=option_fee]').on('change', function() {
  else  $(".offer_opts").hide();
 });
 
+$('input[name="property"]').on('change', function(){
+  var value =$('input[type="radio"][name="property"]:checked').val();
+  if (value == 'refinancing') {
+    window.location.href = base_path + '/refinancing/step/1';
+  }
+})
+
 // Handle number
 Loan.integer();
 Loan.initEasyPieCharts();
