@@ -83,13 +83,41 @@ var $slider_loan_tenture = $(".slider-loan-tenure").slider({
     $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
     $("#loan_tenure-label").html(ui.value);
     $("input[name=loan_tenure]").val(ui.value);
-},
-change: function(event, ui) {
-  $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
-  updateSlider();
-  updateLoanAmount();
-}
+  },
+  change: function(event, ui) {
+    $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+    updateSlider();
+    updateLoanAmount();
+  }
 });
+$(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+$(".slider-loan-tenure").data("value")+'</span>');
+
+var $slider_new_loan_tenture = $(".slider-new-loan-tenure").slider({
+  value: $(".slider-new-loan-tenure").data("value"),
+  min: $(".slider-new-loan-tenure").data("min"),
+  max: $(".slider-new-loan-tenure").data("max"),
+  orientation: "horizontal",
+  animate: !0,
+  range: "min",
+  create: function(event, ui){
+    var current = $("input[name=new_loan_tenure]").val();
+    $(".slider-new-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+current+'</span>');
+  },
+  slide: function(event, ui) {
+    if ("" != $(".slider-new-loan-tenure").attr("data-soft-cap")) {
+      var o = parseInt($(".slider-new-loan-tenure").attr("data-soft-cap"));
+      if (ui.value > o) return !1
+    }
+
+    $(".slider-new-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+    $("#loan_tenure-label").html(ui.value);
+    $("input[name=new_loan_tenure]").val(ui.value);
+  },
+  change: function(event, ui) {
+    $(".slider-new-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
+  }
+});
+$(".slider-new-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+$(".slider-new-loan-tenure").data("value")+'</span>');
 
 var form = $('.form-wizard');
 form.validate({

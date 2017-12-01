@@ -433,6 +433,10 @@ a:hover, a:focus {
     padding: 20px 25px;
 }
 
+.form-refinancing.form-wizard .slider-container{
+    padding: 20px 0px;
+}
+
 .ui-widget-header {
     background: #12aaeb;
 }
