@@ -41,21 +41,21 @@
                 <div class="row col-md-12">
                     <div class="col-md-3">
                         <select class="form-control nobtngrp floatrate" id="current_bank_name" name="current_bank_name">
-                            <option value="">Select current bank or institution</option>
-                            <option value="HDB Loan">HDB Concessionary Loan</option>
-                            <option value="ANZ">ANZ</option>
-                            <option value="Bank of China">Bank of China</option>
-                            <option value="Citibank">Citibank</option>
-                            <option value="CIMB">CIMB</option>
-                            <option value="DBS">DBS</option>
-                            <option value="Hong Leong Finance">Hong Leong Finance</option>
-                            <option value="HSBC">HSBC</option>
-                            <option value="Maybank">Maybank</option>
-                            <option value="OCBC">OCBC</option>
-                            <option value="RHB">RHB</option>
-                            <option value="Standard Chartered">Standard Chartered</option>
-                            <option value="UOB">UOB</option>
-                            <option value="Others">Others</option>
+                            <option value=""><?php echo $this->translate("Select current bank or institution") ?></option>
+                            <option value="HDB Loan"><?php echo $this->translate("HDB Concessionary Loan") ?></option>
+                            <option value="ANZ"><?php echo $this->translate("ANZ") ?></option>
+                            <option value="Bank of China"><?php echo $this->translate("Bank of China") ?></option>
+                            <option value="Citibank"><?php echo $this->translate("Citibank") ?></option>
+                            <option value="CIMB"><?php echo $this->translate("CIMB") ?></option>
+                            <option value="DBS"><?php echo $this->translate("DBS") ?></option>
+                            <option value="Hong Leong Finance"><?php echo $this->translate("Hong Leong Finance") ?></option>
+                            <option value="HSBC"><?php echo $this->translate("HSBC") ?></option>
+                            <option value="Maybank"><?php echo $this->translate("Maybank") ?></option>
+                            <option value="OCBC"><?php echo $this->translate("OCBC") ?></option>
+                            <option value="RHB"><?php echo $this->translate("RHB") ?></option>
+                            <option value="Standard Chartered"><?php echo $this->translate("Standard Chartered") ?></option>
+                            <option value="UOB"><?php echo $this->translate("UOB") ?></option>
+                            <option value="Others"><?php echo $this->translate("Others") ?></option>
                         </select>
                     </div>
                 </div>
@@ -166,102 +166,4 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
 $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/residential-loan-refinancing.js'));
-$this->inlineScript()->captureStart();
-echo <<<JS
-$('input[name=property_status]').on('change', function() {
-   var value =$('input[type="radio"][name="property_status"]:checked').val();
-   if(value === 'Completed') $(".offer_opts h4").html('{$_text_completed}');
-   else  $(".offer_opts h4").html('{$_text_under_construction}');
-});
-$('input[name=option_fee]').on('change', function() {
-   var value =$('input[type="radio"][name="option_fee"]:checked').val();
-   if(value === 'not_paid') $(".offer_opts").show();
-   else  $(".offer_opts").hide();
-});
-var form = $('.form-wizard');
-form.validate({
-    focusInvalid: false, // do not focus the last invalid input
-    ignore: "", // validate all fields including form hidden input
-    rules: {
-        property_type: {
-            required: true
-        },
-        property_status: {
-            required: true
-        },
-        option_fee: {
-            required: true
-        }
-    },
-
-    invalidHandler: function(event, validator) { //display error alert on form submit
-        App.scrollTo($(".error"), -15);
-    },
-
-    errorPlacement: function(error, element) {
-        if(element.attr("name") == "property_type") {
-            $('.property_type').addClass("error");
-        }
-        if(element.attr("name") == "property_status") {
-            $('.property_status').addClass("error");
-        }
-        if(element.attr("name") == "option_fee") {
-            $('.option_fee').addClass("error");
-        }
-    },
-
-    submitHandler: function(form) {
-        // form validation success, call ajax form submit
-        // setup some local variables
-        var form = $(form);
-
-        // let's select and cache all the fields
-        var inputs = form.find("input, select, button, textarea");
-
-        // serialize the data in the form
-        var serializedData = form.serialize();
-
-        // let's disable the inputs for the duration of the ajax request
-        inputs.prop("disabled", true);
-
-        // fire off the request to /form.php
-
-        request = $.ajax({
-            url: form.attr("action"),
-            type: "post",
-            data: serializedData
-        });
-
-        // Clear Message
-        $('.form-group .error').removeClass('error');
-
-        // callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
-            var result = $.parseJSON(response);
-            if(result.success) {
-                App.blockUI({boxed: true});
-            }
-            setTimeout(function(){
-                App.unblockUI();
-                window.location.href = result.redirect;
-            }, 1500);
-        });
-
-        // callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
-            // log the error to the console
-            console.log("The following error occured: " + textStatus, errorThrown);
-        });
-
-        // callback handler that will be called regardless
-        // if the request failed or succeeded
-        request.always(function () {
-            // reenable the inputs
-            App.blockUI({boxed: true});
-            inputs.prop("disabled", false);
-        });
-    }
-});
-JS;
-$this->inlineScript()->captureEnd();
 ?>
