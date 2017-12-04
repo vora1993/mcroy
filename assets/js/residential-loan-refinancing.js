@@ -126,102 +126,197 @@ var $slider_new_loan_tenture = $(".slider-new-loan-tenure").slider({
 });
 $(".slider-new-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+$(".slider-new-loan-tenure").data("value")+'</span>');
 
-var form = $('.form-wizard');
+var form = $('.form-wizard.form-home-loan-wizard');
 form.validate({
-    focusInvalid: false, // do not focus the last invalid input
-    ignore: "", // validate all fields including form hidden input
-    rules: {
-      property: {
-        required: true
-      },
-      property_type: {
-        required: true
-      },
-      property_status: {
-        required: true
-      },
-      option_fee: {
-        required: true
-      },
-      existing_home_loans: {
-        required: true
-      },
-      purchase_price: {
-        required: true
-      }
+  focusInvalid: false, // do not focus the last invalid input
+  ignore: "", // validate all fields including form hidden input
+  rules: {
+    property: {
+      required: true
     },
-
-    invalidHandler: function(event, validator) { //display error alert on form submit
-      App.scrollTo($(".error"), -15);
+    property_type: {
+      required: true
     },
-
-    errorPlacement: function(error, element) {
-      if(element.attr("name") == "property_type") {
-        $('.property_type').addClass("error");
-      }
-      if(element.attr("name") == "property_status") {
-        $('.property_status').addClass("error");
-      }
-      if(element.attr("name") == "option_fee") {
-        $('.option_fee').addClass("error");
-      }
-      if(element.attr("name") == "purchase_price") {
-        $('.purchase_price').addClass("error");
-      }
+    property_status: {
+      required: true
     },
+    option_fee: {
+      required: true
+    },
+    existing_home_loans: {
+      required: true
+    },
+    purchase_price: {
+      required: true
+    }
+  },
 
-    submitHandler: function(form) {
-        // form validation success, call ajax form submit
-        // setup some local variables
-        var form = $(form);
+  invalidHandler: function(event, validator) { //display error alert on form submit
+    App.scrollTo($(".error"), -15);
+  },
 
-        // let's select and cache all the fields
-        var inputs = form.find("input, select, button, textarea");
+  errorPlacement: function(error, element) {
+    if(element.attr("name") == "property_type") {
+      $('.property_type').addClass("error");
+    }
+    if(element.attr("name") == "property_status") {
+      $('.property_status').addClass("error");
+    }
+    if(element.attr("name") == "option_fee") {
+      $('.option_fee').addClass("error");
+    }
+    if(element.attr("name") == "purchase_price") {
+      $('.purchase_price').addClass("error");
+    }
+  },
 
-        // serialize the data in the form
-        var serializedData = form.serialize();
+  submitHandler: function(form) {
+    // form validation success, call ajax form submit
+    // setup some local variables
+    var form = $(form);
 
-        // let's disable the inputs for the duration of the ajax request
-        inputs.prop("disabled", true);
+    // let's select and cache all the fields
+    var inputs = form.find("input, select, button, textarea");
 
-        // fire off the request to /form.php
+    // serialize the data in the form
+    var serializedData = form.serialize();
 
-        request = $.ajax({
-          url: form.attr("action"),
-          type: "post",
-          data: serializedData
-        });
+    // let's disable the inputs for the duration of the ajax request
+    inputs.prop("disabled", true);
 
-        // Clear Message
-        $('.form-group .error').removeClass('error');
+    // fire off the request to /form.php
 
-        // callback handler that will be called on success
-        request.done(function (response, textStatus, jqXHR) {
-          var result = $.parseJSON(response);
-          if(result.success) {
-            App.blockUI({boxed: true});
-          }
-          setTimeout(function(){
-            App.unblockUI();
-            window.location.href = result.redirect;
-          }, 1500);
-        });
-
-        // callback handler that will be called on failure
-        request.fail(function (jqXHR, textStatus, errorThrown) {
-            // log the error to the console
-            console.log("The following error occured: " + textStatus, errorThrown);
-          });
-
-        // callback handler that will be called regardless
-        // if the request failed or succeeded
-        request.always(function () {
-            // reenable the inputs
-            App.blockUI({boxed: true});
-            inputs.prop("disabled", false);
-          });
-      }
+    request = $.ajax({
+      url: form.attr("action"),
+      type: "post",
+      data: serializedData
     });
+
+    // Clear Message
+    $('.form-group .error').removeClass('error');
+
+    // callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR) {
+      var result = $.parseJSON(response);
+      if(result.success) {
+        App.blockUI({boxed: true});
+      }
+      setTimeout(function(){
+        App.unblockUI();
+        window.location.href = result.redirect;
+      }, 1500);
+    });
+
+    // callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        console.log("The following error occured: " + textStatus, errorThrown);
+      });
+
+    // callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // reenable the inputs
+        App.blockUI({boxed: true});
+        inputs.prop("disabled", false);
+      });
+    }
+  });
+
+var formRefinancing = $('.form-wizard.form-refinancing');
+
+formRefinancing.validate({
+  focusInvalid: false, // do not focus the last invalid input
+  ignore: "", // validate all fields including form hidden input
+  rules: {
+    property_type: {
+      required: true
+    },
+    current_bank_name: {
+      required: true
+    },
+    remaining_loan_amount: {
+      required: true
+    },
+    current_interest_rate: {
+      required: true
+    },
+    locked_in: {
+      required: true
+    }
+  },
+
+  invalidHandler: function(event, validator) { //display error alert on form submit
+    App.scrollTo($(".error"), -15);
+  },
+
+  errorPlacement: function(error, element) {
+    if(element.attr("name") == "property_type") {
+      $('.property_type').addClass("error");
+    }
+    if(element.attr("name") == "property_status") {
+      $('.property_status').addClass("error");
+    }
+    if(element.attr("name") == "option_fee") {
+      $('.option_fee').addClass("error");
+    }
+    if(element.attr("name") == "purchase_price") {
+      $('.purchase_price').addClass("error");
+    }
+  },
+
+  submitHandler: function(form) {
+    // form validation success, call ajax form submit
+    // setup some local variables
+    var form = $(form);
+
+    // let's select and cache all the fields
+    var inputs = form.find("input, select, button, textarea");
+
+    // serialize the data in the form
+    var serializedData = form.serialize();
+
+    // let's disable the inputs for the duration of the ajax request
+    inputs.prop("disabled", true);
+
+    // fire off the request to /form.php
+
+    request = $.ajax({
+      url: form.attr("action"),
+      type: "post",
+      data: serializedData
+    });
+
+    // Clear Message
+    $('.form-group .error').removeClass('error');
+
+    // callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR) {
+      var result = $.parseJSON(response);
+      if(result.success) {
+        App.blockUI({boxed: true});
+      }
+      setTimeout(function(){
+        App.unblockUI();
+        window.location.href = result.redirect;
+      }, 1500);
+    });
+
+    // callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        console.log("The following error occured: " + textStatus, errorThrown);
+      });
+
+    // callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // reenable the inputs
+        App.blockUI({boxed: true});
+        inputs.prop("disabled", false);
+      });
+    }
+  });
 
 $('#expected-total-costs-outlay').click(function(){
   $('#total-costs-outlay').slideToggle(function() {

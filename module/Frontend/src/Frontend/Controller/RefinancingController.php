@@ -77,8 +77,7 @@ class RefinancingController extends AbstractActionController
             break;
 
             case 3:
-                $purchase_price = $session->offsetGet('purchase_price') ? $session->offsetGet('purchase_price') : 0;
-                if(!$session->offsetExists('existing_home_loans') && $purchase_price <= 0) {
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
                 }
                 if($this->getServiceLocator()->get('AuthService')->hasIdentity()) {
@@ -91,8 +90,7 @@ class RefinancingController extends AbstractActionController
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 1));
                 }
-                $purchase_price = $session->offsetGet('purchase_price') ? $session->offsetGet('purchase_price') : 0;
-                if(!$session->offsetExists('existing_home_loans') && $purchase_price <= 0) {
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
