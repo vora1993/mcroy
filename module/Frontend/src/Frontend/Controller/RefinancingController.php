@@ -248,17 +248,17 @@ class RefinancingController extends AbstractActionController
         if($session->offsetExists('no_lock_in_only')) {
             $no_lock_in_only = $session->offsetGet('no_lock_in_only');
         }
-        if($session->offsetExists('purchase_price')) {
-            $purchase_price = $session->offsetGet('purchase_price');
+        if($session->offsetExists('remaining_loan_amount')) {
+            $remaining_loan_amount = $session->offsetGet('remaining_loan_amount');
         }
         if($session->offsetExists('loan_amount')) {
             $loan_amount = $session->offsetGet('loan_amount');
         }
-        if($session->offsetExists('loan_tenure')) {
-            $loan_tenure = $session->offsetGet('loan_tenure');
+        if($session->offsetExists('new_loan_tenure')) {
+            $new_loan_tenure = $session->offsetGet('new_loan_tenure');
         }
-        if($session->offsetExists('loan_percent')) {
-            $loan_percent = $session->offsetGet('loan_percent');
+        if($session->offsetExists('current_interest_rate')) {
+            $current_interest_rate = $session->offsetGet('current_interest_rate');
         }
         if($session->offsetExists('select')) {
             $select = $session->offsetGet('select');
@@ -271,10 +271,10 @@ class RefinancingController extends AbstractActionController
             "step"                     => $id,
             "property_type"            => $property_type,
             "preferred_rate_package"   => $preferred_rate_package,
-            "purchase_price"           => $purchase_price,
+            "remaining_loan_amount"    => $remaining_loan_amount,
             "loan_amount"              => $loan_amount,
-            "loan_tenure"              => $loan_tenure,
-            "loan_percent"             => $loan_percent,
+            "new_loan_tenure"          => $new_loan_tenure,
+            "current_interest_rate"    => $current_interest_rate,
             "loans"                    => $loans,
             "total_interest_for_years" => $total_interest_for_years,
             "no_lock_in_only"          => $no_lock_in_only,
