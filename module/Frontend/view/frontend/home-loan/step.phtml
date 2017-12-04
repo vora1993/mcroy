@@ -1,4 +1,4 @@
-<?php 
+<?php
 $title = $this->translate("Home Loan");
 $this->headTitle($title);
 $_text_completed = $this->translate("When do you intend to select your unit / make an offer");
@@ -26,7 +26,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
                                         <div class="stepwizard-step<?php if($this->step == 3 || $this->step == 4 || $this->step == 5) echo ' active'; ?>">
                                             <div class="step-circle">3</div>
                                             <p><?php echo $this->translate("Register") ?></p>
-                                        </div> 
+                                        </div>
                                         <div class="stepwizard-step<?php if($this->step == 4 || $this->step == 5) echo ' active'; ?>">
                                             <div class="step-circle">4</div>
                                             <p><?php echo $this->translate("Compare") ?></p>
@@ -50,7 +50,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
 </div>
 
 <?php if($this->step == 4): ?>
-<section class="selectlist"> 
+<section class="selectlist">
     <div class="container" id="selected-holder">
         <div class="row">
             <div class="col-md-4">
@@ -68,7 +68,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
             <div class="col-md-6" id="select-holder"></div>
             <div class="col-md-2">
                 <div class="row">
-                    <a class="btn blue btn-lg text-uppercase" href="javascipt:;" onclick="Loan.apply()"><?php echo $this->translate("Apply Now") ?></a>
+                    <a class="btn blue btn-lg text-uppercase" href="javascipt:;" onclick="Loan.apply(this)"><?php echo $this->translate("Apply Now") ?></a>
                 </div>
             </div>
         </div>

@@ -106,6 +106,7 @@ var Loan = {
         var total_interest_for_years = $("select[name=total_interest_for_years]").val();
         var preferred_rate_package = $("select[name=preferred_rate_package]").val();
         var no_lock_in_only = $("input[name=no_lock_in_only]:checked").val() ? $("input[name=no_lock_in_only]:checked").val() : 0;
+
         if(loan_amount > 0 && loan_tenure > 0) {
             var l = Ladda.create(button);
             var data = 'loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&loan_percent='+loan_percent+'&preferred_rate_package='+preferred_rate_package+'&total_interest_for_years='+total_interest_for_years+'&no_lock_in_only='+no_lock_in_only;
@@ -135,11 +136,12 @@ var Loan = {
         var loan_amount = $("input[name=loan_amount]").val();
         var loan_tenure = $("input[name=loan_tenure]").val();
         var seo         = $("input[name=seo]").val();
-        var id          = $(button).data("id");
+        var id          = $(button).closest("#selected-holder").find(".fa.fa-times").data("id");
+
         if(id > 0 && loan_amount > 0 && loan_tenure > 0) {
             var data = 'seo='+seo+'&loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&id='+id;
             $.ajax({
-                url: full_url + '/home-loan/apply',
+                url: full_url + '/home-loan/step/4',
                 type: 'post',
                 data: data,
                 dataType: 'json',
