@@ -51,6 +51,28 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item <?php if($this->view === 'credit_cards') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-credit-card"></i>
+                    <span class="title"><?php echo $this->translate("Credit Cards") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'credit_cards') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'credit_cards' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/credit_cards") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List Credit Cards") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'credit_cards' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/credit_cards", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Credit Card") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item <?php if($this->view === 'business_loan') echo 'active open'?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-pie-chart"></i>
@@ -352,7 +374,7 @@
                             <span class="title"><?php echo $this->translate("Common Interests") ?></span>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'tooltip') echo ' active open'?>">
                         <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-tooltip')) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Tooltip") ?></span>
@@ -398,4 +420,3 @@
         </ul>
     </div>
 </div>
-            

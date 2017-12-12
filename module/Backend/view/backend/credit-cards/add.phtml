@@ -1,0 +1,286 @@
+<?php
+$title = $this->translate("Add New Credit Card");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'credit_cards', 'action' => 'add')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <a href="<?php echo $this->url('admin/credit_cards') ?>"><?php echo $this->translate("Credit Cards") ?></a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <span><?php echo $this->translate("Add") ?></span>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet light bordered form-fit">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="icon-credit-card"></i>
+              <span class="caption-subject sbold uppercase"><?php echo $this->translate($title) ?></span>
+            </div>
+          </div>
+          <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="<?php echo $this->url("admin/credit_cards", array("action" => "add")) ?>" id="form_credit_card" class="form-horizontal form-bordered">
+              <div class="form-body">
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Name") ?><span class="required"> * </span></label>
+                  <div class="col-md-9">
+                    <input type="text" name="name" data-required="1" class="form-control" value="" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Status") ?></label>
+                  <div class="col-md-9">
+                    <select class="form-control" name="status">
+                      <option value="1"><?php echo $this->translate("Active") ?></option>
+                      <option value="0"><?php echo $this->translate("Deactive") ?></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Select Logo") ?></label>
+                  <div class="col-md-9">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                      <div class="input-group input-large">
+                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                          <i class="fa fa-camera fileinput-exists"></i>&nbsp;
+                          <span class="fileinput-filename"> </span>
+                        </div>
+                        <span class="input-group-addon btn default btn-file">
+                          <span class="fileinput-new"> <?php echo $this->translate("Select file") ?> </span>
+                          <span class="fileinput-exists"> <?php echo $this->translate("Change") ?> </span>
+                          <input type="file" name="photoupload" id="photoupload" />
+                          <input type="hidden" name="data[logo]" id="logo" value="" />
+                        </span>
+                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <?php echo $this->translate("Remove") ?> </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-offset-3 col-xs-6">
+                    <img id="photo" alt="logo" class="img-responsive" src="<?php echo $this->basePath('data/image/no-image-128.png') ?>" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Color") ?></label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control colorpicker" name="color" value="#ffffff">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Bank") ?></label>
+                  <div class="col-md-9">
+                    <select class="form-control" name="bank_id">
+                      <option value=""><?php echo $this->translate("Select Bank") ?></option>
+                      <?php if(count($this->banks) > 0): ?>
+                        <?php foreach ($this->banks as $bank): ?>
+                          <option value="<?php echo $bank->getId(); ?>"><?php echo $bank->getName() ?></option>
+                        <?php endforeach;?>
+                      <?php endif;?>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Promotions & Deals") ?></label>
+                  <div class="col-md-9">
+                    <textarea name="data[promotion_and_deals]" class="form-control tinymce"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Cash Back") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[cash_back]" value="true">
+                  </div>
+                </div>
+                <div class="card-back-section collapse">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Cash Back Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[cash_back_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Cashback Shopping Value") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[cashback_shopping_value]" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Cashback Driving Value") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[cashback_driving_value]" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Cashback Dinning Value") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[cashback_dinning_value]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Air Miles") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[air_miles]" value="true">
+                  </div>
+                </div>
+                <div class="air-miles-section collapse">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Air Miles Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[air_miles_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Point Per Mile") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[point_per_mile]" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Money Spend Per Mile") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[money_per_mile]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[discount]" value="true">
+                  </div>
+                </div>
+                <div class="discount-section collapse">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[discount_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount Shopping Value") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[discount_shopping_value]" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount Dinning Value") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[discount_dinning_value]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Points") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[points]" value="true">
+                  </div>
+                </div>
+                <div class="points-section collapse">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Points Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[points_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("One $ Per Point") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[one_dollar_per_point]" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("One Point Per $") ?></label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" name="data[one_point_per_dollar]" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Things to Look Out For") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[feature_2]"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Eligibility") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[eligibility]"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Annual Fees & Rates") ?></label>
+                  <div class="col-md-9">
+                    <textarea type="text" class="form-control tinymce" name="data[annual_fee]"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Interest Rate & Payment Fees") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[feature_3_long]"></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Other Information") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[other_information]"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <div class="row">
+                  <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                    <button type="button" class="btn btn-outline" onclick="cancel('admin/bank')"><?php echo $this->translate("Cancel") ?></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- END FORM-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/credit_cards_backend.js'));
+?>

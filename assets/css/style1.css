@@ -398,16 +398,16 @@
 .news-content .item-news {
     background: #0991cc;
     /* For browsers that do not support gradients */
-    
+
     background: -webkit-linear-gradient(left top, #1e4293, #00b7e6);
     /* For Safari 5.1 to 6.0 */
-    
+
     background: -o-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Opera 11.1 to 12.0 */
-    
+
     background: -moz-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Firefox 3.6 to 15 */
-    
+
     background: linear-gradient(to bottom right, #1e4293, #00b7e6);
     /* Standard syntax bg-home-10*/
 }
@@ -1656,6 +1656,81 @@ td {
     background: url(../img/dot.png) no-repeat center left;
     padding-left: 15px;
     color: #667482;
+}
+
+.mg-top-sm{
+    margin-top: 30px;
+}
+
+.category-menu_list-item a {
+    display: block;
+    text-align: center;
+    height: 72px;
+    padding: 5px 0;
+}
+
+.category-menu_list-item {
+    background-color: #fff;
+    border: 1px solid #E0EDF8;
+}
+
+.category-menu_list-item:hover, .category-menu_list-item.active {
+    background-color: #E0EDF8;
+}
+
+.category-menu_list-item span {
+    display: flex;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #2C3F4F;
+    line-height: 1.2;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.icon-cat.medium {
+    width: 32px;
+    height: 32px;
+    background-size: 150px;
+}
+
+.icon-cat {
+    display: inline-block;
+    background: url(../img/credit-card-category-spritesheet.svg) no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 106px;
+}
+
+.icon-cat.medium.summary{
+    background-position: -4px -1px;
+}
+
+.icon-cat.medium.cash-back {
+    background-position: -41px -3px;
+}
+
+.icon-cat.medium.air-miles, .icon-cat.medium.travel {
+    background-position: -79px -3px;
+}
+
+.icon-cat.medium.rewards {
+    background-position: -116px -1px;
+}
+
+.icon-cat.medium.petrol {
+    background-position: -40px -78px;
+}
+
+.icon-cat.medium.shopping {
+    background-position: -41px -40px;
+}
+
+.icon-cat.medium.promo {
+    background-position: -79px -78px;
 }
 
 @media (max-width: 1199px) {
