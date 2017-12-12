@@ -113,7 +113,7 @@ $this->headTitle($title);
                                         ?>
                                         <img class="img-thumbnail" src="<?php echo $this->basePath($image_src) ?>" />
                                     </td>
-                                    <td><a href="<?php echo $this->url("admin/credit_card", array("action" => "edit", "id" => $credit_card->getId())) ?>"> <?php echo $credit_card->getName() ?></a></td>
+                                    <td><a href="<?php echo $this->url("admin/credit_cards", array("action" => "edit", "id" => $credit_card->getId())) ?>"> <?php echo $credit_card->getName() ?></a></td>
                                     <td><?php echo date("d-m-Y H:i A", strtotime($credit_card->getDateAdded())); ?></td>
                                     <td>
                                     <?php

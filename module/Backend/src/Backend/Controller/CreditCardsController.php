@@ -29,9 +29,11 @@ class CreditCardsController extends AbstractActionController
       $credit_card = new \Application\Entity\CreditCard;
       $credit_card->setName($post['name']);
       $credit_card->setDateAdded(new Expression('NOW()'));
-      $credit_card->setDataAttributes($post['data']);
+      $credit_card->setDateModified(new Expression('NOW()'));
+      $credit_card->setDataAttributes(\Zend\Json\Json::encode($post['data']));
       $credit_card->setColor($post['color']);
       $credit_card->setStatus($post['status']);
+      $credit_card->setLogo($post['logo']);
       $added = $application_model_credit_card->insert($credit_card);
       if($added) {
         $messages['success'] = true;

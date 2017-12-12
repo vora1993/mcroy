@@ -158,7 +158,7 @@ form.validate({
       } else {
         if(result.success) {
           toastr.success(result.msg);
-          setTimeout(function(){ window.location.href = full_url+'/admin/bank'; }, 1500);
+          setTimeout(function(){ window.location.href = full_url+'/admin/credit-cards'; }, 1500);
         } else {
           toastr.warning(result.msg);
         }
