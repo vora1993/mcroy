@@ -133,7 +133,7 @@ $('.colorpicker').minicolors({
     theme: 'bootstrap'
 });
 $('#photoupload').on("change", function(){
-    var form = document.getElementById('form_bank');
+    var form = document.getElementById('form_credit_card');
     var fileInput = document.getElementById('photoupload');
     var file = fileInput.files[0];
     var formData = new FormData();
@@ -156,7 +156,7 @@ $('#photoupload').on("change", function(){
     xhr.send(formData);
 });
 
-var form = $('#form_bank');
+var form = $('#form_credit_card');
 form.validate({
     errorElement: 'span', //default input error message container
     errorClass: 'help-block', // default input error message class
@@ -204,8 +204,8 @@ form.validate({
         });
 
         // Clear Message
-        $('#form_bank .form-group').removeClass('has-error');
-        $('#form_bank .help-block, #form_bank .alert').remove();
+        $('#form_credit_card .form-group').removeClass('has-error');
+        $('#form_credit_card .help-block, #form_credit_card .alert').remove();
 
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
@@ -215,7 +215,7 @@ form.validate({
             } else {
                 if(result.success) {
                     toastr.success(result.msg);
-                    setTimeout(function(){ window.location.href = full_url+'/admin/bank'; }, 1500);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/credit-cards'; }, 1500);
                 } else {
                     toastr.warning(result.msg);
                 }
