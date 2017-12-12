@@ -206,7 +206,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         if(selectedIds.length == 1) {
                             App.blockUI({boxed: true});
-                            setTimeout(function(){ window.location.href = full_url + "/admin/bank/edit/" + selectedIds[0]; }, 500);
+                            setTimeout(function(){ window.location.href = full_url + "/admin/credit-cards/edit/" + selectedIds[0]; }, 500);
                         } else {
                             toastr.warning("You can't select multi rows.");
                         }
@@ -226,7 +226,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/bank/set-status",
+                            url: full_url+"/admin/credit-cards/set-status",
                             data: {ids: selectedIds, action: 'active'},
                             dataType: 'json',
                             beforeSend: function() {
@@ -261,7 +261,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/bank/set-status",
+                            url: full_url+"/admin/credit-cards/set-status",
                             data: {ids: selectedIds, action: 'deactive'},
                             dataType: 'json',
                             beforeSend: function() {
@@ -296,7 +296,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/bank/set-status",
+                            url: full_url+"/admin/credit-cards/set-status",
                             data: {ids: selectedIds, action: 'trash'},
                             dataType: 'json',
                             beforeSend: function() {
