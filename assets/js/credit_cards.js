@@ -159,16 +159,9 @@ var CreditCard = {
     }
   },
   'shortlist2': function(a) {
-    if($(a).find(".fa").hasClass("fa-angle-double-down")) {
-      $(a).find(".fa").removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
-      $(".compare-row").slideUp();
-    } else {
-      $(a).find(".fa").removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
-      $(".compare-row").slideDown();
-    }
+    $(".credit-card-shortlist .shortlist-container").slideToggle();
   },
   'shortlist3': function(a) {
-    console.log(a);
     if(a === 'close') {
       // $('.compare-arrow').find(".fa").removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
       $("#creditCardShortlistId").slideUp();
@@ -229,6 +222,38 @@ var CreditCard = {
       }
     });
   },
+  clear_compare: function(a) {
+        var b = $(a).data("id") ? $(a).data("id") : 0;
+        var c = $(a).data("page") ? true : false;
+        $.ajax({
+            url: full_url + "/credit-cards/clear-compare",
+            type: "post",
+            data: "id=" + b,
+            dataType: "json",
+            beforeSend: function(a, b) {
+                App.blockUI({
+                    boxed: true
+                });
+            },
+            success: function(a) {
+                App.unblockUI();
+                if (a["success"]) {
+                    toastr.success(a["msg"]);
+                    if (b > 0) {
+                        if ($(".filters-content .box__compare > a[data-id=" + b + "]").hasClass("active")) $(".filters-content .box__compare > a[data-id=" + b + "]").removeClass("active");
+                    } else if ($(".filters-content .box__compare > a").hasClass("active")) $(".filters-content .box__compare > a").removeClass("active");
+                    if (c) setTimeout(function() {
+                        window.location.reload();
+                    }, 1500); else {
+                        CreditCard.load_select();
+                    }
+                }
+            },
+            error: function(a, b, c) {
+                toastr.error(c + "\r\n" + a.statusText + "\r\n" + a.responseText);
+            }
+        });
+    },
   'sticky_footer': function() {
     if ($('.selectlist').length > 0){
       $(window).on('scroll', function () {

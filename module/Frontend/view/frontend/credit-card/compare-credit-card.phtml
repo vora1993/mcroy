@@ -1,6 +1,9 @@
 <section class="credit-card-shortlist" id="creditCardShortlistId">
   <div class="shortlist-info-container">
-    <div class="shortlist-info" id="compare-title"><i class="fa fa-check-circle fa-2x"></i><span>1</span> <?php echo $this->translate("Shortlisted Product") ?></div>
+    <div class="shortlist-info" id="compare-title" onclick="CreditCard.shortlist2()">
+      <i class="fa fa-check-circle fa-2x"></i>
+      <span>0</span> <?php echo $this->translate("Shortlisted Product") ?>
+    </div>
   </div>
   <div class="shortlist-container">
     <div class="container" id="shortlisted-holder">
@@ -22,7 +25,7 @@
         </div>
         <div class="col-xs-3 text-center">
           <a id="shortlistId_compare_button" class="btn btn-cc-compare btn-block btn-sm" href="/credit-cards/compare"><?php echo $this->translate("Compare Now") ?></a>
-          <a class="clear-shortlist text-uppercase" href="#" onclick="CreditCard.clear_compare(this)"><i class="fa fa-close"></i><?php echo $this->translate("Clear Shortlist") ?></a>
+          <a class="clear-shortlist text-uppercase" href="javascript:;" onclick="CreditCard.clear_compare(this)"><i class="fa fa-close"></i><?php echo $this->translate("Clear Shortlist") ?></a>
         </div>
       </div>
     </div>

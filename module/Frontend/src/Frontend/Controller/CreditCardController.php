@@ -171,4 +171,45 @@ class CreditCardController extends AbstractActionController
     $viewModel->setVariables(array("credit_cards" => $credit_cards, "count" => count($select)));
     return $viewModel;
   }
+
+  public function clearCompareAction()
+  {
+    $session = new Session('credit_card');
+    $request = $this->getRequest();
+    if ($request->isPost())
+    {
+      $success = true;
+      $translator = $this->getServiceLocator()->get('translator');
+      $post = $request->getPost();
+      $id = $post['id'];
+      if ($session->offsetExists('select'))
+      {
+        $select = $session->offsetGet('select');
+        $select_arr = $select;
+        if ($id > 0)
+        {
+          if (($key = array_search($id, $select_arr)) !== false)
+          {
+            unset($select_arr[$key]);
+          }
+        } else
+        {
+          unset($select_arr);
+          $select_arr = array();
+        }
+        $msg = $translator->translate("You have removed this credit card select list");
+        $session->offsetSet('select', $select_arr);
+        $count = count($select_arr);
+      } else
+      {
+        $count = 0;
+      }
+      $response = $this->getResponse();
+      $response->setContent(\Zend\Json\Json::encode(array(
+        "success" => $success,
+        "msg" => $msg,
+        "count" => $count)));
+      return $response;
+    }
+  }
 }
