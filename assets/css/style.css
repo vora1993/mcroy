@@ -2819,3 +2819,24 @@ h2.title-faq {
         width: 100%;
     }
 }
+
+@media (min-width: 768px) {
+    .credit-card-shortlist .shortlist-info-container {
+        width: 738px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .credit-card-shortlist .shortlist-info-container {
+        width: 962px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1170px) {
+    .credit-card-shortlist .shortlist-info-container {
+        width: 1140px;
+        margin: 0 auto;
+    }
+}
