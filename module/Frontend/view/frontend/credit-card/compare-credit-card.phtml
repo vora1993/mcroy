@@ -1,0 +1,30 @@
+<section class="credit-card-shortlist" id="creditCardShortlistId">
+  <div class="shortlist-info-container">
+    <div class="shortlist-info" id="compare-title"><i class="fa fa-check-circle fa-2x"></i><span>1</span> <?php echo $this->translate("Shortlisted Product") ?></div>
+  </div>
+  <div class="shortlist-container">
+    <div class="container" id="shortlisted-holder">
+      <div class="row">
+        <div class="col-xs-9" id="compare-holder">
+          <div class="row">
+            <div class="col-xs-4 drawercard-col">
+              <div class="drawercard-container" data-original-title="empty product holder" title="" id="ms-product-drawer-1" data-cid="">
+              </div>
+            </div>
+            <div class="col-xs-4 drawercard-col">
+              <div class="drawercard-container" data-original-title="empty product holder" title="" id="ms-product-drawer-1" data-cid="">
+              </div>
+            </div>
+            <div class="col-xs-4 drawercard-col">
+              <div class="drawercard-container" data-original-title="empty product holder" title="" id="ms-product-drawer-2" data-cid=""></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-3 text-center">
+          <a id="shortlistId_compare_button" class="btn btn-cc-compare btn-block btn-sm" href="/credit-cards/compare"><?php echo $this->translate("Compare Now") ?></a>
+          <a class="clear-shortlist text-uppercase" href="#" onclick="CreditCard.clear_compare(this)"><i class="fa fa-close"></i><?php echo $this->translate("Clear Shortlist") ?></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
