@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="83px" height="53px" viewBox="0 0 83 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>creditcard-listing-placeholder</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="creditcard-listing-placeholder" sketch:type="MSLayerGroup" transform="translate(1.000000, 1.000000)">
+            <g id="Page-1" sketch:type="MSShapeGroup">
+                <g id="Card-Placeholder">
+                    <g id="Page-1">
+                        <g id="Card-Placeholder">
+                            <g id="cc-table">
+                                <g id="Card-Placeholder">
+                                    <g id="Rectangle-365-+-Rectangle-366">
+                                        <rect id="Rectangle-365" stroke="#D4DDE0" x="0" y="0" width="81" height="51" rx="4"></rect>
+                                        <rect id="Rectangle-366" fill="#D4DEE0" x="0" y="6.85978022" width="81" height="15.4345055"></rect>
+                                        <rect id="Rectangle-366-Copy" fill="#D4DEE0" x="7.35284483" y="29.154066" width="12.4432759" height="8.57472528"></rect>
+                                        <rect id="Rectangle-366-Copy-2" fill="#D4DEE0" x="24.3209483" y="29.154066" width="49.3103542" height="1.71494505"></rect>
+                                        <rect id="Rectangle-366-Copy-3" fill="#D4DEE0" x="24.3209483" y="33.1556044" width="49.3103542" height="1.71494505"></rect>
+                                        <rect id="Rectangle-366-Copy-4" fill="#D4DEE0" x="24.3209483" y="37.7287912" width="49.3103542" height="1.71494505"></rect>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
