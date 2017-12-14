@@ -1757,12 +1757,94 @@ td {
     color: #667482;
 }
 
-
 .md-radio label {
     float: left;
     position: relative;
     width: 100%;
     margin-bottom: 10px;
+}
+
+.mg-top-sm{
+    margin-top: 30px;
+}
+
+.mg-bottom-xs{
+    margin-bottom: 15px;
+}
+
+.mg-bottom-sm{
+    margin-bottom: 30px;
+}
+
+.category-menu_list-item a {
+    display: block;
+    text-align: center;
+    height: 72px;
+    padding: 5px 0;
+}
+
+.category-menu_list-item {
+    background-color: #fff;
+    border: 1px solid #E0EDF8;
+}
+
+.category-menu_list-item:hover, .category-menu_list-item.active {
+    background-color: #E0EDF8;
+}
+
+.category-menu_list-item span {
+    display: flex;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #2C3F4F;
+    line-height: 1.2;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.icon-cat.medium {
+    width: 32px;
+    height: 32px;
+    background-size: 150px;
+}
+
+.icon-cat {
+    display: inline-block;
+    background: url(../img/credit-card-category-spritesheet.svg) no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 106px;
+}
+
+.icon-cat.medium.summary{
+    background-position: -4px -1px;
+}
+
+.icon-cat.medium.cash-back {
+    background-position: -41px -3px;
+}
+
+.icon-cat.medium.air-miles, .icon-cat.medium.travel {
+    background-position: -79px -3px;
+}
+
+.icon-cat.medium.rewards {
+    background-position: -116px -1px;
+}
+
+.icon-cat.medium.petrol {
+    background-position: -40px -78px;
+}
+
+.icon-cat.medium.shopping {
+    background-position: -41px -40px;
+}
+
+.icon-cat.medium.promo {
+    background-position: -79px -78px;
 }
 
 @media (max-width: 1199px) {

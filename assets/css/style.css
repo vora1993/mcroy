@@ -1211,6 +1211,206 @@ span.note-cart {
 .filters-content .row-header .bank-title a:hover {
     color: #fff;
 }
+
+.row-header.t-credit-card {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    font-size: .9em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.row-header.t-credit-card:before {
+    background-image: url(/assets/img/header-pattern-shadowed.png)!important;
+    background-size: 21px!important;
+    content: '';
+    display: table;
+    height: 40px;
+    left: 0;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+}
+
+.row-header.t-credit-card .header--curved {
+    background: url(/assets/img/header-long-credit-card-shadow.png) 0 0/345px 42px no-repeat;
+    height: 40px;
+    background-position-x: 0;
+    background-position-y: -2px;
+    border-top-left-radius: 8px;
+}
+
+.row-header.t-credit-card .header__logo {
+    height: 30px;
+    padding-left: 5px;
+    float: left;
+    overflow: hidden;
+}
+
+.logo-credit-card {
+    /*box-shadow: 0 0 10px #8A9396 inset;*/
+    background-size: cover!important;
+    background: url(/assets/img/credit-card.png) no-repeat;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    bottom: 0;
+    height: 50px;
+    position: absolute;
+    width: 80%;
+    left: 120px;
+    max-width: 140px;
+}
+
+.box-credit-card-content ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.box-credit-card-content ul li {
+    position: relative;
+    margin-bottom: 10px;
+    color: #34495e;
+    text-align: left;
+}
+
+.box-credit-card-content li:before {
+        position: absolute;
+    left: -2.14285714em;
+    top: 0.3em;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f00c";
+    width: 2.14285714em;
+    text-align: center;
+    text-rendering: auto;
+    color: #34495E;
+}
+
+.rtcc-more-content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.rtcc-more-content-side, .rtcc-more-content_left, .rtcc-more-content_right {
+    width: 50%;
+    background-color: #ffffff;
+    padding: 20px 10px 20px 0px;
+}
+
+.rtcc-more-content_right {
+    padding-right: 0px;
+}
+
+.rtcc-more-content-side .rtcc-detail-table, .rtcc-more-content_left .rtcc-detail-table, .rtcc-more-content_right .rtcc-detail-table {
+    max-width: 470px;
+}
+
+.rtcc-detail-table header {
+    border-bottom: 2px solid #33A5E4;
+    padding: 10px 20px;
+}
+
+.rtcc-detail-table {
+    border: 1px solid #EBEFF2;
+    margin: 0 auto 20px;
+    border-radius: 4px;
+}
+
+.rtcc-detail-table header h4, .rtcc-detail-table header b {
+    margin: 0;
+    font-size: 14px;
+    color: #34495E !important;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.rtcc-detail-table main ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.list-label-value {
+    padding: 10px 20px;
+    border-bottom: 1px solid #EBEFF2;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 1.4;
+    align-items: center;
+}
+
+.rtcc-detail-table main ul li:last-child {
+    border-bottom: 0;
+}
+
+.list-label-value .list-label {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    color: #34495e;
+    text-align: left;
+}
+
+.rtcc-detail-table main ul li:nth-of-type(2n+1) {
+    background-color: #FAFAFA;
+}
+
+.rtcc-detail-table.detail-table-category_code main ul li {
+    position: relative;
+    text-align: left;
+    display: flex;
+    padding: 10px 30px;
+    border-bottom: 1px solid #EBEFF2;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: baseline;
+    font-size: 14px;
+}
+
+.detail-table-category_code li:before {
+    position: absolute;
+    left: 0.2em;
+    top: 1.2em;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "";
+    width: 2.14285714em;
+    text-align: center;
+    text-rendering: auto;
+    color: #F5A623;
+}
+
+.header__heading {
+    font-size: 23px;
+    overflow: hidden;
+    line-height: 37px;
+    margin: 0;
+    position: relative;
+    top: 0;
+    z-index: 1;
+}
+
 .filters-content .row-header p {
     margin: 4px 0 12px 0;
 }
@@ -2495,4 +2695,9 @@ h2.title-faq {
   #lastest-news .news-content .col-sm-4.col-xs-12 {
       display: flex;
   }
+}
+@media (max-width: 767px){
+    .rtcc-more-content-side, .rtcc-more-content_left, .rtcc-more-content_right{
+        width: 100%;
+    }
 }

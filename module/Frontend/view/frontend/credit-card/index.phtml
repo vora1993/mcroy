@@ -1,0 +1,378 @@
+<?php
+$slider_loan_tenture = '$slider_loan_tenture';
+$slider_loan_percent = '$slider_loan_percent';
+$total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+?>
+<div class="container">
+  <div class="row">
+    <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
+      <div class="box-featured-bank">
+        <div class="featured-bank lowest-interest">
+          <h3 class="title-featured"><?php echo $this->translate("Filter"); ?></h3>
+          <div class="box-search">
+            <form>
+              <div class="monthly-income-filter">
+                <label>
+                  <?php echo $this->translate("Monthly income") ?>
+                  <span class="pull-right">
+                    <span class="monthly-income-label">$0</span>
+                  </span>
+                </label>
+                <div class="slider-monthly-income" data-min="15000" data-max="100000" data-value="<?php echo $this->monthly_income ?>" data-soft-cap="15000"></div>
+              </div>
+              <hr />
+              <div class="form-group clearfix">
+                <label><?php echo $this->translate("Best for") ?>...</label>
+                <select name="preferred_rate_package" class="form-control">
+                  <option value="All"><?php echo $this->translate("Choose your rewards") ?>...</option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Air Miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Cash Back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
+                </select>
+              </div>
+              <hr />
+              <div class="banks-filter">
+                <label>
+                  <?php echo $this->translate("Banks") ?>
+                </label>
+                <div class="clearfix">
+                  <?php foreach ($this->banks as $key => $bank):
+                  $dir_bank_logo = 'data/bank/'.$bank->getId().'/m_'.$bank->getLogo();
+                  if(!file_exists($dir_bank_logo)) {
+                    $dir_bank_logo = 'data/image/no-image-64.png';
+                  }
+                  ?>
+                  <div class="col-md-6 mg-bottom-xs">
+                    <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
+                  </div>
+                <?php endforeach;?>
+              </div>
+            </div>
+            <hr />
+            <div class="card-providers-filter">
+              <label>
+                <?php echo $this->translate("Card providers") ?>
+              </label>
+            </div>
+            <hr />
+            <div class="loan-filter">
+              <input type="hidden" name="monthly_income" value="<?php echo $this->monthly_income ?>">
+              <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
+              <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
+              <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
+              <button type="button" class="btn btn-lg green-custom ladda-button" onclick="Loan.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9 col-xs-12">
+
+    <div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
+      <div class="category-menu_list-item  active summary">
+        <a href="/credit-cards">
+          <i class="icon-cat medium summary"></i>
+          <span>All Cards</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item promo">
+        <a href="/credit-cards/discount">
+          <i class="icon-cat medium promo"></i>
+          <span>Discount</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item  rewards">
+        <a href="/credit-cards/points">
+          <i class="icon-cat medium rewards"></i>
+          <span>Points</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item air-miles">
+        <a href="/credit-cards/air-miles">
+          <i class="icon-cat medium air-miles"></i>
+          <span>Air Miles</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item cash-back">
+        <a href="/credit-cards/cash-back">
+          <i class="icon-cat medium cash-back"></i>
+          <span>Cash Back</span>
+        </a>
+      </div>
+    </div>
+    <div class="portlet light portlet-fit portlet-form no-shadow">
+      <div class="portlet-body form">
+        <form class="form-horizontal form-wizard">
+          <div class="top-floating">
+            <h4> <?php echo $this->translate("Compare the Best Singapore Credit Cards"); ?></h4>
+            <p><?php echo $this->translate("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in nulla sed mi ultricies imperdiet et dignissim purus. Maecenas pulvinar fringilla iaculis. Vestibulum et rutrum risus, malesuada pulvinar sem. Integer fringilla tristique rutrum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In pellentesque laoreet blandit. Cras ultrices est sit amet lorem cursus rutrum. Quisque lectus lacus, laoreet convallis laoreet quis, porta non nunc."); ?></p>
+          </div>
+
+          <div class="filters-table-container mg-top-sm" id="results">
+            <?php if(count($this->credit_cards) > 0): ?>
+              <div class="filters-table-body filters-credit-card-property">
+                <?php foreach ($this->credit_cards as $key => $credit_card): ?>
+                  <?php
+                  $bank = $this->bank(array("id" => $credit_card->getBankId()));
+                  if (!empty($bank)){
+                    $dir_bank_logo = 'data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+                    $bank_name = $bank->getName();
+                  } else {
+                    $dir_bank_logo = "";
+                    $bank_name = "";
+                  }
+                  $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+                  $credit_card_color = $credit_card->getColor() ? $credit_card->getColor() : "#FFFFFF";
+                  $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+                  if(!file_exists($dir_logo)) {
+                    $dir_logo = '/assets/img/credit-card.png';
+                  }
+                  ?>
+                  <div class="filters-content not-sponsored mg-bottom-sm">
+                    <div class="row-header t-credit-card" style="background-color: <?php echo $credit_card_color; ?>; border: <?php echo $credit_card_color; ?>">
+                      <div class="col-xs-6 header--curved hard--left ">
+                        <img class="header__logo hidden-xs hidden-sm" src="<?php echo $dir_bank_logo; ?>" alt="<?php echo $bank_name ?>" title="<?php echo $bank_name ?>">
+                        <div class="logo-credit-card" style="background: url('<?php echo $dir_logo; ?>') no-repeat;"></div>
+                      </div>
+                      <div class="header__heading hidden-xs weight--semibold col-xs-5" itemprop="name">
+                        <a href="#" target="_blank" class="link--offer-name">
+                          <?php echo $credit_card->getName(); ?>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row row-content">
+                      <div class="col-md-5">
+                        <div class="box-credit-card-content">
+                          <?php echo $_dataAttributes->promotion_and_deals; ?>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                      </div>
+                      <div class="col-md-3">
+                      </div>
+                    </div>
+                    <div class="row row-footer">
+                      <div class="more-info" style="overflow: hidden; display: none;">
+                        <div class="rtcc-more-content">
+                          <div class="rtcc-more-content_left">
+                            <div class="rtcc-detail-table">
+                              <header>
+                                <h4><?php echo $this->translate("Annual Fees and Rates"); ?></h4>
+                              </header>
+                              <main>
+                                <ul>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Principal Annual Fee"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->principal_annual_fee; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Supplementary Annual Fee"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->supplementary_annual_fee; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Fee Waiver"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->fee_waiver; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Annual Interest Rate"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->annual_interest_rate; ?>
+                                    </span>
+                                  </li>
+                                </ul>
+                              </main>
+                            </div>
+                            <div class="rtcc-detail-table">
+                              <header>
+                                <h4><?php echo $this->translate("Eligibility"); ?></h4>
+                              </header>
+                              <main>
+                                <ul>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Singaporean Minimum Income"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->singaporean_income; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Non-Singaporean Minimum Income"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->non_singaporean_income; ?>
+                                    </span>
+                                  </li>
+                                </ul>
+                              </main>
+                            </div>
+                          </div>
+
+                          <div class="rtcc-more-content_right">
+                            <div class="rtcc-detail-table detail-table-category_code">
+                              <header class="clearfix">
+                                <h4>
+                                  <?php echo $this->translate("Things to look out for"); ?>
+                                </h4>
+                              </header>
+                              <div class="clearfix"></div>
+                              <main>
+                                <?php echo $_dataAttributes->look_out_for; ?>
+                              </main>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-md-12 more-detail">
+                      <div class="col-md-8 col-sm-6 col-xs-12 button-gr button-gr-s">
+                        <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
+                      </div>
+                      <?php
+                      $class = '';
+                      if(count($select) > 0) {
+                        if(in_array($credit_card->getId(), $select)) $class = ' active';
+                      }
+                      ?>
+                      <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
+                        <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
+                        <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php
+                        //if($credit_card->getPromotions()) echo '<div class="promotion"><span>'.$credit_card->getPromotions().'</span></div>';
+                  ?>
+                </div>
+              <?php endforeach;?>
+            </div>
+          <?php endif;?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<?php
+echo $this->partial('compare');
+?>
+
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+// Handle number
+Loan.integer();
+Loan.sticky_footer();
+Loan.load_select();
+
+$('input[name=purchase_price]').on('blur', function(){
+  $(this).parent().removeClass('focus');
+}).on('focus', function(){
+  $(this).parent().addClass('focus');
+});
+
+$("input[name=purchase_price]").on("keydown", function(evt) {
+  var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+  if(charCode == 8 || charCode == 46 ){
+    return true;
+  }
+  return isEnterNumber(charCode);
+});
+
+$("input[name=purchase_price]").on("keyup", function() {
+  var val = $(this).val();
+  val = Number(val.replace(/,/g, ""));
+  $(this).val(formatNumber(val, ""));
+  updateLoanAmount();
+});
+
+var slider_monthly_income = $(".slider-monthly-income").slider({
+  value: $(".slider-monthly-income").data("value"),
+  min: $(".slider-monthly-income").data("min"),
+  max: $(".slider-monthly-income").data("max"),
+  orientation: "horizontal",
+  animate: !0,
+  range: "min",
+  slide: function(event, ui) {
+    $(".monthly-income-label").html(formatNumber(ui.value, "$"));
+    $("input[name=monthly_income]").val(ui.value);
+  },
+  change: function(event, ui) {
+    formatNumber(ui.value, "$");
+  }
+})
+
+var {$slider_loan_percent} = $(".slider-loan-amount").slider({
+  value: $(".slider-loan-amount").data("value"),
+  min: $(".slider-loan-amount").data("min"),
+  max: $(".slider-loan-amount").data("max"),
+  orientation: "horizontal",
+  animate: !0,
+  range: "min",
+  slide: function(event, ui) {
+    $(".loan-percentage-label").html(ui.value);
+    $("input[name=loan_percent]").val(ui.value);
+  },
+  change: function(event, ui) {
+    updateLoanAmount();
+  }
+});
+
+var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
+  value: $(".slider-loan-tenure").data("value"),
+  min: $(".slider-loan-tenure").data("min"),
+  max: $(".slider-loan-tenure").data("max"),
+  orientation: "horizontal",
+  animate: !0,
+  range: "min",
+  slide: function(event, ui) {
+    if ("" != $(".slider-loan-tenure").attr("data-soft-cap")) {
+      var o = parseInt($(".slider-loan-tenure").attr("data-soft-cap"));
+      if (ui.value > o) return !1
+    }
+  $(".loan-tenure-label").html(ui.value);
+  $("input[name=loan_tenure]").val(ui.value);
+},
+change: function(event, ui) {
+  updateSlider();
+  updateLoanAmount();
+}
+});
+
+$(".btn-less-detail").hide();
+$(".btn-more-detail").on('click', function(){
+  $(this).closest(".filters-content").find(".more-info").slideDown();
+  $(this).hide();
+  $(this).next().show();
+});
+
+$(".btn-less-detail").on('click', function(){
+  $(this).closest(".filters-content").find(".more-info").slideUp();
+  $(this).hide();
+  $(this).prev().show();
+});
+
+$("#category-menu").owlCarousel({
+  items: 5,
+  navigation: true,
+  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+  pagination: false
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

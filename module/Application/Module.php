@@ -326,6 +326,13 @@ class Module
                 	$model->setHydrator(new Mapper\BankHydrator());
                 	return $model;
                 },
+                'application_model_credit_card' => function ($sm) {
+                    $model = new Model\CreditCard();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\CreditCard());
+                    $model->setHydrator(new Mapper\CreditCardHydrator());
+                    return $model;
+                },
                 'application_model_business_loan_package' => function ($sm) {
                 	$model = new Model\Loan();
                     $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));

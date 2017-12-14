@@ -750,6 +750,19 @@ a:hover, a:focus {
     background: #f9f9f9;
 }
 
+.monthly-income-filter > label > span {
+    color: #12aaeb;
+}
+
+.monthly-income-filter > label {
+    display: block;
+    font-weight: 600;
+}
+
+.banks-filter .bank-logo{
+    cursor: pointer;
+}
+
 .loan-title-portlet {
     border-bottom: 1px solid #ededed;
     display: block;
@@ -1777,7 +1790,6 @@ a:hover, a:focus {
 .filters-table-property table > tbody > tr > td {
     padding: 10px 25px;
 }
-
 
 
 .contact-details ul {

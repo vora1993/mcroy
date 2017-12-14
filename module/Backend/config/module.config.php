@@ -19,6 +19,7 @@ return array(
             'infographic'        => Backend\Controller\InfographicController::class,
             'application_loan'   => Backend\Controller\ApplicationLoanController::class,
             'crm'                => Backend\Controller\CrmController::class,
+            'credit_cards'       => Backend\Controller\CreditCardsController::class,
 		)
 	),
 	'router' => array(
@@ -77,6 +78,20 @@ return array(
         					),
         				),
         			),
+                    'credit_cards' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/credit-cards[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'controller' => 'credit_cards',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
                     'business_loan' => array(
         				'type' => 'segment',
         				'options' => array(
