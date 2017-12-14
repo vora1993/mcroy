@@ -1662,6 +1662,14 @@ td {
     margin-top: 30px;
 }
 
+.mg-bottom-xs{
+    margin-bottom: 15px;
+}
+
+.mg-bottom-sm{
+    margin-bottom: 30px;
+}
+
 .category-menu_list-item a {
     display: block;
     text-align: center;

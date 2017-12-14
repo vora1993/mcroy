@@ -225,32 +225,112 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Things to Look Out For") ?></label>
                   <div class="col-md-9">
-                    <textarea class="form-control tinymce" name="data[feature_2]"></textarea>
+                    <textarea class="form-control tinymce" name="data[look_out_for]"></textarea>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Eligibility") ?></label>
                   <div class="col-md-9">
-                    <textarea class="form-control tinymce" name="data[eligibility]"></textarea>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Singaporean Minimum Income") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[singaporean_income]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Non-Singaporean Minimum Income") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[non_singaporean_income]" class="form-control">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Annual Fees & Rates") ?></label>
                   <div class="col-md-9">
-                    <textarea type="text" class="form-control tinymce" name="data[annual_fee]"></textarea>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Principal Annual Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[principal_annual_fee]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Supplementary Annual Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[supplementary_annual_fee]" class="form-control">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Interest Rate & Payment Fees") ?></label>
                   <div class="col-md-9">
-                    <textarea class="form-control tinymce" name="data[feature_3_long]"></textarea>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Annual Interest Rate") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[annual_interest_rate]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Fee Waiver") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[fee_waiver]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Late Payment Fees") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[late_payment_fees]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Minimum Monthly Repayment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[minimum_monthly_repayment]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Interest-free Period") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[interest_free_period]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Foreign Currency Transaction Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[foreign_currency_transaction_fee]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Balance Transfer Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[balance_transfer_fee]" class="form-control">
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Other Information") ?></label>
                   <div class="col-md-9">
-                    <textarea class="form-control tinymce" name="data[other_information]"></textarea>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Card Association") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[card_association]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Wireless Payment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[wireless_payment]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Mobile Wallet Payment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[mobile_wallet_payment]" class="form-control">
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -111,7 +111,7 @@ a:hover, a:focus {
     padding: 0 20px !important;
     border-bottom: 0 !important;
     border-radius: 8px 8px 0 0 !important;
-    
+
     -webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;
@@ -168,7 +168,7 @@ a:hover, a:focus {
 }
 
 .stepwizard {
-    display: table;     
+    display: table;
     width: 100%;
     position: relative;
     float: left;
@@ -186,7 +186,7 @@ a:hover, a:focus {
     z-order: 0;
 }
 
-.stepwizard-step {    
+.stepwizard-step {
     display: table-cell;
     text-align: center;
     position: relative;
@@ -288,7 +288,7 @@ a:hover, a:focus {
 }
 
 .form-wizard .form-wizard-title,
-.form-auth .form-wizard-title {    
+.form-auth .form-wizard-title {
     margin-bottom: 0;
 }
 
@@ -640,7 +640,7 @@ a:hover, a:focus {
     float: left;
     width: 300px;
     margin-right: 20px;
-} 
+}
 
 .loan-content {
     overflow: hidden;
@@ -700,6 +700,19 @@ a:hover, a:focus {
     background: #f9f9f9;
 }
 
+.monthly-income-filter > label > span {
+    color: #12aaeb;
+}
+
+.monthly-income-filter > label {
+    display: block;
+    font-weight: 600;
+}
+
+.banks-filter .bank-logo{
+    cursor: pointer;
+}
+
 .loan-title-portlet {
     border-bottom: 1px solid #ededed;
     display: block;
@@ -734,7 +747,7 @@ a:hover, a:focus {
     -ms-transition: 0.3s ease;
     width: 100%;
     float: left;
-    
+
     -webkit-border-top-left-radius: 50px;
     -webkit-border-bottom-right-radius: 50px;
     -moz-border-radius-topleft: 50px;
@@ -1090,7 +1103,7 @@ a:hover, a:focus {
 
 .owl-controls .owl-page.active span {
     background: #12aaeb;
-} 
+}
 
 .owl-controls .owl-page span {
     background: #b3b3b3;
@@ -1246,7 +1259,7 @@ a:hover, a:focus {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-   
+
 }
 .calc-circle::after {
     position: absolute;
@@ -1260,7 +1273,7 @@ a:hover, a:focus {
     -moz-border-radius: 50%;
     border-radius: 50%;
     border: 3px solid #c1edff;
-   
+
 }
 
 .calc-results {
@@ -1307,7 +1320,7 @@ a:hover, a:focus {
     display: table;
     width: 100%;
     margin: 0 auto 30px;
-} 
+}
 
 
 .page-business-loan-calculator .form-wizard h3{
@@ -1492,8 +1505,8 @@ a:hover, a:focus {
 }
 
 .page-calculator .page-title {
-    background: #f6f6f6;   
-    padding: 20px 35px;    
+    background: #f6f6f6;
+    padding: 20px 35px;
 }
 
 .page-calculator .page-content {
@@ -1589,7 +1602,7 @@ a:hover, a:focus {
 }
 
 .shortlist {
-    border-top: 1px solid #193d5a;    
+    border-top: 1px solid #193d5a;
 }
 
 .compare-arrow {
@@ -1721,7 +1734,6 @@ a:hover, a:focus {
 .filters-table-property table > tbody > tr > td {
     padding: 10px 25px;
 }
-
 
 
 .contact-details ul {

@@ -5,383 +5,264 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 ?>
 <div class="container">
   <div class="row">
-    <div id="column-left" class="col-md-3 col-xs-12">
+    <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
       <div class="box-featured-bank">
         <div class="featured-bank lowest-interest">
           <h3 class="title-featured"><?php echo $this->translate("Filter"); ?></h3>
-          <div class="box-fillter">
-            <p><?php echo $this->translate("Click the Refresh button below after you make any changes") ?>.</p>
-            <div class="form-group">
-              <label><?php echo $this->translate("Loan Type") ?></label>
-              <select name="preferred_rate_package" class="form-control">
-                <option value="All"><?php echo $this->translate("All") ?></option>
-                <option value="Fixed"<?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("Fixed") ?></option>
-                <option value="Floating"<?php if($this->preferred_rate_package === 'Floating') echo " selected" ?>><?php echo $this->translate("Floating") ?></option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box-featured-bank">
-        <div class="featured-bank lowest-interest">
           <div class="box-search">
-            <div class="box-search-top">
-              <p><?php echo $this->translate("Loan Amount") ?></p>
-              <b>$<?php echo number_format($this->loan_amount) ?></b>
-              <span><?php echo $this->translate("% of purchase price") ?></span>
-            </div>
             <form>
-              <div class="row indented">
-                <div class="col-xs-12">
-                  <label><?php echo $this->translate("Purchase Price") ?></label>
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i><?php echo $this->translate("Purchase Price ($)") ?></i>
-                    </span>
-                    <input type="text" name="purchase_price" class="form-control" value="<?php echo $this->purchase_price ?>">
-                  </div>
-                </div>
-              </div>
-              <div class="loan-filter">
+              <div class="monthly-income-filter">
                 <label>
-                  <?php echo $this->translate("Loan %") ?>
-                  <span class="pull-right"><span class="loan-percentage-label"><?php echo $this->loan_percent ?></span>%</span>
+                  <?php echo $this->translate("Monthly income") ?>
+                  <span class="pull-right">
+                    <span class="monthly-income-label">$0</span>
+                  </span>
                 </label>
-                <div class="slider-loan-amount" data-min="10" data-max="80" data-value="<?php echo $this->loan_percent ?>" data-soft-cap="80"></div>
+                <div class="slider-monthly-income" data-min="15000" data-max="100000" data-value="<?php echo $this->monthly_income ?>" data-soft-cap="15000"></div>
               </div>
-              <div class="loan-filter">
+              <hr />
+              <div class="form-group clearfix">
+                <label><?php echo $this->translate("Best for") ?>...</label>
+                <select name="preferred_rate_package" class="form-control">
+                  <option value="All"><?php echo $this->translate("Choose your rewards") ?>...</option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Air Miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
+                  <option value="Discount"<?php if($this->preferred_rate_package === 'Cash Back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
+                </select>
+              </div>
+              <hr />
+              <div class="banks-filter">
                 <label>
-                  <?php echo $this->translate("Loan Tenure") ?>
-                  <span class="pull-right"><span class="loan-tenure-label"><?php echo $this->loan_tenure ?></span> years</span>
+                  <?php echo $this->translate("Banks") ?>
                 </label>
-                <div class="slider-loan-tenure" data-min="5" data-max="30" data-value="<?php echo $this->loan_tenure ?>" data-soft-cap="30"></div>
-              </div>
-              <div class="loan-filter">
-                <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
-                <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
-                <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
-                <button type="button" class="btn btn-lg green-custom ladda-button" onclick="Loan.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-9 col-xs-12">
-
-      <div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
-        <div class="category-menu_list-item  active summary">
-          <a href="/credit-cards">
-            <i class="icon-cat medium summary"></i>
-            <span>All Cards</span>
-          </a>
-        </div>
-        <div class="category-menu_list-item promo">
-          <a href="/credit-cards/discount">
-            <i class="icon-cat medium promo"></i>
-            <span>Discount</span>
-          </a>
-        </div>
-        <div class="category-menu_list-item  rewards">
-          <a href="/credit-cards/points">
-            <i class="icon-cat medium rewards"></i>
-            <span>Points</span>
-          </a>
-        </div>
-        <div class="category-menu_list-item air-miles">
-          <a href="/credit-cards/air-miles">
-            <i class="icon-cat medium air-miles"></i>
-            <span>Air Miles</span>
-          </a>
-        </div>
-        <div class="category-menu_list-item cash-back">
-          <a href="/credit-cards/cash-back">
-            <i class="icon-cat medium cash-back"></i>
-            <span>Cash Back</span>
-          </a>
-        </div>
-      </div>
-      <div class="portlet light portlet-fit portlet-form no-shadow">
-        <div class="portlet-body form">
-          <form class="form-horizontal form-wizard">
-            <div class="top-floating">
-              <h4> <?php echo $this->translate("Top Floating Rates"); ?></h4>
-              <p><?php echo $this->translate("Home loans displayed below are ranked according to interest rates. You can click on the product box to view more details or modify your search criteria on the left"); ?></p>
-            </div>
-            <div class="filter-table-head hidden-sm hidden-xs">
-              <ul>
-                <li>
-                  <aside class="head-title">
-                    <div class="name"><?php echo $this->translate("Bank") ?></div>
-                  </aside>
-                </li><!--
-              --><li>
-                <aside class="head-title">
-                  <div class="name"><?php echo $this->translate("Interest") ?></div>
-                  <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->interest_property_loan ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                  <div class="sort" data-field="interest"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                    </li><!--
-                  --><li>
-                    <aside class="head-title">
-                      <div class="name"><?php echo $this->translate("Monthly Repayment") ?><span></span></div>
-                      <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_repayment ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                      <div class="sort" data-field="monthly_repayment"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                    </aside>
-                    </li><!--
-                  --><li>
-                    <aside class="head-title">
-                      <div class="name"><?php echo $this->translate("Total Interest Payable") ?></div>
-                      <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->total_interest_payable ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                      <div class="sort" data-field="total_interest_payable"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                    </aside>
-                   </li><!--
-                 --><li>
-                  <aside class="head-title">
-                    <div class="name"><?php echo $this->translate("Type") ?></div>
-                    <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->type_property_loan ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                    <div class="sort" data-field="type"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                  </aside>
-                </li>
-              </ul>
-            </div>
-
-            <div class="filters-table-container" id="results">
-              <?php if(count($this->loans) > 0): ?>
-                <div class="filters-table-body filters-table-property">
-                  <?php foreach ($this->loans as $key => $loan): ?>
-                    <?php
-                    $bank = $this->bank(array("id" => $loan->getBankId()));
-                    $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";
-
-                    $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
-                    $loan_amount = $this->loan_amount;
-                    $int_rates = $loan->getIntYear2();
-
-                // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
-                // Where: r = decimal rate / 12.
-                    $r = ($int_rates / 100) / 12;
-                    $monthly_repayment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-
-                    $monthly_payment = $monthly_repayment;
-                    $loan_tenure = $this->loan_tenure;
-                    $loan_amount = $this->loan_amount;
-                    $total_amount_payable = $monthly_payment * $loan_tenure * 12;
-                    $total_interest_payable = $total_amount_payable - $loan_amount;
-
-                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
-                    if(!file_exists($dir_logo)) {
-                      $dir_logo = 'data/image/no-image-64.png';
-                    }
-                    ?>
-                    <div class="filters-content not-sponsored">
-                      <div class="row-header">
-                        <h4 class="bank-title" style="background-color: <?php echo $bank_color; ?>"><a href="#"><?php echo $loan->getTitle(); ?> <?php echo $loan->getPromotions(); ?></a></h4>
-                      </div>
-                      <div class="row row-content">
-                        <div class="col-md-2">
-                          <div class="box__bank"><span class="bank" data-value="<?php echo $int_rates ?>"><img src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getTitle(); ?>" class="logo"></span></div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="box__interest"><span class="interest" data-value="<?php echo $int_rates ?>"><b><?php echo $int_rates ?>%</b><?php echo $total_interest_for_years ?> <?php echo $this->translate("Year Average") ?></span></div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="box__monthly_repayment"><span class="monthly_repayment" data-value="<?php echo number_format($monthly_repayment); ?>"><b>$<?php echo number_format($monthly_repayment); ?></b><?php echo $total_interest_for_years ?> <?php echo $this->translate("Year Average") ?></span></div>
-                        </div>
-                        <div class="col-md-2">
-                          <?php
-                            /*$lock_in_year = $loan->getLockInYear();
-                            if($lock_in_year > 0) {
-                                $total_interest_payable = $lock_in_year.' '.$this->translate("Year");
-                            } else {
-                                $total_interest_payable = $this->translate("No Lock-in");
-                              }*/
-                              ?>
-                              <div class="box__total_interest_payable"><span class="total_interest_payable" data-value="<?php echo number_format($total_interest_payable); ?>"><b>$<?php echo number_format($total_interest_payable); ?></b></span></div>
-                            </div>
-                            <div class="col-md-2">
-                              <?php
-                              switch ($loan->getFloatingType()) {
-                                case 'SIBOR':
-                                $type = $this->translate("SIBOR");
-                                break;
-
-                                case 'Variable':
-                                $type = $this->translate("Variable");
-                                break;
-
-                                case 'Bank Board Rates':
-                                $type = $this->translate("Bank Board Rates");
-                                break;
-
-                                case 'SOR':
-                                $type = $this->translate("SOR");
-                                break;
-
-                                default:
-                                $type = $this->translate("Fixed");
-                                break;
-                              }
-                              ?>
-                              <div class="box__type"><span class="type" data-value="<?php echo $type ?>"><?php echo $type ?></span></div>
-                            </div>
-                          </div>
-                          <div class="row row-footer">
-                            <div class="col-md-12 more-info" style="overflow: hidden; display: none;">
-                              <h3><?php echo $this->translate("Rates & Payments") ?></h3>
-                              <div class="row">
-                                <div class="content-row-footer">
-                                  <ul>
-                                    <li>
-                                      <div class="col-row-footer-2 text-left padding-left-30"><?php echo $this->translate("Year") ?></div>
-                                      <div class="col-row-footer-2"><?php echo $this->translate("Interest Rate") ?></div>
-                                      <div class="col-row-footer-2 text-right"><?php echo $this->translate("Monthly Payment") ?></div>
-                                      <div class="col-row-footer-3"><?php echo $this->translate("Remark") ?></div>
-                                      <div class="col-row-footer-1"><a data-target="#content-row-footer1" data-toggle="collapse" aria-expanded="true"><i class="fa fa-minus-circle" aria-hidden="true"></i><i class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
-                                      <div id="content-row-footer1" class="content-row-collapse collapse in">
-                                       <ul>
-                                         <?php
-                                         if($loan->getIntYear1() > 0) {
-                                          $int_rates1 = $loan->getIntYear1();
-                                          $r = ($int_rates1 / 100) / 12;
-                                          $monthly_repayment1 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                          ?>
-                                          <li>
-                                            <div class="col-row-footer-2 text-left"><?php echo $this->translate("Year") ?> 1</div>
-                                            <div class="col-row-footer-2"><?php echo $int_rates1 ?></div>
-                                            <div class="col-row-footer-2 text-right"><?php echo round($monthly_repayment1, 3) ?>/mth</div>
-                                            <div class="col-row-footer-3"><?php echo $loan->getRemarkYear1() ?></div>
-                                            <div class="col-row-footer-1"></div>
-                                          </li>
-                                          <?php
-                                        }
-                                        if($loan->getIntYear2() > 0) {
-                                          $int_rates2 = $loan->getIntYear2();
-                                          $r = ($int_rates2 / 100) / 12;
-                                          $monthly_repayment2 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                          ?>
-                                          <li>
-                                            <div class="col-row-footer-2 text-left"><?php echo $this->translate("Year") ?> 2</div>
-                                            <div class="col-row-footer-2"><?php echo $int_rates2 ?></div>
-                                            <div class="col-row-footer-2 text-right"><?php echo round($monthly_repayment2, 3) ?>/mth</div>
-                                            <div class="col-row-footer-3"><?php echo $loan->getRemarkYear2() ?></div>
-                                            <div class="col-row-footer-1"></div>
-                                          </li>
-                                          <?php
-                                        }
-                                        if($loan->getIntYear3() > 0) {
-                                          $int_rates3 = $loan->getIntYear3();
-                                          $r = ($int_rates3 / 100) / 12;
-                                          $monthly_repayment3 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                          ?>
-                                          <li>
-                                            <div class="col-row-footer-2 text-left"><?php echo $this->translate("Year") ?> 3</div>
-                                            <div class="col-row-footer-2"><?php echo $int_rates3 ?></div>
-                                            <div class="col-row-footer-2 text-right"><?php echo round($monthly_repayment3, 3) ?>/mth</div>
-                                            <div class="col-row-footer-3"><?php echo $loan->getRemarkYear3() ?></div>
-                                            <div class="col-row-footer-1"></div>
-                                          </li>
-                                          <?php
-                                        }
-                                        if($loan->getIntYear4() > 0) {
-                                          $int_rates4 = $loan->getIntYear4();
-                                          $r = ($int_rates4 / 100) / 12;
-                                          $monthly_repayment4 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                          ?>
-                                          <li>
-                                            <div class="col-row-footer-2 text-left"><?php echo $this->translate("Year") ?> 4</div>
-                                            <div class="col-row-footer-2"><?php echo $int_rates4 ?></div>
-                                            <div class="col-row-footer-2 text-right"><?php echo round($monthly_repayment4, 3) ?>/mth</div>
-                                            <div class="col-row-footer-3"><?php echo $loan->getRemarkYear4() ?></div>
-                                            <div class="col-row-footer-1"></div>
-                                          </li>
-                                          <?php
-                                        }
-                                        ?>
-                                      </ul>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            <h3><?php echo $this->translate("Features") ?></h3>
-                            <div class="row margin-bottom-20">
-                              <table class="table table-bordered table-striped table-condensed text-left">
-                                <tbody>
-                                  <?php if($loan->getLegalSubsidy()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Legal subsidy") ?></td>
-                                      <td><?php echo $loan->getLegalSubsidy() ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                  <?php if($loan->getLegalFeeSubsidy()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Legal Fee Subsidy") ?></td>
-                                      <td><?php echo $loan->getLegalFeeSubsidy() ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                  <?php if($loan->getValuationSubsidy()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Valuation Subsidy") ?></td>
-                                      <td><?php echo $loan->getValuationSubsidy() ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                  <?php if($loan->getFireInsuranceSubsidy()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Fire Insurance Subsidy") ?></td>
-                                      <td><?php echo $loan->getFireInsuranceSubsidy() ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                  <?php if($loan->getSubsidyComment()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Subsidy Comment") ?></td>
-                                      <td><?php echo nl2br($loan->getSubsidyComment()) ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                  <?php if($loan->getClawback()): ?>
-                                    <tr>
-                                      <td><?php echo $this->translate("Clawback") ?></td>
-                                      <td><?php echo $loan->getClawback() ?></td>
-                                    </tr>
-                                  <?php endif; ?>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                          <div class="col-md-12 more-detail">
-                            <div class="col-md-8 col-sm-6 col-xs-12 button-gr button-gr-s">
-                              <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
-                              <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
-                            </div>
-                            <?php
-                            $class = '';
-                            if(count($select) > 0) {
-                              if(in_array($loan->getId(), $select)) $class = ' active';
-                            }
-                            ?>
-                            <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
-                              <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
-                              <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
-                            </div>
-                          </div>
-                        </div>
-                        <?php
-                        if($loan->getPromotions()) echo '<div class="promotion"><span>'.$loan->getPromotions().'</span></div>';
-                        ?>
-                      </div>
-                    <?php endforeach;?>
+                <div class="clearfix">
+                  <?php foreach ($this->banks as $key => $bank):
+                  $dir_bank_logo = 'data/bank/'.$bank->getId().'/m_'.$bank->getLogo();
+                  if(!file_exists($dir_bank_logo)) {
+                    $dir_bank_logo = 'data/image/no-image-64.png';
+                  }
+                  ?>
+                  <div class="col-md-6 mg-bottom-xs">
+                    <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
                   </div>
-                <?php endif;?>
+                <?php endforeach;?>
               </div>
-            </form>
-          </div>
+            </div>
+            <hr />
+            <div class="card-providers-filter">
+              <label>
+                <?php echo $this->translate("Card providers") ?>
+              </label>
+            </div>
+            <hr />
+            <div class="loan-filter">
+              <input type="hidden" name="monthly_income" value="<?php echo $this->monthly_income ?>">
+              <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
+              <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
+              <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
+              <button type="button" class="btn btn-lg green-custom ladda-button" onclick="Loan.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-md-9 col-xs-12">
 
-  <?php
-  echo $this->partial('compare');
-  ?>
+    <div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
+      <div class="category-menu_list-item  active summary">
+        <a href="/credit-cards">
+          <i class="icon-cat medium summary"></i>
+          <span>All Cards</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item promo">
+        <a href="/credit-cards/discount">
+          <i class="icon-cat medium promo"></i>
+          <span>Discount</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item  rewards">
+        <a href="/credit-cards/points">
+          <i class="icon-cat medium rewards"></i>
+          <span>Points</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item air-miles">
+        <a href="/credit-cards/air-miles">
+          <i class="icon-cat medium air-miles"></i>
+          <span>Air Miles</span>
+        </a>
+      </div>
+      <div class="category-menu_list-item cash-back">
+        <a href="/credit-cards/cash-back">
+          <i class="icon-cat medium cash-back"></i>
+          <span>Cash Back</span>
+        </a>
+      </div>
+    </div>
+    <div class="portlet light portlet-fit portlet-form no-shadow">
+      <div class="portlet-body form">
+        <form class="form-horizontal form-wizard">
+          <div class="top-floating">
+            <h4> <?php echo $this->translate("Compare the Best Singapore Credit Cards"); ?></h4>
+            <p><?php echo $this->translate("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in nulla sed mi ultricies imperdiet et dignissim purus. Maecenas pulvinar fringilla iaculis. Vestibulum et rutrum risus, malesuada pulvinar sem. Integer fringilla tristique rutrum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In pellentesque laoreet blandit. Cras ultrices est sit amet lorem cursus rutrum. Quisque lectus lacus, laoreet convallis laoreet quis, porta non nunc."); ?></p>
+          </div>
+
+          <div class="filters-table-container mg-top-sm" id="results">
+            <?php if(count($this->credit_cards) > 0): ?>
+              <div class="filters-table-body filters-credit-card-property">
+                <?php foreach ($this->credit_cards as $key => $credit_card): ?>
+                  <?php
+                  $bank = $this->bank(array("id" => $credit_card->getBankId()));
+                  if (!empty($bank)){
+                    $dir_bank_logo = 'data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+                    $bank_name = $bank->getName();
+                  } else {
+                    $dir_bank_logo = "";
+                    $bank_name = "";
+                  }
+                  $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+                  $credit_card_color = $credit_card->getColor() ? $credit_card->getColor() : "#FFFFFF";
+                  $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+                  if(!file_exists($dir_logo)) {
+                    $dir_logo = '/assets/img/credit-card.png';
+                  }
+                  ?>
+                  <div class="filters-content not-sponsored mg-bottom-sm">
+                    <div class="row-header t-credit-card" style="background-color: <?php echo $credit_card_color; ?>; border: <?php echo $credit_card_color; ?>">
+                      <div class="col-xs-6 header--curved hard--left ">
+                        <img class="header__logo hidden-xs hidden-sm" src="<?php echo $dir_bank_logo; ?>" alt="<?php echo $bank_name ?>" title="<?php echo $bank_name ?>">
+                        <div class="logo-credit-card" style="background: url('<?php echo $dir_logo; ?>') no-repeat;"></div>
+                      </div>
+                      <div class="header__heading hidden-xs weight--semibold col-xs-5" itemprop="name">
+                        <a href="#" target="_blank" class="link--offer-name">
+                          <?php echo $credit_card->getName(); ?>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row row-content">
+                      <div class="col-md-5">
+                        <div class="box-credit-card-content">
+                          <?php echo $_dataAttributes->promotion_and_deals; ?>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                      </div>
+                      <div class="col-md-3">
+                      </div>
+                    </div>
+                    <div class="row row-footer">
+                      <div class="more-info" style="overflow: hidden; display: none;">
+                        <div class="rtcc-more-content">
+                          <div class="rtcc-more-content_left">
+                            <div class="rtcc-detail-table">
+                              <header>
+                                <h4><?php echo $this->translate("Annual Fees and Rates"); ?></h4>
+                              </header>
+                              <main>
+                                <ul>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Principal Annual Fee"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->principal_annual_fee; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Supplementary Annual Fee"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->supplementary_annual_fee; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Fee Waiver"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->fee_waiver; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Annual Interest Rate"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->annual_interest_rate; ?>
+                                    </span>
+                                  </li>
+                                </ul>
+                              </main>
+                            </div>
+                            <div class="rtcc-detail-table">
+                              <header>
+                                <h4><?php echo $this->translate("Eligibility"); ?></h4>
+                              </header>
+                              <main>
+                                <ul>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Singaporean Minimum Income"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->singaporean_income; ?>
+                                    </span>
+                                  </li>
+                                  <li class="list-label-value">
+                                    <span class="list-label"><?php echo $this->translate("Non-Singaporean Minimum Income"); ?></span>
+                                    <span class="list-value">
+                                      <?php echo $_dataAttributes->non_singaporean_income; ?>
+                                    </span>
+                                  </li>
+                                </ul>
+                              </main>
+                            </div>
+                          </div>
+
+                          <div class="rtcc-more-content_right">
+                            <div class="rtcc-detail-table detail-table-category_code">
+                              <header class="clearfix">
+                                <h4>
+                                  <?php echo $this->translate("Things to look out for"); ?>
+                                </h4>
+                              </header>
+                              <div class="clearfix"></div>
+                              <main>
+                                <?php echo $_dataAttributes->look_out_for; ?>
+                              </main>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-md-12 more-detail">
+                      <div class="col-md-8 col-sm-6 col-xs-12 button-gr button-gr-s">
+                        <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
+                      </div>
+                      <?php
+                      $class = '';
+                      if(count($select) > 0) {
+                        if(in_array($credit_card->getId(), $select)) $class = ' active';
+                      }
+                      ?>
+                      <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
+                        <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
+                        <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php
+                        //if($credit_card->getPromotions()) echo '<div class="promotion"><span>'.$credit_card->getPromotions().'</span></div>';
+                  ?>
+                </div>
+              <?php endforeach;?>
+            </div>
+          <?php endif;?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<?php
+echo $this->partial('compare');
+?>
 
 <?php
 $offStyle = 12;
@@ -419,6 +300,22 @@ $("input[name=purchase_price]").on("keyup", function() {
   $(this).val(formatNumber(val, ""));
   updateLoanAmount();
 });
+
+var slider_monthly_income = $(".slider-monthly-income").slider({
+  value: $(".slider-monthly-income").data("value"),
+  min: $(".slider-monthly-income").data("min"),
+  max: $(".slider-monthly-income").data("max"),
+  orientation: "horizontal",
+  animate: !0,
+  range: "min",
+  slide: function(event, ui) {
+    $(".monthly-income-label").html(formatNumber(ui.value, "$"));
+    $("input[name=monthly_income]").val(ui.value);
+  },
+  change: function(event, ui) {
+    formatNumber(ui.value, "$");
+  }
+})
 
 var {$slider_loan_percent} = $(".slider-loan-amount").slider({
   value: $(".slider-loan-amount").data("value"),
@@ -459,22 +356,22 @@ change: function(event, ui) {
 
 $(".btn-less-detail").hide();
 $(".btn-more-detail").on('click', function(){
-$(this).closest(".filters-content").find(".more-info").slideDown();
-$(this).hide();
-$(this).next().show();
+  $(this).closest(".filters-content").find(".more-info").slideDown();
+  $(this).hide();
+  $(this).next().show();
 });
 
 $(".btn-less-detail").on('click', function(){
-$(this).closest(".filters-content").find(".more-info").slideUp();
-$(this).hide();
-$(this).prev().show();
+  $(this).closest(".filters-content").find(".more-info").slideUp();
+  $(this).hide();
+  $(this).prev().show();
 });
 
 $("#category-menu").owlCarousel({
-items: 5,
-navigation: true,
-navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-pagination: false
+  items: 5,
+  navigation: true,
+  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+  pagination: false
 });
 JS;
 $this->inlineScript()->captureEnd();

@@ -34,6 +34,7 @@ class CreditCardsController extends AbstractActionController
       $credit_card->setColor($post['color']);
       $credit_card->setStatus($post['status']);
       $credit_card->setLogo($post['logo']);
+      $credit_card->setBankId($post['bank_id']);
       $added = $application_model_credit_card->insert($credit_card);
       if($added) {
         $messages['success'] = true;
@@ -41,7 +42,7 @@ class CreditCardsController extends AbstractActionController
 
                 // Logo
         $dir_credit_card = 'data/credit_cards/';
-        if($post['data']['logo']) {
+        if($post['logo']) {
           $dir_logo = $dir_credit_card.$added->getGeneratedValue();
           if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
 

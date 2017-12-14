@@ -10,6 +10,8 @@ class CreditCard implements CreditCardInterface
   protected $date_added;
   protected $date_modified;
   protected $status;
+  protected $data_attributes;
+  protected $bank_id;
 
 
   public function getId()
@@ -44,11 +46,21 @@ class CreditCard implements CreditCardInterface
 
   public function getDataAttributes()
   {
-    return $this->attributes;
+    return $this->data_attributes;
   }
-  public function setDataAttributes($attributes)
+  public function setDataAttributes($data_attributes)
   {
-    $this->attributes = $attributes;
+    $this->data_attributes = $data_attributes;
+    return $this;
+  }
+
+  public function getBankId()
+  {
+    return $this->bank_id;
+  }
+  public function setBankId($bank_id)
+  {
+    $this->bank_id = $bank_id;
     return $this;
   }
 

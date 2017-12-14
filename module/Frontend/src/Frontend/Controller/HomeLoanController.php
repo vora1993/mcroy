@@ -13,7 +13,7 @@ class HomeLoanController extends AbstractActionController
         $this->layout('layout/home-loan');
         return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
     }
-    
+
     public function stepAction() {
         $id = $this->params()->fromRoute('id');  // From RouteMatch
         $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
@@ -36,18 +36,18 @@ class HomeLoanController extends AbstractActionController
                         $session->offsetSet('property_status', $property_status);
                         $session->offsetSet('option_fee', $option_fee);
                         $session->offsetSet('offer_opts', $offer_opts);
-                        
+
                         $success = true;
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 1), array('name' => "home_loan"));
                     }
-                    
+
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
                     return $response;
                 }
             break;
-            
+
             case 2:
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
@@ -68,18 +68,18 @@ class HomeLoanController extends AbstractActionController
                         $session->offsetSet('loan_tenure', $loan_tenure);
                         $session->offsetSet('loan_percent', $loan_percent);
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
-                        
+
                         $success = true;
                         $redirect = $router->assemble(array("action" => "step", "id" => 3), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     }
-                    
+
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
                     return $response;
                 }
             break;
-            
+
             case 3:
                 $purchase_price = $session->offsetGet('purchase_price') ? $session->offsetGet('purchase_price') : 0;
                 if(!$session->offsetExists('existing_home_loans') && $purchase_price <= 0) {
@@ -90,7 +90,7 @@ class HomeLoanController extends AbstractActionController
                 }
                 $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "home_loan"));
             break;
-            
+
             case 4:
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
@@ -102,7 +102,7 @@ class HomeLoanController extends AbstractActionController
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 3));
                 }
-            
+
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_bank');
                 $condition = array('property' => "home_loan", 'status' => 1);
                 if($session->offsetExists('property_type')) {
@@ -133,39 +133,39 @@ class HomeLoanController extends AbstractActionController
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
                         if($no_lock_in_only == 1) $session->offsetSet('no_lock_in_only', 1);
                         else $session->offsetSet('no_lock_in_only', 0);
-                        
+
                         $success = true;
                         $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     }
-                    
+
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
                     return $response;
                 }
             break;
-            
+
             case 5:
                 if($request->isPost()) {
                     $post = $request->getPost();
                     $message = $post['message'];
-                    
+
                     // Send email
                     $application_view_helper_send_email = $viewHelperManager->get('send_email');
-                    
+
                     if($session->offsetExists('loan_amount')) {
                         $loan_amount = $session->offsetGet('loan_amount');
                     }
                     if($session->offsetExists('loan_tenure')) {
                         $loan_tenure = $session->offsetGet('loan_tenure');
                     }
-                    
+
                     // Save to DB
                     $application_view_helper_auth = $viewHelperManager->get('auth');
                     $user = $application_view_helper_auth();
                     $user_id = $user ? $user->getId() : 0;
-                    
-                    $application_model_property_loan = $this->getServiceLocator()->get('application_model_property_loan');             
+
+                    $application_model_property_loan = $this->getServiceLocator()->get('application_model_property_loan');
                     $property_loan = new \Application\Entity\PropertyLoan;
                     $property_loan->setUserId($user_id);
                     $property_loan->setType('home_loan');
@@ -195,7 +195,7 @@ class HomeLoanController extends AbstractActionController
                                 $application_model_property_loan_ref->insert($property_loan_ref);
                             }
                         }
-                        
+
                         // Send email to Admin
                         //$html = '<p>Loan Amount: $<b>'.number_format($loan_amount).'</b></p>';
                         //$html .= '<p>Loan Tenure: <b>'.$loan_tenure.'</b>%</p>';
@@ -204,7 +204,7 @@ class HomeLoanController extends AbstractActionController
                         $html .= '<p>Please check your admin for more information.</p>';
                         $html .= '<p>'.$message.'</p>';
                         $application_view_helper_send_email("You have a Home Loan application form", $html, 'Best regard');
-                    
+
                         // Referrals
                         if ($user_id > 0) {
                             $application_model_user_ref = $this->getServiceLocator()->get('application_model_user_ref');
@@ -231,16 +231,16 @@ class HomeLoanController extends AbstractActionController
                     }
                     // Unset session personal
                     $session->offsetUnset('home_loan');
-                    
+
                     $success = true;
-                    $redirect = $router->assemble(array("action" => "success"), array('name' => "home_loan"));                                        
-                    
+                    $redirect = $router->assemble(array("action" => "success"), array('name' => "home_loan"));
+
                     $response = $this->getResponse();
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "msg" => $msg , "redirect" => $redirect) ) );
-                    return $response;  
-                }          
+                    return $response;
+                }
             break;
-            
+
             default:
                 return $this->redirect()->toRoute("page", array("action" => "error", "id" => 404));
             break;
@@ -269,14 +269,14 @@ class HomeLoanController extends AbstractActionController
         if($session->offsetExists('select')) {
             $select = $session->offsetGet('select');
         }
-        
+
         $session_user = new Session('user');
         $session_user->offsetSet('redirect', $redirect);
-        
+
         return array(
-            "step"                     => $id, 
-            "property_type"            => $property_type, 
-            "preferred_rate_package"   => $preferred_rate_package, 
+            "step"                     => $id,
+            "property_type"            => $property_type,
+            "preferred_rate_package"   => $preferred_rate_package,
             "purchase_price"           => $purchase_price,
             "loan_amount"              => $loan_amount,
             "loan_tenure"              => $loan_tenure,
@@ -288,7 +288,7 @@ class HomeLoanController extends AbstractActionController
             "redirect_url"             => $redirect
         );
     }
-    
+
     public function selectAction() {
         $session = new Session('home_loan');
         $request = $this->getRequest();
@@ -297,21 +297,21 @@ class HomeLoanController extends AbstractActionController
             $post = $request->getPost();
             $id = $post['id'];
             $success = false;
-            
+
             if($session->offsetExists('select')) {
                 $select = $session->offsetGet('select');
                 $select_arr = $select;
-                $current_count_select = count($select_arr);    
+                $current_count_select = count($select_arr);
             } else {
                 $current_count_select = 0;
                 $select_arr = array();
             }
             $max_count_select = 3;
-            
+
             $success = false;
             $cr = "active";
             $ca = "";
-            
+
             if($current_count_select <= $max_count_select) {
                 if(!in_array($id, $select_arr)) {
                     array_push($select_arr, $id);
@@ -328,16 +328,16 @@ class HomeLoanController extends AbstractActionController
             } else {
                 $msg = $translator->translate("Maximum 3 banks selected");
             }
-            
+
             $session->offsetSet('select', $select_arr);
             $response = $this->getResponse();
             $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca) ) );
-            return $response;  
+            return $response;
         }
         if($session->offsetExists('select')) $select = $session->offsetGet('select');
         return array("select" => $select);
     }
-    
+
     public function loadSelectAction()
     {
         $basePath = $this->serviceLocator->get('viewhelpermanager')->get('basePath');
@@ -377,7 +377,7 @@ class HomeLoanController extends AbstractActionController
         $response->setContent(\Zend\Json\Json::encode(array("html" => $html, "count" => count($select))));
         return $response;
     }
-    
+
     public function clearSelectAction()
     {
         $session = new Session('home_loan');
@@ -414,7 +414,7 @@ class HomeLoanController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function applyAction() {
         $session = new Session('home_loan');
         $request = $this->getRequest();
@@ -422,25 +422,25 @@ class HomeLoanController extends AbstractActionController
             $translator = $this->getServiceLocator()->get('translator');
             $post = $request->getPost();
             $success = false;
-            
+
             $id = $post['id'];
             if($id > 0) {
                 $session->offsetSet('apply', $id);
                 $success = true;
                 $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
-                $redirect = $router->assemble(array("action" => "property-loan", "seo" => $post['seo'], "step" => "step", "id" => 4), array('name' => "loan_application"));                
+                $redirect = $router->assemble(array("action" => "property-loan", "seo" => $post['seo'], "step" => "step", "id" => 4), array('name' => "loan_application"));
             } else {
                 $msg = $translator->translate("Please select at least 1 loan package so that we can email a copy of the package details to you");
             }
-            
+
             $response = $this->getResponse();
             $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "msg" => $msg , "redirect" => $redirect) ) );
-            return $response;  
+            return $response;
         }
         if($session->offsetExists('apply')) $select = $session->offsetGet('apply');
         return array("apply" => $apply);
     }
-    
+
     public function applyXXXAction() { // May be compare
         $session = new Session('home_loan');
         $request = $this->getRequest();
@@ -448,33 +448,33 @@ class HomeLoanController extends AbstractActionController
             $translator = $this->getServiceLocator()->get('translator');
             $post = $request->getPost();
             $success = false;
-            
+
             if($session->offsetExists('select')) {
                 $select = $session->offsetGet('select');
                 $select_arr = $select;
-                $current_count_select = count($select_arr);    
+                $current_count_select = count($select_arr);
             } else {
                 $current_count_select = 0;
                 $select_arr = array();
             }
-            
+
             if(count($select_arr) > 0) {
                 $success = true;
                 $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
-                $redirect = $router->assemble(array("action" => "property-loan", "seo" => $post['seo'], "step" => "step", "id" => 4), array('name' => "loan_application"));                
+                $redirect = $router->assemble(array("action" => "property-loan", "seo" => $post['seo'], "step" => "step", "id" => 4), array('name' => "loan_application"));
             } else {
                 $msg = $translator->translate("Please select at least 1 loan package so that we can email a copy of the package details to you");
             }
-            
+
             $response = $this->getResponse();
             $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "msg" => $msg , "redirect" => $redirect) ) );
-            return $response;  
+            return $response;
         }
         if($session->offsetExists('select')) $select = $session->offsetGet('select');
         return array("select" => $select);
     }
-    
+
     public function successAction() {
-        
+
     }
 }
