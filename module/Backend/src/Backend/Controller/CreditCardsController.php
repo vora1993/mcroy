@@ -91,6 +91,7 @@ class CreditCardsController extends AbstractActionController
           $credit_card->setDateModified(new Expression('NOW()'));
           $credit_card->setStatus($post['status']);
           $credit_card->setDataAttributes(\Zend\Json\Json::encode($post['data']));
+          $credit_card->setBankId($post['bank_id']);
                     // Logo
           $dir_credit_card = 'data/credit_cards/';
           if($post['logo'] !== $credit_card->getLogo()) {

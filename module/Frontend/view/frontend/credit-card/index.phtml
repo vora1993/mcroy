@@ -61,7 +61,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
               <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
               <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
               <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
-              <button type="button" class="btn btn-lg green-custom ladda-button" onclick="Loan.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
+              <button type="button" class="btn btn-lg green-custom ladda-button" onclick="CreditCard.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
             </div>
           </form>
         </div>
@@ -240,8 +240,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                       }
                       ?>
                       <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
-                        <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
-                        <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+                        <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="CreditCard.select(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
+                        <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="CreditCard.apply(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
                       </div>
                     </div>
                   </div>
@@ -261,7 +261,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 </div>
 
 <?php
-echo $this->partial('compare');
+  echo $this->partial('compare-credit-card');
 ?>
 
 <?php
@@ -272,13 +272,13 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/credit_cards.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 // Handle number
-Loan.integer();
-Loan.sticky_footer();
-Loan.load_select();
+CreditCard.integer();
+CreditCard.sticky_footer();
+CreditCard.load_select();
 
 $('input[name=purchase_price]').on('blur', function(){
   $(this).parent().removeClass('focus');

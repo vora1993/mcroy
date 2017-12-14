@@ -1401,6 +1401,15 @@ span.note-cart {
     color: #F5A623;
 }
 
+.drawercard-title {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.drawercard-title a {
+    color: #34495e;
+    font-weight: 600;
+}
 .header__heading {
     font-size: 23px;
     overflow: hidden;
@@ -1565,7 +1574,12 @@ a.compare.active {
 }
 .drawercard-col {
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
+
 .drawercard-col p {
     font-size: 12px;
     line-height: 14px;
@@ -1573,6 +1587,125 @@ a.compare.active {
     margin-bottom: 0px;
     color: #3498db;
 }
+
+.credit-card-shortlist {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 2040;
+    display: none;
+}
+
+.credit-card-shortlist .drawercard-container .fa.fa-times {
+    visibility: hidden;
+    position: absolute;
+    border-radius: 20px 20px 20px 20px;
+    background: #e74c3c;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: #ffffff;
+    right: -5px;
+    top: -5px;
+    cursor: pointer;
+}
+
+.credit-card-shortlist .drawercard-container.filled:hover .fa.fa-times {
+    visibility: visible;
+}
+
+.credit-card-shortlist .drawercard-container.filled a {
+    display: inline-block;
+}
+
+.credit-card-shortlist .drawercard-container img {
+    width: 100%;
+    max-width: 83px;
+    max-height: 53px;
+}
+
+.credit-card-shortlist .drawercard-container {
+    display: inline-block;
+    background-image: url(/assets/img/card-placeholder.svg);
+    position: relative;
+    min-width: 83px;
+    height: 53px;
+    vertical-align: top;
+    border-radius: 3px;
+    background-repeat: no-repeat;
+}
+
+.credit-card-shortlist .btn-cc-compare.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-sm {
+    color: #fff;
+    background-color: #8CBA00;
+    border-color: transparent;
+    padding: 9px 13px;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.credit-card-shortlist .btn-cc-compare:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.credit-card-shortlist .clear-shortlist {
+    color: #E74C3C;
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1em;
+    margin-top: 10px;
+}
+
+.credit-card-shortlist .shortlist-container {
+    background: #ffffff;
+    height: 90px;
+    padding: 15px 0;
+    box-shadow: 0 -2px 13px rgba(0,0,0,0.22);
+}
+
+.credit-card-shortlist .shortlist-info-container {
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.credit-card-shortlist .shortlist-info {
+    float: right;
+    cursor: pointer;
+}
+
+.credit-card-shortlist .shortlist-info {
+    color: #34495e;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1;
+    text-transform: uppercase;
+    background-color: #fff;
+    box-shadow: 0 -2px 13px rgba(0,0,0,0.22);
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 20px;
+    border-radius: 5px 5px 0 0;
+}
+
+#shortlistId.credit-card-shortlist {
+    border-top: none;
+    background: transparent;
+}
+
+.credit-card-shortlist .drawercard-container.filled {
+    background-image: none;
+    width: 110px;
+}
+
+.credit-card-shortlist .shortlist-info .fa {
+    margin-right: 5px;
+    color: #8CBA00;
+}
+
 .compare-table-col .fa.fa-times {
     position: absolute;
     -webkit-border-radius: 20px 20px 20px 20px;
