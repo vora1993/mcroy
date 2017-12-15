@@ -28,7 +28,7 @@
       <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
         <?php
           $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
-          $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+          $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
         ?>
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
