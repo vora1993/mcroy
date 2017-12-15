@@ -12,14 +12,14 @@ $remain = $max_loan_compare - $count;
                         <section class="compare-row">
                             <div class="row">
                                 <div class="col-sm-3"></div>
-                            <?php 
+                            <?php
                             if($count > 0) {
                                 $personal_loan = array();
                                 $loans = $this->bank_accounts(array("id" => $compare));
                                 foreach ($loans as $loan) {
                                     $bank = $this->bank(array("id" => $loan->getBankId()));
                                     $category = $this->category(array("id" => $loan->getCategoryId()));
-                                    
+
                                     // Image
                                     $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
                                     if(!file_exists($dir_logo)) {
@@ -72,7 +72,7 @@ $remain = $max_loan_compare - $count;
                             }
                             ?>
                             </div>
-                        </section>    
+                        </section>
                     </section>
                     <div id="overview-wrapper" class="compare-result">
                         <div class="table-results table__item">
@@ -88,7 +88,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['promotions'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -124,10 +124,10 @@ $remain = $max_loan_compare - $count;
                                                 }
                                                 echo '</ul>';
                                             }
-                                        } 
+                                        }
                                         ?>
                                         </div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -146,7 +146,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['initial_deposit_amount'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -165,7 +165,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['minimum_balance'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -184,7 +184,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['cheque_book_fees'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -203,7 +203,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['internet_banking_fees'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -222,7 +222,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['annual_fee'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -241,7 +241,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['service_fee'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -260,7 +260,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['citizenship'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -279,7 +279,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['age'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -298,7 +298,7 @@ $remain = $max_loan_compare - $count;
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['highlight'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -315,7 +315,7 @@ $remain = $max_loan_compare - $count;
                 </div>
         </div>
     </div>
-    <section class="compare-shortlist" style="overflow: hidden; display: none;"> 
+    <section class="compare-shortlist" style="overflow: hidden; display: none;">
         <div class="container">
             <div class="clearfix">
                 <div class="col-xs-3">
@@ -331,7 +331,7 @@ $remain = $max_loan_compare - $count;
                             <a href="<?php echo $row['link'] ?>" data-id="<?php echo $row['loan_id']; ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></a>
                             <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $row['loan_id']; ?>" data-page="compare"><i class="fa fa-times"></i></a>
                         </div>
-                    <?php        
+                    <?php
                     }
                 }
                 if($remain > 0){
@@ -341,7 +341,7 @@ $remain = $max_loan_compare - $count;
                     <?php
                     }
                 }
-                ?>    
+                ?>
             </div>
         </div>
     </section>
