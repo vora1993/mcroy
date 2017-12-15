@@ -28,10 +28,7 @@
       <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
         <?php
           $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
-          $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/m_'.$credit_card->getLogo();
-          if(!file_exists($dir_logo)) {
-            $dir_logo = '/assets/img/credit-card.png';
-          }
+          $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
         ?>
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
@@ -348,10 +345,7 @@
           <div id="compare-product-list" class="compare-product-list" style="position: relative;">
             <?php foreach ($this->credit_cards as $key => $credit_card): ?>
               <?php
-                $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/m_'.$credit_card->getLogo();
-                if(!file_exists($dir_logo)) {
-                  $dir_logo = '/assets/img/credit-card.png';
-                }
+                $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
               ?>
               <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>">
                 <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
