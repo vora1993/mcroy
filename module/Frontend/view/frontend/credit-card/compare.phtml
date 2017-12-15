@@ -26,14 +26,20 @@
   <div class="compare-content compare-content--without-sponsored">
     <?php if ($this->credit_cards_compare): ?>
       <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
-        <?php $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes()); ?>
+        <?php
+          $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+          $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+          if(!file_exists($dir_logo)) {
+            $dir_logo = '/assets/img/credit-card.png';
+          }
+        ?>
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
             <div class="compare-section product">
               <span class="close" data-compare-remove="<?php echo $credit_card->getId() ?>">X</span>
               <article class="compare-product">
                 <a class="" href="#">
-                  <img src="" alt="<?php echo $credit_card->getName() ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
+                  <img src="<?php echo $dir_logo ?>" alt="<?php echo $credit_card->getName() ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
                 </a>
                 <a class="compare-product-link" href="#"><?php echo $credit_card->getName() ?></a>
               </article>
@@ -137,7 +143,7 @@
               </article>
             <?php else: ?>
               <main>
-                <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO DISCOUNT INFORMATION AVAILABLE") ?></span>
+                <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO INFORMATION AVAILABLE") ?></span>
               </main>
             <?php endif ?>
           </div>
