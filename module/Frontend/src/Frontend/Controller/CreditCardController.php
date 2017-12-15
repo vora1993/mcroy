@@ -212,4 +212,25 @@ class CreditCardController extends AbstractActionController
       return $response;
     }
   }
+
+  public function compareAction()
+  {
+    $session = new Session('credit_card');
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+
+    if ($session->offsetExists('select'))
+    {
+      $select = $session->offsetGet('select');
+      if (count($select) > 0)
+      {
+        $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
+      }
+    }
+
+    return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards);
+  }
 }

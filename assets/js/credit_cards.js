@@ -1,3 +1,6 @@
+allowedCategories = [{code: "promotions"}, {code: "cash-back"}, {code: "air-miles"}, {code: "rewards"}, {code: "promo"}, {code: "things-to-look-out"}, {code: "eligibility"}, {code: "annual-fees-rates"}, {code: "interest-rate-fees"}, {code: "other-information"}]
+
+
 function cancel(route) {
   window.location.href = full_url + '/' + route;
 }
@@ -24,6 +27,16 @@ function getActualAmount(e) {
 function updatePieChart(percent) {
   $(".easy-pie-chart .number.loans").data("easyPieChart").update(percent);
   $(".easy-pie-chart .number.loans").find("span").html(percent+'%');
+}
+
+function matchAllCompareSectionHeight() {
+  if ($(".compare-section").length) {
+    var e = ["product", "promotions", "things-to-look-out", "eligibility", "annual-fees-rates", "interest-rate-fees", "other-information"];
+    $.each(allowedCategories, function(e, t) {
+      console.log(t.code);
+      $(".compare-section." + t.code).matchHeight({byRow: true})
+    })
+  }
 }
 
 function updateLoanAmount() {
@@ -373,6 +386,10 @@ var CreditCard = {
       }
     }
     jQuery(document).ready(function() {
+      if (jQuery().select2) {
+        $('.select2').select2();
+      }
+      matchAllCompareSectionHeight();
       if (jQuery().datepicker) {
         $('.date-picker').datepicker({
           rtl: App.isRTL(),
