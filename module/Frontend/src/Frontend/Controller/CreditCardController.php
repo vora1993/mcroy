@@ -88,7 +88,7 @@ class CreditCardController extends AbstractActionController
           $dir_logo = 'data/credit_cards/' . $credit_card->getId() . '/m_' . $credit_card->getLogo();
           if (!file_exists($dir_logo))
           {
-            $dir_logo = 'data/image/no-image-64.png';
+            $dir_logo = '/assets/img/credit-card.png';
           }
           $html .= '<div class="col-xs-4 drawercard-col">';
           $html .= '<span class="drawercard-container filled" data-original-title="empty product holder" title="" id="ms-product-drawer-'. $credit_card->getId() .'" data-cid="'. $credit_card->getId() .'">';
@@ -232,5 +232,45 @@ class CreditCardController extends AbstractActionController
     }
 
     return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards);
+  }
+
+  public function pointsAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function discountAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function airMilesAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function cashBackAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
 }

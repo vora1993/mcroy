@@ -236,37 +236,37 @@ var CreditCard = {
     });
   },
   clear_compare: function(a) {
-        var b = $(a).data("id") ? $(a).data("id") : 0;
-        var c = $(a).data("page") ? true : false;
-        $.ajax({
-            url: full_url + "/credit-cards/clear-compare",
-            type: "post",
-            data: "id=" + b,
-            dataType: "json",
-            beforeSend: function(a, b) {
-                App.blockUI({
-                    boxed: true
-                });
-            },
-            success: function(a) {
-                App.unblockUI();
-                if (a["success"]) {
-                    toastr.success(a["msg"]);
-                    if (b > 0) {
-                        if ($(".filters-content .box__compare > a[data-id=" + b + "]").hasClass("active")) $(".filters-content .box__compare > a[data-id=" + b + "]").removeClass("active");
-                    } else if ($(".filters-content .box__compare > a").hasClass("active")) $(".filters-content .box__compare > a").removeClass("active");
-                    if (c) setTimeout(function() {
-                        window.location.reload();
-                    }, 1500); else {
-                        CreditCard.load_select();
-                    }
-                }
-            },
-            error: function(a, b, c) {
-                toastr.error(c + "\r\n" + a.statusText + "\r\n" + a.responseText);
-            }
+    var b = $(a).data("id") ? $(a).data("id") : 0;
+    var c = $(a).data("page") ? true : false;
+    $.ajax({
+      url: full_url + "/credit-cards/clear-compare",
+      type: "post",
+      data: "id=" + b,
+      dataType: "json",
+      beforeSend: function(a, b) {
+        App.blockUI({
+          boxed: true
         });
-    },
+      },
+      success: function(a) {
+        App.unblockUI();
+        if (a["success"]) {
+          toastr.success(a["msg"]);
+          if (b > 0) {
+            if ($(".filters-content .box__compare > a[data-id=" + b + "]").hasClass("active")) $(".filters-content .box__compare > a[data-id=" + b + "]").removeClass("active");
+          } else if ($(".filters-content .box__compare > a").hasClass("active")) $(".filters-content .box__compare > a").removeClass("active");
+          if (c) setTimeout(function() {
+            window.location.reload();
+          }, 1500); else {
+            CreditCard.load_select();
+          }
+        }
+      },
+      error: function(a, b, c) {
+        toastr.error(c + "\r\n" + a.statusText + "\r\n" + a.responseText);
+      }
+    });
+  },
   'sticky_footer': function() {
     if ($('.selectlist').length > 0){
       $(window).on('scroll', function () {
@@ -390,6 +390,7 @@ var CreditCard = {
         $('.select2').select2();
       }
       matchAllCompareSectionHeight();
+
       if (jQuery().datepicker) {
         $('.date-picker').datepicker({
           rtl: App.isRTL(),
@@ -397,4 +398,103 @@ var CreditCard = {
           autoclose: true
         });
       }
+
+      // Handle number
+      CreditCard.integer();
+      CreditCard.sticky_footer();
+      CreditCard.load_select();
+
+      $('input[name=purchase_price]').on('blur', function(){
+        $(this).parent().removeClass('focus');
+      }).on('focus', function(){
+        $(this).parent().addClass('focus');
+      });
+
+      $("input[name=purchase_price]").on("keydown", function(evt) {
+        var charCode = charCode = (evt.which) ? evt.which : event.keyCode;
+        if(charCode == 8 || charCode == 46 ){
+          return true;
+        }
+        return isEnterNumber(charCode);
+      });
+
+      $("input[name=purchase_price]").on("keyup", function() {
+        var val = $(this).val();
+        val = Number(val.replace(/,/g, ""));
+        $(this).val(formatNumber(val, ""));
+        updateLoanAmount();
+      });
+
+      var slider_monthly_income = $(".slider-monthly-income").slider({
+        value: $(".slider-monthly-income").data("value"),
+        min: $(".slider-monthly-income").data("min"),
+        max: $(".slider-monthly-income").data("max"),
+        orientation: "horizontal",
+        animate: !0,
+        range: "min",
+        slide: function(event, ui) {
+          $(".monthly-income-label").html(formatNumber(ui.value, "$"));
+          $("input[name=monthly_income]").val(ui.value);
+        },
+        change: function(event, ui) {
+          formatNumber(ui.value, "$");
+        }
+      })
+
+      var $slider_loan_percent = $(".slider-loan-amount").slider({
+        value: $(".slider-loan-amount").data("value"),
+        min: $(".slider-loan-amount").data("min"),
+        max: $(".slider-loan-amount").data("max"),
+        orientation: "horizontal",
+        animate: !0,
+        range: "min",
+        slide: function(event, ui) {
+          $(".loan-percentage-label").html(ui.value);
+          $("input[name=loan_percent]").val(ui.value);
+        },
+        change: function(event, ui) {
+          updateLoanAmount();
+        }
+      });
+
+      var $slider_loan_tenture = $(".slider-loan-tenure").slider({
+        value: $(".slider-loan-tenure").data("value"),
+        min: $(".slider-loan-tenure").data("min"),
+        max: $(".slider-loan-tenure").data("max"),
+        orientation: "horizontal",
+        animate: !0,
+        range: "min",
+        slide: function(event, ui) {
+          if ("" != $(".slider-loan-tenure").attr("data-soft-cap")) {
+            var o = parseInt($(".slider-loan-tenure").attr("data-soft-cap"));
+            if (ui.value > o) return !1
+          }
+        $(".loan-tenure-label").html(ui.value);
+        $("input[name=loan_tenure]").val(ui.value);
+      },
+      change: function(event, ui) {
+        updateSlider();
+        updateLoanAmount();
+      }
+      });
+
+      $(".btn-less-detail").hide();
+      $(".btn-more-detail").on('click', function(){
+        $(this).closest(".filters-content").find(".more-info").slideDown();
+        $(this).hide();
+        $(this).next().show();
+      });
+
+      $(".btn-less-detail").on('click', function(){
+        $(this).closest(".filters-content").find(".more-info").slideUp();
+        $(this).hide();
+        $(this).prev().show();
+      });
+
+      $("#category-menu").owlCarousel({
+        items: 5,
+        navigation: true,
+        navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+        pagination: false
+      });
     });

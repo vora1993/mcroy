@@ -29,14 +29,6 @@
   border-left: 1px solid #DFDFDF;
 }
 
-.compare-item {
-  background-color: #fff;
-  border-right: 1px solid #DFDFDF;
-  width: 328px;
-  padding: 20px;
-  position: relative;
-}
-
 .compare-page .close {
   float: right;
   font-size: 21px;
