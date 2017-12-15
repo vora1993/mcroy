@@ -233,4 +233,44 @@ class CreditCardController extends AbstractActionController
 
     return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards);
   }
+
+  public function pointsAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function discountAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function airMilesAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
+
+  public function cashBackAction()
+  {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    $credit_cards = $application_model_credit_card->fetchAll();
+    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+    $banks = $application_model_bank->fetchAll();
+    return array("credit_cards" => $credit_cards, "banks" => $banks);
+  }
 }

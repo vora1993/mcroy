@@ -71,7 +71,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
   <div class="col-md-9 col-xs-12">
 
     <div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
-      <div class="category-menu_list-item  active summary">
+      <div class="category-menu_list-item summary">
         <a href="/credit-cards">
           <i class="icon-cat medium summary"></i>
           <span><?php echo $this->translate("All Cards") ?></span>
@@ -83,13 +83,13 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
           <span><?php echo $this->translate("Discount") ?></span>
         </a>
       </div>
-      <div class="category-menu_list-item  rewards">
+      <div class="category-menu_list-item rewards">
         <a href="/credit-cards/points">
           <i class="icon-cat medium rewards"></i>
           <span><?php echo $this->translate("Points") ?></span>
         </a>
       </div>
-      <div class="category-menu_list-item air-miles">
+      <div class="category-menu_list-item air-miles active">
         <a href="/credit-cards/air-miles">
           <i class="icon-cat medium air-miles"></i>
           <span><?php echo $this->translate("Air Miles") ?></span>
@@ -117,7 +117,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                   <?php
                   $bank = $this->bank(array("id" => $credit_card->getBankId()));
                   if (!empty($bank)){
-                    $dir_bank_logo = 'data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+                    $dir_bank_logo = '/data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
                     $bank_name = $bank->getName();
                   } else {
                     $dir_bank_logo = "";
@@ -128,6 +128,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                   $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
                   if(!file_exists($dir_logo)) {
                     $dir_logo = '/assets/img/credit-card.png';
+                  } else {
+                    $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
                   }
                   ?>
                   <div class="filters-content not-sponsored mg-bottom-sm">
