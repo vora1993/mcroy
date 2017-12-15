@@ -88,7 +88,7 @@ class CreditCardController extends AbstractActionController
           $dir_logo = 'data/credit_cards/' . $credit_card->getId() . '/m_' . $credit_card->getLogo();
           if (!file_exists($dir_logo))
           {
-            $dir_logo = 'data/image/no-image-64.png';
+            $dir_logo = '/assets/img/credit-card.png';
           }
           $html .= '<div class="col-xs-4 drawercard-col">';
           $html .= '<span class="drawercard-container filled" data-original-title="empty product holder" title="" id="ms-product-drawer-'. $credit_card->getId() .'" data-cid="'. $credit_card->getId() .'">';
