@@ -327,7 +327,7 @@
               <?php
                 $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
               ?>
-              <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>">
+              <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" on-click="CreditCard.add_item_compare();">
                 <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
                 <span class="product-add-title"><?php echo $credit_card->getName(); ?></span>
               </div>

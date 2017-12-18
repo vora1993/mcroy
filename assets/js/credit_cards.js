@@ -170,15 +170,41 @@ var CreditCard = {
       toastr.error("Sorry you haven't selected right.");
     }
   },
+  'add_item_compare': function(a) {
+    var id = $(button).data("compare-add");
+    if(id > 0) {
+      var data = 'id='+id;
+      $.ajax({
+        url: full_url + '/credit-cards/add-item-compare',
+        type: 'post',
+        data: data,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) {
+          App.blockUI({boxed: true});
+        },
+        success: function(json) {
+          App.unblockUI();
+          if(json['success'] === false){
+            toastr.error(json['msg']);
+          } else {
+
+          }
+        },
+        error : function(xhr, ajaxOptions, thrownError){
+          toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        },
+      });
+    } else {
+      toastr.error("Sorry you haven't selected right.");
+    }
+  },
   'shortlist2': function(a) {
     $(".credit-card-shortlist .shortlist-container").slideToggle();
   },
   'shortlist3': function(a) {
     if(a === 'close') {
-      // $('.compare-arrow').find(".fa").removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
       $("#creditCardShortlistId").slideUp();
     } else {
-      // $('.compare-arrow').find(".fa").removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
       $("#creditCardShortlistId").slideDown();
     }
   },
