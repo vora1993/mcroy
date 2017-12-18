@@ -123,10 +123,10 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Cash Back") ?></label>
                   <div class="col-md-9">
-                    <input type="checkbox" class="form-control" name="data[cash_back]" value="true" <?php echo $_dataAttributes->cash_back ? "checked" : "" ?> >
+                    <input type="checkbox" class="form-control" name="cash_back" value="true" <?php echo $credit_card->getCashBack() ? "checked" : "" ?> >
                   </div>
                 </div>
-                <div class="card-back-section <?php echo $_dataAttributes->cash_back ? "" : "collapse" ?>">
+                <div class="card-back-section <?php echo $credit_card->getCashBack() ? "" : "collapse" ?>">
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Cash Back Details") ?></label>
                     <div class="col-md-9">
@@ -156,10 +156,10 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Air Miles") ?></label>
                   <div class="col-md-9">
-                    <input type="checkbox" class="form-control" name="data[air_miles]" value="true" <?php echo $_dataAttributes->air_miles ? "checked" : "" ?> >
+                    <input type="checkbox" class="form-control" name="air_miles" value="true" <?php echo $credit_card->getAirMiles() ? "checked" : "" ?> >
                   </div>
                 </div>
-                <div class="air-miles-section <?php echo $_dataAttributes->air_miles ? "" : "collapse" ?>">
+                <div class="air-miles-section <?php echo $credit_card->getAirMiles() ? "" : "collapse" ?>">
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Air Miles Details") ?></label>
                     <div class="col-md-9">
@@ -183,10 +183,10 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
                   <div class="col-md-9">
-                    <input type="checkbox" class="form-control" name="data[discount]" value="true" <?php echo $_dataAttributes->discount ? "checked" : "" ?> >
+                    <input type="checkbox" class="form-control" name="discount" value="true" <?php echo $credit_card->getDiscount() ? "checked" : "" ?> >
                   </div>
                 </div>
-                <div class="discount-section <?php echo $_dataAttributes->discount ? "" : "collapse" ?>">
+                <div class="discount-section <?php echo $credit_card->getDiscount() ? "" : "collapse" ?>">
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Discount Details") ?></label>
                     <div class="col-md-9">
@@ -210,10 +210,10 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Points") ?></label>
                   <div class="col-md-9">
-                    <input type="checkbox" class="form-control" name="data[points]" value="true" <?php echo $_dataAttributes->points ? "checked" : "" ?>>
+                    <input type="checkbox" class="form-control" name="points" value="true" <?php echo $credit_card->getPoints() ? "checked" : "" ?>>
                   </div>
                 </div>
-                <div class="points-section <?php echo $_dataAttributes->points ? "" : "collapse" ?>">
+                <div class="points-section <?php echo $credit_card->getPoints() ? "" : "collapse" ?>">
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Points Details") ?></label>
                     <div class="col-md-9">

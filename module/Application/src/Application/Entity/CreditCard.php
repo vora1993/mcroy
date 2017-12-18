@@ -11,6 +11,10 @@ class CreditCard implements CreditCardInterface
   protected $date_modified;
   protected $status;
   protected $data_attributes;
+  protected $cashback;
+  protected $discount;
+  protected $points;
+  protected $air_miles;
   protected $bank_id;
 
 
@@ -61,6 +65,50 @@ class CreditCard implements CreditCardInterface
   public function setBankId($bank_id)
   {
     $this->bank_id = $bank_id;
+    return $this;
+  }
+
+  public function getCashback()
+  {
+    return $this->cashback;
+  }
+
+  public function setCashback($cashback)
+  {
+    $this->cashback = $cashback;
+    return $this;
+  }
+
+  public function getDiscount()
+  {
+    return $this->discount;
+  }
+
+  public function setDiscount($discount)
+  {
+    $this->discount = $discount;
+    return $this;
+  }
+
+  public function getPoints()
+  {
+    return $this->points;
+  }
+
+  public function setPoints($points)
+  {
+    $this->points = $points;
+    return $this;
+  }
+
+  public function getAirMiles()
+  {
+    return $this->air_miles;
+  }
+
+  public function setAirMiles($air_miles)
+  {
+    $this->air_miles = $air_miles;
     return $this;
   }
 
