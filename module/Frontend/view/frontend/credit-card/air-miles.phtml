@@ -106,8 +106,15 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
       <div class="portlet-body form">
         <form class="form-horizontal form-wizard">
           <div class="top-floating">
-            <h4> <?php echo $this->translate("Compare the Best Singapore Credit Cards"); ?></h4>
-            <p><?php echo $this->translate("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in nulla sed mi ultricies imperdiet et dignissim purus. Maecenas pulvinar fringilla iaculis. Vestibulum et rutrum risus, malesuada pulvinar sem. Integer fringilla tristique rutrum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In pellentesque laoreet blandit. Cras ultrices est sit amet lorem cursus rutrum. Quisque lectus lacus, laoreet convallis laoreet quis, porta non nunc."); ?></p>
+            <div class="cat-icon air-miles big"></div>
+            <div class="filters-result-title">
+              <h4><?php echo $this->translate("Singapore Air Miles Credit Cards"); ?></h4>
+              <div class="filters-result-info product-results-count">
+                <span class="all-results-loaded">
+                  Showing <span class="all-results"><?php echo count($this->credit_cards); ?></span> matching products
+                </span>
+              </div>
+            </div>
           </div>
 
           <div class="filters-table-container mg-top-sm" id="results">
@@ -272,6 +279,7 @@ $offStyle = 12;
 $offScript = 30;
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/credit-card-compare.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
