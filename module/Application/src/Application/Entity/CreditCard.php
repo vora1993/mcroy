@@ -16,6 +16,7 @@ class CreditCard implements CreditCardInterface
   protected $points;
   protected $air_miles;
   protected $bank_id;
+  protected $apply_url;
 
 
   public function getId()
@@ -112,6 +113,17 @@ class CreditCard implements CreditCardInterface
     return $this;
   }
 
+  public function getApplyUrl()
+  {
+    return $this->apply_url;
+  }
+
+  public function setApplyUrl($apply_url)
+  {
+    $this->apply_url = $apply_url;
+    return $this;
+  }
+
   public function getColor()
   {
     return $this->color;
@@ -127,6 +139,7 @@ class CreditCard implements CreditCardInterface
   {
     return $this->date_added;
   }
+
   public function setDateAdded($date_added)
   {
     $this->date_added = $date_added;

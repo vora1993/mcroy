@@ -108,6 +108,9 @@ form.validate({
   rules: {
     name: {
       required: true
+    },
+    apply_url: {
+      url: true
     }
   },
 
