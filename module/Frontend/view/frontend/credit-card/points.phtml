@@ -124,7 +124,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                   <?php
                   $bank = $this->bank(array("id" => $credit_card->getBankId()));
                   if (!empty($bank)){
-                    $dir_bank_logo = 'data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+                    $dir_bank_logo = '/data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
                     $bank_name = $bank->getName();
                   } else {
                     $dir_bank_logo = "";
@@ -135,6 +135,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                   $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
                   if(!file_exists($dir_logo)) {
                     $dir_logo = '/assets/img/credit-card.png';
+                  } else {
+                    $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
                   }
                   ?>
                   <div class="filters-content not-sponsored mg-bottom-sm">
