@@ -535,6 +535,45 @@
     background-position: -10px -10px;
 }
 
+.cat-icon.air-miles.big, .cat-icon.travel.big {
+    background-position: -170px -70px;
+}
+
+.cat-icon.cash-back.big, .cat-icon.cashback.big, .cat-icon.cash.back.big {
+    background-position: -90px -70px;
+}
+
+.cat-icon.rewards.big {
+    background-position: -250px -70px;
+}
+
+.cat-icon.freegift.big, .cat-icon.promo.big {
+    background-position: -970px -70px;
+}
+
+.cat-icon.big {
+    background: url(/assets/img/category-sprites-icon.svg) 0px 0px no-repeat;
+    width: 60px;
+    height: 60px;
+}
+
+.filters-result-title {
+    display: inline-block;
+    margin-left: 15px;
+    max-width: 50%;
+}
+
+.filters-result-title h4 {
+    font-size: 21px;
+    line-height: 25px;
+    margin: 0;
+}
+
+.filters-result-info {
+    display: inline-block;
+    text-align: left;
+}
+
 .td-table-nodata-compare {
     display: block;
     text-align: center;
