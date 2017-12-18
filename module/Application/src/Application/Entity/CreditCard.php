@@ -106,7 +106,7 @@ class CreditCard implements CreditCardInterface
     return $this->air_miles;
   }
 
-  public function setgetAirMiles($air_miles)
+  public function setAirMiles($air_miles)
   {
     $this->air_miles = $air_miles;
     return $this;
