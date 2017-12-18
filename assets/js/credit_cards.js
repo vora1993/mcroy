@@ -226,6 +226,31 @@ var CreditCard = {
       }
     });
   },
+  'remove_select': function(a) {
+    var $this = $(a)
+    var b = $(a).data("compare-remove") ? $(a).data("compare-remove") : 0;
+    $.ajax({
+      url: full_url + "/credit-cards/clear-select",
+      type: "post",
+      data: "id=" + b,
+      dataType: "json",
+      beforeSend: function(a, b) {
+        App.blockUI({
+          boxed: true
+        });
+      },
+      success: function(a) {
+        App.unblockUI();
+        if (a["success"]) {
+          toastr.success(a["msg"]);
+          $this.closest('.compare-item').remove();
+        }
+      },
+      error: function(a, b, c) {
+        toastr.error(c + "\r\n" + a.statusText + "\r\n" + a.responseText);
+      }
+    });
+  },
   clear_compare: function(a) {
     var b = $(a).data("id") ? $(a).data("id") : 0;
     var c = $(a).data("page") ? true : false;

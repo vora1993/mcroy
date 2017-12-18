@@ -33,7 +33,7 @@
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
             <div class="compare-section product">
-              <span class="close" data-compare-remove="<?php echo $credit_card->getId() ?>">X</span>
+              <span class="close" data-compare-remove="<?php echo $credit_card->getId() ?>" onclick="CreditCard.remove_select(this)">X</span>
               <article class="compare-product">
                 <a class="" href="#">
                   <img src="<?php echo $dir_logo ?>" alt="<?php echo $credit_card->getName() ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
