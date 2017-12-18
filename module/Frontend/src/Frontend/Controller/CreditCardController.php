@@ -238,7 +238,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
+    $credit_cards = $application_model_credit_card->fetchAll(array('points' => 'true'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     return array("credit_cards" => $credit_cards, "banks" => $banks);
@@ -248,7 +248,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
+    $credit_cards = $application_model_credit_card->fetchAll(array('discount' => 'true'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     return array("credit_cards" => $credit_cards, "banks" => $banks);
@@ -258,7 +258,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
+    $credit_cards = $application_model_credit_card->fetchAll(array('air_miles' => 'true'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     return array("credit_cards" => $credit_cards, "banks" => $banks);
@@ -268,7 +268,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
+    $credit_cards = $application_model_credit_card->fetchAll(array('casbBack' => 'true'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     return array("credit_cards" => $credit_cards, "banks" => $banks);

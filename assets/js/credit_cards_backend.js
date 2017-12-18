@@ -56,19 +56,19 @@ tinymce.init({
     }
 });
 
-$('input[name="data[cash_back]"]').change(function(){
+$('input[name="cash_back"]').change(function(){
   $('.card-back-section').slideToggle();
 });
 
-$('input[name="data[air_miles]"').change(function(){
+$('input[name="air_miles"').change(function(){
   $('.air-miles-section').slideToggle();
 });
 
-$('input[name="data[discount]"').change(function(){
+$('input[name="discount"').change(function(){
   $('.discount-section').slideToggle();
 });
 
-$('input[name="data[points]"').change(function(){
+$('input[name="points"').change(function(){
   $('.points-section').slideToggle();
 });
 
