@@ -8,6 +8,10 @@ interface CreditCardInterface
     public function getName();
     public function getLogo();
     public function getDataAttributes();
+    public function getCashback();
+    public function getDiscount();
+    public function getPoints();
+    public function getAirMiles();
     public function getColor();
     public function getDateAdded();
     public function getDateModified();
