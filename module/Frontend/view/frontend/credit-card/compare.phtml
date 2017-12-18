@@ -14,7 +14,7 @@
             <a class="compare-product-link" href="/credit-cards/citi-cash-back-card">Citi Cash Back Card</a>
           </div>
           <div class="compare-top-action">
-            <a class="apply-now-btn btn-sm apply-btn btn-block   without-suggested   applyFromActiveResult" href="/credit-cards/citi-cash-back-card/form/page1" data-enquiry-type="" data-product-id="874" data-channel="credit-cards" data-hop-off="1" data-name="Citi Cash Back Card" data-provider="Citibank" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="&quot;_blank&quot;">
+            <a class="apply-now-btn btn-sm apply-btn btn-block   without-suggested applyFromActiveResult" href="/credit-cards/citi-cash-back-card/form/page1" data-enquiry-type="" data-product-id="874" data-channel="credit-cards" data-hop-off="1" data-name="Citi Cash Back Card" data-provider="Citibank" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="&quot;_blank&quot;">
               <i class="fa fa-angle-double-right pull-right"></i>
               apply now
             </a>
@@ -42,7 +42,7 @@
               </article>
             </div>
             <div class="btn-action-wrapper" data-offset-top="405">
-              <a class="apply-now-btn btn-sm apply-btn btn-block without-suggested applyFromActiveResult" href="#" data-enquiry-type="" data-product-id="<?php echo $credit_card->getId() ?>" data-channel="credit-cards" data-hop-off="1" data-name="<?php echo $credit_card->getName() ?>" data-provider="" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="_blank">
+              <a class="apply-now-btn btn-sm apply-btn btn-block without-suggested applyFromActiveResult" href="<?php echo !empty($credit_card->getApplyUrl()) ? $credit_card->getApplyUrl() : 'javascript:void(0);'; ?>" data-enquiry-type="" data-product-id="<?php echo $credit_card->getId() ?>" data-channel="credit-cards" data-hop-off="1" data-name="<?php echo $credit_card->getName() ?>" data-provider="" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="_blank">
                 <i class="fa fa-angle-double-right pull-right"></i>
                 <?php echo $this->translate("apply now") ?>
               </a>
@@ -327,7 +327,7 @@
               <?php
                 $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
               ?>
-              <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" on-click="CreditCard.add_item_compare();">
+              <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" onclick="CreditCard.add_item_compare(this);">
                 <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
                 <span class="product-add-title"><?php echo $credit_card->getName(); ?></span>
               </div>
