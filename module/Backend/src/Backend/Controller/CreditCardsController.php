@@ -39,6 +39,7 @@ class CreditCardsController extends AbstractActionController
       $credit_card->setDiscount($post['discount']);
       $credit_card->setPoints($post['points']);
       $credit_card->setAirMiles($post['air_miles']);
+      $credit_card->setApplyUrl($post['apply_url']);
       $added = $application_model_credit_card->insert($credit_card);
       if($added) {
         $messages['success'] = true;
@@ -100,7 +101,8 @@ class CreditCardsController extends AbstractActionController
           $credit_card->setDiscount($post['discount']);
           $credit_card->setPoints($post['points']);
           $credit_card->setAirMiles($post['air_miles']);
-                    // Logo
+          $credit_card->setApplyUrl($post['apply_url']);
+          // Logo
           $dir_credit_card = 'data/credit_cards/';
           if($post['logo'] !== $credit_card->getLogo()) {
             $dir_logo = $dir_credit_card.$id;
