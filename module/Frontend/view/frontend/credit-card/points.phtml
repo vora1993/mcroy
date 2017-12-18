@@ -155,9 +155,15 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           <?php echo $_dataAttributes->points_details; ?>
                         </div>
                       </div>
-                      <div class="col-md-3">
-                      </div>
-                      <div class="col-md-3">
+                      <div class="col-md-7">
+                        <p class="subheading font-subheading flush--bottom"><?php echo $this->translate("Points") ?></p>
+                        <p itemprop="interestRate" class="heading font-heading weight--bold">
+                          <?php
+                            $total_points_per_year = $_dataAttributes->total_points_per_year;
+                            $total_points_per_year = (float)$total_points_per_year;
+                            echo number_format($total_points_per_year).$this->translate("Points/Year");
+                          ?>
+                        </p>
                       </div>
                     </div>
                     <div class="row row-footer">

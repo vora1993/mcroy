@@ -33,7 +33,6 @@ function matchAllCompareSectionHeight() {
   if ($(".compare-section").length) {
     var e = ["product", "promotions", "things-to-look-out", "eligibility", "annual-fees-rates", "interest-rate-fees", "other-information"];
     $.each(allowedCategories, function(e, t) {
-      console.log(t.code);
       $(".compare-section." + t.code).matchHeight({byRow: true})
     })
   }
@@ -189,16 +188,8 @@ var CreditCard = {
       type: "post",
       dataType: "json",
       success: function(a) {
-        console.log(a);
-        console.log($("#compare-holder"));
         $("#compare-holder").html(a["html"]);
         $("#compare-title > span").html(a["count"]);
-        // $(".drawercard-container").hover(function() {
-        //   if ("hidden" == $(this).children(".fa.fa-times").css("visibility")) $(this).children(".fa.fa-times").css("visibility", "visible");
-        // });
-        // $(".drawercard-container").mouseleave(function() {
-        //   if ("visible" == $(this).children(".fa.fa-times").css("visibility")) $(this).children(".fa.fa-times").css("visibility", "hidden");
-        // });
         if (a["count"] > 0) {
           CreditCard.shortlist3('open');
         } else {
