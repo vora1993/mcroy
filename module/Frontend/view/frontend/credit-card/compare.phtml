@@ -185,16 +185,6 @@
                     <?php endif ?>
                   </span>
                 </li>
-                <li class="list-label-value">
-                  <span class="list-label"><?php echo $this->translate("Supplementary Annual Fee") ?></span>
-                  <span class="list-value">
-                    <?php if ($_dataAttributes->supplementary_annual_fee != ""): ?>
-                      <?php echo $_dataAttributes->supplementary_annual_fee; ?>
-                    <?php else: ?>
-                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
-                    <?php endif ?>
-                  </span>
-                </li>
               </ul>
             </article>
           </div>
@@ -256,16 +246,6 @@
                   <span class="list-label"><?php echo $this->translate("Foreign Currency Transaction Fee") ?></span>
                   <span class="list-value">
                     <?php if ($_dataAttributes->foreign_currency_transaction_fee != ""): ?>
-                      <?php echo $_dataAttributes->foreign_currency_transaction_fee; ?>
-                    <?php else: ?>
-                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
-                    <?php endif ?>
-                  </span>
-                </li>
-                <li class="list-label-value">
-                  <span class="list-label"><?php echo $this->translate("Balance Transfer Fee") ?></span>
-                  <span class="list-value">
-                    <?php if (empty($_dataAttributes->foreign_currency_transaction_fee)): ?>
                       <?php echo $_dataAttributes->foreign_currency_transaction_fee; ?>
                     <?php else: ?>
                       <span class="not-available"><?php echo $this->translate("N/A") ?></span>
