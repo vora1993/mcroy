@@ -551,6 +551,19 @@
     background-position: -970px -70px;
 }
 
+.filters-credit-card-property .subheading.font-subheading {
+    color: #04a0dd;
+}
+
+.filters-credit-card-property .heading {
+    font-size: 25px;
+    line-height: 32px;
+    letter-spacing: 1px;
+    color: #525252;
+    opacity: 1!important;
+    position: relative;
+}
+
 .cat-icon.big {
     background: url(/assets/img/category-sprites-icon.svg) 0px 0px no-repeat;
     width: 60px;

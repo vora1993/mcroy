@@ -157,10 +157,15 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           <?php echo $_dataAttributes->air_miles_details; ?>
                         </div>
                       </div>
-                      <div class="col-md-3">
-                        <label><?php $this->translate("Air miles"); ?></label>
-                      </div>
-                      <div class="col-md-3">
+                      <div class="col-md-7">
+                        <p class="subheading font-subheading flush--bottom"><?php echo $this->translate("Air Miles") ?></p>
+                        <p itemprop="interestRate" class="heading font-heading weight--bold">
+                          <?php
+                            $miles_per_year = $_dataAttributes->miles_per_year;
+                            $miles_per_year = (float)$miles_per_year;
+                            echo number_format($miles_per_year).$this->translate("Miles/Year");
+                          ?>
+                        </p>
                       </div>
                     </div>
                     <div class="row row-footer">

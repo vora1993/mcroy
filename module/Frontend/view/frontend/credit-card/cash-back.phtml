@@ -157,9 +157,15 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           <?php echo $_dataAttributes->cash_back_details; ?>
                         </div>
                       </div>
-                      <div class="col-md-3">
-                      </div>
-                      <div class="col-md-3">
+                      <div class="col-md-7">
+                        <p class="subheading font-subheading flush--bottom"><?php echo $this->translate("Cashback") ?></p>
+                        <p itemprop="interestRate" class="heading font-heading weight--bold">
+                          <?php
+                            $cash_back_value = $_dataAttributes->savings_per_year;
+                            $cash_back_value = (float)$cash_back_value;
+                            echo "$".number_format($cash_back_value, 2);
+                          ?>
+                        </p>
                       </div>
                     </div>
                     <div class="row row-footer">
