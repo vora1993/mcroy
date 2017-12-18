@@ -57,7 +57,7 @@
 #primary-menu > li:last-child > a:hover {
     background-image: url('../img/icon-tool.png') !important;
     background-repeat: no-repeat!important;
-    background-position: 20px 17px !important;
+    background-position: 10px 17px !important;
     background-color: #f3b633!important;
 }
 #primary-menu > li:last-child .dropdown-menu > li a {
