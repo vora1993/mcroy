@@ -127,6 +127,22 @@ $this->headTitle($title);
                     <textarea name="data[promotion_and_deals]" class="form-control tinymce"><?php echo $_dataAttributes->promotion_and_deals ;?></textarea>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Exclusive") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[exclusive]" value="1" <?php echo $_dataAttributes->exclusive ? "checked" : "" ?> >
+                  </div>
+                </div>
+                <div class="exclusive-section <?php echo $_dataAttributes->exclusive ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Exclusive Details") ?></label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="data[exclusive_details]" value="<?php echo $_dataAttributes->exclusive_details ?>" >
+                    </div>
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Cash Back") ?></label>
                   <div class="col-md-9">
@@ -217,6 +233,14 @@ $this->headTitle($title);
                     <textarea class="form-control tinymce" name="data[look_out_for]"><?php echo $_dataAttributes->look_out_for ?></textarea>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-5"><?php echo $this->translate("Requirement") ?></label>
+                  <div class="col-md-7">
+                    <input type="text" name="data[requirement]" class="form-control" value="<?php echo $_dataAttributes->requirement ?>">
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Eligibility") ?></label>
                   <div class="col-md-9">
@@ -254,6 +278,12 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Interest Rate & Payment Fees") ?></label>
                   <div class="col-md-9">
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Interest Rate") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[interest_rate]" class="form-control" value="<?php echo $_dataAttributes->interest_rate ?>">
+                      </div>
+                    </div>
                     <div class="form-group">
                       <label class="control-label col-md-5"><?php echo $this->translate("Annual Interest Rate") ?></label>
                       <div class="col-md-7">

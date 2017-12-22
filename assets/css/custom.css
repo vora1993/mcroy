@@ -2149,6 +2149,12 @@ ul.stay-connected > li.instagram {
 .mg-bottom-xs{
     margin-bottom: 15px;
 }
+
+.mg-top-xs{
+    margin-top: 15px;
+}
+
+
 .form-wizard #complete-total-costs .tooltip-icon{
     margin-top: 0px;
 }
@@ -2167,6 +2173,7 @@ ul.stay-connected > li.instagram {
     margin-top: -16px;
     padding-top: 0px;
 }
+
 @media (max-width: 1280px) {
     .box-services .item {
         padding: 0 20px !important;

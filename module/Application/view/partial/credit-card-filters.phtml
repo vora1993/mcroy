@@ -1,0 +1,56 @@
+<div class="box-featured-bank">
+  <div class="featured-bank lowest-interest">
+    <h3 class="title-featured"><?php echo $this->translate("Filter"); ?></h3>
+    <div class="box-search">
+      <form>
+        <div class="form-group clearfix">
+          <label><?php echo $this->translate("Best for") ?>...</label>
+          <select name="select_category_credit_card" class="form-control">
+            <option value="All"><?php echo $this->translate("Choose your rewards") ?>...</option>
+            <option value="Discount"<?php if($this->credit_card_category === 'Discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
+            <option value="Discount"<?php if($this->credit_card_category === 'Points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
+            <option value="Discount"<?php if($this->credit_card_category === 'Air Miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
+            <option value="Discount"<?php if($this->credit_card_category === 'Cash Back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
+          </select>
+        </div>
+        <hr />
+        <div class="banks-filter">
+          <label>
+            <?php echo $this->translate("Banks") ?>
+          </label>
+          <div class="clearfix">
+            <?php foreach ($this->banks as $key => $bank):
+              $dir_bank_logo = 'data/bank/'.$bank->getId().'/m_'.$bank->getLogo();
+              if(!file_exists($dir_bank_logo)) {
+                $dir_bank_logo = '/assets/img/credit-card.png';
+              }
+              ?>
+              <div class="col-md-6 mg-bottom-xs">
+                <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
+              </div>
+            <?php endforeach;?>
+          </div>
+        </div>
+        <hr />
+        <div class="card-providers-filter">
+          <label>
+            <?php echo $this->translate("Card providers") ?>
+          </label>
+            <ul class="panel__list--clean panel__list--provider">
+              <li class=""><img src="/assets/img/visa_icon.png" alt="Visa" title="Visa">
+            </li>
+              <li class=""><img src="/assets/img/master_card_icon.png" alt="MasterCard" title="MasterCard">
+            </li>
+          </ul>
+        </div>
+        <hr />
+        <div class="loan-filter">
+          <input type="hidden" name="select_category_credit_card" value="<?php echo $this->select_category_credit_card ?>">
+          <input type="hidden" name="bank_id" value="<?php echo $this->bank_id ?>" />
+          <input type="hidden" name="provider_id" value="<?php echo $this->provider_id ?>" />
+          <button type="button" class="btn btn-lg green-custom ladda-button" onclick="CreditCard.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
