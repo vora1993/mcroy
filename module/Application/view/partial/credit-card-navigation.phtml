@@ -1,0 +1,32 @@
+<div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
+  <div class="category-menu_list-item summary <?php echo $page == "summary" ? 'active' : '' ?>">
+    <a href="/credit-cards">
+      <i class="icon-cat medium summary"></i>
+      <span><?php echo $this->translate("All Cards") ?></span>
+    </a>
+  </div>
+  <div class="category-menu_list-item promo <?php echo $page == "discount" ? 'active' : '' ?>">
+    <a href="/credit-cards/discount">
+      <i class="icon-cat medium promo"></i>
+      <span><?php echo $this->translate("Discount") ?></span>
+    </a>
+  </div>
+  <div class="category-menu_list-item rewards <?php echo $page == "points" ? 'active' : '' ?>">
+    <a href="/credit-cards/points">
+      <i class="icon-cat medium rewards"></i>
+      <span><?php echo $this->translate("Points") ?></span>
+    </a>
+  </div>
+  <div class="category-menu_list-item air-miles <?php echo $page == "air-miles" ? 'active' : '' ?>">
+    <a href="/credit-cards/air-miles">
+      <i class="icon-cat medium air-miles"></i>
+      <span><?php echo $this->translate("Air Miles") ?></span>
+    </a>
+  </div>
+  <div class="category-menu_list-item cash-back <?php echo $page == "cash-back" ? 'active' : '' ?>">
+    <a href="/credit-cards/cash-back">
+      <i class="icon-cat medium cash-back"></i>
+      <span><?php echo $this->translate("Cash Back"); ?></span>
+    </a>
+  </div>
+</div>

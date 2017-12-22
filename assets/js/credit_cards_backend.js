@@ -72,6 +72,10 @@ $('input[name="points"').change(function(){
   $('.points-section').slideToggle();
 });
 
+$('input[name="data[exclusive]"').change(function(){
+  $('.exclusive-section').slideToggle();
+});
+
 $('.colorpicker').minicolors({
   theme: 'bootstrap'
 });

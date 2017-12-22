@@ -2014,6 +2014,108 @@ ul.stay-connected > li.instagram {
     text-align: left;
 }
 
+.margin-top-sm {
+    margin-top: 15px;
+}
+
+.swal2-modal button.styled.margin-top-sm {
+    margin-top: 15px;
+}
+
+.page-content-justified{
+    text-align: justify;
+}
+
+.faq-panel{
+    border-bottom: solid 1px #e7e6e2;
+    padding: 0;
+    font-size: 14px;
+}
+
+.faq-panel-header{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.faq-panel .faq-panel-header a .fa-caret-down{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-up{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-down{
+    display: inline-block;
+}
+
+.faq-panel .faq-panel-header a i{
+    color: #78aa43;
+}
+
+.faq-panel .faq-panel-header a{
+    display: block;
+    padding: 20px 0 20px 0px;
+    color: #312f2e;
+    position: relative;
+    text-align: left;
+}
+
+.faq-panel .faq-panel-header a span{
+    padding-left: 10px;
+}
+
+.faq-panel-body{
+    margin: 15px 0 25px;
+    font-size: 20px;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.page-content-wrapper .about-bottom{
+    padding-top: 0px;
+}
+
+.mx-auto{
+    margin: 0 auto;
+}
+.btn-fullwidth{
+    width: 100%;
+}
+
+.mg-top-sm{
+    margin-top: 30px;
+}
+
+.mg-bottom-xs{
+    margin-bottom: 15px;
+}
+.mg-top-xs{
+    margin-top: 15px;
+}
+
+.form-wizard #complete-total-costs .tooltip-icon{
+    margin-top: 0px;
+}
+
+.loan-sidebar-portlet button,
+.loan-sidebar-portlet input,
+.loan-sidebar-portlet optgroup,
+.loan-sidebar-portlet select,
+.loan-sidebar-portlet textarea{
+    float: none;
+}
+
+.home_loan .page-title h2,
+.refinancing .page-title h2{
+    top: 50%;
+    margin-top: -16px;
+    padding-top: 0px;
+}
+
 @media (max-width: 1280px) {
     .box-services .item {
         padding: 0 20px !important;

@@ -1700,33 +1700,39 @@ td {
 }
 
 .icon-cat.medium {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background-size: 150px;
 }
 
 .icon-cat {
     display: inline-block;
-    background: url(../img/credit-card-category-spritesheet.svg) no-repeat;
+    background: url(../img/credit_card_icon.png) no-repeat;
     width: 20px;
     height: 20px;
     background-size: 106px;
 }
 
 .icon-cat.medium.summary{
-    background-position: -4px -1px;
+    background: url(../img/credit-card-all.png) no-repeat;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
 }
 
 .icon-cat.medium.cash-back {
-    background-position: -41px -3px;
+    background-position: -8px -53px;
 }
 
 .icon-cat.medium.air-miles, .icon-cat.medium.travel {
-    background-position: -79px -3px;
+    background: url(../img/air_miles.png) no-repeat;
+    background-size: contain;
+    width: 50px;
+    height: 36px;
 }
 
 .icon-cat.medium.rewards {
-    background-position: -116px -1px;
+    background-position: -109px -52px;
 }
 
 .icon-cat.medium.petrol {
@@ -1738,7 +1744,7 @@ td {
 }
 
 .icon-cat.medium.promo {
-    background-position: -79px -78px;
+    background-position: -58px -6px;
 }
 
 @media (max-width: 1199px) {

@@ -273,4 +273,54 @@ class CreditCardController extends AbstractActionController
     $banks = $application_model_bank->fetchAll();
     return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
+
+  public function addItemCompare()
+  {
+    $session = new Session('credit_card');
+    $request = $this->getRequest();
+    if($request->isPost()) {
+      $translator = $this->getServiceLocator()->get('translator');
+      $post = $request->getPost();
+      $id = $post['id'];
+      $success = false;
+
+      if($session->offsetExists('select')) {
+        $select = $session->offsetGet('select');
+        $select_arr = $select;
+        $current_count_select = count($select_arr);
+      } else {
+        $current_count_select = 0;
+        $select_arr = array();
+      }
+      $max_count_select = 3;
+
+      $success = false;
+      $cr = "active";
+      $ca = "";
+
+      if($current_count_select <= $max_count_select) {
+        if(!in_array($id, $select_arr)) {
+          array_push($select_arr, $id);
+          $success = true;
+          $cr = "";
+          $ca = "active";
+        } else {
+          if(($key = array_search($id, $select_arr)) !== false) {
+            unset($select_arr[$key]);
+            $success = true;
+            $msg = $translator->translate("You have removed this credit card select list");
+          }
+        }
+      } else {
+        $msg = $translator->translate("Maximum 3 banks selected");
+      }
+
+      $session->offsetSet('select', $select_arr);
+      $response = $this->getResponse();
+      $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca) ) );
+      return $response;
+    }
+    if($session->offsetExists('select')) $select = $session->offsetGet('select');
+    return array("select" => $select);
+  }
 }

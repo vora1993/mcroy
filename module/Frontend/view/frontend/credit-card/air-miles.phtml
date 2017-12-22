@@ -6,102 +6,10 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 <div class="container">
   <div class="row">
     <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
-      <div class="box-featured-bank">
-        <div class="featured-bank lowest-interest">
-          <h3 class="title-featured"><?php echo $this->translate("Filter"); ?></h3>
-          <div class="box-search">
-            <form>
-              <div class="monthly-income-filter">
-                <label>
-                  <?php echo $this->translate("Monthly income") ?>
-                  <span class="pull-right">
-                    <span class="monthly-income-label">$0</span>
-                  </span>
-                </label>
-                <div class="slider-monthly-income" data-min="15000" data-max="100000" data-value="<?php echo $this->monthly_income ?>" data-soft-cap="15000"></div>
-              </div>
-              <hr />
-              <div class="form-group clearfix">
-                <label><?php echo $this->translate("Best for") ?>...</label>
-                <select name="preferred_rate_package" class="form-control">
-                  <option value="All"><?php echo $this->translate("Choose your rewards") ?>...</option>
-                  <option value="Discount"<?php if($this->preferred_rate_package === 'Discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
-                  <option value="Discount"<?php if($this->preferred_rate_package === 'Points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
-                  <option value="Discount"<?php if($this->preferred_rate_package === 'Air Miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
-                  <option value="Discount"<?php if($this->preferred_rate_package === 'Cash Back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
-                </select>
-              </div>
-              <hr />
-              <div class="banks-filter">
-                <label>
-                  <?php echo $this->translate("Banks") ?>
-                </label>
-                <div class="clearfix">
-                  <?php foreach ($this->banks as $key => $bank):
-                  $dir_bank_logo = 'data/bank/'.$bank->getId().'/m_'.$bank->getLogo();
-                  if(!file_exists($dir_bank_logo)) {
-                    $dir_bank_logo = '/assets/img/credit-card.png';
-                  }
-                  ?>
-                  <div class="col-md-6 mg-bottom-xs">
-                    <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
-                  </div>
-                <?php endforeach;?>
-              </div>
-            </div>
-            <hr />
-            <div class="card-providers-filter">
-              <label>
-                <?php echo $this->translate("Card providers") ?>
-              </label>
-            </div>
-            <hr />
-            <div class="loan-filter">
-              <input type="hidden" name="monthly_income" value="<?php echo $this->monthly_income ?>">
-              <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
-              <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
-              <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
-              <button type="button" class="btn btn-lg green-custom ladda-button" onclick="CreditCard.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <?php echo $this->partial('credit_card_filters'); ?>
     </div>
-  </div>
   <div class="col-md-9 col-xs-12">
-
-    <div class="category-menu-container mg-top-sm category-menu_list owl-carousel owl-loaded" id="category-menu">
-      <div class="category-menu_list-item summary">
-        <a href="/credit-cards">
-          <i class="icon-cat medium summary"></i>
-          <span><?php echo $this->translate("All Cards") ?></span>
-        </a>
-      </div>
-      <div class="category-menu_list-item promo">
-        <a href="/credit-cards/discount">
-          <i class="icon-cat medium promo"></i>
-          <span><?php echo $this->translate("Discount") ?></span>
-        </a>
-      </div>
-      <div class="category-menu_list-item rewards">
-        <a href="/credit-cards/points">
-          <i class="icon-cat medium rewards"></i>
-          <span><?php echo $this->translate("Points") ?></span>
-        </a>
-      </div>
-      <div class="category-menu_list-item air-miles active">
-        <a href="/credit-cards/air-miles">
-          <i class="icon-cat medium air-miles"></i>
-          <span><?php echo $this->translate("Air Miles") ?></span>
-        </a>
-      </div>
-      <div class="category-menu_list-item cash-back">
-        <a href="/credit-cards/cash-back">
-          <i class="icon-cat medium cash-back"></i>
-          <span><?php echo $this->translate("Cash Back"); ?></span>
-        </a>
-      </div>
-    </div>
+    <?php echo $this->partial('credit_card_navigation', array('page' => 'air-miles')); ?>
     <div class="portlet light portlet-fit portlet-form no-shadow">
       <div class="portlet-body form">
         <form class="form-horizontal form-wizard">
@@ -167,6 +75,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           ?>
                         </p>
                       </div>
+                      <div class="clearfix"></div>
+                      <?php echo $this->partial('credit_card_more_info', array('_dataAttributes' => $_dataAttributes)); ?>
                     </div>
                     <div class="row row-footer">
                       <div class="more-info" style="overflow: hidden; display: none;">
@@ -260,9 +170,6 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                       </div>
                     </div>
                   </div>
-                  <?php
-                        //if($credit_card->getPromotions()) echo '<div class="promotion"><span>'.$credit_card->getPromotions().'</span></div>';
-                  ?>
                 </div>
               <?php endforeach;?>
             </div>

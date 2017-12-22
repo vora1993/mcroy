@@ -117,7 +117,11 @@ return array(
             'property_loan_step_5'     => __DIR__ . '/../view/partial/property-loan/step-5.phtml',
             'mortgage_calculator'      => __DIR__ . '/../view/partial/mortgage-calculator.phtml',
             'business_loan_calculator' => __DIR__ . '/../view/partial/business-loan-calculator.phtml',
-            'crowfunding_repayment'    => __DIR__ . '/../view/partial/crowfunding-repayment-calculator.phtml'
+            'crowfunding_repayment'    => __DIR__ . '/../view/partial/crowfunding-repayment-calculator.phtml',
+            'credit_card_more_info'      => __DIR__ . '/../view/partial/credit-card-more-info.phtml',
+            'credit_card_navigation'      => __DIR__ . '/../view/partial/credit-card-navigation.phtml',
+            'credit_card_filters'      => __DIR__ . '/../view/partial/credit-card-filters.phtml',
+            'credit_card_details'      => __DIR__ . '/../view/partial/credit-card-details.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

@@ -536,19 +536,25 @@
 }
 
 .cat-icon.air-miles.big, .cat-icon.travel.big {
-    background-position: -170px -70px;
+    background: url(../img/air_miles.png) no-repeat;
+    background-size: contain;
+    width: 75px;
+    height: 60px;
 }
 
 .cat-icon.cash-back.big, .cat-icon.cashback.big, .cat-icon.cash.back.big {
-    background-position: -90px -70px;
+    background-position: -16px -99px;
+    background-size: 275px;
 }
 
 .cat-icon.rewards.big {
-    background-position: -250px -70px;
+    background-position: -200px -98px;
+    background-size: 275px;
 }
 
 .cat-icon.freegift.big, .cat-icon.promo.big {
-    background-position: -970px -70px;
+    background-position: -107px -13px;
+    background-size: 275px;
 }
 
 .filters-credit-card-property .subheading.font-subheading {
@@ -565,7 +571,7 @@
 }
 
 .cat-icon.big {
-    background: url(/assets/img/category-sprites-icon.svg) 0px 0px no-repeat;
+    background: url(../img/credit_card_icon.png) no-repeat;
     width: 60px;
     height: 60px;
 }
@@ -758,4 +764,99 @@
     text-align: center;
     text-rendering: auto;
     color: rgb(245, 166, 35);
+}
+
+.link--offer-name {
+    color: #fff;
+}
+
+.link--offer-name:focus,
+.link--offer-name:hover,
+.filters-table-container a.link--offer-name:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.c-offer__header .header__heading {
+    color: #fff;
+    font-size: 23px;
+    overflow: hidden;
+    line-height: 37px;
+    margin: 0;
+    position: relative;
+    top: 0;
+    z-index: 1;
+}
+
+.res-card-data-hldr .title-data {
+  padding: 5px 5px 5px 5px;
+  height: 50px;
+  background-color: #0a4469;
+  font-weight: bold;
+  color: #fff;
+  border-style: solid;
+  border-color: #ccc;
+  border-width: 0px 1px 0px 0;
+  line-height: 40px;
+}
+
+.res-card-data-hldr .title-data label{
+  font-weight: bold;
+}
+
+.ms-exclusive-section .banner-title-exclusive{
+  height: 30px;
+  float: left;
+  text-transform: uppercase;
+  background-color: #056f9d;
+  color: #fff;
+  padding: 6px 10px 4px;
+}
+
+.ms-exclusive-section .description-exclusive {
+    height: 30px;
+    float: left;
+    background-color: #2e86bc;
+    padding: 6px 15px 4px;
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+.ms-exclusive-section .banner-end{
+  float: left;
+  cursor: pointer;
+}
+
+.filters-credit-card-property .filters-content .row-content{
+  padding: 15px 0px;
+}
+
+.card-providers-filter ul{
+  list-style-type: none;
+    margin: 0;
+    padding: 0 15px;
+}
+.card-providers-filter ul li{
+    opacity: 1;
+    display: inline-block;
+    height: 75px!important;
+    line-height: 75px;
+    padding-left: 0;
+    vertical-align: middle;
+    width: 32%;
+    position: relative;
+    font-size: .7em;
+    text-align: center;
+}
+
+.card-providers-filter ul li img {
+    height: 40px;
+    cursor: pointer;
+}
+@media (max-width: 991px) {
+  .res-card-data-hldr .title-data {
+    border-width: 0px 1px 1px 0;
+  }
 }
