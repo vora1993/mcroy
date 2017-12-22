@@ -13,6 +13,40 @@
   if(!file_exists($dir_logo)) {
     $dir_logo = '/assets/img/credit-card.png';
   }
+
+  switch ($page) {
+    case "points":
+      $short_description = $_dataAttributes->promotion_and_deals;
+      $total_points_per_year = $_dataAttributes->total_points_per_year;
+      $total_points_per_year = (float)$total_points_per_year;
+      $category_promo_detail = number_format($total_points_per_year).$this->translate("Points/Year");
+      $header_title = $this->translate("Points");
+      break;
+    case 'air-miles':
+      $short_description = $_dataAttributes->air_miles_details;
+      $miles_per_year = $_dataAttributes->miles_per_year;
+      $miles_per_year = (float)$miles_per_year;
+      $category_promo_detail = number_format($miles_per_year).$this->translate("Miles/Year");
+      $header_title = $this->translate("Air Miles");
+      break;
+    case 'cash-back':
+      $short_description = $_dataAttributes->cash_back_details;
+      $cash_back_value = $_dataAttributes->savings_per_year;
+      $cash_back_value = (float)$cash_back_value;
+      $category_promo_detail = "$".number_format($cash_back_value, 2);
+      $header_title = $this->translate("Cashback");
+      break;
+    case 'discount':
+      $short_description = $_dataAttributes->discount_details;
+      $category_promo_detail = '';
+      $header_title = '';
+      break;
+    case 'summary':
+      $short_description = $_dataAttributes->promotion_and_deals;
+      $category_promo_detail = '';
+      $header_title = '';
+      break;
+  }
 ?>
 <div class="filters-content not-sponsored mg-bottom-sm">
   <div class="row-header t-credit-card" style="background-color: <?php echo $credit_card_color; ?>; border: <?php echo $credit_card_color; ?>">
@@ -32,7 +66,7 @@
         <div class="ms-exclusive-section clearfix">
           <label class="banner-title-exclusive">
             <i class="fa fa-gift" aria-hidden="true"></i>
-            Exclusive
+            <?php echo $this->translate("Exclusive") ?>
           </label>
           <span class="description-exclusive">
             <?php echo $_dataAttributes->exclusive_details ?>
@@ -47,10 +81,17 @@
     </div>
     <div class="col-md-5">
       <div class="box-credit-card-content">
-        <?php echo $_dataAttributes->promotion_and_deals; ?>
+        <?php echo $short_description; ?>
       </div>
     </div>
-    <div class="clearfix"></div>
+    <div class="col-md-7">
+      <p class="subheading font-subheading flush--bottom"><?php echo $header_title ?></p>
+      <p itemprop="interestRate" class="heading font-heading weight--bold">
+        <?php echo $category_promo_detail; ?>
+      </p>
+    </div>
+
+  <div class="clearfix"></div>
     <?php echo $this->partial('credit_card_more_info', array('_dataAttributes' => $_dataAttributes)); ?>
   </div>
   <div class="row row-footer">
