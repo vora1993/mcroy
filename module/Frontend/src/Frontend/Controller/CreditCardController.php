@@ -247,7 +247,7 @@ class CreditCardController extends AbstractActionController
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
-    return array("credit_cards" => $credit_cards, "banks" => $banks);
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders);
   }
 
   public function discountAction()
@@ -259,7 +259,7 @@ class CreditCardController extends AbstractActionController
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
-    return array("credit_cards" => $credit_cards, "banks" => $banks);
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders);
   }
 
   public function airMilesAction()
@@ -271,7 +271,7 @@ class CreditCardController extends AbstractActionController
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
-    return array("credit_cards" => $credit_cards, "banks" => $banks);
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders);
   }
 
   public function cashBackAction()
@@ -283,7 +283,7 @@ class CreditCardController extends AbstractActionController
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
-    return array("credit_cards" => $credit_cards, "banks" => $banks);
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders);
   }
 
   public function addItemCompare()
