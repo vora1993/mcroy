@@ -10,7 +10,8 @@ class Slider implements SliderInterface
     protected $date_added;
     protected $date_modified;
     protected $status;
-    
+    protected $type;
+
     public function getId()
     {
         return $this->id;
@@ -20,7 +21,7 @@ class Slider implements SliderInterface
         $this->id = (int) $id;
         return $this;
     }
-    
+
     public function getUrl()
     {
         return $this->url;
@@ -30,7 +31,7 @@ class Slider implements SliderInterface
         $this->url = $url;
         return $this;
     }
-    
+
     public function getName()
     {
         return $this->name;
@@ -40,7 +41,7 @@ class Slider implements SliderInterface
         $this->name = $name;
         return $this;
     }
-    
+
     public function getSortOrder()
     {
         return $this->sort_order;
@@ -50,7 +51,7 @@ class Slider implements SliderInterface
         $this->sort_order = (int) $sort_order;
         return $this;
     }
-    
+
     public function getDateAdded()
     {
         return $this->date_added;
@@ -60,18 +61,18 @@ class Slider implements SliderInterface
         $this->date_added = $date_added;
         return $this;
     }
-    
+
     public function getDateModified()
     {
         return $this->date_modified;
     }
-    
+
     public function setDateModified($date_modified)
     {
         $this->date_modified = $date_modified;
         return $this;
     }
-    
+
     public function getStatus()
     {
         return $this->status;
@@ -79,6 +80,16 @@ class Slider implements SliderInterface
     public function setStatus($status)
     {
         $this->status = (int) $status;
+        return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+    public function setType($type)
+    {
+        $this->type = (int) $type;
         return $this;
     }
 }

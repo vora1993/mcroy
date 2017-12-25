@@ -15,17 +15,17 @@ class SliderController extends AbstractActionController
 	{
         $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
         $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
-        
+
         return array('sliders' => $sliders);
 	}
-    
+
     public function editAction() {
         $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
         $application_view_helper_auth = $viewHelperManager->get('auth');
         $user = $application_view_helper_auth();
         $translator = $this->getServiceLocator()->get('translator');
         $user_id = $user->getId();
-        
+
         $id = $this->params()->fromRoute('id');
         $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
         $post = $application_model_slider->fetchRow(array('id' => $id));
@@ -36,12 +36,13 @@ class SliderController extends AbstractActionController
             if ($request->isPost()) {
                 $data = $request->getPost();
                 $error = 0;
-                
+
                 if(!$error) {
                     $post->setId($id);
                     $post->setName($data['name']);
                     if($data['url']) $post->setUrl($data['url']);
                     $post->setDateModified(new Expression('NOW()'));
+                    $post->setType($data['type']);
                     $updated = $application_model_slider->update($post);
                     if($updated) {
                         $messages['success'] = true;
@@ -54,11 +55,11 @@ class SliderController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('post' => $post);
-        } 
+        }
     }
-    
+
     /**
      * Add post
      */
@@ -68,7 +69,7 @@ class SliderController extends AbstractActionController
         $user = $application_view_helper_auth();
         $translator = $this->getServiceLocator()->get('translator');
         $user_id = $user->getId();
-        
+
         $request = $this->getRequest();
         $response = $this->getResponse();
         $messages = array();
@@ -82,13 +83,14 @@ class SliderController extends AbstractActionController
                 if($post['url']) $post_entity->setUrl($post['url']);
                 $post_entity->setDateAdded(new Expression('NOW()'));
                 $post_entity->setStatus($post['status']);
+                $post_entity->setType($post['type']);
                 if($post['url']) {
-                    $post_entity->setUrl($post['url']);    
+                    $post_entity->setUrl($post['url']);
                     // Resize image
                     $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
                     $application_view_helper_resizeimage('data/image', $post['url']);
                 }
-                
+
                 $added = $application_model_slider->insert($post_entity);
                 if($added) {
                     $messages['success'] = true;
@@ -98,12 +100,12 @@ class SliderController extends AbstractActionController
                     $messages['msg'] = $translator->translate("Something error. Please check");
                 }
             }
-            
+
             $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
             return $response;
         }
     }
-    
+
     /**
      * Change Image
      */
@@ -121,7 +123,7 @@ class SliderController extends AbstractActionController
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
-                
+
                 list($txt, $ext) = explode(".", $name);
                 if(in_array($ext, $valid_formats)) {
                     $newFilename = $name;
@@ -146,7 +148,7 @@ class SliderController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
   		return $response;
     }
-    
+
     /**
      * Load json
      */
@@ -154,14 +156,14 @@ class SliderController extends AbstractActionController
         $translator = $this->getServiceLocator()->get('translator');
         $messages = array();
         $response = $this->getResponse();
-        
+
         $result = array();
         $query = $this->params()->fromQuery('query');
-            
+
         $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
         $posts = $application_model_slider->search(array('status' => 1), $query);
-        
-        $data = array();    
+
+        $data = array();
         if($posts) {
             foreach ($posts as $post) {
                 $data[] = array(
@@ -171,18 +173,18 @@ class SliderController extends AbstractActionController
             }
         }
         $result['suggestions'] = $data;
-        
+
         $response->setContent ( \Zend\Json\Json::encode ( $result ) );
   		return $response;
     }
-    
+
     public function resizeImage($dir, $filename) {
         $image_src = $dir.DIRECTORY_SEPARATOR.$filename;
         $image = new SimpleImage();
-        $image->load($image_src);                     
+        $image->load($image_src);
         $image_height = $image->getHeight();
         $image_width = $image->getWidth();
-        
+
         if($image_height > $image_width) {
             if($image_height > 512) {
                 $image->resizeToHeight(512);
@@ -200,34 +202,34 @@ class SliderController extends AbstractActionController
             }
         }
     }
-    
+
     function clearHtml($html) {
         $html = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $html);
         $html = preg_replace("/<div>(.*?)<\/div>/", "$1", $html);
         return $html;
     }
-    
+
     function existFolder($folder)
     {
         // Get canonicalized absolute pathname
         $path = realpath($folder);
-    
+
         // If it exist, check if it's a directory
         if($path !== false AND is_dir($path))
         {
             // Return canonicalized absolute pathname
             return $path;
         }
-    
+
         // Path/folder does not exist
         return false;
     }
-    
+
     function deleteFolder($directory)
     {
         foreach(glob("{$directory}/*") as $file)
         {
-            if(is_dir($file)) { 
+            if(is_dir($file)) {
                 $this->deleteFolder($file);
             } else {
                 unlink($file);
@@ -235,23 +237,23 @@ class SliderController extends AbstractActionController
         }
         if($this->existFolder($directory)) rmdir($directory);
     }
-    
+
     public function setStatusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -265,7 +267,7 @@ class SliderController extends AbstractActionController
                 $post->setStatus($status);
                 $now = new Expression('NOW()');
                 $post->setDateModified($now);
-                
+
                 $updated = $application_model_slider->update($post);
                 if(!$updated) $error = $error + 1;
             }
@@ -279,7 +281,7 @@ class SliderController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     public function insertImageAction() {
         $translator = $this->getServiceLocator()->get('translator');
         $messages = array();
@@ -294,7 +296,7 @@ class SliderController extends AbstractActionController
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
-                
+
                 list($txt, $ext) = explode(".", $name);
                 if(in_array($ext, $valid_formats)) {
                     $newFilename = time(). '.' . $ext;
@@ -319,7 +321,7 @@ class SliderController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
   		return $response;
     }
-    
+
     protected function randomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -329,7 +331,7 @@ class SliderController extends AbstractActionController
         }
         return $randomString;
     }
-    
+
     protected function slug($str)
     {
         $str = trim(mb_strtolower($str));
