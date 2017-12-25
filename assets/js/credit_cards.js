@@ -517,3 +517,21 @@ var CreditCard = {
         pagination: false
       });
     });
+
+$('.news-content').owlCarousel({
+  items: 4,
+  autoPlay: 5000,
+  center: true,
+  navigation: true,
+  navigationText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+  pagination: false
+});
+
+$('#slideshow').owlCarousel({
+  items: 3,
+  autoPlay: 5000,
+  singleItem: true,
+  navigation: true,
+  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+  pagination: false
+});
