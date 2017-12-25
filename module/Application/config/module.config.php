@@ -128,6 +128,8 @@ return array(
             'credit_card_navigation'      => __DIR__ . '/../view/partial/credit-card-navigation.phtml',
             'credit_card_filters'      => __DIR__ . '/../view/partial/credit-card-filters.phtml',
             'credit_card_details'      => __DIR__ . '/../view/partial/credit-card-details.phtml',
+            'last_news'                => __DIR__ . '/../view/partial/last-news.phtml',
+            'credit_card_sliders'   => __DIR__ . '/../view/partial/credit-card-sliders.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

@@ -1,0 +1,9 @@
+<?php if(count($this->sliders) > 0) { ?>
+  <div id="slideshow" class="mg-top-xs">
+    <?php foreach ($this->sliders as $slider) { ?>
+        <div class="item">
+        <img src="<?php echo $this->basePath('data/image/'.$slider->getUrl()) ?>"/>
+      </div>
+    <?php } ?>
+  </div>
+<?php } ?>
