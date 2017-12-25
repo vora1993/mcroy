@@ -8,8 +8,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
     <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
       <?php echo $this->partial('credit_card_filters'); ?>
   </div>
-  <div class="col-md-9 col-xs-12">
-
+  <div class="col-md-9 col-xs-12 mg-top-sm">
+    <?php echo $this->partial('credit_card_sliders', array('sliders' => $sliders)); ?>
     <?php echo $this->partial('credit_card_navigation', array('page' => 'points')); ?>
 
     <div class="portlet light portlet-fit portlet-form no-shadow">

@@ -15,7 +15,11 @@ class CreditCardController extends AbstractActionController
     $credit_cards = $application_model_credit_card->fetchAll();
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
-    return array("credit_cards" => $credit_cards, "banks" => $banks);
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+    $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
+    $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, 'posts' => $posts, 'sliders' => $sliders);
   }
 
   public function selectAction() {
@@ -241,6 +245,8 @@ class CreditCardController extends AbstractActionController
     $credit_cards = $application_model_credit_card->fetchAll(array('points' => '1'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
+    $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
+    $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
     return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
 
@@ -251,6 +257,8 @@ class CreditCardController extends AbstractActionController
     $credit_cards = $application_model_credit_card->fetchAll(array('discount' => '1'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
+    $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
+    $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
     return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
 
@@ -261,6 +269,8 @@ class CreditCardController extends AbstractActionController
     $credit_cards = $application_model_credit_card->fetchAll(array('air_miles' => '1'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
+    $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
+    $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
     return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
 
@@ -271,6 +281,8 @@ class CreditCardController extends AbstractActionController
     $credit_cards = $application_model_credit_card->fetchAll(array('cashback' => '1'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
+    $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
+    $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3)));
     return array("credit_cards" => $credit_cards, "banks" => $banks);
   }
 
