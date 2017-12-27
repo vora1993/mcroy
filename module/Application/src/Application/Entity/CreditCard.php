@@ -17,6 +17,7 @@ class CreditCard implements CreditCardInterface
   protected $air_miles;
   protected $bank_id;
   protected $apply_url;
+  protected $provider_id;
 
 
   public function getId()
@@ -66,6 +67,16 @@ class CreditCard implements CreditCardInterface
   public function setBankId($bank_id)
   {
     $this->bank_id = $bank_id;
+    return $this;
+  }
+
+  public function getProviderId()
+  {
+    return $this->provider_id;
+  }
+  public function setProviderId($provider_id)
+  {
+    $this->provider_id = $provider_id;
     return $this;
   }
 

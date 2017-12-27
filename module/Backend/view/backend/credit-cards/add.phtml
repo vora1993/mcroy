@@ -103,6 +103,17 @@ $this->headTitle($title);
                 </div>
 
                 <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Provider") ?></label>
+                  <div class="col-md-9">
+                    <select class="form-control" name="provider_id">
+                      <option value=""><?php echo $this->translate("Select Provider") ?></option>
+                      <option value="1"><?php echo $this->translate("Visa") ?></option>
+                      <option value="2"><?php echo $this->translate("MasterCard") ?></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Apply Url") ?></label>
                   <div class="col-md-9">
                     <input name="apply_url" class="form-control" type="text" />
