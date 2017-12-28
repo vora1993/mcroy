@@ -107,7 +107,7 @@ var form = $('#form_credit_card');
 form.validate({
   errorElement: 'span', //default input error message container
   errorClass: 'help-block', // default input error message class
-  focusInvalid: false, // do not focus the last invalid input
+  focusInvalid: true, // do not focus the last invalid input
   ignore: "",
   rules: {
     name: {
@@ -115,6 +115,12 @@ form.validate({
     },
     apply_url: {
       url: true
+    },
+    provider_id: {
+      required: true
+    },
+    bank_id: {
+      required: true
     }
   },
 
