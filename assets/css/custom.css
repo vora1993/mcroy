@@ -2159,6 +2159,14 @@ ul.stay-connected > li.instagram {
     margin-top: 0px;
 }
 
+.grayscale{
+    opacity: .3;
+}
+
+.grayscale-off {
+    opacity: 1;
+}
+
 .loan-sidebar-portlet button,
 .loan-sidebar-portlet input,
 .loan-sidebar-portlet optgroup,
