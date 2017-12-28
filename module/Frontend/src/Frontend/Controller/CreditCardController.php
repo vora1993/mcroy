@@ -12,9 +12,9 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
+    $credit_cards = $application_model_credit_card->fetchAll(array('status' => 1));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll();
+    $banks = $application_model_bank->fetchAll(array('status' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
@@ -71,6 +71,34 @@ class CreditCardController extends AbstractActionController
     return array("select" => $select);
   }
 
+  public function filterAction()
+  {
+    $request = $this->getRequest();
+    if ($request->isPost())
+    {
+      $post = $request->getPost();
+      $response = $this->getResponse();
+
+      $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+      $credit_cards = $application_model_credit_card->fetchAll(
+        array(
+          'bank_id' => $post['bank_ids'],
+          'provider_id' => $post['provider_ids']
+        )
+      );
+
+      $html = $this->view->partial('credit_card_details', array('credit_cards' => $credit_cards, 'page' => 'summary'));
+
+      $data = array(
+        'bank_ids' => $post['bank_ids'],
+        'provider_ids' => $post['provider_ids']
+      );
+      $success = true;
+
+      $response->setContent(\Zend\Json\Json::encode(array("success" => $success, "html" => $html, "data" => $data)));
+      return $response;
+    }
+  }
   public function loadSelectAction()
   {
     $basePath = $this->serviceLocator->get('viewhelpermanager')->get('basePath');
