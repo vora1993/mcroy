@@ -113,6 +113,10 @@ var CreditCard = {
       toastr.error("Sorry you haven't selected right.");
     }
   },
+  'filterBank': function(element) {
+    var bankId = $(element).data('bank-id');
+    $(element).toggleClass('grayscale');
+  },
   'apply' : function(button) {
     var dataUrl = $(button).data("url");
     if(dataUrl) {

@@ -25,7 +25,7 @@
                 $dir_bank_logo = '/assets/img/credit-card.png';
               }
               ?>
-              <div class="col-md-6 mg-bottom-xs">
+              <div class="col-md-6 mg-bottom-xs" data-bank-id=<?php echo $bank->getId(); ?> onclick="CreditCard.filterBank(this)" >
                 <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
               </div>
             <?php endforeach;?>
@@ -37,9 +37,9 @@
             <?php echo $this->translate("Card providers") ?>
           </label>
             <ul class="panel__list--clean panel__list--provider">
-              <li class=""><img src="/assets/img/visa_icon.png" alt="Visa" title="Visa">
+              <li class="" onclick="CreditCard.filterBank(this)"><img src="/assets/img/visa_icon.png" alt="Visa" title="Visa">
             </li>
-              <li class=""><img src="/assets/img/master_card_icon.png" alt="MasterCard" title="MasterCard">
+              <li class="" onclick="CreditCard.filterBank(this)"><img src="/assets/img/master_card_icon.png" alt="MasterCard" title="MasterCard">
             </li>
           </ul>
         </div>
