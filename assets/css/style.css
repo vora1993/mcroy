@@ -2580,6 +2580,7 @@ ul.links-quote li a:hover {
     border-radius: 5px;
     box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
     margin-bottom: 25px;
+    background: #fff;
 }
 .featured-bank {
     width: 100%;
