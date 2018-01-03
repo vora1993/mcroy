@@ -79,6 +79,9 @@ $('input[name="data[exclusive]"').change(function(){
 $('.colorpicker').minicolors({
   theme: 'bootstrap'
 });
+
+$('select[name="provider_ids[]"]').select2();
+
 $('#photoupload').on("change", function(){
   var form = document.getElementById('form_credit_card');
   var fileInput = document.getElementById('photoupload');

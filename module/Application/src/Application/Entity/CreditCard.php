@@ -17,7 +17,7 @@ class CreditCard implements CreditCardInterface
   protected $air_miles;
   protected $bank_id;
   protected $apply_url;
-  protected $provider_id;
+  protected $provider_ids;
 
 
   public function getId()
@@ -70,13 +70,13 @@ class CreditCard implements CreditCardInterface
     return $this;
   }
 
-  public function getProviderId()
+  public function getProviderIds()
   {
-    return $this->provider_id;
+    return \Zend\Json\Json::decode($this->provider_ids);
   }
-  public function setProviderId($provider_id)
+  public function setProviderIds($provider_ids)
   {
-    $this->provider_id = $provider_id;
+    $this->provider_ids = \Zend\Json\Json::encode($provider_ids);
     return $this;
   }
 

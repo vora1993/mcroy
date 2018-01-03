@@ -17,5 +17,5 @@ interface CreditCardInterface
     public function getDateModified();
     public function getStatus();
     public function getBankId();
-    public function getProviderId();
+    public function getProviderIds();
 }

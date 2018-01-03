@@ -582,8 +582,10 @@ class BankController extends AbstractActionController
                     mkdir($dir, 0777, true);
                 }
 
-                list($txt, $ext) = explode(".", $name);
-                if(in_array($ext, $valid_formats)) {
+                $file_path = pathinfo($name);
+                $ext = $file_path['extension'];
+
+                if(in_array(strtolower($ext), $valid_formats)) {
                     $newFilename = time(). '.' . $ext;
                     $tmp = $file['tmp_name'];
                     if(move_uploaded_file($tmp, $dir.'/'.$newFilename)) {

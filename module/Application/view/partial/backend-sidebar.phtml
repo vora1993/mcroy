@@ -73,6 +73,27 @@
                 </ul>
             </li>
 
+            <li class="nav-item <?php if($this->view === 'credit_card_provider') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-credit-card"></i>
+                    <span class="title"><?php echo $this->translate("Credit Card Providers") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'credit_card_provider') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'credit_card_provider' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/credit_card_provider") ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List Providers") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'credit_card_provider' && $this->action === 'add') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/credit_card_provider", array("action" => "add")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add New Provider") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item <?php if($this->view === 'business_loan') echo 'active open'?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-pie-chart"></i>
