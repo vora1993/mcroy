@@ -37,10 +37,16 @@
             <?php echo $this->translate("Card providers") ?>
           </label>
             <ul class="panel__list--clean panel__list--provider">
-              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="1" ><img src="/assets/img/visa_icon.png" alt="Visa" title="Visa">
-            </li>
-              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="2" ><img src="/assets/img/master_card_icon.png" alt="MasterCard" title="MasterCard">
-            </li>
+            <?php foreach ($this->providers as $key => $provider):
+              $dir_provider_logo = 'data/providers/'.$provider->getId().'/m_'.$provider->getLogo();
+              if(!file_exists($dir_provider_logo)) {
+                $dir_provider_logo = '/assets/img/credit-card.png';
+              }
+            ?>
+              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="<?php echo $provider->getId(); ?>" >
+                <img src="<?php echo $this->basePath($dir_provider_logo); ?>" alt="<?php echo $provider->getName(); ?>" title="<?php echo $provider->getName(); ?>">
+              </li>
+            <?php endforeach;?>
           </ul>
         </div>
         <hr />

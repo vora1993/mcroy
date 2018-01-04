@@ -856,7 +856,7 @@
 }
 
 .card-providers-filter ul li img {
-    height: 40px;
+    height: 20px;
     cursor: pointer;
 }
 @media (max-width: 991px) {

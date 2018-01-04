@@ -19,7 +19,9 @@ class CreditCardController extends AbstractActionController
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
-    return array("credit_cards" => $credit_cards, "banks" => $banks, 'posts' => $posts, 'sliders' => $sliders);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, 'posts' => $posts, 'sliders' => $sliders, 'providers' => $providers);
   }
 
   public function selectAction() {
@@ -277,7 +279,9 @@ class CreditCardController extends AbstractActionController
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
-    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
   public function discountAction()
@@ -291,7 +295,9 @@ class CreditCardController extends AbstractActionController
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
-    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
   public function airMilesAction()
@@ -305,7 +311,9 @@ class CreditCardController extends AbstractActionController
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
-    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
   public function cashBackAction()
@@ -319,7 +327,9 @@ class CreditCardController extends AbstractActionController
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
-    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+    return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
   public function addItemCompare()
