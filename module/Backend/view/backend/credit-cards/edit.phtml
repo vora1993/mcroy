@@ -118,9 +118,11 @@ $this->headTitle($title);
                   <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Provider") ?></label>
                   <div class="col-md-9">
                     <select class="form-control" name="provider_ids[]" multiple="multiple">
-                      <option value=""><?php echo $this->translate("Select Provider") ?></option>
-                      <option value="1" <?php echo $this->credit_card->getProviderIds() == $bank->getId() ? 'selected' : ''; ?>><?php echo $this->translate("Visa") ?></option>
-                      <option value="2" <?php echo $this->credit_card->getProviderIds() == $bank->getId() ? 'selected' : ''; ?>><?php echo $this->translate("MasterCard") ?></option>
+                      <?php if(count($this->providers) > 0): ?>
+                        <?php foreach ($this->providers as $provider): ?>
+                          <option value="<?php echo $provider->getId(); ?>" <?php echo in_array($provider->getId(), \Zend\Json\Json::decode($this->credit_card->getProviderIds())) ? 'selected' : ''; ?> ><?php echo $provider->getName() ?></option>
+                        <?php endforeach;?>
+                      <?php endif;?>
                     </select>
                   </div>
                 </div>

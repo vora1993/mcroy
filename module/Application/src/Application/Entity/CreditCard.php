@@ -72,11 +72,11 @@ class CreditCard implements CreditCardInterface
 
   public function getProviderIds()
   {
-    return \Zend\Json\Json::decode($this->provider_ids);
+    return $this->provider_ids;
   }
   public function setProviderIds($provider_ids)
   {
-    $this->provider_ids = \Zend\Json\Json::encode($provider_ids);
+    $this->provider_ids = $provider_ids;
     return $this;
   }
 
