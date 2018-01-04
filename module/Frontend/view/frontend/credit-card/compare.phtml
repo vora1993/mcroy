@@ -252,6 +252,16 @@
                     <?php endif ?>
                   </span>
                 </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Cash Advance Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->cash_advance_fee != ""): ?>
+                      <?php echo $_dataAttributes->cash_advance_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
               </ul>
             </article>
           </div>
