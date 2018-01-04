@@ -230,6 +230,12 @@ $this->headTitle($title);
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Card Features") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[card_features]"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Requirement") ?></label>
                   <div class="col-md-9">
                     <input type="text" name="data[requirement]" class="form-control">
