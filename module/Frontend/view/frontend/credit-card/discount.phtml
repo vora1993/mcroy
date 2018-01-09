@@ -6,7 +6,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 <div class="container">
   <div class="row">
     <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
-      <?php echo $this->partial('credit_card_filters'); ?>
+      <?php echo $this->partial('credit_card_filters', array('banks' => $banks, 'providers' => $providers, 'credit_card_category' => 'discount')); ?>
   </div>
   <div class="col-md-9 col-xs-12 mg-top-sm">
     <?php echo $this->partial('credit_card_sliders', array('sliders' => $sliders)); ?>
