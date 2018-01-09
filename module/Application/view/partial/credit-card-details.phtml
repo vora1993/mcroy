@@ -3,7 +3,7 @@
     <?php foreach ($this->credit_cards as $key => $credit_card):
       $bank = $this->bank(array("id" => $credit_card->getBankId()));
       if (!empty($bank)){
-        $dir_bank_logo = 'data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+        $dir_bank_logo = '/data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
         $bank_name = $bank->getName();
       } else {
         $dir_bank_logo = "";
@@ -11,7 +11,7 @@
       }
       $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
       $credit_card_color = $credit_card->getColor() ? $credit_card->getColor() : "#FFFFFF";
-      $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+      $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
       if(!file_exists($dir_logo)) {
         $dir_logo = '/assets/img/credit-card.png';
       }
@@ -43,7 +43,7 @@
           $category_promo_detail = '';
           $header_title = '';
           break;
-        case 'summary':
+        case 'all':
           $short_description = $_dataAttributes->promotion_and_deals;
           $category_promo_detail = '';
           $header_title = '';

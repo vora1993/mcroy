@@ -81,11 +81,28 @@ class CreditCardController extends AbstractActionController
     if($request->isPost()) {
       $params = $request->getPost();
       $provider_ids = !empty($params['provider_ids']) ? $params['provider_ids'] : array();
+      $query_arr = array('bank_id' => $params['bank_ids'], 'status' => 1);
+      switch ($params['category_id']) {
+        case 'points':
+          $query_arr['points'] = '1';
+          break;
+        case 'air-miles':
+          $query_arr['air_miles'] = '1';
+          break;
+        case 'cash-back':
+          $query_arr['cash_back'] = '1';
+          break;
+        case 'discount':
+          $query_arr['discount'] = '1';
+          break;
+      }
+
       $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-      $credit_cards = $application_model_credit_card->filter(array('bank_id' => $params['bank_ids'], 'status' => 1), implode("|", $provider_ids));
+      $credit_cards = $application_model_credit_card->filter($query_arr, implode("|", $provider_ids));
       $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
       $banks = $application_model_bank->fetchAll(array('status' => 1));
-      $htmlView = new ViewModel(array("credit_cards" => $credit_cards, "banks" => $banks, 'page' => 'summary'));
+
+      $htmlView = new ViewModel(array("credit_cards" => $credit_cards, "banks" => $banks, 'page' => $params['category_id']));
       $htmlOutput = $htmlView
         ->setTerminal(true)
         ->setTemplate('credit_card_details');
