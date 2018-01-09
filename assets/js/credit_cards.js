@@ -88,35 +88,32 @@ var CreditCard = {
     var dataProviderIdList = $(".card-providers-filter li").not(".grayscale").map(function() {
       return $(this).data("provider-id");
     }).get();
-    console.log(dataBankIdList);
-    console.log(dataProviderIdList);
+    var categoryId = $('select[name="select_category_credit_card"]').val();
 
     var l = Ladda.create(button);
     var data = {
       bank_ids: dataBankIdList,
-      provider_ids: dataProviderIdList
+      provider_ids: dataProviderIdList,
+      category_id: categoryId
     }
-    toastr.error("Sorry you haven't selected right.");
-    // $.ajax({
-    //   url: full_url + '/credit-cards/filter',
-    //   type: 'post',
-    //   data: data,
-    //   dataType: 'json',
-    //   beforeSend: function(xhr, settings) {
-    //     l.start();
-    //   },
-    //   success: function(json) {
-    //     if (json['success']) {
-    //       l.stop();
-    //       // window.location.href = json['redirect'];
-    //       // console.log(json);
-    //       toastr.error("Sorry you haven't selected right.");
-    //     }
-    //   },
-    //   error : function(xhr, ajaxOptions, thrownError){
-    //     toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-    //   },
-    // });
+    // toastr.error("Sorry you haven't selected right.");
+    $.ajax({
+      url: full_url + '/credit-cards/filter',
+      type: 'post',
+      data: data,
+      dataType: 'html',
+      beforeSend: function(xhr, settings) {
+        l.start();
+      },
+      success: function(html) {
+        l.stop();
+        $('#results').html(html);
+      },
+      error : function(xhr, ajaxOptions, thrownError){
+        l.stop();
+        toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      },
+    });
 
   },
   'filterBank': function(element) {
@@ -373,13 +370,13 @@ var CreditCard = {
         $("#popup-compare").load(full_url + "/credit-cards/popup-credit-card");
       },
       detail: function() {
-        $(".btn-more-detail").on('click', function(){
+        $("#results").on('click', '.btn-more-detail', function(){
           $(this).closest(".row-footer").find(".more-info").slideDown();
           $(this).hide();
           $(this).next().show();
         });
 
-        $(".btn-less-detail").on('click', function(){
+        $("#results").on('click', '.btn-less-detail', function(){
           $("p").slideDown();
           $(this).closest(".row-footer").find(".more-info").slideUp();
           $(this).hide();
@@ -508,13 +505,13 @@ var CreditCard = {
       });
 
       $(".btn-less-detail").hide();
-      $(".btn-more-detail").on('click', function(){
+      $("#results").on('click', '.btn-more-detail', function(){
         $(this).closest(".filters-content").find(".more-info").slideDown();
         $(this).hide();
         $(this).next().show();
       });
 
-      $(".btn-less-detail").on('click', function(){
+      $("#results").on('click', '.btn-less-detail', function(){
         $(this).closest(".filters-content").find(".more-info").slideUp();
         $(this).hide();
         $(this).prev().show();

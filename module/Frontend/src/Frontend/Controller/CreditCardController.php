@@ -75,32 +75,24 @@ class CreditCardController extends AbstractActionController
 
   public function filterAction()
   {
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+
     $request = $this->getRequest();
-    if ($request->isPost())
-    {
-      $post = $request->getPost();
-      $response = $this->getResponse();
-
+    if($request->isPost()) {
+      $params = $request->getPost();
+      $provider_ids = !empty($params['provider_ids']) ? $params['provider_ids'] : array();
       $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-      $credit_cards = $application_model_credit_card->fetchAll(
-        array(
-          'bank_id' => $post['bank_ids'],
-          'provider_id' => $post['provider_ids']
-        )
-      );
-
-      $html = $this->view->partial('credit_card_details', array('credit_cards' => $credit_cards, 'page' => 'summary'));
-
-      $data = array(
-        'bank_ids' => $post['bank_ids'],
-        'provider_ids' => $post['provider_ids']
-      );
-      $success = true;
-
-      $response->setContent(\Zend\Json\Json::encode(array("success" => $success, "html" => $html, "data" => $data)));
-      return $response;
+      $credit_cards = $application_model_credit_card->filter(array('bank_id' => $params['bank_ids'], 'status' => 1), implode("|", $provider_ids));
+      $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+      $banks = $application_model_bank->fetchAll(array('status' => 1));
+      $htmlView = new ViewModel(array("credit_cards" => $credit_cards, "banks" => $banks, 'page' => 'summary'));
+      $htmlOutput = $htmlView
+        ->setTerminal(true)
+        ->setTemplate('credit_card_details');
+      return $htmlOutput;
     }
   }
+
   public function loadSelectAction()
   {
     $basePath = $this->serviceLocator->get('viewhelpermanager')->get('basePath');

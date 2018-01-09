@@ -52,6 +52,17 @@ class CreditCard extends AbstractDbMapper
         return $result;
     }
 
+    public function filter($condition=nul, $providerIds='', $order=null)
+    {
+        $select = $this->getSelect();
+        if($condition) $select->where($condition);
+        $select->where('CONCAT(",", `provider_ids`, ",") REGEXP ",('.$providerIds.'),"');
+        if($order) $select->order($order);
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
     public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null)
     {
         if (!$where) {

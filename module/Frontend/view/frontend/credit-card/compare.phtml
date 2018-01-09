@@ -262,6 +262,16 @@
                     <?php endif ?>
                   </span>
                 </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Local Currency Transfer Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->currency_transfer_fee != ""): ?>
+                      <?php echo $_dataAttributes->currency_transfer_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
               </ul>
             </article>
           </div>

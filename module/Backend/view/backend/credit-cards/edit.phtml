@@ -120,7 +120,7 @@ $this->headTitle($title);
                     <select class="form-control" name="provider_ids[]" multiple="multiple">
                       <?php if(count($this->providers) > 0): ?>
                         <?php foreach ($this->providers as $provider): ?>
-                          <option value="<?php echo $provider->getId(); ?>" <?php echo in_array($provider->getId(), \Zend\Json\Json::decode($this->credit_card->getProviderIds())) ? 'selected' : ''; ?> ><?php echo $provider->getName() ?></option>
+                          <option value="<?php echo $provider->getId(); ?>" <?php echo in_array($provider->getId(), explode('|', $this->credit_card->getProviderIds())) ? 'selected' : ''; ?> ><?php echo $provider->getName() ?></option>
                         <?php endforeach;?>
                       <?php endif;?>
                     </select>
@@ -351,6 +351,12 @@ $this->headTitle($title);
                       <label class="control-label col-md-5"><?php echo $this->translate("Cash Advance Fee") ?></label>
                       <div class="col-md-7">
                         <input type="text" name="data[cash_advance_fee]" class="form-control" value="<?php echo $_dataAttributes->cash_advance_fee ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Local Currency Transfer Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[currency_transfer_fee]" class="form-control" value="<?php echo $_dataAttributes->currency_transfer_fee ?>">
                       </div>
                     </div>
                   </div>
