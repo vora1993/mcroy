@@ -90,7 +90,7 @@ class CreditCardController extends AbstractActionController
           $query_arr['air_miles'] = '1';
           break;
         case 'cash-back':
-          $query_arr['cash_back'] = '1';
+          $query_arr['cashback'] = '1';
           break;
         case 'discount':
           $query_arr['discount'] = '1';
