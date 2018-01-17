@@ -320,7 +320,6 @@ class BankAccountController extends AbstractActionController
             
             $ordering       = \Zend\Json\Json::decode($this->params()->fromPost('order'));
 	        $rootOrdering   = \Zend\Json\Json::decode($this->params()->fromPost('rootOrder'));
-            
             if($ordering) {
                 foreach ($ordering as $order => $item_id) {
                     $order = $order + 1;
@@ -333,9 +332,9 @@ class BankAccountController extends AbstractActionController
                 }
             } else {
                 foreach($rootOrdering as $order => $item_id){
-                    $order = $order + 1;
                     $itemToOrder = $application_model_category->fetchRow(array('id' => $item_id));
     	            if($itemToOrder){
+                        $array_test[]=$itemToOrder;
                         $itemToOrder->setId($item_id);
                         $itemToOrder->setSortOrder($order);
     	                $application_model_category->update($itemToOrder);
@@ -344,7 +343,7 @@ class BankAccountController extends AbstractActionController
     	    }
             return $response->setContent ( \Zend\Json\Json::encode ( array("success" => true, "msg" => $translator->translate("Successfully update")) ) );
         }
-        $categories     = $application_model_category->fetchAll(array("type" => "bank_account"))->toArray();
+        $categories     = $application_model_category->fetchAllOrder(array("type" => "bank_account"))->toArray();
         $category_html  = $this->buildCategory($categories);
         
         return array("category_html" => $category_html);
@@ -383,7 +382,6 @@ class BankAccountController extends AbstractActionController
             }
             $html .= '</ol>';
         }
-        
         return $html;
     }
     
