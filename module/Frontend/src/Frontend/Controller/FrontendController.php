@@ -13,7 +13,7 @@ class FrontendController extends AbstractActionController
 	    $testimonials = $application_model_testimonial->fetchAll(array("status" => 1));
 
         $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
-        $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 0));
+        $sliders = $application_model_slider->fetchAll(array('status' => array(1,2,3), 'type' => 0));
 
         $application_model_post = $this->getServiceLocator()->get('application_model_post');
         $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 3);
