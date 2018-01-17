@@ -160,8 +160,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Savings per year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[savings_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="cashback_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("$") ?></span>
                     </div>
                   </div>
                 </div>
@@ -181,8 +182,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Miles per Year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[miles_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="air_miles_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("Miles/Year") ?></span>
                     </div>
                   </div>
                 </div>
@@ -198,6 +200,13 @@ $this->headTitle($title);
                     <label class="control-label col-md-3"><?php echo $this->translate("Discount Details") ?></label>
                     <div class="col-md-9">
                       <textarea class="form-control tinymce" name="data[discount_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input class="form-control nobtngrp" name="discount_value" >
+                      <span class="input-group-addon">%</span>
                     </div>
                   </div>
                 </div>
@@ -217,8 +226,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Total Points Per Year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[total_points_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="points_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("Points/Year") ?></span>
                     </div>
                   </div>
                 </div>

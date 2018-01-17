@@ -43,6 +43,10 @@ class CreditCardsController extends AbstractActionController
       $credit_card->setAirMiles($post['air_miles']);
       $credit_card->setApplyUrl($post['apply_url']);
       $credit_card->setProviderIds(implode(",", $post['provider_ids']));
+      $credit_card->setCashbackValue($post['cashback_value']);
+      $credit_card->setDiscountValue($post['discount_value']);
+      $credit_card->setPointsValue($post['points_value']);
+      $credit_card->setAirMilesValue($post['air_miles_value']);
       $added = $application_model_credit_card->insert($credit_card);
       if($added) {
         $messages['success'] = true;
@@ -108,6 +112,10 @@ class CreditCardsController extends AbstractActionController
           $credit_card->setAirMiles($post['air_miles']);
           $credit_card->setApplyUrl($post['apply_url']);
           $credit_card->setProviderIds(implode(",", $post['provider_ids']));
+          $credit_card->setCashbackValue($post['cashback_value']);
+          $credit_card->setDiscountValue($post['discount_value']);
+          $credit_card->setPointsValue($post['points_value']);
+          $credit_card->setAirMilesValue($post['air_miles_value']);
           // Logo
           $dir_credit_card = 'data/credit_cards/';
           if($post['logo'] !== $credit_card->getLogo()) {

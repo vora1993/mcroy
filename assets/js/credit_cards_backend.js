@@ -124,7 +124,19 @@ form.validate({
     },
     bank_id: {
       required: true
-    }
+    },
+    air_miles_value: {
+      number: true
+    },
+    points_value: {
+      number: true
+    },
+    cashback_value: {
+      number: true
+    },
+    discount_value: {
+      number: true
+    },
   },
 
   highlight: function(element) { // hightlight error inputs

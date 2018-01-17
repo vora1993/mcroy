@@ -18,4 +18,8 @@ interface CreditCardInterface
     public function getStatus();
     public function getBankId();
     public function getProviderIds();
+    public function getCashbackValue();
+    public function getDiscountValue();
+    public function getPointsValue();
+    public function getAirMilesValue();
 }
