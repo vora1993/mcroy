@@ -306,6 +306,9 @@ class BankAccountController extends AbstractActionController
      */
     public function categoryAction() {
         $application_model_category = $this->getServiceLocator()->get('application_model_category');
+        //Load model menu
+        $application_model_menu = $this->getServiceLocator()->get('application_model_menu');
+
         $response = $this->getResponse();
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -320,6 +323,7 @@ class BankAccountController extends AbstractActionController
             
             $ordering       = \Zend\Json\Json::decode($this->params()->fromPost('order'));
 	        $rootOrdering   = \Zend\Json\Json::decode($this->params()->fromPost('rootOrder'));
+
             if($ordering) {
                 foreach ($ordering as $order => $item_id) {
                     $order = $order + 1;
@@ -333,11 +337,18 @@ class BankAccountController extends AbstractActionController
             } else {
                 foreach($rootOrdering as $order => $item_id){
                     $itemToOrder = $application_model_category->fetchRow(array('id' => $item_id));
+                    //Get name
+                    $nameMenu=$itemToOrder->getName();
+                    $itemToOrderMenu=$application_model_menu->fetchRow(array('name'=>$nameMenu));
     	            if($itemToOrder){
-                        $array_test[]=$itemToOrder;
                         $itemToOrder->setId($item_id);
                         $itemToOrder->setSortOrder($order);
     	                $application_model_category->update($itemToOrder);
+
+                        //Update sort order in table menu
+                        $cond=array('name'=>$nameMenu);
+                        $itemToOrderMenu->setSortOrder($order);
+                        $application_model_menu->update($itemToOrderMenu,$cond);
                     }
                 }
     	    }
@@ -439,6 +450,22 @@ class BankAccountController extends AbstractActionController
             $category->setStatus(1);
                     
             $added = $application_model_category->insert($category);
+
+            //Insert table menu
+            $application_model_menu = $this->getServiceLocator()->get('application_model_menu'); 
+            $menu = new \Application\Entity\Menu;
+            $menu->setGroupId(1);
+            $menu->setTitle($name);
+            $menu->setParent(5);
+            $menu->setName($name);
+            $menu->setRoute("loan_application");
+            $menu->setAction("bank-account");
+            $menu->setValue($this->makeSeo($name));
+            $menu->setSortOrder(0);
+            $menu->setDateAdded(new Expression('NOW()'));
+            $menu->setDateModified(NULL);
+            $added = $application_model_menu->insert($menu);
+
             if($added) {
                 $messages['success'] = true;
                 $messages['msg'] = $translator->translate("Successfully added");
