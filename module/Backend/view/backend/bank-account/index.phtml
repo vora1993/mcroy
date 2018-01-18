@@ -21,7 +21,7 @@ $this->headTitle($title);
             </ul>
         </div>
         <!-- END PAGE BAR -->
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -91,7 +91,7 @@ $this->headTitle($title);
                             </thead>
                             <tbody>
                                 <?php if(count($this->loans) > 0): ?>
-                                <?php foreach ($this->loans as $loan): 
+                                <?php foreach ($this->loans as $loan):
                                 $bank = $this->bank(array("id" => $loan->getBankId()));
                                 ?>
                                 <tr class="odd gradeX">
@@ -102,7 +102,7 @@ $this->headTitle($title);
                                         </label>
                                     </td>
                                     <td><a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "edit", "id" => $loan->getId())) ?>"> <?php echo $loan->getLoanTitle() ?></a></td>
-                                    <td><?php echo $this->category(array("id" => $loan->getCategoryId()))->getName(); ?></td>
+                                    <td><?php echo $this->category(array("id" => $loan->getCategoryId())) ? $this->category(array("id" => $loan->getCategoryId()))->getName() : ''; ?></td>
                                     <td><a href="<?php echo $this->url("admin/bank", array("action" => "edit", "id" => $bank->getId())) ?>"> <?php echo $bank->getName() ?></a></td>
                                     <td><?php echo date("d-m-Y H:i A", strtotime($loan->getDateAdded())); ?></td>
                                     <td>
@@ -111,7 +111,7 @@ $this->headTitle($title);
                                         case 1;
                                             echo '<span class="label label-sm label-success"> '.$this->translate("Active").' </span>';
                                         break;
-                                        
+
                                         default:
                                             echo '<span class="label label-sm label-danger"> '.$this->translate("Deactive").' </span>';
                                         break;
@@ -128,7 +128,7 @@ $this->headTitle($title);
                 </div>
             </div>
         </div>
-    </div>            
+    </div>
 </div>
 <!-- END CONTENT -->
 <?php
@@ -151,11 +151,11 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
         var sgDatec = sgDateb[1].split(':');
         return (sgDateb[0] + sgDatea[1] + sgDatea[0] + sgDatec[0] + sgDatec[1] ) * 1;
     },
-        
+
     "date-sg-asc": function ( a, b ) {
         return ((a < b) ? -1 : ((a > b) ? 1 : 0));
     },
-        
+
     "date-sg-desc": function ( a, b ) {
         return ((a < b) ? 1 : ((a > b) ? -1 : 0));
     }
@@ -184,7 +184,7 @@ jQuery(document).ready(function() {
                 "first": "First"
             }
         },
-        
+
         buttons: [
             {
                 text: 'Edit',
@@ -224,7 +224,7 @@ jQuery(document).ready(function() {
                                 App.blockUI({boxed: true});
                             },
                             success: function(itemJson) {
-                                App.unblockUI();      
+                                App.unblockUI();
                                 if(itemJson['success']) {
                                     toastr.success(itemJson.msg);
                                     setTimeout(function(){ window.location.reload(); }, 1500);
@@ -259,7 +259,7 @@ jQuery(document).ready(function() {
                                 App.blockUI({boxed: true});
                             },
                             success: function(itemJson) {
-                                App.unblockUI();      
+                                App.unblockUI();
                                 if(itemJson['success']) {
                                     toastr.success(itemJson.msg);
                                     setTimeout(function(){ window.location.reload(); }, 1500);
@@ -294,7 +294,7 @@ jQuery(document).ready(function() {
                                 App.blockUI({boxed: true});
                             },
                             success: function(itemJson) {
-                                App.unblockUI();      
+                                App.unblockUI();
                                 if(itemJson['success']) {
                                     toastr.success(itemJson.msg);
                                     setTimeout(function(){ window.location.reload(); }, 1500);
@@ -319,7 +319,7 @@ jQuery(document).ready(function() {
                 }
             }
         ],
-        
+
         // setup responsive extension: http://datatables.net/extensions/responsive/
         responsive: true,
 
@@ -328,13 +328,13 @@ jQuery(document).ready(function() {
             "orderable": false,
             "searchable": false
         }],
-        
+
         "lengthMenu": [
             [25, 50, 100, -1],
             [25, 50, 100, "All"] // change per page values here
         ],
         // set the initial value
-        "pageLength": 25,            
+        "pageLength": 25,
         "pagingType": "bootstrap_full_number",
         "columnDefs": [
             {"orderable": false,"targets": [0,6]},
@@ -344,7 +344,7 @@ jQuery(document).ready(function() {
             [4, "desc"]
         ] // set first column as a default sort by asc
     });
-    
+
     var tableWrapper = jQuery('#table_page_wrapper');
     table.find('.group-checkable').change(function () {
         var set = jQuery(this).attr("data-set");
@@ -359,11 +359,11 @@ jQuery(document).ready(function() {
             }
         });
     });
-    
+
     table.on('change', 'tbody tr .checkboxes', function () {
         $(this).parents('tr').toggleClass("active");
     });
-    
+
     // handle datatable custom tools
     $('#table_page_tools > li > a.tool-action').on('click', function() {
         var action = $(this).attr('data-action');
