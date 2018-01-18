@@ -5,344 +5,344 @@ $max_loan_compare = $this->setting()->max_loan_compare ? $this->setting()->max_l
 $remain = $max_loan_compare - $count;
 ?>
 <div id="popup-compare">
-    <div id="compare" class="business-compare" style="display: none;">
-        <div class="container">
-                <div id="content">
-                    <section class="compare-table">
-                        <section class="compare-row">
-                            <div class="row">
-                                <div class="col-sm-3"></div>
-                            <?php
-                            if($count > 0) {
-                                $personal_loan = array();
-                                $loans = $this->bank_accounts(array("id" => $compare));
-                                foreach ($loans as $loan) {
-                                    $bank = $this->bank(array("id" => $loan->getBankId()));
-                                    $category = $this->category(array("id" => $loan->getCategoryId()));
+  <div id="compare" class="business-compare" style="display: none;">
+    <div class="container">
+      <div id="content">
+        <section class="compare-table">
+          <section class="compare-row">
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <?php
+              if($count > 0) {
+                $personal_loan = array();
+                $loans = $this->bank_accounts(array("id" => $compare));
+                foreach ($loans as $loan) {
+                  $bank = $this->bank(array("id" => $loan->getBankId()));
+                  $category = $this->category(array("id" => $loan->getCategoryId()));
 
                                     // Image
-                                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
-                                    if(!file_exists($dir_logo)) {
-                                        $dir_logo = 'data/image/no-image-128.png';
-                                    }
-                                    ?>
-                                    <div class="col-sm-3 box">
-                                        <div class="card-holder">
-                                            <a href="<?php echo $loan->getLink() ?>"><img alt="<?php echo $loan->getLoanTitle(); ?>" src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getLoanTitle(); ?>"></a>
-                                            <h4 class="name-holder"><a href="#"><?php echo $loan->getLoanTitle() ?></a></h4>
-                                            <a href="<?php echo $loan->getLink() ?>" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></a>
-                                            <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $loan->getId(); ?>" data-page="compare"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    $personal_loan[] = array(
-                                        'loan_id'                 => $loan->getId(),
-                                        'dir_logo'                => $dir_logo,
-                                        'promotions'              => $loan->getPromotions(),
-                                        'link'                    => $loan->getLink(),
-                                        'interest_rates'          => $loan->getInterestRate(),
-                                        'initial_deposit_amount'  => $loan->getInitialDepositAmount(),
-                                        'minimum_balance'         => $loan->getMinimumBalance(),
-                                        'cheque_book_fees'        => $loan->getChequeBookFees(),
-                                        'internet_banking_fees'   => $loan->getInternetBankingFees(),
-                                        'annual_fee'              => $loan->getAnnualFee(),
-                                        'service_fee'             => $loan->getServiceFee(),
-                                        'highlight'               => $loan->getHighlight(),
-                                        'citizenship'             => $loan->getCitizenship(),
-                                        'age'                     => $loan->getAge(),
-                                    );
-                                }
-                            }
-                            if($remain > 0){
-                                for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-sm-3 box">
-                                        <div class="card-holder-empty">
-                                            <h4>
-                                                <a href="<?php echo $this->url("loan_application", array("action" => "bank-account", "seo" => $category->getSeo())) ?>"><?php echo $this->translate("Add Bank Account to Compare") ?></a>
-                                            </h4>
-                                            <div class="card-holder-description">
-                                                <?php echo $this->translate("Add a Bank Account for comparison, you will be returned to the Bank Account Listing") ?>
-                                            </div>
-                                            <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("loan_application", array("action" => "bank-account", "seo" => $category->getSeo())) ?>"><?php echo $this->translate("Add Bank Account") ?></a>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            }
-                            ?>
-                            </div>
-                        </section>
-                    </section>
-                    <div id="overview-wrapper" class="compare-result">
-                        <div class="table-results table__item">
-                            <section class="table--item-title">
-                                <h4 class="title"><i class="icon-pencil overview small"></i> <?php echo $this->translate("Sign Up Promotions") ?></h4>
-                            </section>
-                        </div>
-                        <div class="table-results content">
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Promotion") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['promotions'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                        </div>
+                  $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                  if(!file_exists($dir_logo)) {
+                    $dir_logo = 'data/image/no-image-128.png';
+                  }
+                  ?>
+                  <div class="col-sm-3 box">
+                    <div class="card-holder">
+                      <a href="<?php echo $loan->getLink() ?>"><img alt="<?php echo $loan->getLoanTitle(); ?>" src="<?php echo $this->basePath($dir_logo); ?>" alt="<?php echo $loan->getLoanTitle(); ?>"></a>
+                      <h4 class="name-holder"><a href="#"><?php echo $loan->getLoanTitle() ?></a></h4>
+                      <a href="<?php echo $loan->getLink() ?>" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></a>
+                      <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $loan->getId(); ?>" data-page="compare"><i class="fa fa-times"></i></a>
                     </div>
-                    <div id="repayment-summary-wrapper" class="compare-result">
-                        <div class="table-results table__item">
-                            <section class="table--item-title">
-                                <h4 class="title"><i class="icon-refresh repayment-summary small"></i> <?php echo $this->translate("Repayment Summary") ?></h4>
-                            </section>
-                        </div>
-                        <div class="table-results content">
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Interest Rates") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        echo '<div class="col-md-3 card-item">';
-                                        if($row['interest_rates']) {
-                                            $interest_rates = \Zend\Json\Json::decode($row['interest_rates']);
-                                            if(count($interest_rates) > 0) {
-                                                echo '<ul>';
-                                                foreach ($interest_rates as $value) {
-                                                    echo '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
-                                                }
-                                                echo '</ul>';
-                                            }
-                                        }
-                                        ?>
-                                        </div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Initial Deposit Amount") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['initial_deposit_amount'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Minimum Balance") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['minimum_balance'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Cheque Book Fees") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['cheque_book_fees'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Internet Banking Fees") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['internet_banking_fees'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Annual Fee") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['annual_fee'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Service Fee") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['service_fee'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Citizenship") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['citizenship'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Age") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['age'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                            <div class="row items">
-                                <div class="col-md-3 card-item"><strong><?php echo $this->translate("Highlight") ?></strong></div>
-                                <?php
-                                if(count($personal_loan) > 0) {
-                                    foreach ($personal_loan as $row) {
-                                        ?>
-                                        <div class="col-md-3 card-item"><?php echo $row['highlight'] ?></div>
-                                        <?php
-                                    }
-                                }
-                                if($remain > 0){
-                                    for($i=1; $i<=$remain; $i++) {
-                                    ?>
-                                    <div class="col-md-3 card-item"></div>
-                                    <?php
-                                    }
-                                }
-                                ?>
-                            </div>
-                        </div>
+                  </div>
+                  <?php
+                  $personal_loan[] = array(
+                    'loan_id'                 => $loan->getId(),
+                    'dir_logo'                => $dir_logo,
+                    'promotions'              => $loan->getPromotions(),
+                    'link'                    => $loan->getLink(),
+                    'interest_rates'          => $loan->getInterestRate(),
+                    'initial_deposit_amount'  => $loan->getInitialDepositAmount(),
+                    'minimum_balance'         => $loan->getMinimumBalance(),
+                    'cheque_book_fees'        => $loan->getChequeBookFees(),
+                    'internet_banking_fees'   => $loan->getInternetBankingFees(),
+                    'annual_fee'              => $loan->getAnnualFee(),
+                    'service_fee'             => $loan->getServiceFee(),
+                    'highlight'               => $loan->getHighlight(),
+                    'citizenship'             => $loan->getCitizenship(),
+                    'age'                     => $loan->getAge(),
+                  );
+                }
+              }
+              if($remain > 0){
+                for($i=1; $i<=$remain; $i++) {
+                  ?>
+                  <div class="col-sm-3 box">
+                    <div class="card-holder-empty">
+                      <h4>
+                        <a href="<?php echo $this->url("loan_application", array("action" => "bank-account", "seo" => $category->getSeo())) ?>"><?php echo $this->translate("Add Bank Account to Compare") ?></a>
+                      </h4>
+                      <div class="card-holder-description">
+                        <?php echo $this->translate("Add a Bank Account for comparison, you will be returned to the Bank Account Listing") ?>
+                      </div>
+                      <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("loan_application", array("action" => "bank-account", "seo" => $category->getSeo())) ?>"><?php echo $this->translate("Add Bank Account") ?></a>
                     </div>
-                </div>
+                  </div>
+                  <?php
+                }
+              }
+              ?>
+            </div>
+          </section>
+        </section>
+        <div id="overview-wrapper" class="compare-result">
+          <div class="table-results table__item">
+            <section class="table--item-title">
+              <h4 class="title"><i class="icon-pencil overview small"></i> <?php echo $this->translate("Sign Up Promotions") ?></h4>
+            </section>
+          </div>
+          <div class="table-results content">
+            <div class="row items">
+              <div class="col-md-3 card-item"><strong><?php echo $this->translate("Promotion") ?></strong></div>
+              <?php
+              if(count($personal_loan) > 0) {
+                foreach ($personal_loan as $row) {
+                  ?>
+                  <div class="col-md-3 card-item"><?php echo $row['promotions'] ?></div>
+                  <?php
+                }
+              }
+              if($remain > 0){
+                for($i=1; $i<=$remain; $i++) {
+                  ?>
+                  <div class="col-md-3 card-item"></div>
+                  <?php
+                }
+              }
+              ?>
+            </div>
+          </div>
         </div>
-    </div>
-    <section class="compare-shortlist" style="overflow: hidden; display: none;">
-        <div class="container">
-            <div class="clearfix">
-                <div class="col-xs-3">
-                    <h4><?php echo $this->translate("Compare Business Term Loan") ?></h4>
-                    <p><?php echo $this->translate("Apply for the Business Term Loan of your choice right away") ?></p>
+        <div id="repayment-summary-wrapper" class="compare-result">
+          <div class="table-results table__item">
+            <section class="table--item-title">
+              <h4 class="title"><i class="icon-refresh repayment-summary small"></i> <?php echo $this->translate("Repayment Summary") ?></h4>
+            </section>
+          </div>
+          <div class="table-results content">
+            <div class="row items">
+              <div class="col-md-3 card-item"><strong><?php echo $this->translate("Interest Rates") ?></strong></div>
+              <?php
+              if(count($personal_loan) > 0) {
+                foreach ($personal_loan as $row) {
+                  echo '<div class="col-md-3 card-item">';
+                  if($row['interest_rates']) {
+                    $interest_rates = \Zend\Json\Json::decode($row['interest_rates']);
+                    if(count($interest_rates) > 0) {
+                      echo '<ul>';
+                      foreach ($interest_rates as $value) {
+                        echo '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
+                      }
+                      echo '</ul>';
+                    }
+                  }
+                  ?>
                 </div>
                 <?php
-                if(count($personal_loan) > 0) {
-                    foreach ($personal_loan as $row) {
-                        ?>
-                        <div class="col-xs-3 compare-table-col">
-                            <a href="#"><img src="<?php echo $this->basePath($row['dir_logo']); ?>" /></a>
-                            <a href="<?php echo $row['link'] ?>" data-id="<?php echo $row['loan_id']; ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></a>
-                            <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $row['loan_id']; ?>" data-page="compare"><i class="fa fa-times"></i></a>
-                        </div>
-                    <?php
-                    }
-                }
-                if($remain > 0){
-                    for($i=1; $i<=$remain; $i++) {
-                        ?>
-                        <div class="col-xs-3 compare-table-col"></div>
-                    <?php
-                    }
-                }
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
                 ?>
-            </div>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Initial Deposit Amount") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['initial_deposit_amount'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Minimum Balance") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['minimum_balance'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Cheque Book Fees") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['cheque_book_fees'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Internet Banking Fees") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['internet_banking_fees'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Annual Fee") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['annual_fee'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Service Fee") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['service_fee'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Citizenship") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['citizenship'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Age") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['age'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="row items">
+            <div class="col-md-3 card-item"><strong><?php echo $this->translate("Highlight") ?></strong></div>
+            <?php
+            if(count($personal_loan) > 0) {
+              foreach ($personal_loan as $row) {
+                ?>
+                <div class="col-md-3 card-item"><?php echo $row['highlight'] ?></div>
+                <?php
+              }
+            }
+            if($remain > 0){
+              for($i=1; $i<=$remain; $i++) {
+                ?>
+                <div class="col-md-3 card-item"></div>
+                <?php
+              }
+            }
+            ?>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="compare-shortlist" style="overflow: hidden; display: none;">
+  <div class="container">
+    <div class="clearfix">
+      <div class="col-xs-3">
+        <h4><?php echo $this->translate("Compare Business Term Loan") ?></h4>
+        <p><?php echo $this->translate("Apply for the Business Term Loan of your choice right away") ?></p>
+      </div>
+      <?php
+      if(count($personal_loan) > 0) {
+        foreach ($personal_loan as $row) {
+          ?>
+          <div class="col-xs-3 compare-table-col">
+            <a href="#"><img src="<?php echo $this->basePath($row['dir_logo']); ?>" /></a>
+            <a href="<?php echo $row['link'] ?>" data-id="<?php echo $row['loan_id']; ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></a>
+            <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $row['loan_id']; ?>" data-page="compare"><i class="fa fa-times"></i></a>
+          </div>
+          <?php
+        }
+      }
+      if($remain > 0){
+        for($i=1; $i<=$remain; $i++) {
+          ?>
+          <div class="col-xs-3 compare-table-col"></div>
+          <?php
+        }
+      }
+      ?>
+    </div>
+  </div>
+</section>
 </div>
