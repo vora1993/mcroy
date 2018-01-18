@@ -6,7 +6,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 <div class="container">
   <div class="row">
     <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
-      <?php echo $this->partial('credit_card_filters'); ?>
+      <?php echo $this->partial('credit_card_filters', array('banks' => $banks, 'providers' => $providers, 'credit_card_category' => 'cash-back')); ?>
   </div>
   <div class="col-md-9 col-xs-12 mg-top-sm">
     <?php echo $this->partial('credit_card_sliders', array('sliders' => $sliders)); ?>
@@ -26,14 +26,10 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
             </div>
           </div>
 
-          <div class="filters-table-container mg-top-sm" id="results">
-            <?php if(count($this->credit_cards) > 0): ?>
-              <div class="filters-table-body filters-credit-card-property">
-                <?php foreach ($this->credit_cards as $key => $credit_card): ?>
-                  <?php echo $this->partial('credit_card_details', array('credit_card' => $credit_card, 'page' => 'cash-back')); ?>
-              <?php endforeach;?>
+          <div class="filters-table-container mg-top-md" id="results">
+            <div class="filters-table-body filters-credit-card-property">
+              <?php echo $this->partial('credit_card_details', array('credit_cards' => $credit_cards, 'page' => 'cash-back')); ?>
             </div>
-          <?php endif;?>
         </div>
       </form>
     </div>
@@ -41,7 +37,6 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 </div>
 </div>
 </div>
-<hr>
 <?php echo $this->partial('last_news', array('posts' => $posts)); ?>
 <?php
   echo $this->partial('compare-credit-card');

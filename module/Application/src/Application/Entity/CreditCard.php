@@ -17,7 +17,11 @@ class CreditCard implements CreditCardInterface
   protected $air_miles;
   protected $bank_id;
   protected $apply_url;
-  protected $provider_id;
+  protected $provider_ids;
+  protected $cashback_value;
+  protected $points_value;
+  protected $air_miles_value;
+  protected $discount_value;
 
 
   public function getId()
@@ -70,13 +74,13 @@ class CreditCard implements CreditCardInterface
     return $this;
   }
 
-  public function getProviderId()
+  public function getProviderIds()
   {
-    return $this->provider_id;
+    return $this->provider_ids;
   }
-  public function setProviderId($provider_id)
+  public function setProviderIds($provider_ids)
   {
-    $this->provider_id = $provider_id;
+    $this->provider_ids = $provider_ids;
     return $this;
   }
 
@@ -172,9 +176,54 @@ class CreditCard implements CreditCardInterface
   {
     return $this->status;
   }
+
   public function setStatus($status)
   {
     $this->status = (int) $status;
+    return $this;
+  }
+
+  public function getAirMilesValue()
+  {
+    return $this->air_miles_value;
+  }
+
+  public function setAirMilesValue($air_miles_value)
+  {
+    $this->air_miles_value = (int) $air_miles_value;
+    return $this;
+  }
+
+  public function getPointsValue()
+  {
+    return $this->points_value;
+  }
+
+  public function setPointsValue($points_value)
+  {
+    $this->points_value = (int) $points_value;
+    return $this;
+  }
+
+  public function getCashbackValue()
+  {
+    return $this->cashback_value;
+  }
+
+  public function setCashbackValue($cashback_value)
+  {
+    $this->cashback_value = (float) $cashback_value;
+    return $this;
+  }
+
+  public function getDiscountValue()
+  {
+    return $this->discount_value;
+  }
+
+  public function setDiscountValue($discount_value)
+  {
+    $this->discount_value = (float) $discount_value;
     return $this;
   }
 }

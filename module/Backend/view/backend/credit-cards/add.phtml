@@ -105,10 +105,13 @@ $this->headTitle($title);
                 <div class="form-group">
                   <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Provider") ?></label>
                   <div class="col-md-9">
-                    <select class="form-control" name="provider_id">
+                    <select class="form-control" name="provider_ids[]" multiple="multiple">
                       <option value=""><?php echo $this->translate("Select Provider") ?></option>
-                      <option value="1"><?php echo $this->translate("Visa") ?></option>
-                      <option value="2"><?php echo $this->translate("MasterCard") ?></option>
+                      <?php if(count($this->providers) > 0): ?>
+                        <?php foreach ($this->providers as $provider): ?>
+                          <option value="<?php echo $provider->getId(); ?>"><?php echo $provider->getName() ?></option>
+                        <?php endforeach;?>
+                      <?php endif;?>
                     </select>
                   </div>
                 </div>
@@ -157,8 +160,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Savings per year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[savings_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="cashback_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("$") ?></span>
                     </div>
                   </div>
                 </div>
@@ -178,8 +182,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Miles per Year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[miles_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="air_miles_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("Miles/Year") ?></span>
                     </div>
                   </div>
                 </div>
@@ -195,6 +200,13 @@ $this->headTitle($title);
                     <label class="control-label col-md-3"><?php echo $this->translate("Discount Details") ?></label>
                     <div class="col-md-9">
                       <textarea class="form-control tinymce" name="data[discount_details]"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input class="form-control nobtngrp" name="discount_value" >
+                      <span class="input-group-addon">%</span>
                     </div>
                   </div>
                 </div>
@@ -214,8 +226,9 @@ $this->headTitle($title);
                   </div>
                   <div class="form-group">
                     <label class="control-label col-md-3"><?php echo $this->translate("Total Points Per Year") ?></label>
-                    <div class="col-md-9">
-                      <input type="text" class="form-control" name="data[total_points_per_year]" />
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="points_value" />
+                      <span class="input-group-addon"><?php echo $this->translate("Points/Year") ?></span>
                     </div>
                   </div>
                 </div>
@@ -227,9 +240,21 @@ $this->headTitle($title);
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-md-5"><?php echo $this->translate("Requirement") ?></label>
-                  <div class="col-md-7">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Card Features") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[card_features]"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Requirement") ?></label>
+                  <div class="col-md-9">
                     <input type="text" name="data[requirement]" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Interest Free") ?></label>
+                  <div class="col-md-9>
+                    <input type="text" name="data[interest_free]" class="form-control" >
                   </div>
                 </div>
                 <div class="form-group">
@@ -312,9 +337,15 @@ $this->headTitle($title);
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="control-label col-md-5"><?php echo $this->translate("Balance Transfer Fee") ?></label>
+                      <label class="control-label col-md-5"><?php echo $this->translate("Cash Advance Fee") ?></label>
                       <div class="col-md-7">
-                        <input type="text" name="data[balance_transfer_fee]" class="form-control">
+                        <input type="text" name="data[cash_advance_fee]" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Local Currency Transfer Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[currency_transfer_fee]" class="form-control">
                       </div>
                     </div>
                   </div>

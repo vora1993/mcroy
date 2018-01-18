@@ -8,57 +8,40 @@ use Zend\View\Model\JsonModel;
 use Zend\Db\Sql\Expression;
 use Mynamespace\SimpleImage;
 
-class CreditCardsController extends AbstractActionController
+class CreditCardProviderController extends AbstractActionController
 {
   public function indexAction() {
-    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll();
-    return array("credit_cards" => $credit_cards);
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $providers = $application_model_credit_card_provider->fetchAll();
+    return array("providers" => $providers);
   }
 
   public function addAction() {
-    $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll(array('status' => 1));
-    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
-    $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
     $request = $this->getRequest();
     if ($request->isPost()) {
       $post = $request->getPost();
       $messages = array();
       $translator = $this->getServiceLocator()->get('translator');
 
-      $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-      $credit_card = new \Application\Entity\CreditCard;
-      $credit_card->setName($post['name']);
-      $credit_card->setDateAdded(new Expression('NOW()'));
-      $credit_card->setDateModified(new Expression('NOW()'));
-      $credit_card->setDataAttributes(\Zend\Json\Json::encode($post['data']));
-      $credit_card->setColor($post['color']);
-      $credit_card->setStatus($post['status']);
-      $credit_card->setLogo($post['logo']);
-      $credit_card->setBankId($post['bank_id']);
-      $credit_card->setCashback($post['cash_back']);
-      $credit_card->setDiscount($post['discount']);
-      $credit_card->setPoints($post['points']);
-      $credit_card->setAirMiles($post['air_miles']);
-      $credit_card->setApplyUrl($post['apply_url']);
-      $credit_card->setProviderIds(implode(",", $post['provider_ids']));
-      $credit_card->setCashbackValue($post['cashback_value']);
-      $credit_card->setDiscountValue($post['discount_value']);
-      $credit_card->setPointsValue($post['points_value']);
-      $credit_card->setAirMilesValue($post['air_miles_value']);
-      $added = $application_model_credit_card->insert($credit_card);
+      $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+      $provider = new \Application\Entity\CreditCardProvider;
+      $provider->setName($post['name']);
+      $provider->setDateAdded(new Expression('NOW()'));
+      $provider->setDateModified(new Expression('NOW()'));
+      $provider->setLogo($post['logo']);
+      $provider->setStatus($post['status']);
+      $added = $application_model_credit_card_provider->insert($provider);
       if($added) {
         $messages['success'] = true;
         $messages['msg'] = $translator->translate("Successfully added");
 
                 // Logo
-        $dir_credit_card = 'data/credit_cards/';
+        $dir_provider = 'data/providers/';
         if($post['logo']) {
-          $dir_logo = $dir_credit_card.$added->getGeneratedValue();
+          $dir_logo = $dir_provider.$added->getGeneratedValue();
           if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
 
-          $dir_tmp = $dir_credit_card.'/tmp/'.$post['logo'];
+          $dir_tmp = $dir_provider.'/tmp/'.$post['logo'];
           $dir_new = $dir_logo.'/'.$post['logo'];
           if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
 
@@ -67,7 +50,7 @@ class CreditCardsController extends AbstractActionController
           $application_view_helper_folder = $viewHelperManager->get('folder');
 
           $application_view_helper_resizeimage($dir_logo, $post['logo']);
-          $application_view_helper_folder("delete", $dir_credit_card.'/tmp');
+          $application_view_helper_folder("delete", $dir_provider.'/tmp');
         }
       } else {
         $messages['success'] = false;
@@ -77,21 +60,15 @@ class CreditCardsController extends AbstractActionController
       $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
       return $response;
     }
-
-    return array("banks" => $banks, "providers" => $providers);
   }
 
   public function editAction() {
     $id = $this->params()->fromRoute('id');
-    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_card = $application_model_credit_card->fetchRow(array('id' => $id));
-
-    if($credit_card) {
+    $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
+    $provider = $application_model_credit_card_provider->fetchRow(array('id' => $id));
+    if($provider) {
       $translator = $this->getServiceLocator()->get('translator');
-      $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-      $banks = $application_model_bank->fetchAll(array('status' => 1));
-      $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
-      $providers = $application_model_credit_card_provider->fetchAll(array('status' => 1));
+
       $request = $this->getRequest();
       $response = $this->getResponse();
       $messages = array();
@@ -100,29 +77,18 @@ class CreditCardsController extends AbstractActionController
 
         $error = 0;
         if(!$error) {
-          $credit_card->setId($id);
-          $credit_card->setName($post['name']);
-          $credit_card->setDateModified(new Expression('NOW()'));
-          $credit_card->setStatus($post['status']);
-          $credit_card->setDataAttributes(\Zend\Json\Json::encode($post['data']));
-          $credit_card->setBankId($post['bank_id']);
-          $credit_card->setCashback($post['cash_back']);
-          $credit_card->setDiscount($post['discount']);
-          $credit_card->setPoints($post['points']);
-          $credit_card->setAirMiles($post['air_miles']);
-          $credit_card->setApplyUrl($post['apply_url']);
-          $credit_card->setProviderIds(implode(",", $post['provider_ids']));
-          $credit_card->setCashbackValue($post['cashback_value']);
-          $credit_card->setDiscountValue($post['discount_value']);
-          $credit_card->setPointsValue($post['points_value']);
-          $credit_card->setAirMilesValue($post['air_miles_value']);
-          // Logo
-          $dir_credit_card = 'data/credit_cards/';
-          if($post['logo'] !== $credit_card->getLogo()) {
-            $dir_logo = $dir_credit_card.$id;
+          $provider->setId($id);
+          $provider->setName($post['name']);
+          $provider->setDateModified(new Expression('NOW()'));
+          $provider->setStatus($post['status']);
+
+                    // Logo
+          $dir_provider = 'data/providers/';
+          if($post['logo'] !== $provider->getLogo()) {
+            $dir_logo = $dir_provider.$id;
             if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
 
-            $dir_tmp = $dir_credit_card.'/tmp/'.$post['logo'];
+            $dir_tmp = $dir_provider.'/tmp/'.$post['logo'];
             $dir_new = $dir_logo.'/'.$post['logo'];
             if(file_exists($dir_tmp)) {
               copy($dir_tmp, $dir_new);
@@ -136,14 +102,13 @@ class CreditCardsController extends AbstractActionController
               $application_view_helper_folder = $viewHelperManager->get('folder');
 
               $application_view_helper_resizeimage($dir_logo, $new_logo_name);
-              $application_view_helper_folder("delete", $dir_credit_card.'/tmp');
+              $application_view_helper_folder("delete", $dir_provider.'/tmp');
 
-              $credit_card->setLogo($new_logo_name);
+              $provider->setLogo($new_logo_name);
             }
           }
-          $credit_card->setColor($post['color']);
 
-          $edited = $application_model_credit_card->update($credit_card);
+          $edited = $application_model_credit_card_provider->update($provider);
           if($edited) {
             $messages['success'] = true;
             $messages['msg']     = $translator->translate("Successfully updated");
@@ -156,9 +121,9 @@ class CreditCardsController extends AbstractActionController
         return $response;
       }
 
-      return array('credit_card' => $credit_card, 'banks' => $banks, 'providers' => $providers);
+      return array('provider' => $provider);
     } else {
-      return $this->redirect()->toRoute("admin/credit_cards");
+      return $this->redirect()->toRoute("admin/bank");
     }
   }
 
@@ -166,7 +131,7 @@ class CreditCardsController extends AbstractActionController
     $request = $this->getRequest();
     if ($request->isPost()) {
       $translator = $this->getServiceLocator()->get('translator');
-      $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+      $application_model_credit_card_provider = $this->getServiceLocator()->get('application_model_credit_card_provider');
 
       $action = $this->params()->fromPost('action');
       switch ($action) {
@@ -186,12 +151,12 @@ class CreditCardsController extends AbstractActionController
       $error = 0;
       $result = array();
       foreach ($ids as $id) {
-        $user = $application_model_credit_card->fetchRow(array('id' => $id));
-        $user->setId($id);
-        $user->setStatus($status);
-        $user->setDateModified(new Expression('NOW()'));
+        $provider = $application_model_credit_card_provider->fetchRow(array('id' => $id));
+        $provider->setId($id);
+        $provider->setStatus($status);
+        $provider->setDateModified(new Expression('NOW()'));
 
-        $updated = $application_model_credit_card->update($user);
+        $updated = $application_model_credit_card_provider->update($provider);
         if(!$updated) $error = $error + 1;
       }
       if(!$error) {
@@ -213,9 +178,10 @@ class CreditCardsController extends AbstractActionController
     if ($request->isPost()) {
       $file = $this->params()->fromFiles('file');
       $valid_formats = array("jpg", "jpeg", "png", "gif", "bmp");
+      $file_validator = new \Zend\Validator\File\Extension($valid_formats, true);
       $name = $file['name'];
       if(strlen($name)) {
-        $dir = 'data/credit_cards/tmp';
+        $dir = 'data/providers/tmp';
         if (!file_exists($dir)) {
           mkdir($dir, 0777, true);
         }
@@ -230,7 +196,7 @@ class CreditCardsController extends AbstractActionController
             $messages = array(
               'success'  => true,
               'name'     => $newFilename,
-              'src'      => '/data/credit_cards/tmp/'.$newFilename,
+              'src'      => '/data/providers/tmp/'.$newFilename,
               'msg'      => $translator->translate("Upload logo successful"),
             );
           } else {

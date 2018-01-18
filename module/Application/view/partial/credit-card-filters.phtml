@@ -6,11 +6,11 @@
         <div class="form-group clearfix">
           <label><?php echo $this->translate("Best for") ?>...</label>
           <select name="select_category_credit_card" class="form-control">
-            <option value="All"><?php echo $this->translate("Choose your rewards") ?>...</option>
-            <option value="Discount"<?php if($this->credit_card_category === 'Discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
-            <option value="Discount"<?php if($this->credit_card_category === 'Points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
-            <option value="Discount"<?php if($this->credit_card_category === 'Air Miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
-            <option value="Discount"<?php if($this->credit_card_category === 'Cash Back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
+            <option value="all"><?php echo $this->translate("Choose your rewards") ?>...</option>
+            <option value="discount"<?php if($this->credit_card_category === 'discount') echo " selected" ?>><?php echo $this->translate("Discount") ?></option>
+            <option value="points"<?php if($this->credit_card_category === 'points') echo " selected" ?>><?php echo $this->translate("Points") ?></option>
+            <option value="air-miles"<?php if($this->credit_card_category === 'air-miles') echo " selected" ?>><?php echo $this->translate("Air Miles") ?></option>
+            <option value="cash-back"<?php if($this->credit_card_category === 'cash-back') echo " selected" ?>><?php echo $this->translate("Cash Back") ?></option>
           </select>
         </div>
         <hr />
@@ -37,10 +37,16 @@
             <?php echo $this->translate("Card providers") ?>
           </label>
             <ul class="panel__list--clean panel__list--provider">
-              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="1" ><img src="/assets/img/visa_icon.png" alt="Visa" title="Visa">
-            </li>
-              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="2" ><img src="/assets/img/master_card_icon.png" alt="MasterCard" title="MasterCard">
-            </li>
+            <?php foreach ($this->providers as $key => $provider):
+              $dir_provider_logo = 'data/providers/'.$provider->getId().'/m_'.$provider->getLogo();
+              if(!file_exists($dir_provider_logo)) {
+                $dir_provider_logo = '/assets/img/credit-card.png';
+              }
+            ?>
+              <li class="" onclick="CreditCard.filterBank(this)" data-provider-id="<?php echo $provider->getId(); ?>" >
+                <img src="<?php echo $this->basePath($dir_provider_logo); ?>" alt="<?php echo $provider->getName(); ?>" title="<?php echo $provider->getName(); ?>">
+              </li>
+            <?php endforeach;?>
           </ul>
         </div>
         <hr />

@@ -11,10 +11,10 @@ use Zend\Db\Sql\Where;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Predicate\Expression;
 
-class Category extends AbstractDbMapper
+class CreditCardProvider extends AbstractDbMapper
 {
-    protected $tableName  = 'categories';
-    
+    protected $tableName  = 'credit_card_providers';
+
     public function fetchAll($condition=null)
     {
         $select = $this->getSelect();
@@ -25,44 +25,11 @@ class Category extends AbstractDbMapper
         return $entity;
     }
 
-    public function fetchAllOrder($condition=null)
-    {
-        $select = $this->getSelect();
-        if($condition) $select->where($condition);
-        $select->order('sort_order ASC');
-        $entity = $this->select($select);
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
-        return $entity;
-    }
-
     public function fetchRow($condition=null)
     {
         $select = $this->getSelect();
         if($condition) $select->where($condition);
 
-        $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
-        return $entity;
-    }
-    
-    public function fetchCurrent($condition=null) {
-        $select = $this->getSelect();
-        
-        if($condition) $select->where($condition);
-        
-        $select->order('id DESC');
-        
-        $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
-        return $entity;
-    }
-    
-    public function fetchCurrentDate($date=null) {
-        $select = $this->getSelect();
-        
-        if($date) $select->where(new Expression('DATE(date_added) = ?', $date));
-        $select->order('id DESC');
-        
         $entity = $this->select($select)->current();
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
         return $entity;
@@ -92,7 +59,7 @@ class Category extends AbstractDbMapper
         }
         return parent::update($entity, $where, $tableName, $hydrator);
     }
-    
+
     public function delete($where, $tableName = null)
     {
         return parent::delete($where);

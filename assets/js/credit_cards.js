@@ -82,36 +82,39 @@ function updateSlider() {
 // CreditCard functions
 var CreditCard = {
   'filter' : function(button) {
-    var loan_amount  = $("input[name=loan_amount]").val();
-    var loan_tenure  = $("input[name=loan_tenure]").val();
-    var loan_percent = $("input[name=loan_percent]").val();
-    var total_interest_for_years = $("select[name=total_interest_for_years]").val();
-    var preferred_rate_package = $("select[name=preferred_rate_package]").val();
-    var no_lock_in_only = $("input[name=no_lock_in_only]:checked").val() ? $("input[name=no_lock_in_only]:checked").val() : 0;
-    if(loan_amount > 0 && loan_tenure > 0) {
-      var l = Ladda.create(button);
-      var data = 'loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&loan_percent='+loan_percent+'&preferred_rate_package='+preferred_rate_package+'&total_interest_for_years='+total_interest_for_years+'&no_lock_in_only='+no_lock_in_only;
-      $.ajax({
-        url: full_url + '/loan-application/property-loan/commercial-industrial-loan/step/3',
-        type: 'post',
-        data: data,
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-          l.start();
-        },
-        success: function(json) {
-          if (json['success']) {
-            l.stop();
-            window.location.href = json['redirect'];
-          }
-        },
-        error : function(xhr, ajaxOptions, thrownError){
-          toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        },
-      });
-    } else {
-      toastr.error("Sorry you haven't selected right.");
+    var dataBankIdList = $(".banks-filter .col-md-6").not(".grayscale").map(function() {
+      return $(this).data("bank-id");
+    }).get();
+    var dataProviderIdList = $(".card-providers-filter li").not(".grayscale").map(function() {
+      return $(this).data("provider-id");
+    }).get();
+    var categoryId = $('select[name="select_category_credit_card"]').val();
+
+    var l = Ladda.create(button);
+    var data = {
+      bank_ids: dataBankIdList,
+      provider_ids: dataProviderIdList,
+      category_id: categoryId
     }
+    // toastr.error("Sorry you haven't selected right.");
+    $.ajax({
+      url: full_url + '/credit-cards/filter',
+      type: 'post',
+      data: data,
+      dataType: 'html',
+      beforeSend: function(xhr, settings) {
+        l.start();
+      },
+      success: function(html) {
+        l.stop();
+        $('#results').html(html);
+      },
+      error : function(xhr, ajaxOptions, thrownError){
+        l.stop();
+        toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      },
+    });
+
   },
   'filterBank': function(element) {
     var bankId = $(element).data('bank-id');
@@ -367,13 +370,13 @@ var CreditCard = {
         $("#popup-compare").load(full_url + "/credit-cards/popup-credit-card");
       },
       detail: function() {
-        $(".btn-more-detail").on('click', function(){
+        $("#results").on('click', '.btn-more-detail', function(){
           $(this).closest(".row-footer").find(".more-info").slideDown();
           $(this).hide();
           $(this).next().show();
         });
 
-        $(".btn-less-detail").on('click', function(){
+        $("#results").on('click', '.btn-less-detail', function(){
           $("p").slideDown();
           $(this).closest(".row-footer").find(".more-info").slideUp();
           $(this).hide();
@@ -502,13 +505,13 @@ var CreditCard = {
       });
 
       $(".btn-less-detail").hide();
-      $(".btn-more-detail").on('click', function(){
+      $("#results").on('click', '.btn-more-detail', function(){
         $(this).closest(".filters-content").find(".more-info").slideDown();
         $(this).hide();
         $(this).next().show();
       });
 
-      $(".btn-less-detail").on('click', function(){
+      $("#results").on('click', '.btn-less-detail', function(){
         $(this).closest(".filters-content").find(".more-info").slideUp();
         $(this).hide();
         $(this).prev().show();

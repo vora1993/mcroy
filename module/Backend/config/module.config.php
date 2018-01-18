@@ -20,6 +20,7 @@ return array(
             'application_loan'   => Backend\Controller\ApplicationLoanController::class,
             'crm'                => Backend\Controller\CrmController::class,
             'credit_cards'       => Backend\Controller\CreditCardsController::class,
+            'credit_card_provider' => Backend\Controller\CreditCardProviderController::class,
 		)
 	),
 	'router' => array(
@@ -88,6 +89,20 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'credit_cards',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
+                    'credit_card_provider' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/providers[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'controller' => 'credit_card_provider',
                                 'action' => 'index'
                             ),
                         ),

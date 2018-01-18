@@ -1768,12 +1768,28 @@ td {
     margin-top: 30px;
 }
 
+.mg-top-md{
+    margin-top: 45px;
+}
+
+.mg-top-lg{
+    margin-top: 60px;
+}
+
 .mg-bottom-xs{
     margin-bottom: 15px;
 }
 
 .mg-bottom-sm{
     margin-bottom: 30px;
+}
+
+.mg-bottom-md{
+    margin-bottom: 45px;
+}
+
+.mg-bottom-lg{
+    margin-bottom: 60px;
 }
 
 .category-menu_list-item a {

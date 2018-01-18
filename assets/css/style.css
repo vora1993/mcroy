@@ -1371,7 +1371,8 @@ span.note-cart {
     background-color: #FAFAFA;
 }
 
-.rtcc-detail-table.detail-table-category_code main ul li {
+.rtcc-detail-table.detail-table-category_code main ul li,
+.rtcc-detail-table.detail-table-card-features main ul li {
     position: relative;
     text-align: left;
     display: flex;
@@ -1399,6 +1400,24 @@ span.note-cart {
     text-align: center;
     text-rendering: auto;
     color: #F5A623;
+}
+
+.detail-table-card-features li:before {
+    position: absolute;
+    left: 0.2em;
+    top: 1.2em;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f00c";
+    width: 2.14285714em;
+    text-align: center;
+    text-rendering: auto;
+    color: #77aa43;
 }
 
 .drawercard-title {
@@ -2581,6 +2600,7 @@ ul.links-quote li a:hover {
     border-radius: 5px;
     box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
     margin-bottom: 25px;
+    background: #fff;
 }
 .featured-bank {
     width: 100%;
