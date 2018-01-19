@@ -1,7 +1,7 @@
 <?php
 $this->headTitle("Homepage");
 ?>
-<?php 
+<?php
 if(count($this->sliders) > 0) { ?>
     <div id="slideshow">
     <?php foreach ($this->sliders as $slider) { ?>
@@ -49,7 +49,7 @@ if(count($this->sliders) > 0) { ?>
     </div>
     <div class="services-content">
         <div class="box-services">
-            
+
                 <?php
                 foreach ($widget_2 as $k => $wg) {
                     ?>
@@ -65,10 +65,10 @@ if(count($this->sliders) > 0) { ?>
                             </div>
                         </div>
                     </div>
-                    <?php   
+                    <?php
                 }
                 ?>
-            
+
         </div>
     </div>
 </div>
@@ -87,7 +87,7 @@ if(count($this->sliders) > 0) { ?>
                             <?php if(strpos($wg->getLabelLink(), "$") !== false): ?>
                                 <span class="number">$</span><span class="number" data-counter="counterup" data-value="<?php echo str_replace("$", "", $wg->getLabelLink()) ?>">0</span>
                             <?php else: ?>
-                                <span data-counter="counterup" data-value="<?php echo $wg->getLabelLink() ?>">0</span> 
+                                <span data-counter="counterup" data-value="<?php echo $wg->getLabelLink() ?>">0</span>
                             <?php endif; ?>
                                 <span style="display: block;"><?php echo $wg->getName() ?></span>
                                 <p><?php echo $wg->getContent(); ?></p>
@@ -110,7 +110,7 @@ if(count($this->sliders) > 0) { ?>
                 <h4><?php echo $wg->getName() ?></h4>
                 <div class="line-why">&nbsp;</div>
                 <p><?php echo $wg->getContent(); ?></p>
-            </div>    
+            </div>
             <?php endforeach; ?>
         </div>
     </div>
@@ -127,13 +127,13 @@ if(count($this->sliders) > 0) { ?>
                 if(count($this->posts) > 0) {
                     foreach ($this->posts as $post) {
                         ?>
-                        <div class="col-sm-4 col-xs-12">
+                        <div class="col-xs-12">
         					<div class="item-news">
         						<div class="image">
         							<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img style="height: 212px!important" src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" title="" alt=""></a>
         						</div>
-        
-        						<div class="caption" style="height: 136px!important">
+
+        						<div class="caption">
         							<h4><?php echo $post->getPostTitle() ?></h4>
         							<span class="date-news"><i class="fa fa-calendar"></i> <?php echo $post->getDateAdded()?></span>
         							<?php
@@ -141,7 +141,7 @@ if(count($this->sliders) > 0) { ?>
                                             if(strlen($introtext) > 150) {
                                                 // truncate string
                                                 $stringCut = substr($introtext, 0, 150);
-                                                
+
                                                 // make sure it ends in a word so assassinate doesn't become ass...
                                                 $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
                                             }
@@ -169,7 +169,7 @@ if(count($this->sliders) > 0) { ?>
                 <p>We are the 1st comparison site to introduce MGM program cos we know everyone likes a good deal, so why not share with your business partners and associate and get rewarded! Every account signed up will have a unique referral code, refer and get cash incentive!</p>
                 <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn green-custom">Sign for an account</a> <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn blue"><?php echo $this->translate("Login") ?></a>
             </div>
-        </div>		
+        </div>
     </div>
 </div>
 
@@ -179,7 +179,7 @@ if(count($this->sliders) > 0) { ?>
         <h4>We love to hear</h4>
         <div class="row">
     		<div class="box-content">
-            	<?php 
+            	<?php
                 if(count($this->testimonials) > 0) {
                     foreach ($this->testimonials as $testimonial) {
                         ?>
@@ -209,7 +209,7 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/countUp.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 $('#slideshow').owlCarousel({
@@ -260,7 +260,7 @@ form_subscribe.validate({
             email: true
         }
     },
-    
+
     highlight: function(element) { // hightlight error inputs
         $(element)
             .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -278,16 +278,16 @@ form_subscribe.validate({
     submitHandler: function (form) {
         // setup some local variables
         var form = $(form);
-        
+
         // let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-        
+
         // serialize the data in the form
         var serializedData = form.serialize();
-        
+
         // let's disable the inputs for the duration of the ajax request
         inputs.prop("disabled", true);
-        
+
         // fire off the request to /form.php
 
         request = $.ajax({
@@ -295,11 +295,11 @@ form_subscribe.validate({
             type: "post",
             data: serializedData
         });
-        
+
         // Clear Message
         $('#form_subscribe .form-group').removeClass('has-error');
         $('#form_subscribe .help-block, #form_subscribe .alert').remove();
-        
+
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
@@ -310,13 +310,13 @@ form_subscribe.validate({
                 toastr.warning(result.msg);
             }
         });
-        
+
         // callback handler that will be called on failure
         request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
             toastr.error("The following error occured: " + textStatus, errorThrown);
         });
-        
+
         // callback handler that will be called regardless
         // if the request failed or succeeded
         request.always(function () {
