@@ -12,4 +12,5 @@ interface SliderInterface
     public function getDateModified();
     public function getStatus();
     public function getType();
+    public function getLink();
 }
