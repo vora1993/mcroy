@@ -569,4 +569,35 @@ class BankAccountController extends AbstractActionController
         }
         return $text;
     }
+
+    public function interestRateAction()
+    {  
+    }
+    public function AddinterestRateAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $messages = array();
+            $translator = $this->getServiceLocator()->get('translator');
+            $application_model_bank_interest_rate= $this->getServiceLocator()->get('application_model_bank_interest_rate');
+            $loan = new \Application\Entity\BankInterestRate;
+            $loan->setBankId($post['bank_id']);
+            $loan->setName($post['name']);
+            $loan->setRate($post['loan_title']);
+            $added = $application_model_bank_interest_rate->insert($loan);
+            echo 'a';
+            exit;
+            if($added) {
+                $messages['success'] = true;
+                $messages['msg'] = $translator->translate("Successfully added");
+            } else {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Something error. Please check");
+            }
+            $response = $this->getResponse();
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+    }
 }

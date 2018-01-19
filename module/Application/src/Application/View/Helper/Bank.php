@@ -10,11 +10,17 @@ class Bank extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
 
-    public function __invoke($condition=null)
+    public function __invoke($condition=null,$getall=0)
     {
         $sm = $this->serviceLocator->getServiceLocator();
         $application_model_bank = $sm->get('application_model_bank');
-        $row = $application_model_bank->fetchRow($condition);
+        if($getall==0)
+        {
+            $row = $application_model_bank->fetchRow($condition);
+        }else{
+            $row = $application_model_bank->fetchAll($condition);
+        }
+        
         return $row;
     }
     

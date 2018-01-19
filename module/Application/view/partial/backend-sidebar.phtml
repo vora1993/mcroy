@@ -232,6 +232,17 @@
                             <span class="title"><?php echo $this->translate("List of Bank Account") ?></span>
                         </a>
                     </li>
+
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'interest-rate') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account",array("action"=>"interest-rate")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List Bank Interest Ratess") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'add-interest-rate') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_bank_account",array("action"=>"add-interest-rate")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add Bank Interest Ratess") ?></span>
+                        </a>
+                    </li>
                     <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'add') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "add")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Add New Bank Account") ?></span>
