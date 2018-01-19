@@ -124,47 +124,6 @@ if(count($this->sliders) > 0) { ?>
 <?php echo $this->setting()->homepage ?>
 
 <div id="lastest-news">
-<<<<<<< HEAD
-  <div class="container">
-    <div class="row">
-      <h3><?php echo $this->translate("Latest News") ?></h3>
-      <div class="news-content">
-        <?php
-        if(count($this->posts) > 0) {
-          foreach ($this->posts as $post) {
-            ?>
-            <div class="col-xs-12">
-              <div class="item-news">
-                <div class="image">
-                  <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
-                </div>
-
-                <div class="caption">
-                  <h4><?php echo $post->getPostTitle() ?></h4>
-                  <span class="date-news"><i class="fa fa-calendar"></i> May 22, 2016</span>
-                  <?php
-                  $introtext = $post->getPostExcerpt();
-                  if(strlen($introtext) > 150) {
-                    // truncate string
-                    $stringCut = substr($introtext, 0, 150);
-
-                    // make sure it ends in a word so assassinate doesn't become ass...
-                    $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
-                  }
-                  ?>
-                  <p><?php echo $introtext; ?></p>
-                </div>
-                <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
-              </div>
-            </div>
-            <?php
-          }
-        }
-        ?>
-      </div>
-    </div>
-  </div>
-=======
 	<div class="container">
 		<div class="row">
             <h3><?php echo $this->translate("Latest News") ?></h3>
@@ -204,7 +163,6 @@ if(count($this->sliders) > 0) { ?>
 			</div>
 		</div>
 	</div>
->>>>>>> features/33-business-credit-card
 </div>
 
 <div id="financial" class="font-white">
