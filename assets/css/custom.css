@@ -1,9 +1,10 @@
 /* here you can put your own css to customize and override the theme */
-/*body {
-    font-family: 'TrajanPro', Sans-Serif;
+body {
+    /*font-family: 'TrajanPro', Sans-Serif;
     font-family: 'Open Sans' sans-serif;
-    font-size: 12px;
-}*/
+    font-size: 12px;*/
+    -webkit-font-smoothing: antialiased;
+}
 a {
     color: #12aaeb;
 }
@@ -2057,6 +2058,7 @@ ul.stay-connected > li.instagram {
     text-align: left;
 }
 
+<<<<<<< HEAD
 .mx-auto{
     margin: 0 auto;
 }
@@ -2102,6 +2104,71 @@ ul.stay-connected > li.instagram {
     .box-services .item {
         padding: 0 20px !important;
     }
+}
+
+.margin-top-sm {
+    margin-top: 15px;
+}
+
+.swal2-modal button.styled.margin-top-sm {
+    margin-top: 15px;
+}
+
+.page-content-justified{
+    text-align: justify;
+}
+
+.faq-panel{
+    border-bottom: solid 1px #e7e6e2;
+    padding: 0;
+    font-size: 14px;
+}
+
+.faq-panel-header{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.faq-panel .faq-panel-header a .fa-caret-down{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-up{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-down{
+    display: inline-block;
+}
+
+.faq-panel .faq-panel-header a i{
+    color: #78aa43;
+}
+
+.faq-panel .faq-panel-header a{
+    display: block;
+    padding: 20px 0 20px 0px;
+    color: #312f2e;
+    position: relative;
+    text-align: left;
+}
+
+.faq-panel .faq-panel-header a span{
+    padding-left: 10px;
+}
+
+.faq-panel-body{
+    margin: 15px 0 25px;
+    font-size: 20px;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.page-content-wrapper .about-bottom{
+    padding-top: 0px;
 }
 
 @media (max-width: 768px) {

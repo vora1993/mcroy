@@ -122,6 +122,10 @@
     padding-top: 50px;
     padding-bottom: 75px;
 }
+#services-home .services-content{
+    max-width: 1945px;
+    margin: 0 auto;
+}
 .services-desc {
     width: 100%;
     text-align: center;
@@ -146,7 +150,6 @@
     width: 100%;
     float: left;
     position: relative;
-    padding: 0 15%;
 }
 .box-services .item .image {
     width: 100%;
@@ -173,11 +176,12 @@
     margin-top: 15px;
     width: 100%;
     text-align: center;
+    margin-bottom: 15px;
 }
 .box-services .item .name {
     font-size: 30px;
     padding: 0 15px;
-    text-align: center;
+    text-align: left;
     white-space: nowrap;
 }
 .box-services .item .name a {
@@ -187,11 +191,10 @@
 }
 .box-services .item .desc {
     font-size: 16px;
-    padding: 15px 25px;
-    width: 100%;
+    padding: 15px;
     margin-bottom: 10px;
     text-align: left;
-    height: 175px;
+    height: 180px;
     overflow: hidden;
 }
 
@@ -204,9 +207,12 @@
 .box-services .item .desc ul > li {
     display: block;
     margin-bottom: 12px;
-    background: url(../img/icon-check.png) no-repeat center left;
-    padding-left: 25px;
     color: #333;
+}
+
+.box-services .item .desc ul > li:before {
+    content: "•";
+    padding-right: 5px;
 }
 
 .box-services .item .group-btn {
@@ -219,10 +225,75 @@
 }
 
 .item_services {
-    width: 33.33333%;
+    /*width: 33.33333%;*/
     float: left;
     margin-bottom: 15px;
 }
+.card{
+    border-radius: 15px;
+    min-height: 285px;
+    height: 100%;
+    position: relative;
+    background: #d9f2f1;
+}
+.card--header{
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: 700;
+    padding: 5px 0px;
+    display: table;
+    width: 100%;
+}
+.header--text{
+    display: table-cell;
+    vertical-align: middle;
+}
+.card--content{
+    padding: 0;
+    font-size: 25px;
+    line-height: 26px;
+}
+
+.card--body .card--image-wrapper{
+    float: right;
+    text-align: center;
+}
+
+.card .card--btn{
+    background-color: #fefefe;
+    border: 2px solid #244364;
+    border-radius: 30px;
+    color: #00244b;
+    display: inline-block;
+    font-size: 1.3em;
+    line-height: 40px;
+    padding-left: 15px;
+    text-align: left;
+    width: 220px;
+    background-image: url(../img/icon-arrow-right-brand.svg);
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.group-btn--card{
+    text-align: left;
+    padding-left: 15px;
+}
+
+.card--image{
+    max-width: 155px;
+    max-height: 155px;
+    width: 100%;
+    display: inline-block;
+}
+
+.card--content{
+    float: left;
+    padding: 0;
+    font-size: 25px;
+    line-height: 26px;
+}
+
 .total-content {
     width: 100%;
     float: left;
@@ -285,10 +356,25 @@
     -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
 }
+.subscribe:before{
+    content: '';
+    width: 100%;
+    height: 10px;
+    display: block;
+    background-image: repeating-linear-gradient(
+        135deg,
+        red 0, red 1em, transparent 0, transparent 2em,
+        #58a 0, #58a 3em, transparent 0, transparent 4em
+    );
+}
+#form_subscribe .btn.text-upcase{
+    text-transform: uppercase;
+    padding: 9px 26px 8px;
+}
 .caption-sub {
     width: 100%;
     float: left;
-    padding: 35px 30px;
+    padding: 80px 10px;
 }
 .caption-sub > i {
     font-size: 40px;
@@ -297,9 +383,8 @@
     padding-top: 7px;
 }
 .box-sub {
-    width: 70%;
+    width: 100%;
     float: left;
-    padding-left: 15px;
     margin-bottom: 10px;
 }
 .box-sub h4 {
@@ -315,11 +400,11 @@
     color: #193d5a;
 }
 .caption-sub > input {
-    width: 68%;
+    width: 58%;
     float: left;
 }
 .caption-sub > button {
-    width: 30%;
+    width: 40%;
     float: right;
     margin: 0 !important;
 }
@@ -337,7 +422,7 @@
     font-size: 16px;
     color: #193d5a;
     text-transform: uppercase;
-    padding: 20px 15px;
+    padding: 5px 15px 0px 15px;
     font-weight: 600;
 }
 .content-action .image {
@@ -371,7 +456,7 @@
     float: left;
     position: absolute;
     bottom: -20px;
-    left: 13px;
+    left: 5%;
     background: #193d5a;
     color: #fff;
     text-align: center;
@@ -429,7 +514,6 @@
 #footer h3 {
     font-size: 32px;
     margin: 0 0 25px;
-    text-transform: uppercase;
 }
 .footer-top {
     width: 100%;
@@ -1673,6 +1757,14 @@ td {
     color: #667482;
 }
 
+
+.md-radio label {
+    float: left;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1199px) {
     .page-header .page-header-menu .hor-menu .navbar-nav > li > a {
         padding: 16px 13px 15px;
@@ -1724,6 +1816,12 @@ td {
     }
     .tit-login {
         font-size: 20px;
+    }
+    #form_subscribe .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-lg {
+        padding: 12px 15px 10px;
+    }
+    .margin-bottom-xs-15 .col-md-4:last-child .title-last-loan{
+        padding: 5px 9px 0px 9px;
     }
 }
 @media (max-width: 991px) {
@@ -1971,6 +2069,19 @@ td {
     .page-eligibility .form-actions{
         margin-top: 0px;
     }
+    .margin-top-xs-35 {
+        margin-top: 35px;
+    }
+    .margin-bottom-xs-15{
+        margin-bottom: 15px;
+    }
+    .caption-sub{
+        padding: 30px 10px;
+    }
+    .caption-sub > input.input-lg {
+        width: 58% !important;
+        float: left;
+    }
 }
 @media (max-width: 639px) {
     .top-box {
@@ -2084,10 +2195,10 @@ td {
     .box-services .item {
         padding: 0 15px;
     }
-}
-.md-radio label {
-    float: left;
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px;
+    .box-services .item .name{
+        font-size: 25px;
+    }
+    .brand.owl-carousel .owl-buttons .owl-next{
+        right: 0px;
+    }
 }
