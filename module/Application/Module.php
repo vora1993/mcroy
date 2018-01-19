@@ -18,23 +18,23 @@ use Zend\Session\Container as Session;
 class Module
 {
     protected $whitelist = array(
-        'admin/index', 
-        'admin/user/login', 
-        'home/index', 
+        'admin/index',
+        'admin/user/login',
+        'home/index',
     );
-    
+
     public function onBootstrap(MvcEvent $e)
     {
         $app = $e->getApplication();
         $em  = $app->getEventManager();
         $sm  = $app->getServiceManager();
-        
+
         $session = new Session('customer');
         if($session->offsetExists('customer_id') === FALSE) {
-            $session->customer_id = 0;    
+            $session->customer_id = 0;
         }
         if($session->offsetExists('api') === FALSE) {
-            $session->api = $this->generateRandomString(20);    
+            $session->api = $this->generateRandomString(20);
         }
         /*
         $list = $this->whitelist;
@@ -46,7 +46,7 @@ class Module
             if (!$match instanceof RouteMatch) {
                 return;
             }
-            
+
             // Route is whitelisted
             $route = $match->getMatchedRouteName();
             $action = strtolower($match->getParam('action', ''));	// get the action name
@@ -54,31 +54,31 @@ class Module
             if (in_array($name, $list)) {
                 return;
             }
-            
+
             // User is authenticated
             if ($auth->hasIdentity()) {
                 return;
             }
-            
+
             // Redirect to the user login page
             $router   = $e->getRouter();
             $url      = $router->assemble(array('action' => 'error', 'seo' => '404'), array(
                 'name' => 'page'
             ));
-            
+
             $response = $e->getResponse();
             $response->getHeaders()->addHeaderLine('Location', $url);
             $response->setStatusCode(302);
 
             return $response;
-            
+
         }, -100);
         */
-        
-        
+
+
         // Layout
         $em->attach(MvcEvent::EVENT_DISPATCH, array($this, 'selectLayoutBasedOnRoute'));
-        
+
         // Module layout
         $eventManager        = $e->getApplication()->getEventManager();
         $eventManager->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
@@ -92,7 +92,7 @@ class Module
         }, 100);
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
+
         // Language
         $app->getEventManager()->attach(
             'dispatch',
@@ -100,7 +100,7 @@ class Module
               $routeMatch = $e->getRouteMatch();
               $this->serviceManager = $e->getApplication()->getServiceManager();
               $translator = $this->serviceManager->get('translator');
-                
+
               if ($routeMatch->getParam('locale') != '') {
                 $translator->setLocale($routeMatch->getParam('locale'));
               } else {
@@ -109,7 +109,7 @@ class Module
             }, 100
         );
     }
-    
+
     public function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -119,7 +119,7 @@ class Module
         }
         return $randomString;
     }
-    
+
     public function selectLayoutBasedOnRoute(MvcEvent $e)
     {
         $app    = $e->getParam('application');
@@ -138,10 +138,10 @@ class Module
         ) {
             return;
         }
-        
+
         $layout       = $config['admin']['admin_layout_template'];
         $layout_login = $config['admin']['admin_login_template'];
-        
+
         $controller = $match->getParam('controller');
         $action     = $match->getParam('action');
         $module     = $match->getParam('__NAMESPACE__');
@@ -149,11 +149,11 @@ class Module
         if($route === 'admin/user' && $action === 'login') {
             $target->layout($layout_login);
         } else {
-            $target->layout($layout);    
+            $target->layout($layout);
         }
     }
-    
-    public function getViewHelperConfig() 
+
+    public function getViewHelperConfig()
     {
         return array(
             'factories' => array(
@@ -265,7 +265,7 @@ class Module
     {
         return include __DIR__ . '/config/module.config.php';
     }
-    
+
     public function getServiceConfig()
     {
         return array(
@@ -479,6 +479,13 @@ class Module
                 	$model->setEntityPrototype(new \Application\Entity\Subscribe());
                 	$model->setHydrator(new Mapper\SubscribeHydrator());
                 	return $model;
+                },
+                'application_model_business_loan_eligibility' => function ($sm) {
+                    $model = new Model\BusinessLoanEligibility();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\BusinessLoanEligibility());
+                    $model->setHydrator(new Mapper\BusinessLoanEligibilityHydrator());
+                    return $model;
                 },
             ),
         );

@@ -87,14 +87,14 @@ $this->headTitle($title);
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab_location">
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>            
+    </div>
 </div>
 <!-- END CONTENT -->
 <!-- BEGIN MODAL -->
@@ -106,7 +106,7 @@ $this->headTitle($title);
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title"><?php echo $this->translate("Add New Menu") ?></h4>
                 </div>
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="title" class="col-md-3 control-label"><?php echo $this->translate("Title") ?></label>
                         <div class="col-md-9">
@@ -124,12 +124,12 @@ $this->headTitle($title);
                         <div class="col-md-9">
                             <select name="route" class="form-control">
                                 <option value=""><?php echo $this->translate("[select]") ?></option>
-                                <?php 
+                                <?php
                                 if(count($this->routes) > 0){
                                     foreach($this->routes as $key => $route) {
                                         ?>
                                         <option value="<?php echo $key ?>"><?php echo $key ?></option>
-                                        <?php    
+                                        <?php
                                     }
                                 }
                                 ?>
@@ -181,7 +181,7 @@ $('select[name=route]').on('change', function() {
         $.ajax({
             type: 'POST',
             url: full_url + '/admin/setting/load-action',
-            data: {route: route}, 
+            data: {route: route},
             beforeSend: function() {
                 App.blockUI({boxed: true});
             },
@@ -192,7 +192,7 @@ $('select[name=route]').on('change', function() {
             error: function(xhr) { // if error occured
                 toastr.error("Error occured. Please try again.");
             },
-            dataType: 'json'  
+            dataType: 'json'
         });
     }
 });
@@ -204,7 +204,7 @@ function create_menu(button) {
         $.ajax({
             type: 'POST',
             url: full_url + '/admin/setting/create-menu',
-            data: {name: name}, 
+            data: {name: name},
             beforeSend: function() {
                 l.start();
             },
@@ -216,7 +216,7 @@ function create_menu(button) {
             error: function(xhr) { // if error occured
                 toastr.error("Error occured. Please try again.");
             },
-            dataType: 'json'  
+            dataType: 'json'
         });
     }
 }
@@ -237,7 +237,7 @@ function edit_menu(button, id) {
         $.ajax({
             type: 'POST',
             url: full_url + '/admin/setting/edit-menu',
-            data: {menu_id:menu_id, menu_name: menu_name}, 
+            data: {menu_id:menu_id, menu_name: menu_name},
             beforeSend: function() {
                 l.start();
             },
@@ -248,12 +248,12 @@ function edit_menu(button, id) {
                     setTimeout(function(){ window.location.reload(); }, 1500);
                 } else {
                     toastr.error(data.msg);
-                } 
+                }
             },
             error: function(xhr) { // if error occured
                 toastr.error("Error occured. Please try again.");
             },
-            dataType: 'json'  
+            dataType: 'json'
         });
     }
 }
@@ -271,7 +271,7 @@ function remove_menu(button, id) {
         $.ajax({
             type: 'POST',
             url: full_url + '/admin/setting/remove-menu',
-            data: {menu_id:id}, 
+            data: {menu_id:id},
             beforeSend: function() {
                 l.start();
             },
@@ -282,12 +282,12 @@ function remove_menu(button, id) {
                     setTimeout(function(){ window.location.reload(); }, 1500);
                 } else {
                     toastr.error(data.msg);
-                } 
+                }
             },
             error: function(xhr) { // if error occured
                 toastr.error("Error occured. Please try again.");
             },
-            dataType: 'json'  
+            dataType: 'json'
         });
     }, function(dismiss) {
 		// dismiss can be 'cancel', 'overlay', 'close', 'timer'
@@ -318,7 +318,7 @@ form.validate({
             required: true
         }
     },
-    
+
     highlight: function(element) { // hightlight error inputs
         $(element)
             .closest('.form-group').addClass('has-error'); // set error class to the control group
@@ -336,16 +336,16 @@ form.validate({
     submitHandler: function (form) {
         // setup some local variables
         var form = $(form);
-        
+
         // let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-        
+
         // serialize the data in the form
         var serializedData = form.serialize();
-    
+
         // let's disable the inputs for the duration of the ajax request
         inputs.prop("disabled", true);
-        
+
         // fire off the request to /form.php
 
         request = $.ajax({
@@ -353,11 +353,11 @@ form.validate({
             type: "post",
             data: serializedData
         });
-        
+
         // Clear Message
         $('#form_add_menu .form-group').removeClass('has-error');
         $('#form_add_menu .help-block, #form_add_menu .alert').remove();
-        
+
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
@@ -370,13 +370,13 @@ form.validate({
                 toastr.error(result.msg);
             }
         });
-        
+
         // callback handler that will be called on failure
         request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
             toastr.error("The following error occured: " + textStatus, errorThrown);
         });
-        
+
         // callback handler that will be called regardless
         // if the request failed or succeeded
         request.always(function () {
@@ -386,7 +386,7 @@ form.validate({
     }
 });
 
-$('.dd').nestable({ 
+$('.dd').nestable({
     dropCallback: function(details) {
         var order = new Array();
         $("li[data-id='"+details.destId +"']").find('ol:first').children().each(function(index,elem) {
@@ -398,14 +398,14 @@ $('.dd').nestable({
                 rootOrder[index] = $(elem).attr('data-id');
             });
         }
-        $.post(full_url+'/admin/setting/menu', { 
-            source : details.sourceId, 
-            destination: details.destId, 
+        $.post(full_url+'/admin/setting/menu', {
+            source : details.sourceId,
+            destination: details.destId,
             order:JSON.stringify(order),
-            rootOrder:JSON.stringify(rootOrder) 
+            rootOrder:JSON.stringify(rootOrder)
         }, function(response) {
             var result = $.parseJSON(response);
-            if(result.success) toastr.success(result.msg); 
+            if(result.success) toastr.success(result.msg);
         });
     }
 });

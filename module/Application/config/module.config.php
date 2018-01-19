@@ -122,7 +122,8 @@ return array(
             'refinancing_step_5'         => __DIR__ . '/../view/partial/refinancing/step-5.phtml',
             'mortgage_calculator'      => __DIR__ . '/../view/partial/mortgage-calculator.phtml',
             'business_loan_calculator' => __DIR__ . '/../view/partial/business-loan-calculator.phtml',
-            'crowfunding_repayment'    => __DIR__ . '/../view/partial/crowfunding-repayment-calculator.phtml'
+            'crowfunding_repayment'    => __DIR__ . '/../view/partial/crowfunding-repayment-calculator.phtml',
+            'business_loan_eligibility_calculator' => __DIR__ . '/../view/partial/business-loan-eligibility-calculator.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

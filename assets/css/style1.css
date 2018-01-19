@@ -398,16 +398,16 @@
 .news-content .item-news {
     background: #0991cc;
     /* For browsers that do not support gradients */
-    
+
     background: -webkit-linear-gradient(left top, #1e4293, #00b7e6);
     /* For Safari 5.1 to 6.0 */
-    
+
     background: -o-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Opera 11.1 to 12.0 */
-    
+
     background: -moz-linear-gradient(bottom right, #1e4293, #00b7e6);
     /* For Firefox 3.6 to 15 */
-    
+
     background: linear-gradient(to bottom right, #1e4293, #00b7e6);
     /* Standard syntax bg-home-10*/
 }
@@ -1468,9 +1468,14 @@ output {
     float: left;
     border: 2px solid #f6f6f6;
 }
-.page-mortgage .form-wizard {
+.page-mortgage .form-wizard,
+.page-eligibility .form-wizard {
     width: 100%;
     float: left;
+}
+
+.page-eligibility .director-box input{
+    float: none;
 }
 .title-mortgage {
     color: #193d5a;
@@ -1483,9 +1488,18 @@ output {
     margin-bottom: 20px;
     margin-top: 0;
 }
-.page-mortgage .form-actions {
+.page-mortgage .form-actions,
+.page-eligibility .form-actions {
     padding: 0 15px 20px;
 }
+#monthly-commitment-body .form-inline,
+.sm-margin-bottom {
+    margin-bottom: 15px;
+}
+#monthly-commitment-body .form-inline .control-label{
+    text-align: left;
+}
+
 .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
     text-transform: none;
 }
@@ -1493,7 +1507,8 @@ output {
     width: 100%;
     float: left;
 }
-.repayWrap .firstTxt {
+.repayWrap .firstTxt,
+.result-loan-eligibility-calculator .firstTxt {
     font-size: 16px;
     border: 1px solid #ebebeb;
     width: 100%;
@@ -1949,8 +1964,12 @@ td {
     .form-wizard .slider-container {
         margin-bottom: 10px;
     }
-    .page-mortgage .form-actions button {
+    .page-mortgage .form-actions button,
+    .page-eligibility .form-actions button {
         margin-bottom: 15px;
+    }
+    .page-eligibility .form-actions{
+        margin-top: 0px;
     }
 }
 @media (max-width: 639px) {

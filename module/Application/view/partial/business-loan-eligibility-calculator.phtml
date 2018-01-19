@@ -1,0 +1,312 @@
+<div class="form-wizard">
+  <div id="personalInfo" style="display: block;">
+      <form class="form-horizontal" id="business-loan-eligibility">
+          <input type="hidden" name="_token" value="<?php echo md5(uniqid(rand(), true)); ?>" >
+          <div class="form-body">
+              <div class="clearfix"></div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><?php echo $this->translate("Section A: Company INFO"); ?></h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>1. <?php echo $this->translate("Company Monthly Turnover") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Lorem Ipsum is also known as: Greeked text, blind text, placeholder text, dummy content, filler text, lipsum, and mock-content." data-html="true" data-original-title="<span><?php echo $this->translate("Company Monthly Turnover") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group col-md-6">
+                                <input name="monthly_turnover" type="text" id="monthly-turnover" class="form-control" data-message='<?php echo $this->translate("Please enter your company monthly turnover"); ?>' onkeyup="return enter_check(event);" required>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>2. <?php echo $this->translate("Input Your Monthly Commitment") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Lorem Ipsum is also known as: Greeked text, blind text, placeholder text, dummy content, filler text, lipsum, and mock-content." data-html="true" data-original-title="<span><?php echo $this->translate("Monthly Commitment") ?></span>"><i class="fa fa-question-circle"></i></a>
+                        <a href="javascript:void(0);" id="monthly-commitment-individual"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="input-group col-md-6 sm-margin-bottom">
+                            <input name="monthly_commitment" type="text" id="monthly-commitment" class="form-control" data-message='<?php echo $this->translate("Please enter your monthly commitment"); ?>' onkeyup="return enter_check(event);" required>
+                          </div>
+                        <div class="collapse" id="monthly-commitment-body">
+                          <div class="row col-md-12 form-inline clearfix">
+                            <label class="row control-label col-md-5">1. <?php echo $this->translate("Total monthly installment for Company Business Term Loan"); ?></label>
+                            <div class="input-group">
+                                <input name="business_term_loan" id="business-term-loan" type="text" class="form-control nobtngrp">
+
+                            </div>
+                          </div>
+                          <div class="row col-md-12 form-inline clearfix">
+                            <label class="row control-label col-md-5">2. <?php echo $this->translate("Total monthly installment for Mortgage Loan"); ?></label>
+                            <div class="input-group">
+                                <input name="mortgage_loan" id="mortgage-loan" type="text" class="form-control nobtngrp">
+
+                            </div>
+                          </div>
+                          <div class="row col-md-12 form-inline clearfix">
+                            <label class="row control-label col-md-5">3. <?php echo $this->translate("Total monthly installment for Hire-Purchase Loan"); ?></label>
+                            <div class="input-group">
+                                <input name="purchase_loan" id="purchase-loan" type="text" class="form-control nobtngrp">
+
+                            </div>
+                          </div>
+                          <div class="row col-md-12 form-inline clearfix">
+                            <label class="row control-label col-md-5">4. <?php echo $this->translate("Total monthly installment for Private Lender Loan"); ?>
+                              <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Private Lender Loan includes P2P lending & MoneyLender Loan" data-html="true" data-original-title="<span><?php echo $this->translate("Private Lender Loan") ?></span>"><i class="fa fa-question-circle"></i></a>
+                            </label>
+                            <div class="input-group">
+                                <input name="private_lender_loan" id="private-lender-loan" type="text" class="form-control nobtngrp">
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group loan-amount-result">
+                      <div class="row form-wizard-title">
+                          <h3>3. <?php echo $this->translate("What Industry Are You In") ?>?</h3>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="input-group col-md-6">
+                                <select class="form-control nobtngrp floatrate" id="industry_type" data-message='<?php echo $this->translate("Please choose type of industry"); ?>' name="industry_type" required>
+                                  <?php foreach(array("Professionals", "Services", "Logistics & Transportation", "Food & Bev", "Wholesale", "Import & Export", "Trading", "Manufacturing", "Construction", "Retail") as $industry) { ?>
+                                  <option type="radio" name="industry_type" value="<?php echo $industry; ?>"><?php echo $this->translate($industry); ?></option>
+                                   <?php } ?>
+                                </select>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>4. <?php echo $this->translate("Is your current premises owned or rented?") ?></h3>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="md-radio-list">
+                              <div class="md-radio">
+                                  <input type="radio" id="premises_type_owned" name="premises_type" value="owned" class="md-radiobtn" checked="checked" required>
+                                  <label for="premises_type_owned">
+                                      <span></span>
+                                      <span class="check"></span>
+                                      <span class="box"></span> <?php echo $this->translate("Owned") ?>
+                                  </label>
+                              </div>
+                              <div class="md-radio">
+                                  <input type="radio" id="premises_type_rented" name="premises_type" value="rented" class="md-radiobtn">
+                                  <label for="premises_type_rented">
+                                      <span></span>
+                                      <span class="check"></span>
+                                      <span class="box"></span> <?php echo $this->translate("Rented") ?>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group hidden" id="rented-section-box">
+                    <div class="row form-wizard-title">
+                        <h3><?php echo $this->translate("What the monthly rental?") ?></h3>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-group col-md-6">
+                          <input name="rental_amount" id="rental-amount" type="text" class="form-control nobtngrp" data-message='<?php echo $this->translate("Please enter your monthly rental"); ?>' required>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><?php echo $this->translate("Section B: Director's Information"); ?></h3>
+                </div>
+
+                <ul class="nav nav-tabs margin-top-sm" role="tablist">
+                  <li class="active"><a href="#applicant_01" data-toggle="tab"><?php echo $this->translate("Director"); ?> 1</a></li>
+                  <li><a href="#" class="add-applicant">[+] <?php echo $this->translate("ADD Applicant"); ?></a></li>
+                </ul>
+                <div class="tab-content director-box">
+                  <div class="tab-pane active panel-body" id="applicant_01">
+                    <div class="form-group directors-notice-box">
+                      <div class="row form-wizard-title">
+                          <h3>
+                            1. <?php echo $this->translate("What is the director's latest 2 years notice of assessment declaration?") ?>
+                          </h3>
+                          <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="Lorem Ipsum is also known as: Greeked text, blind text, placeholder text, dummy content, filler text, lipsum, and mock-content." data-html="true" data-original-title="<span><?php echo $this->translate("Lorem Ipsum") ?></span>"><i class="fa fa-question-circle"></i></a>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="input-group col-md-6">
+                            <label class="control-label">A. <?php echo $this->translate("NOA 2016") ?></label>
+                            <input type="text" id="director_1_noa_type_2016" name="director[1][director_1_noa_2016]" class="form-control director-noa" data-message='<?php echo $this->translate("Please enter NOA 2016"); ?>' required>
+
+                          </div>
+                          <div class="input-group col-md-6">
+                            <label class="control-label">B. <?php echo $this->translate("NOA 2017") ?></label>
+                            <input type="text" id="director_1_noa_type_2017" name="director[1][noa_2017]" class="form-control director-noa" data-message='<?php echo $this->translate("Please enter NOA 2017"); ?>' required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row form-wizard-title">
+                          <h3>2. <?php echo $this->translate("Does any of the director owned any local property?") ?></h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 local-property">
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    <input type="radio" id="director_type_1_yes" name="director[1][type]" value="yes" class="md-radiobtn" checked="checked">
+                                    <label for="director_type_1_yes">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("Yes") ?>
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="director_type_1_no" name="director[1][type]" value="no" class="md-radiobtn">
+                                    <label for="director_type_1_no">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("No") ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group director-property-box">
+                      <div class="row form-wizard-title">
+                          <h3><?php echo $this->translate("Type of property owned?") ?></h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    <input type="radio" id="director_1_property_owned_hdb" name="director[1][property_owned_type]" value="HDB/ EC" class="md-radiobtn" checked="checked">
+                                    <label for="director_1_property_owned_hdb">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("HDB/ EC") ?>
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="director_1_property_owned_condominium" name="director[1][property_owned_type]" value="Condominium" class="md-radiobtn">
+                                    <label for="director_1_property_owned_condominium">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("Condominium") ?>
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="director_1_property_owned_landed" name="director[1][property_owned_type]" value="Landed" class="md-radiobtn">
+                                    <label for="director_1_property_owned_landed">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <?php echo $this->translate("Landed") ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div class="form-wizard-title">
+                  <h3><?php echo $this->translate("Total Average 2 years NOA for all directors");?>: <span id="total-average-all-directors">$0.00</span></h3>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3><?php echo $this->translate("Section C: Financial Information (Latest Year Financial)"); ?></h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>1. <?php echo $this->translate("Company Net Profit After Tax") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="You can get this information from your company's latest Profit & Loss financial statement." data-html="true" data-original-title="<span><?php echo $this->translate("Company Net Profit After Tax") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group col-md-6">
+                                <input name="net_profit" type="text" id="company-net-profit" class="form-control" onkeyup="return enter_check(event);" data-message='<?php echo $this->translate("Please enter Company Net Profit After Tax"); ?>' required>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>2. <?php echo $this->translate("Annual depreciation") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="You can get this information from your company's latest Profit & Loss financial statement. Please input 0 if none." data-html="true" data-original-title="<span><?php echo $this->translate("Annual depreciation") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group col-md-6">
+                                <input name="annual_depreciation" type="text" id="annual-depreciation" class="form-control" onkeyup="return enter_check(event);" data-message='<?php echo $this->translate("Please enter Annual depreciation"); ?>' required>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row form-wizard-title">
+                        <h3>3. <?php echo $this->translate("Annual interest expense") ?>?</h3>
+                        <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="right" data-container="body" data-content="You can get this information from your company's latest Profit & Loss financial statement. Please input 0 if none." data-html="true" data-original-title="<span><?php echo $this->translate("Annual interest expense") ?></span>"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group col-md-6">
+                                <input name="annual_interest" type="text" id="annual-interest" class="form-control" onkeyup="return enter_check(event);" data-message='<?php echo $this->translate("Please enter Annual interest expense"); ?>' required>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="form-actions">
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                  <button type="button" id="submit-reset" class="btn grey-mint btn-lg pull-left font-white"><?php echo $this->translate('Reset'); ?></button>
+              </div>
+              <div class="col-md-3 col-sm-6 col-xs-12">
+                  <button type="button" id="submit-prepayment" class="btn btn-lg green-custom pull-right"><?php echo $this->translate('Calculate'); ?></button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+
+<?php
+$this->headLink()->offsetSetStylesheet(12, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/sweetalert2/sweetalert2.min.css'));
+$this->inlineScript()->offsetSetFile(4, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/jquery.ui.touch-punch.min.js'));
+$this->inlineScript()->offsetSetFile(34, $this->basePath('assets/plugins/sweetalert2/sweetalert2.min.js'));
+$this->inlineScript()->offsetSetFile(103, $this->basePath('assets/js/loan-eligibility-calculator.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/plugins/underscore/underscore-min.js'));
+$this->inlineScript()->offsetSetFile(102, $this->basePath('assets/plugins/autoNumeric/autoNumeric.min.js'));
+?>
+<?php $this->headScript()->captureStart(); ?>
+var incomeFactorAddons = {};
+<?php foreach ($this->income_factor_addons as $key => $setting) { ?>
+  incomeFactorAddons['<?php echo $setting->getKey(); ?>'] = <?php echo $setting->getValue(); ?>;
+<?php } ?>
+<?php $this->headScript()->captureEnd(); ?>
