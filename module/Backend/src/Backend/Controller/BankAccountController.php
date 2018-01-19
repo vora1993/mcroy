@@ -451,12 +451,16 @@ class BankAccountController extends AbstractActionController
                     
             $added = $application_model_category->insert($category);
 
+            //Get parent_id
+            $application_model_menu = $this->getServiceLocator()->get('application_model_menu');
+            $parentMenu=$application_model_menu->fetchRow(array('action'=>'bank-account','parent'=>0));
+            $id_parentMenu=$parentMenu->getId();
+
             //Insert table menu
-            $application_model_menu = $this->getServiceLocator()->get('application_model_menu'); 
             $menu = new \Application\Entity\Menu;
             $menu->setGroupId(1);
             $menu->setTitle($name);
-            $menu->setParent(5);
+            $menu->setParent($id_parentMenu);
             $menu->setName($name);
             $menu->setRoute("loan_application");
             $menu->setAction("bank-account");

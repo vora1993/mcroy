@@ -188,7 +188,6 @@ class PostController extends AbstractActionController
             if ($request->isPost()) {
                 $data = $request->getPost();
                 $error = 0;
-                
                 $current_seo = $post->getSeo();
                 if($current_seo !== $data['seo']) {
                     $error = 1;
@@ -205,6 +204,7 @@ class PostController extends AbstractActionController
                     $post->setSeo($data['seo']);
                     $post->setPostExcerpt($data['post_excerpt']);
                     $post->setPostContent($data['post_content']);
+                    $post->setFeaturedImage($data['featured_image']);
                     if($data['post_date']) {
                         $post_date = explode("/", $data['post_date']);
                         $date_post = $post_date[2].'-'.$post_date[1].'-'.$post_date[0].' '.date("H:i:s");
@@ -252,14 +252,12 @@ class PostController extends AbstractActionController
         if ($request->isPost()) {
             $post = $request->getPost();
             $error = 0;
-            
             $application_model_post = $this->getServiceLocator()->get('application_model_post');
             $current_seo = $application_model_post->fetchRow(array("seo" => $post['seo']));
             if($current_seo) {
                 $error = 1;
                 $messages['error']['seo'][] = "{$post['seo']} " . $translator->translate("has been exist");
             }
-            
             if(!$error) {
                 $post_entity = new \Application\Entity\Post;
                 $post_entity->setPostAuthor($user_id);
