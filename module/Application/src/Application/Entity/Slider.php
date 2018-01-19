@@ -11,6 +11,7 @@ class Slider implements SliderInterface
     protected $date_modified;
     protected $status;
     protected $type;
+    protected $link;
 
     public function getId()
     {
@@ -90,6 +91,16 @@ class Slider implements SliderInterface
     public function setType($type)
     {
         $this->type = (int) $type;
+        return $this;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+    public function setLink($link)
+    {
+        $this->link = $link;
         return $this;
     }
 }

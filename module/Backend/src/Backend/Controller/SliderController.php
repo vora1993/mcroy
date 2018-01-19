@@ -43,6 +43,7 @@ class SliderController extends AbstractActionController
                     if($data['url']) $post->setUrl($data['url']);
                     $post->setDateModified(new Expression('NOW()'));
                     $post->setType($data['type']);
+                    $post->setLink($data['link']);
                     $updated = $application_model_slider->update($post);
                     if($updated) {
                         $messages['success'] = true;
@@ -84,6 +85,7 @@ class SliderController extends AbstractActionController
                 $post_entity->setDateAdded(new Expression('NOW()'));
                 $post_entity->setStatus($post['status']);
                 $post_entity->setType($post['type']);
+                $post_entity->setLink($post['link']);
                 if($post['url']) {
                     $post_entity->setUrl($post['url']);
                     // Resize image

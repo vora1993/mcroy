@@ -86,6 +86,12 @@ $this->headTitle($title);
                                         <img id="photo" alt="featured image" src="<?php echo $this->basePath($image_src) ?>" width="100%" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Link") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="link" data-required="1" class="form-control" value="<?php echo $this->post->getLink() ?>" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-actions">
                                 <div class="row">
