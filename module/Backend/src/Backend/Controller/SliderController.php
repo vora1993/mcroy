@@ -90,12 +90,6 @@ class SliderController extends AbstractActionController
                 $style_button='';
                 if(isset($post['link']) && isset($post['style'])) $style_button=$post['style'];
                 $post_entity->setStyle($style_button);
-                if($post['url']) {
-                    $post_entity->setUrl($post['url']);
-                    // Resize image
-                    $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
-                    $application_view_helper_resizeimage('data/image', $post['url']);
-                }
 
                 $added = $application_model_slider->insert($post_entity);
                 if($added) {
