@@ -3,7 +3,6 @@ $this->headTitle("Homepage");
 ?>
 <link rel="stylesheet" type="text/css" href="assets/css/my-style-slider.css">
 <?php
-$i=1;
 $array_message=[
     1=>'GET RATING NOW!!',
     2=>'COMPARE RATES NOW!!',
@@ -15,13 +14,11 @@ if(count($this->sliders) > 0) { ?>
         <?php foreach ($this->sliders as $slider) {?>
             <div class="item">
                 <img width="100%" src="<?php echo $this->basePath('data/image/'.$slider->getUrl()) ?>"/>
-                <?php if($slider->getLink()!=''){?>
-                <div id="Slide<?php echo $i?>_button" class="Slideshow_button">
-                    <a href="<?php echo $slider->getLink()?>"><button class="btn btn-default btn-lg"><?php echo $array_message[$i]?></button></a>
+                <?php if($slider->getLink()!='' && $slider->getStyle()!=''){?>
+                <div id="Slide<?php echo $slider->getStyle()?>_button" class="Slideshow_button">
+                    <a href="<?php echo $slider->getLink()?>"><button class="btn btn-default btn-lg"><?php echo $array_message[$slider->getStyle()]?></button></a>
                 </div>
                 <?php
-                        $i++;
-                        if($i>3) $i=1;
                     }
                 ?>
             </div>

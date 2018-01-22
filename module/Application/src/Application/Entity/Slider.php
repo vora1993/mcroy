@@ -12,6 +12,7 @@ class Slider implements SliderInterface
     protected $status;
     protected $type;
     protected $link;
+    protected $style;
 
     public function getId()
     {
@@ -101,6 +102,16 @@ class Slider implements SliderInterface
     public function setLink($link)
     {
         $this->link = $link;
+        return $this;
+    }
+
+    public function getStyle()
+    {
+        return $this->style;
+    }
+    public function setStyle($style)
+    {
+        $this->style = (int)$style;
         return $this;
     }
 }

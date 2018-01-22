@@ -13,4 +13,5 @@ interface SliderInterface
     public function getStatus();
     public function getType();
     public function getLink();
+    public function getStyle();
 }
