@@ -42,7 +42,8 @@ class CreditCardsController extends AbstractActionController
       $credit_card->setPoints($post['points']);
       $credit_card->setAirMiles($post['air_miles']);
       $credit_card->setApplyUrl($post['apply_url']);
-      $credit_card->setProviderIds(implode(",", $post['provider_ids']));
+      $provider_ids = !empty($post['provider_ids']) ? implode(",", array_filter($post['provider_ids'])) : '';
+      $credit_card->setProviderIds($provider_ids);
       $credit_card->setCashbackValue($post['cashback_value']);
       $credit_card->setDiscountValue($post['discount_value']);
       $credit_card->setPointsValue($post['points_value']);
@@ -111,11 +112,13 @@ class CreditCardsController extends AbstractActionController
           $credit_card->setPoints($post['points']);
           $credit_card->setAirMiles($post['air_miles']);
           $credit_card->setApplyUrl($post['apply_url']);
-          $credit_card->setProviderIds(implode(",", $post['provider_ids']));
+          $provider_ids = !empty($post['provider_ids']) ? implode(",", array_filter($post['provider_ids'])) : '';
+          $credit_card->setProviderIds($provider_ids);
           $credit_card->setCashbackValue($post['cashback_value']);
           $credit_card->setDiscountValue($post['discount_value']);
           $credit_card->setPointsValue($post['points_value']);
           $credit_card->setAirMilesValue($post['air_miles_value']);
+
           // Logo
           $dir_credit_card = 'data/credit_cards/';
           if($post['logo'] !== $credit_card->getLogo()) {
