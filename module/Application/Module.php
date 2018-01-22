@@ -221,6 +221,10 @@ class Module
                     $viewHelper = new View\Helper\Bank;
                     return $viewHelper;
                 },
+                'BankInterestRate' => function($sm) {
+                    $viewHelper = new View\Helper\BankInterestRate;
+                    return $viewHelper;
+                },
                 'business_loan' => function($sm) {
                     $viewHelper = new View\Helper\BusinessLoan;
                     return $viewHelper;
@@ -427,8 +431,8 @@ class Module
                 'application_model_bank_interest_rate' => function ($sm) {
                     $model = new Model\BankInterestRate();
                     $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
-                    $model->setEntityPrototype(new \Application\Entity\Category());
-                    $model->setHydrator(new Mapper\CategoryHydrator());
+                    $model->setEntityPrototype(new \Application\Entity\BankInterestRate());
+                    $model->setHydrator(new Mapper\BankInterestRateHydrator());
                     return $model;
                 },
                 'application_model_post' => function ($sm) {

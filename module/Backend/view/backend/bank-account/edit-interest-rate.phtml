@@ -1,5 +1,5 @@
 <?php
-$title = $this->translate("Add New Bank Interest Rates");
+$title = $this->translate("Edit Bank Interest Rates");
 $this->headTitle($title);
 
 function buildTree(Array $data, $parent = 0) {
@@ -17,16 +17,20 @@ function buildTree(Array $data, $parent = 0) {
     return $tree;
 }
 
-function printTree($tree, $r = 0, $p = null) {
+function printTree($tree, $r = 0, $p = null, $c = null) {
     foreach ($tree as $i => $t) {
         $dash = ($t['parent'] == 0) ? '' : str_repeat('-', $r) .' ';
-        printf("\t<option value='%d'>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        if($c == $t['id']) {
+            printf("\t<option value='%d' selected>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        } else {
+            printf("\t<option value='%d'>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        }
         if ($t['parent'] == $p) {
             // reset $r
             $r = 0;
         }
         if (isset($t['_children'])) {
-            printTree($t['_children'], ++$r, $t['parent']);
+            printTree($t['_children'], ++$r, $t['parent'], $c);
         }
     }
 }
@@ -78,12 +82,12 @@ if(count($banks) > 0) {
                     </div>
                     <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="<?php echo $this->url("admin/admin_bank_account", array("action" => "AddinterestRate")) ?>" id="form_bank" class="form-horizontal form-bordered">
+                        <form action="<?php echo $this->url("admin/admin_bank_account", array("action" => "EditinterestRate","id" => $this->loan->getId())) ?>" id="form_bank" class="form-horizontal form-bordered">
                             <div class="form-body">
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Name") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" data-required="1" class="form-control" value="" /> 
+                                        <input type="text" name="name" data-required="1" class="form-control" value="<?php echo $this->loan->getName() ?>" /> 
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -93,7 +97,7 @@ if(count($banks) > 0) {
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
                                             <?php 
                                             $tree = buildTree($rows);
-                                            printTree($tree);
+                                            printTree($tree, 0, null, $this->loan->getBankId());
                                             ?>
                                         </select>
                                     </div>
@@ -102,23 +106,32 @@ if(count($banks) > 0) {
                                     <label class="control-label col-md-3"><?php echo $this->translate("Type") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
                                         <select name="type" class="form-control">
-                                            <option value="Lowest Interest Rates">Lowest Interest Rates</option>
-                                             <option value="Lowest Processing Fees"> Lowest Processing Fees</option>
-                                              <option value="Lowest Penalty Fees">Lowest Penalty Fees</option>
-                                              <option value="Promo Interest Rates">Promo Interest Rates</option>
+                                            <option <?php if($this->loan->getType()=="Lowest Interest Rates") echo "selected"?> value="Lowest Interest Rates">Lowest Interest Rates</option>
+                                             <option <?php if($this->loan->getType()=="Lowest Processing Fees") echo "selected"?> value="Lowest Processing Fees"> Lowest Processing Fees</option>
+                                              <option <?php if($this->loan->getType()=="Lowest Penalty Fees") echo "selected"?> value="Lowest Penalty Fees">Lowest Penalty Fees</option>
+                                              <option <?php if($this->loan->getType()=="Promo Interest Rates") echo "selected"?> value="Promo Interest Rates">Promo Interest Rates</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Rate") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="number" name="rate" data-required="1" class="form-control" value="" placeholder="percent is default value" /> 
+                                        <input type="number" name="rate" data-required="1" class="form-control" value="<?php echo  $this->loan->getRate()?>" placeholder="percent is default value" /> 
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Sort") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="number" name="sort" data-required="1" class="form-control" value="" /> 
+                                        <input type="number" name="sort" data-required="1" class="form-control" value="<?php echo  $this->loan->getSort()?>" placeholder="percent is default value" /> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Status") ?></label>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="status">
+                                            <option value="1"<?php if($this->loan->getStatus() == 1) echo ' selected="selected"'; ?>><?php echo $this->translate("Active") ?></option>
+                                            <option value="0"<?php if($this->loan->getStatus() == 0) echo ' selected="selected"'; ?>><?php echo $this->translate("Deactive") ?></option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

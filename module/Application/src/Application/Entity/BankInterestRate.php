@@ -7,6 +7,9 @@ class BankInterestRate implements BankInterestRateInterface
     protected $bankid;
     protected $name;
     protected $rate;
+    protected $type;
+    protected $status;
+    protected $sort;
     
     public function getId()
     {
@@ -45,6 +48,36 @@ class BankInterestRate implements BankInterestRateInterface
     public function setRate($rate)
     {
         $this->rate = (float)$rate;
+        return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+    public function setType($type)
+    {
+        $this->type = (string)$type;
+        return $this;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function setStatus($status)
+    {
+        $this->status = (int) $status;
+        return $this;
+    }
+
+    public function getSort()
+    {
+        return $this->sort;
+    }
+    public function setSort($sort)
+    {
+        $this->sort = (int) $sort;
         return $this;
     }
 }

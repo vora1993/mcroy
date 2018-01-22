@@ -25,6 +25,16 @@ class BankInterestRate extends AbstractDbMapper
         return $entity;
     }
 
+    public function fetchAllSort($condition=null)
+    {
+        $select = $this->getSelect();
+        if($condition) $select->where($condition);
+        $select->order("sort asc");
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
+
     public function fetchRow($condition=null)
     {
         $select = $this->getSelect();

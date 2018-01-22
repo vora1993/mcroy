@@ -1,5 +1,5 @@
 <?php
-$title = $this->translate("Bank Account Management");
+$title = $this->translate("List bank Interest Rate");
 $this->headTitle($title);
 ?>
 <!-- BEGIN SIDEBAR -->
@@ -81,10 +81,10 @@ $this->headTitle($title);
                                             <span></span>
                                         </label>
                                     </th>
-                                    <th> <?php echo $this->translate("Loan title") ?> </th>
-                                    <th> <?php echo $this->translate("Category") ?> </th>
+                                    <th> <?php echo $this->translate("Name") ?> </th>
                                     <th> <?php echo $this->translate("Bank name") ?> </th>
-                                    <th> <?php echo $this->translate("Creation Date") ?> </th>
+                                    <th> <?php echo $this->translate("Rate") ?> </th>
+                                    <th> <?php echo $this->translate("Type") ?> </th>
                                     <th> <?php echo $this->translate("Status") ?> </th>
                                     <th> <?php echo $this->translate("Actions") ?> </th>
                                 </tr>
@@ -92,7 +92,7 @@ $this->headTitle($title);
                             <tbody>
                                 <?php if(count($this->loans) > 0): ?>
                                 <?php foreach ($this->loans as $loan):
-                                $bank = $this->bank(array("id" => $loan->getBankId()));
+                                $list_rate = $this->BankInterestRate(array("id" => $loan->getId()));
                                 ?>
                                 <tr class="odd gradeX">
                                     <td>
@@ -101,10 +101,10 @@ $this->headTitle($title);
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td><a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "edit", "id" => $loan->getId())) ?>"> <?php echo $loan->getLoanTitle() ?></a></td>
-                                    <td><?php echo $this->category(array("id" => $loan->getCategoryId())) ? $this->category(array("id" => $loan->getCategoryId()))->getName() : ''; ?></td>
-                                    <td><a href="<?php echo $this->url("admin/bank", array("action" => "edit", "id" => $bank->getId())) ?>"> <?php echo $bank->getName() ?></a></td>
-                                    <td><?php echo date("d-m-Y H:i A", strtotime($loan->getDateAdded())); ?></td>
+                                    <td><a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "edit-interest-rate", "id" => $loan->getId())) ?>"> <?php echo $loan->getName() ?></a></td>
+                                    <td><?php echo $this->bank(array("id" => $loan->getBankId())) ? $this->bank(array("id" => $loan->getBankId()))->getName() : ''; ?></td>
+                                    <td><?php echo $loan->getRate() ?>%</td>
+                                    <td><?php echo $loan->getType()?></td>
                                     <td>
                                     <?php
                                     switch ($loan->getStatus()){
@@ -119,7 +119,7 @@ $this->headTitle($title);
                                     ?>
                                     </td>
                                     <td><a class="btn red-thunderbird btn-xs" href="<?php echo $this->url("admin/admin_bank_account", array("action" => "edit", "id" => $loan->getId())) ?>"><i class="fa fa-pencil"></i> <?php echo $this->translate("Edit") ?></a></td>
-                                </tr>
+                                </tr> 
                                 <?php endforeach;?>
                                 <?php endif;?>
                             </tbody>
