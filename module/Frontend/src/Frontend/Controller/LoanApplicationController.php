@@ -792,8 +792,9 @@ class LoanApplicationController extends AbstractActionController
 
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array("type" => "bank_account"));
-
-        $view_model = new ViewModel(array("category" => $category, "faq" => $faq));
+        $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
+        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1));
+        $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate));
         return $view_model;
     }
 

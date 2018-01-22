@@ -87,47 +87,29 @@ $this->headTitle($title);
                         </div>
                         <div id="column-right" class="col-sm-3 col-xs-12">
                             <div class="box-featured-bank">
+                                <?php $i=1;?>
+                                <?php if(count($this->interest_rate) > 0): ?>
+                                <?php foreach ($this->interest_rate as $loan):
+                                if($i<=4)
+                                {
+                                $img_bank = $this->Bank(array("id" => $loan->getBankId()));
+                                ?>
                                 <div class="featured-bank lowest-interest">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
                                     <div class="item-bank">
                                     <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/4.png') ?>" title="" alt="" />
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/'.$img_bank->getLogo()) ?>" title="" alt="" />
                                     </div>
-                                        <h4 class="name-bank">HSBC's Personal Loan</h4>
-                                        <span class="amout-bank">(7%)</span>
-                                    </div>
-                                </div>
-                                <div class="featured-bank lowest-processing">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/1.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">POSB Personal Loan</h4>
-                                        <span class="amout-bank">(10%)</span>
+                                        <h4 class="name-bank"><?php echo $loan->getName() ?></h4>
+                                        <span class="amout-bank">(<?php echo $loan->getRate() ?>%)</span>
                                     </div>
                                 </div>
-                                <div class="featured-bank lowest-penalty">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/3.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">Standard  Chartered CashOne</h4>
-                                        <span class="amout-bank">(8.5%)</span>
-                                    </div>
-                                </div>
-                                <div class="featured-bank lowest-annual">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/2.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">Citibank Ready Credit</h4>
-                                        <span class="amout-bank">(6.7%)</span>
-                                    </div>
-                                </div>
-
+                                <?php
+                                        $i++;
+                                    }
+                                 endforeach;
+                                ?>
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>

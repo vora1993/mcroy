@@ -1,0 +1,290 @@
+<?php
+$title = $this->translate("Add New Bank Interest Rates");
+$this->headTitle($title);
+
+function buildTree(Array $data, $parent = 0) {
+    $tree = array();
+    foreach ($data as $d) {
+        if ($d['parent'] == $parent) {
+            $children = buildTree($data, $d['id']);
+            // set a trivial key
+            if (!empty($children)) {
+                $d['_children'] = $children;
+            }
+            $tree[] = $d;
+        }
+    }
+    return $tree;
+}
+
+function printTree($tree, $r = 0, $p = null) {
+    foreach ($tree as $i => $t) {
+        $dash = ($t['parent'] == 0) ? '' : str_repeat('-', $r) .' ';
+        printf("\t<option value='%d'>%s%s</option>\n", $t['id'], $dash, $t['name']);
+        if ($t['parent'] == $p) {
+            // reset $r
+            $r = 0;
+        }
+        if (isset($t['_children'])) {
+            printTree($t['_children'], ++$r, $t['parent']);
+        }
+    }
+}
+
+$rows = array();
+$banks = $this->bank(array("status" => 1),1);
+                                        
+if(count($banks) > 0) {
+    foreach ($banks as $bank) {
+        $rows[] = array(
+            'id' => $bank->getId(),
+            'name' => $bank->getName(),
+        );
+    }
+}
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'admin_bank_account', 'action' => 'add-interest-rate')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/admin_bank_account') ?>"><?php echo $this->translate("Bank Account") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Add") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered form-fit">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bank"></i>
+                            <span class="caption-subject sbold uppercase"><?php echo $this->translate($title) ?></span>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <!-- BEGIN FORM-->
+                        <form action="<?php echo $this->url("admin/admin_bank_account", array("action" => "AddinterestRate")) ?>" id="form_bank" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Name") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="name" data-required="1" class="form-control" value="" /> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Bank") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select name="bank_id" class="form-control">
+                                            <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <?php 
+                                            $tree = buildTree($rows);
+                                            printTree($tree);
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Type") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select name="type" class="form-control">
+                                            <option value="Lowest Interest Rates">Lowest Interest Rates</option>
+                                             <option value="Lowest Processing Fees"> Lowest Processing Fees</option>
+                                              <option value="Lowest Penalty Fees">Lowest Penalty Fees</option>
+                                              <option value="Promo Interest Rates">Promo Interest Rates</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Rate") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <input type="number" name="rate" data-required="1" class="form-control" value="" placeholder="percent is default value" /> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Sort") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <input type="number" name="sort" data-required="1" class="form-control" value="" /> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                                        <button type="button" class="btn btn-outline" onclick="cancel('admin/bank-account')"><?php echo $this->translate("Cancel") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-repeater/jquery.repeater.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('select[name=category_id]').on("change", function() {
+    var category_name = $("select[name=category_id] option:selected").text();
+    if(category_name === 'Fixed Deposit') {
+        $('.tenor').removeClass('hide');
+        $('.initial_deposit_amount label').text('Fixed Deposit Amount');
+        $('.minimum_balance label').text('Minimum Deposit');
+    } else {
+        $('.tenor').addClass('hide');
+        $('.initial_deposit_amount label').text('Initial Deposit Amount');
+        $('.minimum_balance label').text('Minimum Balance');
+    }
+});
+
+tinymce.init({
+    selector: '.editor',
+    height: 300,
+    plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    content_css: full_url+'/assets/css/codepen.min.css',
+    setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
+});
+
+$('.mt-repeater').each(function(){
+    $(this).repeater({
+        show: function () {
+       	    $(this).slideDown();
+        },
+        hide: function (deleteElement) {
+            if(confirm('Are you sure you want to delete this element?')) {
+                $(this).slideUp(deleteElement);
+            }
+        },
+        ready: function (setIndexes) {
+            
+        }
+    });
+});
+
+var form = $('#form_bank');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        bank_id: {
+            required: true
+        },
+        loan_title: {
+            required: true
+        },
+        int_rate: {
+            required: true
+        },
+        link: {
+            required: false,
+            url: true
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+    
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_bank .form-group').removeClass('has-error');
+        $('#form_bank .help-block, #form_bank .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/bank-account/interest-rate'; }, 1500);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

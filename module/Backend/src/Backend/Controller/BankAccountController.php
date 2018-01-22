@@ -569,4 +569,78 @@ class BankAccountController extends AbstractActionController
         }
         return $text;
     }
+
+    public function interestRateAction()
+    {  
+        $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
+        $loans = $application_model_bank_interest_rate->fetchAllSort();
+        return array("loans" => $loans);
+    }
+    public function AddinterestRateAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $messages = array();
+            $translator = $this->getServiceLocator()->get('translator');
+            $application_model_bank_interest_rate= $this->getServiceLocator()->get('application_model_bank_interest_rate');
+            $loan = new \Application\Entity\BankInterestRate;
+            $loan->setBankId($post['bank_id']);
+            $loan->setName($post['name']);
+            $loan->setRate($post['rate']);
+            $loan->setType($post['type']);
+            $loan->setSort($post['sort']);
+            $loan->setStatus(1);
+            $added = $application_model_bank_interest_rate->insert($loan);
+            if($added) {
+                $messages['success'] = true;
+                $messages['msg'] = $translator->translate("Successfully added");
+            } else {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Something error. Please check");
+            }
+            $response = $this->getResponse();
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+    }
+    public function EditinterestRateAction()
+    {
+        $id = $this->params()->fromRoute('id');
+        $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
+        $loan = $application_model_bank_interest_rate->fetchRow(array('id' => $id));
+        if($loan) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $post = $request->getPost();   
+                $error = 0;
+                if(!$error) {
+                    $loan->setBankId($post['bank_id']);
+                    $loan->setName($post['name']);
+                    $loan->setRate($post['rate']);
+                    $loan->setType($post['type']);
+                    $loan->setSort($post['sort']);
+                    $loan->setStatus($post['status']);
+                    
+                    $edited = $application_model_bank_interest_rate->update($loan);
+                    if($edited) {
+                        $messages['success'] = true;
+                        $messages['msg']     = $translator->translate("Successfully updated");
+                    } else {
+                        $messages['success'] = false;
+                        $messages['msg']     = $translator->translate("Something error. Please check");
+                    }
+                }
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('loan' => $loan);
+        } else {
+            return $this->redirect()->toRoute("admin/view-business-loan"); 
+        }
+    }
 }

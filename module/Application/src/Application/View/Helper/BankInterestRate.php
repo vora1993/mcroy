@@ -6,22 +6,16 @@ use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;  
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Bank extends AbstractHelper implements ServiceLocatorAwareInterface
+class BankInterestRate extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
 
-    public function __invoke($condition=null,$getall=0)
+    public function __invoke($condition=null)
     {
         $sm = $this->serviceLocator->getServiceLocator();
-        $application_model_bank = $sm->get('application_model_bank');
-        if($getall==0)
-        {
-            $row = $application_model_bank->fetchRow($condition);
-        }else{
-            $row = $application_model_bank->fetchAll($condition);
-        }
-        
-        return $row;
+        $application_model_bank_interest_rate = $sm->get('application_model_bank_interest_rate');
+        $rows = $application_model_bank_interest_rate->fetchAll($condition);
+        return $rows;
     }
     
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
