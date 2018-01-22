@@ -21,21 +21,21 @@
           $short_description = $_dataAttributes->promotion_and_deals;
           $total_points_per_year = $_dataAttributes->total_points_per_year;
           $total_points_per_year = (float)$total_points_per_year;
-          $category_promo_detail = number_format($total_points_per_year).$this->translate("Points/Year");
+          $category_promo_detail = number_format($credit_card->getPointsValue()).$this->translate("Points/Year");
           $header_title = $this->translate("Points");
           break;
         case 'air-miles':
           $short_description = $_dataAttributes->air_miles_details;
           $miles_per_year = $_dataAttributes->miles_per_year;
           $miles_per_year = (float)$miles_per_year;
-          $category_promo_detail = number_format($miles_per_year).$this->translate("Miles/Year");
+          $category_promo_detail = number_format($credit_card->getAirMilesValue()).$this->translate("Miles/Year");
           $header_title = $this->translate("Air Miles");
           break;
         case 'cash-back':
           $short_description = $_dataAttributes->cash_back_details;
           $cash_back_value = $_dataAttributes->savings_per_year;
           $cash_back_value = (float)$cash_back_value;
-          $category_promo_detail = "$".number_format($cash_back_value, 2);
+          $category_promo_detail = "$".number_format($credit_card->getCashbackValue(), 2);
           $header_title = $this->translate("Cashback");
           break;
         case 'discount':
