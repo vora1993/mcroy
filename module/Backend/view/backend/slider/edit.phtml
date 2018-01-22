@@ -89,7 +89,17 @@ $this->headTitle($title);
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Link") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="link" data-required="1" class="form-control" value="<?php echo $this->post->getLink() ?>" />
+                                        <input id="link" type="text" name="link" data-required="1" class="form-control" value="<?php echo $this->post->getLink() ?>" />
+                                    </div>
+                                </div>
+                                <div id="style_button" class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Type Button") ?></label>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="style">
+                                            <option <?php if($this->post->getStyle()==1) echo 'selected'?> value="1"><?php echo $this->translate("BUSINESS LOAN") ?></option>
+                                            <option <?php if($this->post->getStyle()==2) echo 'selected'?> value="2"><?php echo $this->translate("CONVENTIONAL BANKS LOAN") ?></option>
+                                            <option <?php if($this->post->getStyle()==3) echo 'selected'?> value="3"><?php echo $this->translate("CREDIT CARD") ?></option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -132,6 +142,32 @@ $this->inlineScript()->offsetSetFile(34, $this->basePath('assets/plugins/sweetal
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
+if($('#link').val()!=='')
+{
+    $('#style_button').show();
+}else
+{
+    $('#style_button').hide();
+}
+$('#link').blur(function(){
+    if($('#link').val()!=='')
+    {
+        $('#style_button').show();
+    }else
+    {
+        $('#style_button').hide();
+    }
+})
+$('#link').keydown(function(){
+    if($('#link').val()!=='')
+    {
+        $('#style_button').show();
+    }else
+    {
+        $('#style_button').hide();
+    }
+})
+
 $('#photoupload').on("change", function(){
     var form = document.getElementById('form_post');
     var fileInput = document.getElementById('photoupload');
