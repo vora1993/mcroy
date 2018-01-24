@@ -11,9 +11,12 @@
       }
       $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
       $credit_card_color = $credit_card->getColor() ? $credit_card->getColor() : "#FFFFFF";
-      $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+      $dir_logo = 'data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
       if(!file_exists($dir_logo)) {
         $dir_logo = '/assets/img/credit-card.png';
+      } else
+      {
+        $dir_logo = '/'. $dir_logo;
       }
 
       switch ($page) {
