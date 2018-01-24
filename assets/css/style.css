@@ -1313,6 +1313,7 @@ span.note-cart {
 
 .rtcc-more-content_right {
     padding-right: 0px;
+    overflow: scroll;
 }
 
 .rtcc-more-content-side .rtcc-detail-table, .rtcc-more-content_left .rtcc-detail-table, .rtcc-more-content_right .rtcc-detail-table {
