@@ -13,6 +13,7 @@ return array(
             'loan_application'    => Frontend\Controller\LoanApplicationController::class,
             'bank_account'        => Frontend\Controller\BankAccountController::class,
             'credit_card'         => Frontend\Controller\CreditCardController::class,
+            'design'              => Frontend\Controller\DesignController::class
 		)
 	),
 	'router' => array(

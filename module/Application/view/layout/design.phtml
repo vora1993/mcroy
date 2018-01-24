@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->setting()->company_name)->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0')->appendHttpEquiv('X-UA-Compatible', 'IE=edge')?>
+        <meta content="<?php echo $this->setting()->company_description ?>" name="description" />
+        <meta content="<?php echo $this->setting()->owner_name ?>" name="author" />
+        
+        <?php 
+        $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/favicon.ico')); 
+        $offStyle = 1;
+        $this->headLink()->offsetSetStylesheet($offStyle++, 'http://fonts.googleapis.com/css?family=Lato:400,300,600,700&subset=all')
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/font-awesome/css/font-awesome.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap/css/bootstrap.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.css'));
+        // offStype 1 ~ 10
+        $offStyle = 21;
+        $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/components-md.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/plugins-md.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/login.min.css'))
+                         ->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/my-style-slider.css'));
+        ?>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <?php echo $this->headLink();?>
+                        
+        <!-- Scripts -->
+        <?php 
+        $offScript = 1;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/respond.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/excanvas.min.js', 'text/javascript', ['conditional' => 'lt IE 9']))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap/js/bootstrap.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/js.cookie.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.blockui.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js'));
+        $offScript = 21;
+        $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-toastr/toastr.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/plugins/backstretch/jquery.backstretch.min.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/app.js'))
+                             ->offsetSetFile($offScript++, $this->basePath('assets/js/login.js'));?>
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        var server_url = '<?php echo $this->serverUrl() ?>';
+        var base_path = '<?php echo $this->basePath() ?>';
+        var full_url = '<?php echo $this->serverUrl().$this->basePath() ?>';
+        /* ]]> */
+        </script>
+        <?php echo $this->headScript() ?>
+    </head>
+    <body>
+        <div id="header" class="container-fluid">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <img width="63%" src="/data/company/logo.png" alt="logo" class="logo-default">
+                        </a>
+                    </div>
+                     <ul id="signup" class="nav navbar-nav">
+                        <li>
+                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="banner" class="col-md-7">
+                <img width="100%" src="/assets/img/design/banner.png">
+            </div>
+            <div class="container title">
+                <h1>Get The Best Deals</h1>
+                <p>On Your Corporate Financing Needs<p>
+                <hr>
+            </div>
+            <div class="container post">
+                <div class="icon-group">
+                    <i class="icon_render"></i>
+                    <div>Rent</div>
+                </div>
+                <div class="icon-group">
+                    <i class="icon_slaries"></i>
+                    <div>Slaries</div>
+                </div>
+                <div class="icon-group">
+                    <i class="icon_tax"></i>
+                    <div>Tax</div>
+                </div>
+                <div class="icon-group">
+                    <i class="icon_invoices"></i>
+                    <div>Invoices</div>
+                </div>
+                <div class="icon-group">
+                    <i class="icon_vendor"></i>
+                    <div>Vendor</div>
+                </div>
+                <div class="icon-group last">
+                    <i class="icon_supplies"></i>
+                    <div>Suppliers</div>
+                </div>
+                <button class="btn btn-warning">
+                Click Here To Find Out More &nbsp<span class="button-cricle">+</span>
+                </button>
+            </div>
+            <div class="container">
+                <button id="hide_button" class="btn btn-warning center-block">Click Here To Find Out More &nbsp<span class="button-cricle">+</span></button>
+            </div>
+        </div>
+        <div id="content-card" class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 col-sm-5 col-xs-12 col-md-offset-1">
+                    <hr>
+                    <h1>Keep your cash for up to <span>90-days</span> paying zero interest</h1>
+                    <p>
+                        Forget the delays and aggravations that come with traditional small business financing options like having instant access to an interest free small bussiness loan
+                    </p>
+                    <button class="btn btn-danger">
+                Corporated cadit CARDS with this feature now! &nbsp<span class="card-button-cricle">+</span>
+                </button>
+                </div>
+                <div id="card-banner" class="col-md-6 col-sm-6 col-xs-12">
+                    <img width="100%" src="/assets/img/design/card_banner.png">
+                </div>
+            </div>
+        </div>
+        <div id="features" class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <h1 class="center-block">Feautures and Security</h1>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="access"></i>
+                    <div class="features-title">
+                        <h4>Access to interest free credit</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="flexible"></i>
+                    <div class="features-title">
+                        <h4>Flexible payment terms</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="early"></i>
+                    <div class="features-title">
+                        <h4>Early payment discount</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="earn"></i>
+                    <div class="features-title">
+                        <h4>Earn early</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="tax1"></i>
+                    <div class="features-title">
+                        <h4>Tax benefits</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 features-group">
+                    <i class="improve"></i>
+                    <div class="features-title">
+                        <h4>Improve your credit rating</h4>
+                        <div>loren Ipsum is simple dummy text of the has been the industry's standard</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
