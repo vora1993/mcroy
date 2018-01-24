@@ -82,23 +82,27 @@ class CreditCardController extends AbstractActionController
       $params = $request->getPost();
       $provider_ids = !empty($params['provider_ids']) ? $params['provider_ids'] : array();
       $query_arr = array('bank_id' => $params['bank_ids'], 'status' => 1);
+      $sort=null;
       switch ($params['category_id']) {
         case 'points':
           $query_arr['points'] = '1';
+          $sort="points_value desc";
           break;
         case 'air-miles':
           $query_arr['air_miles'] = '1';
+          $sort="air_miles_value desc";
           break;
         case 'cash-back':
           $query_arr['cashback'] = '1';
+          $sort="cashback_value desc";
           break;
         case 'discount':
           $query_arr['discount'] = '1';
+          $sort="discount_value desc";
           break;
       }
-
       $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-      $credit_cards = $application_model_credit_card->filter($query_arr, implode("|", $provider_ids));
+      $credit_cards = $application_model_credit_card->filter($query_arr, implode("|", $provider_ids),$sort);
       $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
       $banks = $application_model_bank->fetchAll(array('status' => 1));
 
@@ -297,7 +301,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll(array('discount' => '1'));
+    $credit_cards = $application_model_credit_card->fetchAllOrder(array('discount' => '1'),'discount_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
@@ -313,7 +317,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll(array('air_miles' => '1'));
+    $credit_cards = $application_model_credit_card->fetchAllOrder(array('air_miles' => '1'),'air_miles_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
@@ -329,7 +333,7 @@ class CreditCardController extends AbstractActionController
   {
     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-    $credit_cards = $application_model_credit_card->fetchAll(array('cashback' => '1'));
+    $credit_cards = $application_model_credit_card->fetchAllOrder(array('cashback' => '1'),'cashback_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
     $banks = $application_model_bank->fetchAll();
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');

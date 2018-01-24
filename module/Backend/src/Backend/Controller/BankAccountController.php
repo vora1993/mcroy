@@ -15,16 +15,16 @@ class BankAccountController extends AbstractActionController
         $loans = $application_model_bank_account_package->fetchAll(array("status" => array(0,1,2,3)));
         return array("loans" => $loans);
     }
-    
+
     public function addAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
-            $loan = new \Application\Entity\BankAccount;
+            $loan = new \Application\Entity\BankAccountPackage;
             $loan->setBankId($post['bank_id']);
             $loan->setCategoryId($post['category_id']);
             $loan->setLoanTitle($post['loan_title']);
@@ -43,7 +43,7 @@ class BankAccountController extends AbstractActionController
             $loan->setCitizenship($post['citizenship']);
             $loan->setAge($post['age']);
             $loan->setStatus($post['status']);
-            
+
             // Calculate
             $interest_rate = $post['interest-rate'];
             if(count($interest_rate) > 0) {
@@ -58,7 +58,7 @@ class BankAccountController extends AbstractActionController
                 }
                 $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
             }
-            
+
             $added = $application_model_bank_account_package->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -72,20 +72,20 @@ class BankAccountController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function editAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
         $loan = $application_model_bank_account_package->fetchRow(array('id' => $id));
         if($loan) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-                
+
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
@@ -107,7 +107,7 @@ class BankAccountController extends AbstractActionController
                     $loan->setAge($post['age']);
                     $loan->setDateModified(new Expression('NOW()'));
                     $loan->setStatus($post['status']);
-                    
+
                     // Calculate
                     $interest_rate = $post['interest-rate'];
                     if(count($interest_rate) > 0) {
@@ -122,7 +122,7 @@ class BankAccountController extends AbstractActionController
                         }
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
-                    
+
                     $edited = $application_model_bank_account_package->update($loan);
                     if($edited) {
                         $messages['success'] = true;
@@ -135,19 +135,19 @@ class BankAccountController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('loan' => $loan);
         } else {
-            return $this->redirect()->toRoute("admin/view-business-loan"); 
+            return $this->redirect()->toRoute("admin/view-business-loan");
         }
     }
-    
+
     public function faqAction() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array('type' => 'bank_account'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -171,7 +171,7 @@ class BankAccountController extends AbstractActionController
                         $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
                         $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
                     }
-                    
+
                     $edited = $application_model_faq->update($faq);
                     if($edited) {
                         $messages['success'] = true;
@@ -184,27 +184,27 @@ class BankAccountController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('faq' => $faq);
-        } 
+        }
     }
-    
+
     public function statusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -217,7 +217,7 @@ class BankAccountController extends AbstractActionController
                 $user->setId($id);
                 $user->setStatus($status);
                 $user->setDateModified(new Expression('NOW()'));
-                
+
                 $updated = $application_model_bank_account_package->update($user);
                 if(!$updated) $error = $error + 1;
             }
@@ -231,40 +231,40 @@ class BankAccountController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     public function businessTermLoanAction() {
         $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
         $loans = $application_model_bank_account_package->fetchAll(array("type" => "business_term_loan"));
         return array("loans" => $loans);
     }
-    
+
     public function individualAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
-        $loan = $application_model_bank_account_package->fetchRow(array('id' => $id)); 
+        $loan = $application_model_bank_account_package->fetchRow(array('id' => $id));
         return array('loan' => $loan);
     }
-    
+
     public function setStatusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'approved':
                     $status = 1;
                 break;
-                
+
                 case 'cancelled':
                     $status = 2;
                 break;
-                
+
                 case 'rejected':
                     $status = 3;
                 break;
-                
+
                 case 'pending':
                     $status = 0;
                 break;
@@ -272,12 +272,12 @@ class BankAccountController extends AbstractActionController
             $id = $this->params()->fromPost('id');
             $credit = $this->params()->fromPost('credit');
             $result = array();
-                
+
             $bank_account = $application_model_bank_account_package->fetchRow(array('id' => $id));
             $bank_account->setId($id);
             $bank_account->setStatus($status);
             $bank_account->setDateModified(new Expression('NOW()'));
-                
+
             $updated = $application_model_bank_account_package->update($bank_account);
             if($updated) {
                 if($action === 'approved') {
@@ -300,7 +300,7 @@ class BankAccountController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     /**
      * Category
      */
@@ -315,12 +315,12 @@ class BankAccountController extends AbstractActionController
             $translator  = $this->getServiceLocator()->get('translator');
             $source      = $this->params()->fromPost('source');
             $destination = $this->params()->fromPost('destination', 0);
-            
+
             $category = $application_model_category->fetchRow(array('id' => $source));
             $category->setId($source);
             $category->setParentId($destination);
             $application_model_category->update($category);
-            
+
             $ordering       = \Zend\Json\Json::decode($this->params()->fromPost('order'));
 	        $rootOrdering   = \Zend\Json\Json::decode($this->params()->fromPost('rootOrder'));
 
@@ -356,10 +356,10 @@ class BankAccountController extends AbstractActionController
         }
         $categories     = $application_model_category->fetchAllOrder(array("type" => "bank_account"))->toArray();
         $category_html  = $this->buildCategory($categories);
-        
+
         return array("category_html" => $category_html);
     }
-    
+
     public function buildCategory($categories, $id_parent = 0) {
         $html = "";
         $translator = $this->getServiceLocator()->get('translator');
@@ -371,10 +371,10 @@ class BankAccountController extends AbstractActionController
                 unset($categories[$key]);
             }
         }
-        if ($category_tmp) 
+        if ($category_tmp)
         {
             $html .= '<ol class="dd-list" id="accordion">';
-            foreach ($category_tmp as $item) 
+            foreach ($category_tmp as $item)
             {
                 $id = $item['id'];
                 $label = $item['name'];
@@ -395,7 +395,7 @@ class BankAccountController extends AbstractActionController
         }
         return $html;
     }
-    
+
     public function createCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -403,7 +403,7 @@ class BankAccountController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category_group = $this->getServiceLocator()->get('application_model_category_group');
-            
+
             $name = $this->params()->fromPost('name');
             $category_group = $application_model_category_group->fetchRow(array('name' => $name));
             if($category_group) {
@@ -416,7 +416,7 @@ class BankAccountController extends AbstractActionController
                 $category_group->setSortOrder(2);
                 $category_group->setDateModified(new Expression('NOW()'));
                 $category_group->setStatus(1);
-                    
+
                 $added = $application_model_category_group->insert($category_group);
                 if($added) {
                     $messages['success'] = true;
@@ -430,14 +430,14 @@ class BankAccountController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function addCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
-            $application_model_category = $this->getServiceLocator()->get('application_model_category');            
+            $application_model_category = $this->getServiceLocator()->get('application_model_category');
             $name     = $this->params()->fromPost('name');
 
             $category = new \Application\Entity\Category;
@@ -448,7 +448,7 @@ class BankAccountController extends AbstractActionController
             $category->setDateAdded(new Expression('NOW()'));
             $category->setParentId(0);
             $category->setStatus(1);
-                    
+
             $added = $application_model_category->insert($category);
 
             //Get parent_id
@@ -481,7 +481,7 @@ class BankAccountController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function editCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -489,17 +489,17 @@ class BankAccountController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category = $this->getServiceLocator()->get('application_model_category');
-            
+
             $category_id   = $this->params()->fromPost('category_id');
             $category_name = $this->params()->fromPost('category_name');
-            
+
             $category = $application_model_category->fetchRow(array('id' => $category_id));
             if($category) {
                 $category->setId($category_id);
                 $category->setName($category_name);
                 $category->setSeo($this->makeSeo($category_name));
                 $category->setDateModified(new Expression('NOW()'));
-                    
+
                 $updated = $application_model_category->update($category);
                 if($updated) {
                     $messages['success'] = true;
@@ -515,7 +515,7 @@ class BankAccountController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function removeCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -523,7 +523,7 @@ class BankAccountController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category = $this->getServiceLocator()->get('application_model_category');
-            
+
             $category_id   = $this->params()->fromPost('category_id');
             $deleted = $application_model_category->delete(array('id' => $category_id));
             if($deleted) {
@@ -537,13 +537,13 @@ class BankAccountController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     function clearHtml($html) {
         $html = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $html);
         $html = preg_replace("/<div>(.*?)<\/div>/", "$1", $html);
         return $html;
     }
-    
+
     function makeSeo($text, $limit=75)
     {
         // replace non letter or digits by -
@@ -560,7 +560,7 @@ class BankAccountController extends AbstractActionController
 
         if(strlen($text) > 70) {
             $text = substr($text, 0, 70);
-        } 
+        }
 
         if (empty($text))
         {
@@ -571,7 +571,7 @@ class BankAccountController extends AbstractActionController
     }
 
     public function interestRateAction()
-    {  
+    {
         $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
         $loans = $application_model_bank_interest_rate->fetchAllSort();
         return array("loans" => $loans);
@@ -615,7 +615,7 @@ class BankAccountController extends AbstractActionController
             $response = $this->getResponse();
             $messages = array();
             if ($request->isPost()) {
-                $post = $request->getPost();   
+                $post = $request->getPost();
                 $error = 0;
                 if(!$error) {
                     $loan->setBankId($post['bank_id']);
@@ -624,7 +624,7 @@ class BankAccountController extends AbstractActionController
                     $loan->setType($post['type']);
                     $loan->setSort($post['sort']);
                     $loan->setStatus($post['status']);
-                    
+
                     $edited = $application_model_bank_interest_rate->update($loan);
                     if($edited) {
                         $messages['success'] = true;
@@ -637,10 +637,10 @@ class BankAccountController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('loan' => $loan);
         } else {
-            return $this->redirect()->toRoute("admin/view-business-loan"); 
+            return $this->redirect()->toRoute("admin/view-business-loan");
         }
     }
 }
