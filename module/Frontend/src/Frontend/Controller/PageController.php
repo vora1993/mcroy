@@ -32,7 +32,7 @@ class PageController extends AbstractActionController
         if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
         
         $application_model_page = $this->getServiceLocator()->get('application_model_page');
-        $post = $application_model_page->fetchRow(array('seo' => $seo));
+        $post = $application_model_page->fetchRow(array('seo' => $seo,'status'=>1));
         return array("post" => $post);
     }
     
@@ -79,7 +79,7 @@ class PageController extends AbstractActionController
             return $response;
         }
         
-        $post = $application_model_page->fetchRow(array('seo' => $seo));
+        $post = $application_model_page->fetchRow(array('seo' => $seo,'status'=>1));
         return array("post" => $post);
     }
     
@@ -93,7 +93,7 @@ class PageController extends AbstractActionController
         $application_model_post = $this->getServiceLocator()->get('application_model_post');
         $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
         
-        $post = $application_model_page->fetchRow(array('seo' => $seo));
+        $post = $application_model_page->fetchRow(array('seo' => $seo,'status'=>1));
         return array("post" => $post, "widget_1" => $widget_1, "posts" => $posts);
     }
     
