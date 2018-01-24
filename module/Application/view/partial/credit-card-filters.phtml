@@ -25,7 +25,7 @@
                 $dir_bank_logo = '/assets/img/credit-card.png';
               }
               ?>
-              <div class="col-md-6 mg-bottom-xs" data-bank-id=<?php echo $bank->getId(); ?> onclick="CreditCard.filterBank(this)" >
+              <div style="height: 102px" class="col-md-6 mg-bottom-xs" data-bank-id=<?php echo $bank->getId(); ?> onclick="CreditCard.filterBank(this)" >
                 <img src="<?php echo $this->basePath($dir_bank_logo); ?>" alt="<?php echo $bank->getName(); ?>" class="bank-logo">
               </div>
             <?php endforeach;?>
