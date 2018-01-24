@@ -87,14 +87,15 @@ class LoanApplicationController extends AbstractActionController
                             }
                         }
                     }
-
                     // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
                     // Where: r = decimal rate / 12.
                     $r = ($int_rates / 100) / 12;
                     if($int_rates <= 0) $r = 1;
-                    $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
-                    $total_amount_payable = $monthly_payment * $loan_tenure * 12;
-                    $total_interest_payable = $total_amount_payable - $loan_amount;
+                    // $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
+                    $monthly_payment=($int_rates/100)*$loan_amount;
+                    $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
+                    // $total_interest_payable = $total_amount_payable - $loan_amount;
+                    $total_interest_payable=$monthly_payment*$loan_tenure;
                     $class = "";
                     if ($session->offsetExists('compare'))
                     {
@@ -182,7 +183,7 @@ class LoanApplicationController extends AbstractActionController
                         </div>
 
                         <div class="col-md-4">
-                        <div class="col-md-8"><strong>' . $translator->translate("Interest Rate (per annum)") .'</strong></div>
+                        <div class="col-md-8"><strong>' . $translator->translate("Interest Rate (per month)") .'</strong></div>
                         <div class="col-md-4">' . $int_rates . '%</div>
                         </div>
                         </div>';
@@ -198,7 +199,7 @@ class LoanApplicationController extends AbstractActionController
                         </div>
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Loan Tenure") .'</strong></div>
-                        <div class="col-md-4">' . $loan_tenure . ' years</div>
+                        <div class="col-md-4">' . $loan_tenure . ' months</div>
                         </div>
                         </div>';
 
