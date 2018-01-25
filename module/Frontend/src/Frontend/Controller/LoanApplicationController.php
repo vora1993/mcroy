@@ -21,7 +21,7 @@ class LoanApplicationController extends AbstractActionController
             $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basePath');
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
 
-            $loans = $application_model_business_loan_package->fetchAll(array("status" => 1, "category_id" => $post['category_id']));
+            $loans = $application_model_business_loan_package->fetchAllOrderInterestRate(array("status" => 1, "category_id" => $post['category_id']));
             $html = '';
             if (count($loans) > 0)
             {
@@ -87,6 +87,7 @@ class LoanApplicationController extends AbstractActionController
                             }
                         }
                     }
+                    $int_rates=$loan->getIntRate();
                     // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
                     // Where: r = decimal rate / 12.
                     $r = ($int_rates / 100) / 12;
@@ -637,7 +638,6 @@ class LoanApplicationController extends AbstractActionController
         $seo = $this->params()->fromRoute('seo');
         $application_model_category = $this->getServiceLocator()->get('application_model_category');
         $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "bank_account"));
-
         if ($request->isPost())
         {
             $post = $request->getPost();

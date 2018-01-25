@@ -256,8 +256,48 @@ class BusinessLoanController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
+            $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
+            $action = $this->params()->fromPost('action');
+            switch ($action) {
+                case 'active':
+                    $status = 1;
+                break;
+                
+                case 'trash':
+                    $status = 4;
+                break;
+                
+                case 'deactive':
+                    $status = 0;
+                break;
+            }
+            $ids = $this->params()->fromPost('ids');
+            $error = 0;
+            $result = array();
+            foreach ($ids as $id) {
+                $user = $application_model_bank_account_package->fetchRow(array('id' => $id));
+                $user->setId($id);
+                $user->setStatus($status);
+                $user->setDateModified(new Expression('NOW()'));
+                $updated = $application_model_bank_account_package->update($user);
+                if(!$updated) $error = $error + 1;
+            }
+            if(!$error) {
+                $result['success'] = true;
+                $result['msg'] = $translator->translate("Successfully updated");
+            } else {
+                $result['success'] = false;
+                $result['msg'] = $translator->translate("Something error. Please check");
+            }
+        }
+        return new JsonModel($result);
+    }
+    //Status action for list of business term loan
+    public function statusBusinessAction() {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $translator = $this->getServiceLocator()->get('translator');
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
-            
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'active':
@@ -280,7 +320,6 @@ class BusinessLoanController extends AbstractActionController
                 $user->setId($id);
                 $user->setStatus($status);
                 $user->setDateModified(new Expression('NOW()'));
-                
                 $updated = $application_model_business_loan_package->update($user);
                 if(!$updated) $error = $error + 1;
             }

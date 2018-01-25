@@ -122,11 +122,15 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                        --><li>
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Processing Fee") ?></div>
+                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->processing_fee ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                            <div class="sort" data-field="interest"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </aside>
                                        </li><!--
                                     --><li>
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Penalty Fee") ?></div>
+                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->penalty_fee ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                            <div class="sort" data-field="interest"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </aside>
                                     </li>
                                 </ul>
