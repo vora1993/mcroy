@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'font_slide_bold';
-	src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Bold.ttf') format(‘truetype’),
-	font-weight: 100;
+    font-family: 'font_slide_bold';
+    src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Bold.ttf') format(‘truetype’),
+    font-weight: 100;
 }
 @font-face {
-	font-family: 'font_slide_regular';
-	src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Regular.ttf') format(‘truetype’),
-	font-weight: 100;
+    font-family: 'font_slide_regular';
+    src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Regular.ttf') format(‘truetype’),
+    font-weight: 100;
 }
 /*Slide 1*/
 #slideshow
@@ -80,25 +80,25 @@
     {
         font-size: 14px!important;
     }
-	/*Slide2*/
-	#Slide2_button
-	{
-		right: 11%;
-	}
+    /*Slide2*/
+    #Slide2_button
+    {
+        right: 11%;
+    }
     #Slide2_button button
     {
-	    padding: 10px 6px;
-    	font-size: 13px;
+        padding: 10px 6px;
+        font-size: 13px;
 
     }
     /*SLide3*/
     #Slide3_button
     {
-    	right: 47%;
+        right: 47%;
     }
     #Slide3_button button
     {
-    	font-size: 18px;
+        font-size: 18px;
     }
 }
 @media only screen and (max-width: 700px)
@@ -114,18 +114,18 @@
     }
 
     #Slide2_button button
-	{
-	    padding: 4px 1px;
-    	font-size: 8px;;
-	}
-	#Slide3_button
     {
-    	right: 47%;
+        padding: 4px 1px;
+        font-size: 8px;;
+    }
+    #Slide3_button
+    {
+        right: 47%;
     }
     #Slide3_button button
     {
-		padding: 6px 6px;
-    	font-size: 12px;
+        padding: 6px 6px;
+        font-size: 12px;
     }
 }
 @media only screen and (max-width: 400px)
@@ -137,20 +137,20 @@
     }
     #Slide1_button button
     {
-    	padding: 14px 34px;
+        padding: 14px 34px;
         font-size: 5px!important;
     }
-	/*Slide 2*/
+    /*Slide 2*/
     #Slide2_button button
-	{
-	    padding: 4px 1px;
-    	font-size: 8px;;
-	}
-	/*Slide 3*/
+    {
+        padding: 4px 1px;
+        font-size: 8px;;
+    }
+    /*Slide 3*/
     #Slide3_button button
     {
-		padding: 4px 6px;
-    	font-size: 8px;
+        padding: 4px 6px;
+        font-size: 8px;
     }
 }
 
@@ -434,6 +434,98 @@
     text-align: center;
     color: white;
 }
+/*works*/
+#works h1
+{
+    text-align: center;
+    color: #283F59;
+    margin-top: 5%; 
+    font-family: 'Roboto', sans-serif;
+}
+#works .col-md-1
+{
+    width: 11%;
+}
+#works .col-md-1 hr
+{
+    margin-top: 162%;
+    border: none;
+    height: 1px;
+    color: #E3E3E3;
+    background-color: #E3E3E3;
+}
+.works-group .works1
+{
+    background-image: url(../img/design/works1.png);
+    display: inline-block;
+    width: 69px;
+    height: 69px;
+    background-size: 68px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works2
+{
+    background-image: url(../img/design/works2.png);
+    display: inline-block;
+    width: 79px;
+    height: 59px;
+    background-size: 79px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works3
+{
+    background-image: url(../img/design/works3.png);
+    display: inline-block;
+    width: 68px;
+    height: 63px;
+    background-size: 66px;
+    background-position: 2px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works4
+{
+    background-image: url(../img/design/works4.png);
+    display: inline-block;
+    width: 60px;
+    height: 59px;
+    background-size: 60px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-title
+{
+    margin-top: 25%;
+}
+.works-title span
+{
+    display: block;
+    margin-top: 4%;
+    width: 28%;
+    height: 23%;
+    background: #324C76;
+    border-radius: 25px;
+    padding: 8px;
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+}
+.work-title-sub span
+{
+    background:none;
+    border: 1px solid #9F9F9F;
+    color: #858585;
+}
+.works-content
+{
+    text-align: center;
+    margin-top: 10%;
+}
 @media only screen and (max-width: 1000px)
 {
     #banner
@@ -448,6 +540,18 @@
     #content-card .col-md-5
     {
         margin-top: 0;
+    }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .work-title
+    {
+        margin-top: 5%;
+    }
+    .works-title span
+    {
+        width: 6%;
     }
 }
 @media only screen and (max-width: 768px)
@@ -491,6 +595,18 @@
     {
         margin-bottom: 20px;
     }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .works-title
+    {
+        display: none;
+    }
+    .works-content
+    {
+        margin-bottom: 10%;
+    }
 }
 @media only screen and (max-width: 400px)
 {
@@ -519,5 +635,17 @@
     {
         font-size: 10px;
         margin-bottom: 20px;
+    }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .works-title
+    {
+        display: none;
+    }
+    .works-content
+    {
+        margin-bottom: 10%;
     }
 }
