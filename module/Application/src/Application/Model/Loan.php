@@ -25,6 +25,17 @@ class Loan extends AbstractDbMapper
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
         return $entity;
     }
+
+    public function fetchAllOrderInterestRate($condition=null)
+    {
+        $select = $this->getSelect();
+        if($condition) $select->where($condition);
+        
+        $select->order('int_rate ASC');
+        $entity = $this->select($select);
+        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+        return $entity;
+    }
     
     public function fetchFilter($condition=null, $min_sales_turnover=null, $min_years_of_incorporation=null)
     {
