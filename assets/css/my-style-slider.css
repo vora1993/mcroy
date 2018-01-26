@@ -435,12 +435,16 @@
     color: white;
 }
 /*works*/
+#works
+{
+    margin-bottom: 7%;
+}
 #works h1
 {
     text-align: center;
     color: #283F59;
     margin-top: 5%; 
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 #works .col-md-1
 {
@@ -525,6 +529,111 @@
 {
     text-align: center;
     margin-top: 10%;
+    font-family: 'Source Sans Pro', sans-serif
+}
+/*note*/
+#note
+{
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    position: relative;
+}
+#note img
+{
+    height: 400px;
+}
+#note>div
+{
+    position: absolute;
+    width: 28%;
+    text-align: center;
+    top: 26%;
+    left: 46%;
+    font-style: italic;
+}
+#note>div p
+{
+    color: #ff5057;
+}
+.note-content
+{
+    height: 170px;
+    overflow: hidden;
+}
+/*footer*/
+.title-footer
+{
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+.title-footer div
+{
+    font-size: 26px;
+    text-align: center;
+}
+#button-title
+{
+    border-radius: 25px;
+    padding: 1px;
+    padding-right: 27px;
+    padding-left: 31px;
+    margin-left: 8%;
+}
+.footer-button-cricle
+{
+    display: inline-block;
+    width: 30%;
+    height: 17%;
+    background: #BA8F32;
+    border-radius: 25px;
+    padding: 9px;
+    margin-left: 19%;
+}
+.text-input
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DEDEDE;
+    margin-bottom: 8%;
+}
+.button-payment
+{
+    background-color: #F34E65;
+}
+#form_payment .row
+{
+    margin-left: 0; 
+    margin-right: 0; 
+}
+#contact-icon
+{
+    text-align: center;
+}
+#contact-icon i.fa-facebook
+{
+    color: #2D4989;
+    font-size: 250%;
+}
+#contact-icon i.fa-twitter
+{
+    color: #75CEEF;
+    font-size: 250%;
+}
+#contact-icon i.fa-linkedin
+{
+    color: #71A8EE;
+    font-size: 250%;
+}
+#contact-icon i.fa-google-plus
+{
+    color: #EC6771;
+    font-size: 250%;
+}
+.group-contact-icon
+{
+    display: inline;
+    margin-right: 2%;
 }
 @media only screen and (max-width: 1000px)
 {
@@ -545,9 +654,14 @@
     {
         display: none;
     }
-    .work-title
+    .works-title
     {
         margin-top: 5%;
+    }
+    .works-content
+    {
+        margin-top: 4%;
+        margin-bottom: 5%;
     }
     .works-title span
     {

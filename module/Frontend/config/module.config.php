@@ -173,6 +173,22 @@ return array(
 					),
 				),
 			),
+            'design' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/design[/:action[/:id][-:seo]][/:paged]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                        'seo'    => '[a-zA-Z0-9_-]*',
+                        'paged'  => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'design',
+                        'action' => 'index'
+                    ),
+                ),
+            ),
             'page' => array(
 				'type' => 'segment',
                 'options' => array(

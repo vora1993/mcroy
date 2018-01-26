@@ -8,6 +8,7 @@ return array(
             'bank'               => Backend\Controller\BankController::class,
             'business_loan'      => Backend\Controller\BusinessLoanController::class,
             'admin_bank_account' => Backend\Controller\BankAccountController::class,
+            'admin_design'       => Backend\Controller\DesignController::class,
             'factoring'          => Backend\Controller\FactoringController::class,
             'funding'            => Backend\Controller\FundingController::class,
             'property_loan'      => Backend\Controller\PropertyLoanController::class,
@@ -135,6 +136,20 @@ return array(
         					),
         				),
         			),
+                    'admin_design' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/design[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                'controller' => 'admin_design',
+                                'action' => 'index'
+                            ),
+                        ),
+                    ),
                     'factoring' => array(
         				'type' => 'segment',
         				'options' => array(

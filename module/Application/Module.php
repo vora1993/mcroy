@@ -386,6 +386,13 @@ class Module
                 	$model->setHydrator(new Mapper\BankAccountPackageHydrator());
                 	return $model;
                 },
+                'application_model_design' => function ($sm) {
+                    $model = new Model\Design();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\Design());
+                    $model->setHydrator(new Mapper\DesignHydrator());
+                    return $model;
+                },
                 'application_model_bank_account' => function ($sm) {
                 	$model = new Model\BankAccount();
                     $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
