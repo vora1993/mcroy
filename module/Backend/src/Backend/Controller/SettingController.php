@@ -821,7 +821,7 @@ class SettingController extends AbstractActionController
       $request = $this->getRequest();
       $response = $this->getResponse();
       $messages = array();
-      $company_array_key = array('eligibility_sale_turn_over', 'eligibility_years_of_incorporation', 'min_requirement', 'monthly_instalments', 'total_interest_payable', 'processing_fee', 'penalty_fee', 'interest_property_loan', 'monthly_repayment', 'total_interest_payable', 'type_property_loan');
+      $company_array_key = array('eligibility_sale_turn_over', 'eligibility_years_of_incorporation', 'min_requirement', 'monthly_instalments', 'total_interest_payable', 'processing_fee', 'penalty_fee', 'interest_property_loan', 'monthly_repayment', 'total_interest_payable', 'type_property_loan','min_turnover','min_years_incorporation','annual_fee','lock_in_period','max_tenure');
 
       if ($request->isPost()) {
         $post = $request->getPost();

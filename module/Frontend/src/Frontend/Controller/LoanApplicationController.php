@@ -16,12 +16,30 @@ class LoanApplicationController extends AbstractActionController
         if ($request->isPost())
         {
             $post = $request->getPost();
+            $unit_rate='year';
+            if($post['seo']=='p2p-lending')
+            {
+                $unit_rate='month';
+            }
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
             $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basePath');
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
 
             $loans = $application_model_business_loan_package->fetchAll(array("status" => 1, "category_id" => $post['category_id']));
+
+            //Load helper setting for tooltip
+            $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+            
+            $settings = $application_model_setting->fetchAll();
+            $obj = new \stdClass;
+            foreach ($settings as $setting) {
+                $key = $setting->getKey();
+                $value = $setting->getValue();
+                $obj->{$key} = $value;    
+            }
+
+
             $html = '';
             if (count($loans) > 0)
             {
@@ -123,7 +141,6 @@ class LoanApplicationController extends AbstractActionController
                         $dir_c = 'assets/img/checked-no.png';
                         $checked = "no";
                     }
-
                     $html .= '<div class="col-md-5"><div class="row">';
                     $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates .'"><b>' . $int_rates . '%</b>' . $translator->translate("Interest Rate") .'</span></div>';
                     $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$checked . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
@@ -147,22 +164,29 @@ class LoanApplicationController extends AbstractActionController
                                 <div class="col-md-4">' . $loan->getIntRate() . '</div>
                             </div>
                             <div class="col-md-4">
-                                <div class="col-md-8"><strong>' . $translator->translate("Min Turnover") .'</strong></div>
-                                <div class="col-md-4">' . $loan->getMinTurnover() . '</div>
+                                <div class="col-md-8"><strong>' . $translator->translate("Min Turnover") .'</strong>
+                                  
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->min_turnover.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
+                                </div>
+                                <div class="col-md-4">$' . $loan->getMinTurnover() . '</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("Principle Loan Amount") .'</strong></div>
-                                <div class="col-md-4">' . number_format($loan_amount) . '</div>
+                                <div class="col-md-4">$' . number_format($loan_amount) . '</div>
                             </div>
                         </div>';
 
                     $html .= '<div class="row">
                         <div class="col-md-4">
-                            <div class="col-md-8"><strong>' . $translator->translate("Max Tenure") .'</strong></div>
-                            <div class="col-md-4">' . $loan->getMaxTenure() . '</div></div>
+                            <div class="col-md-8"><strong>' . $translator->translate("Max Tenure") .'</strong>
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->max_tenure.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
+                            </div>
+                            <div class="col-md-4">' . $loan->getMaxTenure() .' Year</div></div>
                             <div class="col-md-4">
-                            <div class="col-md-8"><strong>' . $translator->translate("Min Years Incorporation") .'</strong></div>
-                            <div class="col-md-4">' . $loan->getMinYearsIncorporation() . '</div>
+                            <div class="col-md-8"><strong>' . $translator->translate("Min Years Incorporation") .'</strong>
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->min_years_incorporation.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
+                            </div>
+                            <div class="col-md-4">' . $loan->getMinYearsIncorporation() . ' Year</div>
                             </div>
                             <div class="col-md-4">
                             <div class="col-md-8"><strong>' . $translator->translate("Monthly Instalment") .'</strong></div>
@@ -173,7 +197,7 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Max Loan Amount") .'</strong></div>
-                        <div class="col-md-4">' . $loan->getMaxLoanAmt() . '</div>
+                        <div class="col-md-4">$' . $loan->getMaxLoanAmt() . '</div>
                         </div>
 
                         <div class="col-md-4">
@@ -182,14 +206,16 @@ class LoanApplicationController extends AbstractActionController
                         </div>
 
                         <div class="col-md-4">
-                        <div class="col-md-8"><strong>' . $translator->translate("Interest Rate (per annum)") .'</strong></div>
+                        <div class="col-md-8"><strong>' . $translator->translate("Interest Rate (per ".$unit_rate.")") .'</strong></div>
                         <div class="col-md-4">' . $int_rates . '%</div>
                         </div>
                         </div>';
 
                     $html .= '<div class="row">
                         <div class="col-md-4">
-                        <div class="col-md-8"><strong>' . $translator->translate("Annual Fee") .'</strong></div>
+                        <div class="col-md-8"><strong>' . $translator->translate("Annual Fee") .'</strong>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->annual_fee.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
+                        </div>
                         <div class="col-md-4">' . $loan->getAnnualFee() . '</div>
                         </div>
                         <div class="col-md-4">
@@ -201,11 +227,19 @@ class LoanApplicationController extends AbstractActionController
                         <div class="col-md-4">' . $loan_tenure . ' years</div>
                         </div>
                         </div>';
-
+                    if($loan->getLockInPeriod()>0)
+                    {
+                        $value_Period=$loan->getLockInPeriod();
+                    }else
+                    {
+                        $value_Period=0;
+                    }
                     $html .= '<div class="row">
                         <div class="col-md-4">
-                        <div class="col-md-8"><strong>' . $translator->translate("Lock In Period") .'</strong></div>
-                        <div class="col-md-4">' . $loan->getLockInPeriod() . '</div>
+                        <div class="col-md-8"><strong>' . $translator->translate("Lock In Period") .'</strong>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->lock_in_period.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
+                        </div>
+                        <div class="col-md-4">' . $value_Period . ' year</div>
                         </div>
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
@@ -214,7 +248,8 @@ class LoanApplicationController extends AbstractActionController
                         </div>
                         </div>';
 
-                    $html .= '<div class="row">
+                    /*Restructuring of loan tenor.
+                        $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Restructuring Of Loan Tenor") .'</strong></div>
                         <div class="col-md-4">' . $loan->getRestructuringOfLoanTenor() . '</div>
@@ -225,6 +260,8 @@ class LoanApplicationController extends AbstractActionController
                         <div class="col-md-4">$' . number_format($total_interest_payable, 2) .'</div>
                         </div>
                         </div>';
+                    */
+
                     /*
                     $html .= '<div class="row">
                         <div class="col-md-4"></div>
@@ -265,7 +302,7 @@ class LoanApplicationController extends AbstractActionController
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
         $business_loan = $application_model_business_loan->fetchDate(array("category_id" => $category->getId()), date("d"), date("m"), date("Y"));
 
-        return array("category" => $category, "faq" => $faq, "count" => count($business_loan));
+        return array("category" => $category, "faq" => $faq, "count" => count($business_loan),"seo"=>$seo);
     }
 
     public function propertyLoanAction()
