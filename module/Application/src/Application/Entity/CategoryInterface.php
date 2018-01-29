@@ -14,4 +14,5 @@ interface CategoryInterface
     public function getDateAdded();
     public function getDateModified();
     public function getStatus();
+    public function getShowBankInterestRate();
 }

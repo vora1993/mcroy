@@ -45,6 +45,7 @@ class SliderController extends AbstractActionController
                     $post->setType($data['type']);
                     $post->setLink($data['link']);
                     $post->setStyle($data['style']);
+                    $post->setSortOrder($data['sort']);
                     $updated = $application_model_slider->update($post);
                     if($updated) {
                         $messages['success'] = true;

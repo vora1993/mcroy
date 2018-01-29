@@ -19,6 +19,7 @@ class Slider extends AbstractDbMapper
     {
         $select = $this->getSelect();
         if($condition) $select->where($condition);
+        $select->order('sort_order asc');
 
         $entity = $this->select($select);
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));

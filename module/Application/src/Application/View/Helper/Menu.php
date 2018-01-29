@@ -21,8 +21,8 @@ class Menu extends AbstractHelper implements ServiceLocatorAwareInterface
         $auth_form = $options['auth'] ? true : false;
         
         $application_model_menu = $sm->get('application_model_menu');
+
         $menus = $application_model_menu->fetchAll(array("group_id" => $group_id));
-        
         $html = '';
         $data = array();
         if(count($menus) > 0) {
@@ -94,13 +94,17 @@ class Menu extends AbstractHelper implements ServiceLocatorAwareInterface
                                 
                                 if($submenu3['route']) $url = $router->assemble(array('action' => $submenu3['action'], 'seo' => $submenu3['value']), array('name' => $submenu3['route']));
                                 else $url = "#";
-                                
                                 $html .= '<li aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link">'.$submenu3['name'].'</a></li>'; 
                             }
                             $html .= '</ul>';
                             $html .= '</li>';
                         } else {
-                            $html .= '<li aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link">'.$submenu['name'].'</a></li>';    
+                            $style="";
+                            if($submenu['name']=="Business Loan Calculator")
+                            {
+                                $style="<span style='color:green;font-weight:bold'>(NEW!!)</span>";
+                            }
+                            $html .= '<li aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link">'.$submenu['name'].$style.'</a></li>';    
                         }
                     }
                     $html .= '</ul>';

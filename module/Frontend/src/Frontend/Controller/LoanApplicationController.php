@@ -16,11 +16,6 @@ class LoanApplicationController extends AbstractActionController
         if ($request->isPost())
         {
             $post = $request->getPost();
-            $unit_rate='year';
-            if($post['seo']=='p2p-lending')
-            {
-                $unit_rate='month';
-            }
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
             $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basePath');
@@ -114,6 +109,22 @@ class LoanApplicationController extends AbstractActionController
                     $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
                     // $total_interest_payable = $total_amount_payable - $loan_amount;
                     $total_interest_payable=$monthly_payment*$loan_tenure;
+
+                    //Only p2p module
+                    $unit_rate='year';
+                    $unit_loan_tenure='years';
+                    if($post['seo']=='p2p-lending')
+                    {
+                        $unit_rate='month';
+                        $unit_loan_tenure='month';
+                        $loan_tenure=$loan_tenure*12;
+                    }else
+                    {
+                        $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
+-                       $total_amount_payable = $monthly_payment * $loan_tenure * 12;
+-                       $total_interest_payable = $total_amount_payable - $loan_amount;
+                    }
+
                     $class = "";
                     if ($session->offsetExists('compare'))
                     {
@@ -142,6 +153,7 @@ class LoanApplicationController extends AbstractActionController
                         $dir_c = 'assets/img/checked-no.png';
                         $checked = "no";
                     }
+
                     $html .= '<div class="col-md-5"><div class="row">';
                     $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates .'"><b>' . $int_rates . '%</b>' . $translator->translate("Interest Rate") .'</span></div>';
                     $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$checked . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
@@ -227,7 +239,7 @@ class LoanApplicationController extends AbstractActionController
                         </div>
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Loan Tenure") .'</strong></div>
-                        <div class="col-md-4">' . $loan_tenure . ' months</div>
+                        <div class="col-md-4">' . $loan_tenure . $unit_loan_tenure.'</div>
                         </div>
                         </div>';
                     if($loan->getLockInPeriod()>0)
@@ -301,11 +313,14 @@ class LoanApplicationController extends AbstractActionController
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array("type" => "business_loan"));
 
+        $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
+        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1));
+
         // Count apply today
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
         $business_loan = $application_model_business_loan->fetchDate(array("category_id" => $category->getId()), date("d"), date("m"), date("Y"));
 
-        return array("category" => $category, "faq" => $faq, "count" => count($business_loan),"seo"=>$seo);
+        return array("category" => $category, "faq" => $faq, "count" => count($business_loan),"seo"=>$seo,"interest_rate"=>$interest_rate);
     }
 
     public function propertyLoanAction()
@@ -623,7 +638,6 @@ class LoanApplicationController extends AbstractActionController
                 $property_loan_package = $application_model_property_loan_package->fetchAll(array("id" => $select));
             }
         }
-
         $viewModel = new ViewModel();
         $viewModel->setTerminal(true);
         $viewModel->setVariables(array("loans" => $property_loan_package, "count" => count($select)));
@@ -676,6 +690,7 @@ class LoanApplicationController extends AbstractActionController
         $seo = $this->params()->fromRoute('seo');
         $application_model_category = $this->getServiceLocator()->get('application_model_category');
         $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "bank_account"));
+        
         if ($request->isPost())
         {
             $post = $request->getPost();
@@ -692,7 +707,6 @@ class LoanApplicationController extends AbstractActionController
             $session->offsetSet('category_id', $category_id);
 
             $loans = $application_model_bank_account_package->fetchAll(array("status" => 1, "category_id" => $category_id));
-
             $html = '';
             if (count($loans) > 0)
             {
@@ -792,8 +806,8 @@ class LoanApplicationController extends AbstractActionController
                     }
                     $html .= '</div></div>';
 
-                    $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Citizenship").'</div><div class="col-md-6">'.$loan->getCitizenship().'</div></div>';
-                    $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Age").'</div><div class="col-md-6">'.$loan->getAge().'</div></div>';
+                    /*$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Citizenship").'</div><div class="col-md-6">'.$loan->getCitizenship().'</div></div>';
+                    $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Age").'</div><div class="col-md-6">'.$loan->getAge().'</div></div>';*/
                     if($category->getName() === 'Fixed Deposit') $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Minimum Deposit").'</div><div class="col-md-6">'.$loan->getMinimumBalance().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Annual Fee").'</div><div class="col-md-6">'.$loan->getAnnualFee().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Service Fee").'</div><div class="col-md-6">'.$loan->getServiceFee().'</div></div>';
@@ -827,13 +841,11 @@ class LoanApplicationController extends AbstractActionController
             $view_model = new ViewModel(array("category" => $category, "faq" => $faq));
             $view_model->setTemplate('frontend/bank-account/fixed-deposit.phtml');
         }
-
-
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array("type" => "bank_account"));
         $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
         $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1));
-        $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate));
+        $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate,"current_category"=>$category));
         return $view_model;
     }
 
