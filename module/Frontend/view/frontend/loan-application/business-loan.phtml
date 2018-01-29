@@ -52,7 +52,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                             <div class="col-md-6 col-sm-6 col-xs-12"  style="margin-bottom: 15px;">
                                                 <div class="row">
                                                     <b class="col-xs-12 lb-loan">
-                                                        <?php echo $this->translate("Eligibility - Sale Turn Over") ?>
+                                                        <?php echo $this->translate("Eligibility - Sales Turnover") ?>
                                                         <a href="javascript:;" class="tooltip-icon popovers" data-trigger="hover" data-placement="left" data-container="body" data-content="<?php echo $this->setting()->eligibility_sale_turn_over ?>" data-html="true" data-original-title="<span><?php echo $this->translate("Eligibility - Sale Turn Over") ?></span>"><i class="fa fa-question-circle"></i></a>
                                                     </b>
                                                     <div class="col-xs-12">
@@ -74,13 +74,14 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                                             <input type="text" name="min_years_of_incorporation" value="3" id="min_years_of_incorporation" class="form-control" placeholder="3" />
                                                             <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("month") ?></i></span>
                                                         </div>
-                                                    </div>
+                                                    </div> 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-xs-12">
                                         <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                                        <input type="hidden" name="seo" value="<?php echo $this->seo ?>" />
                                         <button type="button" id="submit-search" class="btn_calculate"><?php echo $this->translate("Calculate My Results") ?></button>
                                     </div>
                                 </form>
@@ -104,6 +105,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Min Requirement") ?></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->min_requirement ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                            <div class="sort" data-field="requirement"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
@@ -385,6 +387,8 @@ $(document).ready(function() {
         var loan_amount = formatIntNumber($("input[name=loan_amount]").val());
         var loan_tenure = $("input[name=loan_tenure]").val();
 
+        var seo = $("input[name=seo]").val();
+
         var min_sales_turnover = formatIntNumber($("input[name=min_sales_turnover]").val());
         var min_years_of_incorporation = $("input[name=min_years_of_incorporation]").val();
 
@@ -392,7 +396,7 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: $("#form_loan").attr("action"),
-                data: {category_id: category_id, loan_amount: loan_amount, loan_tenure: loan_tenure, min_sales_turnover: min_sales_turnover, min_years_of_incorporation: min_years_of_incorporation},
+                data: {category_id: category_id, loan_amount: loan_amount, loan_tenure: loan_tenure, min_sales_turnover: min_sales_turnover, min_years_of_incorporation: min_years_of_incorporation,seo:seo},
                 dataType: 'json',
                 beforeSend: function() {
                     App.blockUI({boxed: true});

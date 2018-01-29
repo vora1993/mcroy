@@ -221,7 +221,7 @@ var Loan = {
         var g = $(".filters-content.not-sponsored");
         var h = g.sort(function(a, b) {
             if ("bank" === c) if ("asc" === e) return $(a).find(".bank-title > a").text() < $(b).find(".bank-title > a").text(); else return $(a).find(".bank-title > a").text() > $(b).find(".bank-title > a").text();
-            if ("rate" === c || "applicable" === c || "loan" === c || "month" === c || "interest" === c || "processing" === c || "penalty" === c) {
+            if ("rate" === c || "applicable" === c || "loan" === c || "month" === c || "interest" === c || "processing" === c || "penalty" === c || "requirement" === c) {
                 var d = ".box__" + c;
                 if ("asc" === e) return $(a).find(d + " > span").data("value") < $(b).find(d + " > span").data("value"); else return $(a).find(d + " > span").data("value") > $(b).find(d + " > span").data("value");
             }

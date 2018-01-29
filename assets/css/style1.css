@@ -181,7 +181,7 @@
 .box-services .item .name {
     font-size: 30px;
     padding: 0 15px;
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
 }
 .box-services .item .name a {
@@ -193,8 +193,8 @@
     font-size: 16px;
     padding: 15px;
     margin-bottom: 10px;
-    text-align: left;
-    height: 180px;
+    text-align: center;
+    height: 190px;
     overflow: hidden;
 }
 
@@ -225,7 +225,7 @@
 }
 
 .item_services {
-    /*width: 33.33333%;*/
+    width: 33.33333%;
     float: left;
     margin-bottom: 15px;
 }
