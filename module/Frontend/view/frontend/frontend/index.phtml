@@ -1,207 +1,217 @@
 <?php
 $this->headTitle("Homepage");
 ?>
+<link rel="stylesheet" type="text/css" href="assets/css/my-style-slider.css">
 <?php
+$array_message=[
+    1=>'GET RATING NOW!!',
+    2=>'COMPARE RATES NOW!!',
+    3=>'Click Here To Find Out More'
+];
 if(count($this->sliders) > 0) { ?>
-<div id="slideshow">
-  <?php foreach ($this->sliders as $slider) { ?>
-  <div class="item">
-    <img src="<?php echo $this->basePath('data/image/'.$slider->getUrl()) ?>"/>
-  </div>
-  <?php
-}
-?>
-</div>
-<?php
-}
+    <div id="custom_slideshow">
+        <div id="slideshow">
+        <?php foreach ($this->sliders as $slider) {?>
+            <div class="item">
+                <img width="100%" src="<?php echo $this->basePath('data/image/'.$slider->getUrl()) ?>"/>
+                <?php if($slider->getLink()!='' && $slider->getStyle()!=''){?>
+                <div id="Slide<?php echo $slider->getStyle()?>_button" class="Slideshow_button">
+                    <a href="<?php echo $slider->getLink()?>"><button class="btn btn-default btn-lg"><?php echo $array_message[$slider->getStyle()]?></button></a>
+                </div>
+                <?php
+                    }
+                ?>
+            </div>
+        <?php
+        }
+        ?>
+        </div>
+    </div>
+        <?php
+}   
 ?>
 
 <div id="brand-home">
-  <div class="container">
-    <div class="brand-desc">
-      <p>We Compare Singapore&rsquo;s most reputable <strong>Financial Institutions &amp; Lenders</strong></p>
+    <div class="container">
+        <div class="brand-desc">
+            <p>We Compare Singapore&rsquo;s most reputable <strong>Financial Institutions &amp; Lenders</strong></p>
+        </div>
+        <div class="brand">
+            <?php
+            $product_image = \Zend\Json\Json::decode($widget_1->getContent());
+            if(count($product_image) > 0) {
+                foreach ($product_image as $image) {
+                    ?>
+                    <div class="item"><img src="<?php echo $this->basePath('data/brand/'.$image) ?>" /></div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
     </div>
-    <div class="brand">
-      <?php
-      $product_image = \Zend\Json\Json::decode($widget_1->getContent());
-      if(count($product_image) > 0) {
-        foreach ($product_image as $image) {
-          ?>
-          <div class="item"><img src="<?php echo $this->basePath('data/brand/'.$image) ?>" /></div>
-          <?php
-        }
-      }
-      ?>
-    </div>
-  </div>
 </div>
 
 <div id="services-home">
-  <div class="services-desc">
-    <div class="container">
-      <p>Our <strong>Broad Range</strong> of Services</p>
-      <ul>
-        <li>Save Money &amp; Time</li>
-        <li>Get the Best Deal Within 20 Secs</li>
-        <li>100% Independent</li>
-      </ul>
-    </div>
-  </div>
-  <div class="services-content">
-    <div class="box-services">
-
-      <?php
-      foreach ($widget_2 as $k => $wg) {
-        ?>
-        <div class="item_services col-md-6">
-          <div class="item card">
-            <div class="card--header">
-              <h3 class="name card--header header--text"><a href="<?php echo $wg->getLink() ?>"><?php echo $wg->getName() ?></a></h3>
-            </div>
-            <div class="caption card--body">
-              <div class="card--image-wrapper col-xs-12 col-md-4">
-                <img class="card--image" src="../../assets/img/service-<?php echo $k+1 ?>.png" />
-              </div>
-              <div class="desc card--content col-xs-12 col-md-8">
-                <?php echo $wg->getContent(); ?>
-              </div>
-              <div class="clearfix"></div>
-              <div class="group-btn--card"><a class="card--btn margin-top-20" href="<?php echo $wg->getLink() ?>"><?php echo $wg->getLabelLink() ?></a></div>
-            </div>
-          </div>
+    <div class="services-desc">
+        <div class="container">
+            <p>Our <strong>Broad Range</strong> of Services</p>
+            <ul>
+                <li>Save Money &amp; Time</li>
+                <li>Get the Best Deal Within 20 Secs</li>
+                <li>100% Independent</li>
+            </ul>
         </div>
-        <?php
-      }
-      ?>
-
     </div>
-  </div>
+    <div class="services-content">
+        <div class="box-services">
+
+                <?php
+                foreach ($widget_2 as $k => $wg) {
+                    ?>
+                    <div class="item_services">
+                        <div class="item">
+                            <div class="image"><img src="../../assets/img/service-<?php echo $k+1 ?>.png" /></div>
+                            <div class="caption">
+                                <h3 class="name"><a href="<?php echo $wg->getLink() ?>"><?php echo $wg->getName() ?></a></h3>
+                                <div class="desc">
+                                    <?php echo $wg->getContent(); ?>
+                                </div>
+                                <div class="group-btn"><a class="btn blue-custom btn-block btn-lg margin-top-20" href="<?php echo $wg->getLink() ?>"><?php echo $wg->getLabelLink() ?></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+
+        </div>
+    </div>
 </div>
 
 <div id="total">
-  <div class="container">
-    <div class="total-content">
-      <h3 class="heading-total">We Have Served Over 406 Business and</h3>
-      <div class="total-group">
-        <div class="row">
-          <?php foreach ($widget_3 as $k => $wg): ?>
-            <div class="col-sm-6 col-xs-12">
-              <div class="total-item">
-                <i class="<?php echo $wg->getLink() ?>" aria-hidden="true"></i>
-                <div class="caption-total">
-                  <?php if(strpos($wg->getLabelLink(), "$") !== false): ?>
-                    <span class="number">$</span><span class="number" data-counter="counterup" data-value="<?php echo str_replace("$", "", $wg->getLabelLink()) ?>">0</span>
-                  <?php else: ?>
-                    <span data-counter="counterup" data-value="<?php echo $wg->getLabelLink() ?>">0</span>
-                  <?php endif; ?>
-                  <span style="display: block;"><?php echo $wg->getName() ?></span>
-                  <p><?php echo $wg->getContent(); ?></p>
+    <div class="container">
+        <div class="total-content">
+            <h3 class="heading-total">We Have Served Over 406 Business and</h3>
+            <div class="total-group">
+                <div class="row">
+                    <?php foreach ($widget_3 as $k => $wg): ?>
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="total-item">
+                            <i class="<?php echo $wg->getLink() ?>" aria-hidden="true"></i>
+                            <div class="caption-total">
+                            <?php if(strpos($wg->getLabelLink(), "$") !== false): ?>
+                                <span class="number">$</span><span class="number" data-counter="counterup" data-value="<?php echo str_replace("$", "", $wg->getLabelLink()) ?>">0</span>
+                            <?php else: ?>
+                                <span data-counter="counterup" data-value="<?php echo $wg->getLabelLink() ?>">0</span>
+                            <?php endif; ?>
+                                <span style="display: block;"><?php echo $wg->getName() ?></span>
+                                <p><?php echo $wg->getContent(); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-              </div>
             </div>
-          <?php endforeach; ?>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div id="why-use" class="text-center font-white">
-  <div class="container">
-    <div class="row">
-      <h3 class="margin-bottom-40">Why use <?php echo $this->setting()->owner_name ?>?</h3>
-      <?php foreach ($widget_4 as $k => $wg): ?>
-        <div class="col-md-3 col-sm-6 col-xs-12"><img src="<?php echo $wg->getLink() ?>" />
-          <h4><?php echo $wg->getName() ?></h4>
-          <div class="line-why">&nbsp;</div>
-          <p><?php echo $wg->getContent(); ?></p>
+    <div class="container">
+        <div class="row">
+            <h3 class="margin-bottom-40">Why use <?php echo $this->setting()->owner_name ?>?</h3>
+            <?php foreach ($widget_4 as $k => $wg): ?>
+            <div class="col-md-3 col-sm-6 col-xs-12"><img src="<?php echo $wg->getLink() ?>" />
+                <h4><?php echo $wg->getName() ?></h4>
+                <div class="line-why">&nbsp;</div>
+                <p><?php echo $wg->getContent(); ?></p>
+            </div>
+            <?php endforeach; ?>
         </div>
-      <?php endforeach; ?>
     </div>
-  </div>
 </div>
 
 <?php echo $this->setting()->homepage ?>
 
 <div id="lastest-news">
-  <div class="container">
-    <div class="row">
-      <h3><?php echo $this->translate("Latest News") ?></h3>
-      <div class="news-content">
-        <?php
-        if(count($this->posts) > 0) {
-          foreach ($this->posts as $post) {
-            ?>
-            <div class="col-xs-12">
-              <div class="item-news">
-                <div class="image">
-                  <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
-                </div>
+	<div class="container">
+		<div class="row">
+            <h3><?php echo $this->translate("Latest News") ?></h3>
+			<div class="news-content">
+				<?php ;
+                if(count($this->posts) > 0) {
+                    foreach ($this->posts as $post) {
+                        ?>
+                        <div class="col-xs-12">
+        					<div class="item-news">
+        						<div class="image">
+        							<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img style="height: 212px!important" src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" title="" alt=""></a>
+        						</div>
 
-                <div class="caption">
-                  <h4><?php echo $post->getPostTitle() ?></h4>
-                  <span class="date-news"><i class="fa fa-calendar"></i> <?php echo date("F jS, Y", strtotime($post->getPostDate())); ?></span>
-                  <?php
-                  $introtext = $post->getPostExcerpt();
-                  if(strlen($introtext) > 150) {
-                    // truncate string
-                    $stringCut = substr($introtext, 0, 150);
+        						<div class="caption">
+        							<h4><?php echo $post->getPostTitle() ?></h4>
+        							<span class="date-news"><i class="fa fa-calendar"></i> <?php echo $post->getDateAdded()?></span>
+        							<?php
+                                            $introtext = $post->getPostExcerpt();
+                                            if(strlen($introtext) > 150) {
+                                                // truncate string
+                                                $stringCut = substr($introtext, 0, 150);
 
-                    // make sure it ends in a word so assassinate doesn't become ass...
-                    $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
-                  }
-                  ?>
-                  <p><?php echo $introtext; ?></p>
-                </div>
-                <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
-              </div>
-            </div>
-            <?php
-          }
-        }
-        ?>
-      </div>
-    </div>
-  </div>
+                                                // make sure it ends in a word so assassinate doesn't become ass...
+                                                $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
+                                            }
+                                            ?>
+                                    <p><?php echo $introtext; ?></p>
+        						</div>
+        						<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
+        					</div>
+        				</div>
+                        <?php
+                    }
+                }
+                ?>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="financial" class="font-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 hidden-sm hidden-xs"><div class="image-financial"><img src="<?php echo $this->basePath('assets/img/financial-image.png') ?>" class="img-responsive"></div></div>
-      <div class="col-md-6 col-xs-12 financial-caption">
-        <h3><?php echo $this->translate("Member Get Member Programme (MGM)") ?></h3>
-        <p>We are the 1st comparison site to introduce MGM program cos we know everyone likes a good deal, so why not share with your business partners and associate and get rewarded! Every account signed up will have a unique referral code, refer and get cash incentive!</p>
-        <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn green-custom">Sign for an account</a> <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn blue"><?php echo $this->translate("Login") ?></a>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 hidden-sm hidden-xs"><div class="image-financial"><img src="<?php echo $this->basePath('assets/img/financial-image.png') ?>" class="img-responsive"></div></div>
+            <div class="col-md-6 col-xs-12 financial-caption">
+                <h3><?php echo $this->translate("Member Get Member Programme (MGM)") ?></h3>
+                <p>We are the 1st comparison site to introduce MGM program cos we know everyone likes a good deal, so why not share with your business partners and associate and get rewarded! Every account signed up will have a unique referral code, refer and get cash incentive!</p>
+                <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn green-custom">Sign for an account</a> <a href="<?php echo $this->url("frontend_user", array("action" => "auth")) ?>" class="btn blue"><?php echo $this->translate("Login") ?></a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div id="testimonials">
-  <div class="container">
-    <h3>Words <b>From Our Customers</b></h3>
-    <h4>We love to hear</h4>
-    <div class="row">
-      <div class="box-content">
-        <?php
-        if(count($this->testimonials) > 0) {
-          foreach ($this->testimonials as $testimonial) {
-            ?>
-            <div class="item col-xs-12">
-              <div class="content-test">
-                <p><?php echo $testimonial->getContent() ?></p>
-                <div class="image-test" style="background: url('<?php echo $this->basePath('data/image/'.$testimonial->getUrl()) ?>') no-repeat center center;"></div>
-                <span><b><?php echo $testimonial->getName() ?></b><i><?php echo $testimonial->getPosition() ?></i></span>
-              </div>
-            </div>
-            <?php
-          }
-        }
-        ?>
-      </div>
-    </div>
-  </div>
+    <div class="container">
+        <h3>Words <b>From Our Customers</b></h3>
+        <h4>We love to hear</h4>
+        <div class="row">
+    		<div class="box-content">
+            	<?php
+                if(count($this->testimonials) > 0) {
+                    foreach ($this->testimonials as $testimonial) {
+                        ?>
+                        <div class="item col-xs-12">
+                        	<div class="content-test">
+                        		<p><?php echo $testimonial->getContent() ?></p>
+                            	<div class="image-test" style="background: url('<?php echo $this->basePath('data/image/'.$testimonial->getUrl()) ?>') no-repeat center center;"></div>
+                            	<span><b><?php echo $testimonial->getName() ?></b><i><?php echo $testimonial->getPosition() ?></i></span>
+                            </div>
+                		</div>
+                        <?php
+                    }
+                }
+                ?>
+    		</div>
+        </div>
+	</div>
 </div>
 
 <?php
@@ -218,126 +228,117 @@ $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')
 $this->inlineScript()->captureStart();
 echo <<<JS
 $('#slideshow').owlCarousel({
-  items: 3,
-  autoPlay: 5000,
-  singleItem: true,
-  navigation: true,
-  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-  pagination: false
+	items: 3,
+	autoPlay: 5000,
+	singleItem: true,
+	navigation: true,
+	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+	pagination: false
 });
 
 $('#brand-home .brand').owlCarousel({
-  items: 6,
-  autoPlay: 5000,
-  margin: 10,
-  center: true,
-  navigation: true,
-  navigationText: ['<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>', '<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>'],
-  pagination: false
+    items: 6,
+   	autoPlay: 5000,
+    margin: 10,
+    center: true,
+   	navigation: true,
+   	navigationText: ['<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>', '<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>'],
+   	pagination: false
 });
 
 
 $('#testimonials .box-content').owlCarousel({
-  items: 1,
-  autoPlay: 5000,
-  navigation: true,
-  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-  pagination: true
+	items: 1,
+	autoPlay: 5000,
+	navigation: true,
+	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+	pagination: true
 });
 
 $('.floating-box').owlCarousel({
-  items: 3,
-  autoPlay: 5000,
-  navigation: true,
-  navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-  pagination: false
-});
-
-$('#lastest-news .news-content').owlCarousel({
-  items: 3,
-  autoPlay: 5000,
-  navigation: true,
-  navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-  pagination: false,
-  autoHeight: true
+	items: 3,
+	autoPlay: 5000,
+	navigation: true,
+	navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+	pagination: false
 });
 
 var form_subscribe = $('#form_subscribe');
 form_subscribe.validate({
-  errorElement: 'span', //default input error message container
-  errorClass: 'help-block', // default input error message class
-  focusInvalid: false, // do not focus the last invalid input
-  ignore: "",
-  rules: {
-    subscribe_email: {
-      required: true,
-      email: true
-    }
-  },
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        subscribe_email: {
+            required: true,
+            email: true
+        }
+    },
 
-  highlight: function(element) { // hightlight error inputs
-    $(element)
-    .closest('.form-group').addClass('has-error'); // set error class to the control group
-  },
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
 
-  success: function(label) {
-    label.closest('.form-group').removeClass('has-error');
-    label.remove();
-  },
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
 
-  errorPlacement: function(error, element) {
-    error.insertAfter(element);
-  },
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
 
-  submitHandler: function (form) {
+    submitHandler: function (form) {
         // setup some local variables
-    var form = $(form);
+        var form = $(form);
 
         // let's select and cache all the fields
-    var inputs = form.find("input, select, button, textarea");
+        var inputs = form.find("input, select, button, textarea");
 
         // serialize the data in the form
-    var serializedData = form.serialize();
+        var serializedData = form.serialize();
 
         // let's disable the inputs for the duration of the ajax request
-    inputs.prop("disabled", true);
+        inputs.prop("disabled", true);
 
         // fire off the request to /form.php
 
-    request = $.ajax({
-      url: form.attr("action"),
-      type: "post",
-      data: serializedData
-    });
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
 
         // Clear Message
-    $('#form_subscribe .form-group').removeClass('has-error');
-    $('#form_subscribe .help-block, #form_subscribe .alert').remove();
+        $('#form_subscribe .form-group').removeClass('has-error');
+        $('#form_subscribe .help-block, #form_subscribe .alert').remove();
 
         // callback handler that will be called on success
-    request.done(function (response, textStatus, jqXHR) {
-      var result = $.parseJSON(response);
-      if(result.success) {
-        toastr.success(result.msg);
-        form_subscribe.trigger("reset");
-      } else {
-        toastr.warning(result.msg);
-      }
-    });
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                toastr.success(result.msg);
+                form_subscribe.trigger("reset");
+            } else {
+                toastr.warning(result.msg);
+            }
+        });
 
         // callback handler that will be called on failure
-    request.fail(function (jqXHR, textStatus, errorThrown) {
+        request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
-      toastr.error("The following error occured: " + textStatus, errorThrown);
-    });
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
 
         // callback handler that will be called regardless
         // if the request failed or succeeded
-    request.always(function () {
+        request.always(function () {
             // reenable the inputs
-      inputs.prop("disabled", false);
-    });
-  }
+            inputs.prop("disabled", false);
+        });
+    }
 });
 JS;
 $this->inlineScript()->captureEnd();

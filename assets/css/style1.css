@@ -36,7 +36,7 @@
 .page-header .page-header-menu .hor-menu .navbar-nav>li>a {
     font-size: 14px;
     font-weight: 400;
-    padding: 16px 35px 15px 35px;
+    padding: 16px 30px 15px 30px;
 }
 .page-header .page-header-menu .hor-menu .navbar-nav > li > a > i {
     color: #fff !important;
@@ -45,10 +45,10 @@
     text-align: center;
 }
 #primary-menu > li:last-child > a {
-    padding: 16px 40px 15px;
+    padding: 16px 30px 15px;
     background-image: url('../img/icon-tool.png');
     background-repeat: no-repeat;
-    background-position: 20px 17px;
+    background-position: 10px 17px;
     background-color: #f3b633;
 }
 #primary-menu .dropdown-menu > li > a {
@@ -57,7 +57,7 @@
 #primary-menu > li:last-child > a:hover {
     background-image: url('../img/icon-tool.png') !important;
     background-repeat: no-repeat!important;
-    background-position: 20px 17px !important;
+    background-position: 10px 17px !important;
     background-color: #f3b633!important;
 }
 #primary-menu > li:last-child .dropdown-menu > li a {
@@ -1757,12 +1757,116 @@ td {
     color: #667482;
 }
 
-
 .md-radio label {
     float: left;
     position: relative;
     width: 100%;
     margin-bottom: 10px;
+}
+
+.mg-top-sm{
+    margin-top: 30px;
+}
+
+.mg-top-md{
+    margin-top: 45px;
+}
+
+.mg-top-lg{
+    margin-top: 60px;
+}
+
+.mg-bottom-xs{
+    margin-bottom: 15px;
+}
+
+.mg-bottom-sm{
+    margin-bottom: 30px;
+}
+
+.mg-bottom-md{
+    margin-bottom: 45px;
+}
+
+.mg-bottom-lg{
+    margin-bottom: 60px;
+}
+
+.category-menu_list-item a {
+    display: block;
+    text-align: center;
+    height: 72px;
+    padding: 5px 0;
+}
+
+.category-menu_list-item {
+    background-color: #fff;
+    border: 1px solid #E0EDF8;
+}
+
+.category-menu_list-item:hover, .category-menu_list-item.active {
+    background-color: #E0EDF8;
+}
+
+.category-menu_list-item span {
+    display: flex;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #2C3F4F;
+    line-height: 1.2;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+}
+
+.icon-cat.medium {
+    width: 36px;
+    height: 36px;
+    background-size: 150px;
+}
+
+.icon-cat {
+    display: inline-block;
+    background: url(../img/credit_card_icon.png) no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 106px;
+}
+
+.icon-cat.medium.summary{
+    background: url(../img/credit-card-all.png) no-repeat;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
+}
+
+.icon-cat.medium.cash-back {
+    background-position: -8px -53px;
+}
+
+.icon-cat.medium.air-miles, .icon-cat.medium.travel {
+    background: url(../img/air_miles.png) no-repeat;
+    background-size: contain;
+    width: 50px;
+    height: 36px;
+}
+
+.icon-cat.medium.rewards {
+    background-position: -109px -52px;
+}
+
+.icon-cat.medium.petrol {
+    background-position: -40px -78px;
+}
+
+.icon-cat.medium.shopping {
+    background-position: -41px -40px;
+}
+
+.icon-cat.medium.promo {
+    background-position: -58px -6px;
 }
 
 @media (max-width: 1199px) {

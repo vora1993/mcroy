@@ -12,6 +12,7 @@ return array(
             'page'                => Frontend\Controller\PageController::class,
             'loan_application'    => Frontend\Controller\LoanApplicationController::class,
             'bank_account'        => Frontend\Controller\BankAccountController::class,
+            'credit_card'         => Frontend\Controller\CreditCardController::class,
 		)
 	),
 	'router' => array(
@@ -125,6 +126,20 @@ return array(
                         'controller' => 'refinancing',
 		                'action' => 'index'
 		            ),
+                ),
+            ),
+            'credit-cards' => array(
+                'type' => 'segment',
+                'options' => array(
+                'route' => '/credit-cards[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'credit_card',
+                        'action' => 'index'
+                    ),
                 ),
             ),
             'frontend_user' => array(

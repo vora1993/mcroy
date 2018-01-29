@@ -1,0 +1,49 @@
+<?php
+$slider_loan_tenture = '$slider_loan_tenture';
+$slider_loan_percent = '$slider_loan_percent';
+$total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+?>
+<div class="container">
+  <div class="row">
+    <div id="column-left" class="col-md-3 col-xs-12 mg-top-sm">
+      <?php echo $this->partial('credit_card_filters', array('banks' => $banks, 'providers' => $providers, 'credit_card_category' => 'all')); ?>
+  </div>
+  <div class="col-md-9 col-xs-12 mg-top-sm">
+    <?php echo $this->partial('credit_card_sliders', array('sliders' => $sliders)); ?>
+
+    <?php echo $this->partial('credit_card_navigation', array('page' => 'summary')); ?>
+
+    <div class="portlet light portlet-fit portlet-form no-shadow">
+      <div class="portlet-body form">
+        <form class="form-horizontal form-wizard">
+          <div class="top-floating">
+            <h4> <?php echo $this->translate("Compare the Best Singapore Credit Cards"); ?></h4>
+            <p><?php echo $this->translate("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in nulla sed mi ultricies imperdiet et dignissim purus. Maecenas pulvinar fringilla iaculis. Vestibulum et rutrum risus, malesuada pulvinar sem. Integer fringilla tristique rutrum. Interdum et malesuada fames ac ante ipsum primis in faucibus. In pellentesque laoreet blandit. Cras ultrices est sit amet lorem cursus rutrum. Quisque lectus lacus, laoreet convallis laoreet quis, porta non nunc."); ?></p>
+          </div>
+
+          <div class="filters-table-container mg-top-md" id="results">
+            <?php echo $this->partial('credit_card_details', array('credit_cards' => $credit_cards, 'page' => 'all')); ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<?php echo $this->partial('last_news', array('posts' => $posts)); ?>
+<?php
+  echo $this->partial('compare-credit-card');
+?>
+
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/credit-card-compare.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/credit_cards.js'));
+?>

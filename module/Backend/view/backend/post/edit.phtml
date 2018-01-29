@@ -36,7 +36,7 @@ $this->headTitle($title);
                     </div>
                     <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="<?php echo $this->url("admin/post", array('action' => "edit", "id" => $this->post->getId())) ?>" id="form_post" class="form-horizontal form-bordered">
+                        <form action="<?php echo $this->url("admin/post", array('action' => "edit", "id" => $this->post->getId())) ?>" id="form_post" class="form-horizontal form-bordered" enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Title") ?><span class="required"> * </span></label>
@@ -48,7 +48,7 @@ $this->headTitle($title);
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Seo") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="seo" class="form-control" value="<?php echo $this->post->getSeo() ?>" /> 
+                                        <input type="text" name="seo" class="form-control" value="<?php echo $this->post->getSeo() ?>" readonly/> 
                                     </div>
                                 </div>
                                 
@@ -109,7 +109,7 @@ $this->headTitle($title);
                                                     <input type="file" name="photoupload" id="photoupload" />
                                                     <input type="hidden" name="featured_image" id="featured_image" value="<?php echo $this->post->getFeaturedImage() ?>" />
                                                 </span>
-                                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <?php echo $this->translate("Remove") ?> </a>
+                                                <a id="RemoveImage" href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <?php echo $this->translate("Remove") ?> </a>
                                             </div>
                                         </div>
                                         <?php

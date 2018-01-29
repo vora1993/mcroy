@@ -15,14 +15,14 @@ class BankController extends AbstractActionController
         $banks = $application_model_bank->fetchAll();
         return array("banks" => $banks);
     }
-    
+
     public function addAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
             $bank = new \Application\Entity\Bank;
             $bank->setName($post['name']);
@@ -34,23 +34,23 @@ class BankController extends AbstractActionController
             if($added) {
                 $messages['success'] = true;
                 $messages['msg'] = $translator->translate("Successfully added");
-                    
+
                 // Logo
                 $dir_bank = 'data/bank/';
                 if($post['logo']) {
                     $dir_logo = $dir_bank.$added->getGeneratedValue();
                     if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
-                            
+
                     $dir_tmp = $dir_bank.'/tmp/'.$post['logo'];
                     $dir_new = $dir_logo.'/'.$post['logo'];
                     if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
-                    
+
                     $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
                     $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
                     $application_view_helper_folder = $viewHelperManager->get('folder');
-                    
+
                     $application_view_helper_resizeimage($dir_logo, $post['logo']);
-                    $application_view_helper_folder("delete", $dir_bank.'/tmp');          
+                    $application_view_helper_folder("delete", $dir_bank.'/tmp');
                 }
             } else {
                 $messages['success'] = false;
@@ -61,54 +61,54 @@ class BankController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function editAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
         $bank = $application_model_bank->fetchRow(array('id' => $id));
         if($bank) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-                
+
                 $error = 0;
                 if(!$error) {
                     $bank->setId($id);
                     $bank->setName($post['name']);
                     $bank->setDateModified(new Expression('NOW()'));
                     $bank->setStatus($post['status']);
-                    
+
                     // Logo
                     $dir_bank = 'data/bank/';
                     if($post['logo'] !== $bank->getLogo()) {
                         $dir_logo = $dir_bank.$id;
                         if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
-                        
+
                         $dir_tmp = $dir_bank.'/tmp/'.$post['logo'];
                         $dir_new = $dir_logo.'/'.$post['logo'];
                         if(file_exists($dir_tmp)) {
                             copy($dir_tmp, $dir_new);
-                            
+
                             $ext = pathinfo($post['logo'], PATHINFO_EXTENSION);
                             $new_logo_name = $id.'.'.$ext;
                             rename($dir_new, $dir_logo.'/'.$new_logo_name);
-                            
+
                             $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
                             $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
                             $application_view_helper_folder = $viewHelperManager->get('folder');
-                            
+
                             $application_view_helper_resizeimage($dir_logo, $new_logo_name);
                             $application_view_helper_folder("delete", $dir_bank.'/tmp');
-                            
+
                             $bank->setLogo($new_logo_name);
                         }
                     }
                     $bank->setColor($post['color']);
-                    
+
                     $edited = $application_model_bank->update($bank);
                     if($edited) {
                         $messages['success'] = true;
@@ -121,29 +121,29 @@ class BankController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('bank' => $bank);
         } else {
-            return $this->redirect()->toRoute("admin/bank"); 
+            return $this->redirect()->toRoute("admin/bank");
         }
     }
-    
+
     public function setStatusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -156,7 +156,7 @@ class BankController extends AbstractActionController
                 $user->setId($id);
                 $user->setStatus($status);
                 $user->setDateModified(new Expression('NOW()'));
-                
+
                 $updated = $application_model_bank->update($user);
                 if(!$updated) $error = $error + 1;
             }
@@ -170,8 +170,8 @@ class BankController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
-    
+
+
     /**
      * Property Loan page
      */
@@ -180,14 +180,14 @@ class BankController extends AbstractActionController
         $loans = $application_model_business_loan_package->fetchAll();
         return array("loans" => $loans);
     }
-    
+
     public function addPropertyLoanAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_property_loan_bank');
             $loan = new \Application\Entity\PropertyLoanPackage;
             $loan->setBankId($post['bank_id']);
@@ -215,20 +215,20 @@ class BankController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function editPropertyLoanAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_property_loan_bank');
         $loan = $application_model_business_loan_package->fetchRow(array('id' => $id));
         if($loan) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-                
+
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
@@ -244,7 +244,7 @@ class BankController extends AbstractActionController
                     $loan->setMinYearsOfIncorporation($post['min_years_of_incorporation']);
                     $loan->setDateModified(new Expression('NOW()'));
                     $loan->setStatus($post['status']);
-                    
+
                     $edited = $application_model_business_loan_package->update($loan);
                     if($edited) {
                         $messages['success'] = true;
@@ -257,29 +257,29 @@ class BankController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('loan' => $loan);
         } else {
-            return $this->redirect()->toRoute("admin/view-property-loan"); 
+            return $this->redirect()->toRoute("admin/view-property-loan");
         }
     }
-    
+
     public function statusPropertyLoanAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_property_loan_bank');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -292,7 +292,7 @@ class BankController extends AbstractActionController
                 $user->setId($id);
                 $user->setStatus($status);
                 $user->setDateModified(new Expression('NOW()'));
-                
+
                 $updated = $application_model_business_loan_package->update($user);
                 if(!$updated) $error = $error + 1;
             }
@@ -306,7 +306,7 @@ class BankController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     /**
      * Interest Rate page
      */
@@ -316,11 +316,11 @@ class BankController extends AbstractActionController
             case 1:
                 $model = "application_model_business_loan_package";
             break;
-            
+
             case 2:
                 $model = "application_model_property_loan_bank";
             break;
-            
+
             default:
                 $id = 1;
                 $model = "application_model_business_loan_package";
@@ -328,7 +328,7 @@ class BankController extends AbstractActionController
         }
         $application_model_business_loan_package = $this->getServiceLocator()->get($model);
         $loans = $application_model_business_loan_package->fetchAll(array("status" => 1));
-        
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
@@ -337,18 +337,18 @@ class BankController extends AbstractActionController
             $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
             $application_view_helper_setting = $viewHelperManager->get('setting');
             $setting = $application_view_helper_setting();
-            
+
             $loan_id = $post['id'];
             $type = $post['type'];
             switch ($type) {
                 case 1:
                     $model = "application_model_business_loan_package";
                 break;
-                
+
                 case 2:
                     $model = "application_model_property_loan_bank";
                 break;
-                
+
                 default:
                     $model = "application_model_business_loan_package";
                 break;
@@ -356,7 +356,7 @@ class BankController extends AbstractActionController
             $application_model_business_loan_package = $this->getServiceLocator()->get($model);
             $bank = $application_model_business_loan_package->fetchRow(array("id" => $loan_id));
             $max_loan_tenure = $setting->max_loan_tenure;
-            
+
             $success = false;
             $html = "";
             if($bank) {
@@ -387,25 +387,25 @@ class BankController extends AbstractActionController
                 $messages['success'] = false;
             }
             $messages['html'] = $html;
-            
+
             $response = $this->getResponse();
             $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
             return $response;
         }
         return array("id" => $id, "loans" => $loans);
     }
-    
+
     public function updateInterestRateAction() {
         $translator = $this->getServiceLocator()->get('translator');
         $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
         $application_view_helper_setting = $viewHelperManager->get('setting');
         $setting = $application_view_helper_setting();
-            
+
         $request = $this->getRequest();
         $messages = array();
         if ($request->isPost()) {
             $post = $request->getPost();
-            
+
             $type = $post['type'];
             if($type == 2) {
                 $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_property_loan_bank');
@@ -415,7 +415,7 @@ class BankController extends AbstractActionController
                 $max_loan_tenure = $setting->max_loan_tenure;
             }
             $loan = $application_model_business_loan_package->fetchRow(array("id" => $post['id']));
-                
+
             $error = 0;
             if(!$error) {
                 $loan->setId($post['id']);
@@ -442,7 +442,7 @@ class BankController extends AbstractActionController
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
                     $loan->setDateModified(new Expression('NOW()'));
-                    
+
                     $edited = $application_model_business_loan_package->update($loan);
                     if($edited) {
                         $messages['success'] = true;
@@ -457,21 +457,21 @@ class BankController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function updateInterestRateBusinessLoanAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
         $bank = $application_model_business_loan_package->fetchRow(array('id' => $id));
         return array("type" => 1, "bank" => $bank);
     }
-    
+
     public function updateInterestRatePropertyLoanAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_property_loan_bank');
         $bank = $application_model_business_loan_package->fetchRow(array('id' => $id));
         return array("type" => 2, "bank" => $bank);
     }
-    
+
     /**
      * Referrals
      */
@@ -481,13 +481,13 @@ class BankController extends AbstractActionController
         $referrals = $application_model_referral->fetchAll();
         return array("referrals" => $referrals);
     }
-    
+
     public function setStatusReferralAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_referral = $this->getServiceLocator()->get('application_model_referral');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'paid':
@@ -501,7 +501,7 @@ class BankController extends AbstractActionController
                 $referral = $application_model_referral->fetchRow(array('id' => $id));
                 $referral->setId($id);
                 $referral->setStatus($status);
-                
+
                 $updated = $application_model_referral->update($referral);
                 if(!$updated) $error = $error + 1;
             }
@@ -515,14 +515,14 @@ class BankController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     public function editReferralAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_referral = $this->getServiceLocator()->get('application_model_referral');
         $referral = $application_model_referral->fetchRow(array('id' => $id));
         if($referral) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -534,7 +534,7 @@ class BankController extends AbstractActionController
                     $messages['msg']     = $translator->translate("You can't paid multiple for this loan");
                     $error = $error + 1;
                 }
-                
+
                 if(!$error) {
                     $referral->setId($id);
                     $referral->setCredit($post['credit']);
@@ -550,7 +550,7 @@ class BankController extends AbstractActionController
                         $user_credit->setRefId($id);
                         $user_credit->setDateAdded(new Expression('NOW()'));
                         $application_model_user_credit->insert($user_credit);
-                        
+
                         $messages['success'] = true;
                         $messages['msg']     = $translator->translate("Successfully updated");
                     } else {
@@ -563,10 +563,10 @@ class BankController extends AbstractActionController
             }
             return array('referral' => $referral);
         } else {
-            return $this->redirect()->toRoute("admin/bank", array("action" => "view-referral-summary")); 
+            return $this->redirect()->toRoute("admin/bank", array("action" => "view-referral-summary"));
         }
     }
-    
+
     public function changeLogoAction() {
         $translator = $this->getServiceLocator()->get('translator');
         $messages = array();
@@ -581,9 +581,11 @@ class BankController extends AbstractActionController
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
-                
-                list($txt, $ext) = explode(".", $name);
-                if(in_array($ext, $valid_formats)) {
+
+                $file_path = pathinfo($name);
+                $ext = $file_path['extension'];
+
+                if(in_array(strtolower($ext), $valid_formats)) {
                     $newFilename = time(). '.' . $ext;
                     $tmp = $file['tmp_name'];
                     if(move_uploaded_file($tmp, $dir.'/'.$newFilename)) {
@@ -606,7 +608,7 @@ class BankController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
   		return $response;
     }
-    
+
     function clearHtml($html) {
         $html = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $html);
         $html = preg_replace("/<div>(.*?)<\/div>/", "$1", $html);

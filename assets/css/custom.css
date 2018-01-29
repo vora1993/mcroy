@@ -750,6 +750,19 @@ a:hover, a:focus {
     background: #f9f9f9;
 }
 
+.monthly-income-filter > label > span {
+    color: #12aaeb;
+}
+
+.monthly-income-filter > label {
+    display: block;
+    font-weight: 600;
+}
+
+.banks-filter .bank-logo{
+    cursor: pointer;
+}
+
 .loan-title-portlet {
     border-bottom: 1px solid #ededed;
     display: block;
@@ -1779,7 +1792,6 @@ a:hover, a:focus {
 }
 
 
-
 .contact-details ul {
     list-style-type: none;
     margin: 0;
@@ -2058,7 +2070,71 @@ ul.stay-connected > li.instagram {
     text-align: left;
 }
 
-<<<<<<< HEAD
+.margin-top-sm {
+    margin-top: 15px;
+}
+
+.swal2-modal button.styled.margin-top-sm {
+    margin-top: 15px;
+}
+
+.page-content-justified{
+    text-align: justify;
+}
+
+.faq-panel{
+    border-bottom: solid 1px #e7e6e2;
+    padding: 0;
+    font-size: 14px;
+}
+
+.faq-panel-header{
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.faq-panel .faq-panel-header a .fa-caret-down{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-up{
+    display: none;
+}
+
+.faq-panel .faq-panel-header a.collapsed .fa-caret-down{
+    display: inline-block;
+}
+
+.faq-panel .faq-panel-header a i{
+    color: #78aa43;
+}
+
+.faq-panel .faq-panel-header a{
+    display: block;
+    padding: 20px 0 20px 0px;
+    color: #312f2e;
+    position: relative;
+    text-align: left;
+}
+
+.faq-panel .faq-panel-header a span{
+    padding-left: 10px;
+}
+
+.faq-panel-body{
+    margin: 15px 0 25px;
+    font-size: 20px;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.page-content-wrapper .about-bottom{
+    padding-top: 0px;
+}
+
 .mx-auto{
     margin: 0 auto;
 }
@@ -2073,8 +2149,21 @@ ul.stay-connected > li.instagram {
 .mg-bottom-xs{
     margin-bottom: 15px;
 }
+
+.mg-top-xs{
+    margin-top: 15px;
+}
+
 .form-wizard #complete-total-costs .tooltip-icon{
     margin-top: 0px;
+}
+
+.grayscale{
+    opacity: .3;
+}
+
+.grayscale-off {
+    opacity: 1;
 }
 
 .loan-sidebar-portlet button,

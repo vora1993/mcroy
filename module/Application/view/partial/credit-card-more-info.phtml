@@ -1,0 +1,58 @@
+<div class="mg-top-xs res-card-data-hldr">
+  <div class="col-md-3 col-xs-6">
+    <div class="row title-data">
+      <label><?php echo $this->translate("Annual Fee") ?></label>
+    </div>
+    <div class="row">
+      <span class="list-value">
+        <?php if ($_dataAttributes->principal_annual_fee != ""): ?>
+          <?php echo $_dataAttributes->principal_annual_fee; ?>
+        <?php else: ?>
+          <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+        <?php endif ?>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-3 col-xs-6">
+    <div class="row title-data">
+      <label class=""><?php echo $this->translate("Interest Free") ?></label>
+    </div>
+    <div class="row">
+      <span class="list-value">
+        <?php if ($_dataAttributes->interest_rate != ""): ?>
+          <?php echo $_dataAttributes->interest_rate; ?>
+        <?php else: ?>
+          <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+        <?php endif ?>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-3 col-xs-6">
+    <div class="row title-data">
+      <label class=""><?php echo $this->translate("Annual Interest Rate") ?></label>
+    </div>
+    <div class="row">
+      <span class="list-value">
+        <?php if ($_dataAttributes->annual_interest_rate != ""): ?>
+          <?php echo $_dataAttributes->annual_interest_rate; ?>
+        <?php else: ?>
+          <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+        <?php endif ?>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-3 col-xs-6">
+    <div class="row title-data">
+      <label class=""><?php echo $this->translate("Requirement") ?></label>
+    </div>
+    <div class="row">
+      <span class="list-value">
+        <?php if ($_dataAttributes->requirement != ""): ?>
+          <?php echo $_dataAttributes->requirement; ?>
+        <?php else: ?>
+          <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+        <?php endif ?>
+      </span>
+    </div>
+  </div>
+</div>

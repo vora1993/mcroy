@@ -44,7 +44,7 @@ $this->headTitle($title);
                                             <div class="name"><?php echo $this->translate("Interest Rates") ?><span></span></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
                                             <div class="sort" data-field="month"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>  
+                                        </aside>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
@@ -67,7 +67,7 @@ $this->headTitle($title);
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Int Rates") ?><span></span></div>
                                             <div class="sort" data-field="interest_rates"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>  
+                                        </aside>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
@@ -87,47 +87,29 @@ $this->headTitle($title);
                         </div>
                         <div id="column-right" class="col-sm-3 col-xs-12">
                             <div class="box-featured-bank">
+                                <?php $i=1;?>
+                                <?php if(count($this->interest_rate) > 0): ?>
+                                <?php foreach ($this->interest_rate as $loan):
+                                if($i<=4)
+                                {
+                                $img_bank = $this->Bank(array("id" => $loan->getBankId()));
+                                ?>
                                 <div class="featured-bank lowest-interest">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
+                                    <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
                                     <div class="item-bank">
                                     <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/4.png') ?>" title="" alt="" />
+                                        <img class="logo-bank" src="<?php echo $this->basePath('data/bank/'.$loan->getBankId().'/'.$img_bank->getLogo()) ?>" title="" alt="" />
                                     </div>
-                                        <h4 class="name-bank">HSBC's Personal Loan</h4>
-                                        <span class="amout-bank">(7%)</span>
-                                    </div>
-                                </div>
-                                <div class="featured-bank lowest-processing">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/1.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">POSB Personal Loan</h4>
-                                        <span class="amout-bank">(10%)</span>
+                                        <h4 class="name-bank"><?php echo $loan->getName() ?></h4>
+                                        <span class="amout-bank">(<?php echo $loan->getRate() ?>%)</span>
                                     </div>
                                 </div>
-                                <div class="featured-bank lowest-penalty">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/3.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">Standard  Chartered CashOne</h4>
-                                        <span class="amout-bank">(8.5%)</span>
-                                    </div>
-                                </div>
-                                <div class="featured-bank lowest-annual">
-                                    <h3 class="title-featured">Lowest Interest Rates</h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/brand/2.png') ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank">Citibank Ready Credit</h4>
-                                        <span class="amout-bank">(6.7%)</span>
-                                    </div>
-                                </div>
-                                
+                                <?php
+                                        $i++;
+                                    }
+                                 endforeach;
+                                ?>
+                                <?php endif;?>
                             </div>
                         </div>
                     </div>
@@ -135,7 +117,7 @@ $this->headTitle($title);
                     <div id="info" class="tab-pane fade">
         				<div class="body-info">
                             <div class="content-faq">
-                                <?php 
+                                <?php
                                 $_faq = \Zend\Json\Json::decode($this->faq->getQuestion());
                                 if(count($_faq) > 0) {
                                     $k = 1;
@@ -156,18 +138,18 @@ $this->headTitle($title);
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php 
-                                        $k++;   
+                                        <?php
+                                        $k++;
                                     }
                                 }
                                 ?>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
                     <div id="need" class="tab-pane fade">
                         <div class="body-info">
-                            <div class="content-faq">                               
+                            <div class="content-faq">
                                 <form action="<?php echo $this->url("page", array("action" => "post-question")) ?>" class="form-horizontal" id="question_form">
                                     <div class="form-body">
                                         <div class="form-group">
@@ -208,7 +190,7 @@ $this->headTitle($title);
                                         </div>
                                     </div>
                                 </form>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
@@ -218,17 +200,11 @@ $this->headTitle($title);
 
         </div>
 
-        <div class="compare-disclaimer">
-            <div class="container">
-               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
-            </div>
-		</div>
-
         <?php echo $this->partial('frontend_sub_footer'); ?>
     </div>
 </div>
 
-<section class="shortlist"> 
+<section class="shortlist">
     <div class="container" id="shortlisted-holder">
         <div class="row compare-row" style="display: none;">
             <div class="col-xs-4">
@@ -289,7 +265,7 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom4.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom4.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 $('#testimonials .box-content').owlCarousel({
@@ -327,7 +303,7 @@ form.validate({
             required: true
         }
     },
-    
+
     highlight: function(element) {
         $(element).closest(".form-group").addClass("has-error");
     },
@@ -343,22 +319,22 @@ form.validate({
 
     submitHandler: function (form) {
         var form = $(form);
-        
+
         var inputs = form.find("input, select, button, textarea");
-        
+
         var serializedData = form.serialize();
-    
+
         inputs.prop("disabled", true);
-        
+
         request = $.ajax({
             url: form.attr("action"),
             type: "post",
             data: serializedData
         });
-        
+
         $("#question_form .form-group").removeClass("has-error");
         $("#question_form .help-block, #question_form .alert").remove();
-        
+
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
             if(result.error) {
@@ -371,11 +347,11 @@ form.validate({
                 }
             }
         });
-        
+
         request.fail(function (jqXHR, textStatus, errorThrown) {
             toastr.error("The following error occured: " + textStatus, errorThrown);
         });
-        
+
         request.always(function () {
             inputs.prop("disabled", false);
         });

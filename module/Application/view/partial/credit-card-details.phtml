@@ -1,0 +1,206 @@
+<?php if(count($this->credit_cards) > 0): ?>
+  <div class="filters-table-body filters-credit-card-property">
+    <?php foreach ($this->credit_cards as $key => $credit_card):
+      $bank = $this->bank(array("id" => $credit_card->getBankId()));
+      if (!empty($bank)){
+        $dir_bank_logo = '/data/bank/'.$credit_card->getBankId().'/'.$bank->getLogo();
+        $bank_name = $bank->getName();
+      } else {
+        $dir_bank_logo = "";
+        $bank_name = "";
+      }
+      $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+      $credit_card_color = $credit_card->getColor() ? $credit_card->getColor() : "#FFFFFF";
+      $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+      if(!file_exists($dir_logo)) {
+        $dir_logo = '/assets/img/credit-card.png';
+      }
+
+      switch ($page) {
+        case "points":
+          $short_description = $_dataAttributes->promotion_and_deals;
+          $total_points_per_year = $_dataAttributes->total_points_per_year;
+          $total_points_per_year = (float)$total_points_per_year;
+          $category_promo_detail = number_format($credit_card->getPointsValue()).$this->translate("Points/Year");
+          $header_title = $this->translate("Points");
+          break;
+        case 'air-miles':
+          $short_description = $_dataAttributes->air_miles_details;
+          $miles_per_year = $_dataAttributes->miles_per_year;
+          $miles_per_year = (float)$miles_per_year;
+          $category_promo_detail = number_format($credit_card->getAirMilesValue()).$this->translate("Miles/Year");
+          $header_title = $this->translate("Air Miles");
+          break;
+        case 'cash-back':
+          $short_description = $_dataAttributes->cash_back_details;
+          $cash_back_value = $_dataAttributes->savings_per_year;
+          $cash_back_value = (float)$cash_back_value;
+          $category_promo_detail = "$".number_format($credit_card->getCashbackValue(), 2);
+          $header_title = $this->translate("Cashback");
+          break;
+        case 'discount':
+          $short_description = $_dataAttributes->discount_details;
+          $category_promo_detail = '';
+          $header_title = '';
+          break;
+        case 'all':
+          $short_description = $_dataAttributes->promotion_and_deals;
+          $category_promo_detail = '';
+          $header_title = '';
+          break;
+      }
+    ?>
+    <div class="filters-content not-sponsored mg-bottom-lg">
+      <div class="row-header t-credit-card" style="background-color: <?php echo $credit_card_color; ?>; border: <?php echo $credit_card_color; ?>">
+        <div class="col-xs-6 header--curved hard--left ">
+          <img class="header__logo hidden-xs hidden-sm" src="<?php echo $dir_bank_logo; ?>" alt="<?php echo $bank_name ?>" title="<?php echo $bank_name ?>">
+          <div class="logo-credit-card" style="background: url('<?php echo $dir_logo; ?>') no-repeat;"></div>
+        </div>
+        <div class="header__heading hidden-xs weight--semibold col-xs-5" itemprop="name">
+          <a href="#" target="_blank" class="link--offer-name">
+            <?php echo $credit_card->getName(); ?>
+          </a>
+        </div>
+      </div>
+      <div class="row row-content">
+        <div class="col-xs-12">
+          <?php if ( $_dataAttributes->exclusive ): ?>
+            <div class="ms-exclusive-section clearfix">
+              <label class="banner-title-exclusive">
+                <i class="fa fa-gift" aria-hidden="true"></i>
+                <?php echo $this->translate("Exclusive") ?>
+              </label>
+              <span class="description-exclusive">
+                <?php echo $_dataAttributes->exclusive_details ?>
+              </span>
+              <div class="banner-end">
+                <svg width="15" height="30">
+                  <path fill="#2e86bc" d="M0 0 15 0 0 15 15 30 0 30 Z"></path>
+                </svg>
+              </div>
+            </div>
+          <?php endif ?>
+        </div>
+        <div class="col-md-5">
+          <div class="box-credit-card-content">
+            <?php echo $short_description; ?>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <p class="subheading font-subheading flush--bottom"><?php echo $header_title ?></p>
+          <p itemprop="interestRate" class="heading font-heading weight--bold">
+            <?php echo $category_promo_detail; ?>
+          </p>
+        </div>
+
+      <div class="clearfix"></div>
+        <?php echo $this->partial('credit_card_more_info', array('_dataAttributes' => $_dataAttributes)); ?>
+      </div>
+      <div class="row row-footer">
+        <div class="more-info" style="overflow: hidden; display: none;">
+          <div class="rtcc-more-content">
+            <div class="rtcc-more-content_left">
+              <div class="rtcc-detail-table">
+                <header>
+                  <h4><?php echo $this->translate("Annual Fees and Rates"); ?></h4>
+                </header>
+                <main>
+                  <ul>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Principal Annual Fee"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->principal_annual_fee; ?>
+                      </span>
+                    </li>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Supplementary Annual Fee"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->supplementary_annual_fee; ?>
+                      </span>
+                    </li>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Fee Waiver"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->fee_waiver; ?>
+                      </span>
+                    </li>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Annual Interest Rate"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->annual_interest_rate; ?>
+                      </span>
+                    </li>
+                  </ul>
+                </main>
+              </div>
+              <div class="rtcc-detail-table">
+                <header>
+                  <h4><?php echo $this->translate("Eligibility"); ?></h4>
+                </header>
+                <main>
+                  <ul>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Singaporean Minimum Income"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->singaporean_income; ?>
+                      </span>
+                    </li>
+                    <li class="list-label-value">
+                      <span class="list-label"><?php echo $this->translate("Non-Singaporean Minimum Income"); ?></span>
+                      <span class="list-value">
+                        <?php echo $_dataAttributes->non_singaporean_income; ?>
+                      </span>
+                    </li>
+                  </ul>
+                </main>
+              </div>
+            </div>
+
+            <div class="rtcc-more-content_right">
+              <div class="rtcc-detail-table detail-table-category_code">
+                <header class="clearfix">
+                  <h4>
+                    <?php echo $this->translate("Things to look out for"); ?>
+                  </h4>
+                </header>
+                <div class="clearfix"></div>
+                <main>
+                  <?php echo $_dataAttributes->look_out_for; ?>
+                </main>
+              </div>
+
+              <div class="rtcc-detail-table detail-table-card-features">
+                <header class="clearfix">
+                  <h4>
+                    <?php echo $this->translate("Card Features"); ?>
+                  </h4>
+                </header>
+                <div class="clearfix"></div>
+                <main>
+                  <?php echo $_dataAttributes->card_features; ?>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 more-detail">
+          <div class="col-md-8 col-sm-6 col-xs-12 button-gr button-gr-s">
+            <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
+            <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
+          </div>
+          <?php
+          $class = '';
+          if(count($select) > 0) {
+            if(in_array($credit_card->getId(), $select)) $class = ' active';
+          }
+          ?>
+          <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
+            <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="CreditCard.select(this)" data-id="<?php echo $credit_card->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
+            <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="CreditCard.apply(this)" data-url="<?php echo $credit_card->getApplyUrl(); ?>" data-id="<?php echo $credit_card->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php endforeach;?>
+  </div>
+<?php endif;?>
