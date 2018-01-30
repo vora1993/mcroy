@@ -1468,7 +1468,7 @@ span.note-cart {
 }
 .filters-content [class*=box__] > span b {
     display: block;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 20px;
     color: #0070ae;
 }
