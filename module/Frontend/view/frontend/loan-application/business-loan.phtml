@@ -301,8 +301,15 @@ if(count($notify) > 0) {
     echo '<script type="text/javascript">';
     $time_out = 2500;
     foreach ($notify as $value) {
+        if($value=='There are 38 people viewed these loans today')
+        {
+            $message_js='There are '.rand(30,100).' people viewed these loans today';
+        }else
+        {
+            $message_js='There are '.rand(30,100).' customer applied these loans today';
+        }
         echo 'setTimeout(function(){
-                $.bootstrapGrowl("'.$value.'", {
+                $.bootstrapGrowl("'.$message_js.'", {
                     ele: "body",
                     type: "info",
                     offset: {

@@ -14,7 +14,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAll(array('status' => 1));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll(array('status' => 1));
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');

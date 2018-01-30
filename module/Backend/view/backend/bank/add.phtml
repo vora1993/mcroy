@@ -87,6 +87,40 @@ $this->headTitle($title);
                                         <input type="text" class="form-control colorpicker" name="color" value="#0362f0">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Select Logo in credit card") ?></label>
+                                    <div class="col-md-6">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="input-group input-large">
+                                                <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                                    <i class="fa fa-camera fileinput-exists"></i>&nbsp;
+                                                    <span class="fileinput-filename"> </span>
+                                                </div>
+                                                <span class="input-group-addon btn default btn-file">
+                                                    <span class="fileinput-new"> <?php echo $this->translate("Select file") ?> </span>
+                                                    <span class="fileinput-exists"> <?php echo $this->translate("Change") ?> </span>
+                                                    <input type="file" name="photoupload_credit_card" id="photoupload_credit_card" />
+                                                    <input type="hidden" name="logo_credit_card" id="logo_credit_card" value="" />
+                                                </span>
+                                                <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <?php echo $this->translate("Remove") ?> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-offset-3 col-xs-6">
+                                        <img id="photo_credit_card" alt="photo_credit_card" class="img-responsive" src="/data/image/no-image-128.png">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Dispaly on credit card") ?></label>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="status_credit_card">
+                                            <option value="1">Active</option>
+                                            <option value="0" selected>Deactive</option>
+                                        </select> 
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-actions">
                                 <div class="row">
@@ -134,6 +168,30 @@ $('#photoupload').on("change", function(){
                 toastr.success(result.msg);
                 $('#photo').attr("src", full_url + result.src);
                 $('#logo').val(result.name);
+            } else {
+                toastr.warning(result.msg);
+            } 
+        }
+    }
+    // Add any event handlers here...
+    xhr.open('POST', full_url + "/admin/bank/change-logo", true);
+    xhr.send(formData);
+});
+
+$('#photoupload_credit_card').on("change", function(){
+    var form = document.getElementById('form_bank');
+    var fileInput = document.getElementById('photoupload_credit_card');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            var result = $.parseJSON(xhr.responseText);
+            if(result.success === true) {
+                toastr.success(result.msg);
+                $('#photo_credit_card').attr("src", full_url + result.src);
+                $('#logo_credit_card').val(result.name);
             } else {
                 toastr.warning(result.msg);
             } 

@@ -20,7 +20,7 @@
           </label>
           <div class="clearfix">
             <?php foreach ($this->banks as $key => $bank):
-              $dir_bank_logo = 'data/bank/'.$bank->getId().'/m_'.$bank->getLogo();
+              $dir_bank_logo = 'data/logo_bank_credit_card/'.$bank->getId().'/m_'.$bank->getLogoInCreditCard();
               if(!file_exists($dir_bank_logo)) {
                 $dir_bank_logo = '/assets/img/credit-card.png';
               }
