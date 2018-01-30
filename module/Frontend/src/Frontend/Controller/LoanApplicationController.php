@@ -214,8 +214,8 @@ class LoanApplicationController extends AbstractActionController
                         </div>
 
                         <div class="col-md-4">
-                        <div class="col-md-8 hide"><strong>' . $translator->translate("Min Age") .'</strong></div>
-                        <div class="col-md-4 hide">' . $loan->getMinAge() . '</div>
+                        <div class="col-md-8 "><strong>' . $translator->translate("Penalty Fee") .'</strong></div>
+                        <div class="col-md-4">' . $loan->getPrepaymentPenaltyFee() . '</div>
                         </div>
 
                         <div class="col-md-4">

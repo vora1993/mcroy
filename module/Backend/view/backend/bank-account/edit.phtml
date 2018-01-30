@@ -197,7 +197,8 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Highlight") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="highlight" class="form-control editor" value="<?php echo $this->loan->getHighlight() ?>" /> 
+                                        <!-- <input type="text" name="highlight" class="form-control editor" value="<?php echo $this->loan->getHighlight() ?>" />  -->
+                                        <textarea class="form-control editor"><?php echo $this->loan->getHighlight() ?></textarea>
                                     </div>
                                 </div>
                                 
