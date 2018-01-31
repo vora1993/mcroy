@@ -771,8 +771,7 @@ class LoanApplicationController extends AbstractActionController
                         // $I = round($A - $loan_amount, 2);
 
                         $loan_amount_interes=$post['loan_amount_interes'];
-                        $month_interes=$post['month_interes'];
-                        $I=($interest_rate*$loan_amount_interes*$month_interes)/100/12;
+                        $I=($interest_rate*$loan_amount_interes)/100;
 
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getTenor()) .'"><b>' . $loan->getTenor() . '</b>' . $translator->translate("Tenor") .'</span></li>';
@@ -836,6 +835,173 @@ class LoanApplicationController extends AbstractActionController
                 }
                 $html .= '</div>';
             }
+            $response = $this->getResponse();
+            $response->setContent(\Zend\Json\Json::encode(array("html" => $html)));
+            return $response;
+        }
+        if($category->getName() === 'Fixed Deposit'){
+            $view_model = new ViewModel(array("category" => $category, "faq" => $faq));
+            $view_model->setTemplate('frontend/bank-account/fixed-deposit.phtml');
+        }
+        $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+        $faq = $application_model_faq->fetchRow(array("type" => "bank_account"));
+        $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
+        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1,"display"=>$seo));
+        $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate,"current_category"=>$category,"seo"=>$seo));
+        return $view_model;
+    }
+
+    public function bankAccountFilterAction()
+    {
+        $session = new Session('bank_account');
+        $session->offsetUnset('success');
+        $request = $this->getRequest();
+
+        $seo = $this->params()->fromRoute('seo');
+        $application_model_category = $this->getServiceLocator()->get('application_model_category');
+        $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "bank_account"));
+        
+        if ($request->isPost())
+        {
+            $post = $request->getPost();
+            $messages = array();
+            $translator = $this->getServiceLocator()->get('translator');
+            $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basePath');
+            $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
+
+            $category_id = $post['category_id'];
+            $loan_amount = $post['loan_amount'];
+            $loan_tenure = $post['loan_tenure'];
+            $month_interes=$post['month_interes'];
+
+            $category = $application_model_category->fetchRow(array("id" => $category_id));
+            $session->offsetSet('category_id', $category_id);
+
+            $loans = $application_model_bank_account_package->fetchAll(array("status" => 1, "category_id" => $category_id));
+            $html = '';
+            if (count($loans) > 0)
+            {
+                $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
+                $html .= '<div class="filters-table-body">';
+                foreach ($loans as $k => $loan) {
+                    $class = "";
+                    if ($session->offsetExists('compare'))
+                    {
+                        $compare_arr = $session->offsetGet('compare');
+                        if (count($compare_arr) > 0)
+                        {
+                            if (in_array($loan->getId(), $compare_arr))
+                            {
+                                $class = " active";
+                            }
+                        }
+                    }
+
+                    $bank = $application_model_bank->fetchRow(array("id" => $loan->getBankId()));
+                    //if ($k == 0) {
+                        //$html .= '<div class="filters-content sponsored">';
+                    //} else {
+                    if($loan->getCategoryAccount()==$month_interes)
+                    {
+                        $html .= '<div class="filters-content not-sponsored">';
+                        //}
+                        $html .= '<div class="row-header"><h4 class="bank-title"  style="background-color: ' . $bank->getColor() .'"><a href="#">' . $loan->getLoanTitle() . '</a></h4></div>';
+                        $html .= '<div class="row-content">';
+                        // Image
+                        $dir_logo = 'data/bank/' . $loan->getBankId() . '/m_' . $bank->getLogo();
+                        if (!file_exists($dir_logo))
+                        {
+                            $dir_logo = 'data/image/no-image-64.png';
+                        }
+                        $html .= '<ul>';
+                        $html .= '<li><a href="#"><img src="' . $basePath($dir_logo) .'" alt="' . $loan->getLoanTitle() . '" class="logo" /></a></li>';
+                        if($category->getName() === 'Fixed Deposit') {
+                            $interest_rate = $this->string_to_number($loan->getIntRate());
+                            // A = P x (1 + r/n)nt
+                            // I = A - P
+                            if($loan->getInterestRate()) {
+                                $interest_rates = \Zend\Json\Json::decode($loan->getInterestRate());
+                                if(count($interest_rates) > 0) {
+                                    foreach ($interest_rates as $value) {
+                                        if($value->tier == $this->string_to_number($loan_tenure)) {
+                                            $interest_rate = $value->percentage;
+                                        }
+                                    }
+                                }
+                            }
+                            // Formula:
+                            // A = P x (1 + r/n)nt
+                            // I = A - P
+                            // First, converting R percent to r a decimal
+                            // r = R/100 = 0.35%/100 = 0.0035 per year.
+                            // $r = $interest_rate / 100;
+                            // //Putting time into years for simplicity,
+                            // //3 months / 12 months/year = 0.25 years.
+                            // $t = $loan_tenure / 12;
+                            // // Solving our equation
+                            // $A = $loan_amount * (1 + ($r * $t));
+                            // $I = round($A - $loan_amount, 2);
+
+                            $loan_amount_interes=$post['loan_amount_interes'];
+                            $I=($interest_rate*$loan_amount_interes)/100;
+
+                            $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
+                            $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getTenor()) .'"><b>' . $loan->getTenor() . '</b>' . $translator->translate("Tenor") .'</span></li>';
+                            $html .= '<li class="box__interest_rates"><span class="interest_rates" data-value="' . $this->string_to_number($interest_rate) .'"><b>' . $interest_rate . '%</b>' . $translator->translate("Interest Rates") .'</span></li>';
+                            $html .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.$I.'"><b>'.$I.'$</b>' . $translator->translate("Interest Earned") .'</span></li>';
+                        }
+                        $html .= '</ul>';
+                        $html .= '</div>'; // End row-content
+
+                        $html .= '<div class="row-footer">';
+                        $html .= '<div class="col-md-12 summary-details">';
+
+                        $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Interest Rates").'</div>';
+                        $html .= '<div class="col-md-6">';
+                        if($loan->getInterestRate()) {
+                            $interest_rates = \Zend\Json\Json::decode($loan->getInterestRate());
+                            if(count($interest_rates) > 0) {
+                                $html .= '<ul>';
+                                foreach ($interest_rates as $value) {
+                                    if($category->getName() === 'Fixed Deposit') {
+                                        $html .= '<li><label>'.$value->tier.' months</label><span>'.$value->percentage.' %</span></li>';
+                                    } else {
+                                        $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
+                                    }
+                                }
+                                $html .= '</ul>';
+                            }
+                        }
+                        $html .= '</div></div>';
+
+                        /*$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Citizenship").'</div><div class="col-md-6">'.$loan->getCitizenship().'</div></div>';
+                        $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Age").'</div><div class="col-md-6">'.$loan->getAge().'</div></div>';*/
+                        if($category->getName() === 'Fixed Deposit') $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Minimum Deposit").'</div><div class="col-md-6">'.$loan->getMinimumBalance().'</div></div>';
+                        $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Annual Fee").'</div><div class="col-md-6">'.$loan->getAnnualFee().'</div></div>';
+                        $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Service Fee").'</div><div class="col-md-6">'.$loan->getServiceFee().'</div></div>';
+                        $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Highlight").'</div><div class="col-md-6">'.$loan->getHighlight().'</div></div>';
+
+                        $html .= '</div>'; // End summary-details
+
+                        $html .= '<div class="col-md-12 more-detail">';
+                        $html .= '<div class="col-md-8 col-sm-6 col-xs-12 button-gr button-gr-s">
+                            <a href="javascript:void(0)" class="btn btn-more-detail">' . $translator->translate("Details") . '<i class="fa fa-angle-down"></i></a>
+                            <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;">' .$translator->translate("Close") . '<i class="fa fa-angle-up"></i></a>';
+                        $html .= '</div>';
+
+                        $html .= '<div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">';
+                        $html .= '<div class="col-md-6 col-sm-6 col-xs-12 box__compare"><button type="button" onclick="Loan.compare(this)" data-id="' .$loan->getId() . '" class="btn btn-lg btn-block ladda-button compare' . $class . '" title="' . $translator->translate("Compare") . '"><i class="fa fa-copy"></i><span>' . $translator->translate("Compare") . '</span></button></div>';
+                        $html .= '<div class="col-md-6 col-sm-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="' .$loan->getId() . '" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="' .$translator->translate("Apply") . '"><i class="fa fa-check-square-o"></i> ' . $translator->translate("Apply Now") .'</button></div>';
+                        $html .= '</div>';
+
+                        $html .= '</div></div>'; // End row-footer
+
+                        if($loan->getPromotions()) $html .= '<div class="promotion"><span>'.$loan->getPromotions().'</span></div>';
+                        $html .= '</div>';
+                    }
+                $html .= '</div>';
+                }
+        }
             $response = $this->getResponse();
             $response->setContent(\Zend\Json\Json::encode(array("html" => $html)));
             return $response;

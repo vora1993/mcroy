@@ -27,6 +27,7 @@ class BankAccountController extends AbstractActionController
             $loan = new \Application\Entity\BankAccountPackage;
             $loan->setBankId($post['bank_id']);
             $loan->setCategoryId($post['category_id']);
+            $loan->setCategoryAccount($post['category_account']);
             $loan->setLoanTitle($post['loan_title']);
             if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
             $loan->setLink($post['link']);
@@ -85,12 +86,12 @@ class BankAccountController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
                     $loan->setBankId($post['bank_id']);
                     $loan->setCategoryId($post['category_id']);
+                    $loan->setCategoryAccount($post['category_account']);
                     $loan->setLoanTitle($post['loan_title']);
                     if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
                     $loan->setLink($post['link']);
