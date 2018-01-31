@@ -44,10 +44,11 @@ $this->headTitle($title);
                                                     <div class="col-xs-12">
                                                         <div class="input-group" style="width: 100%">
                                                             <select name="month_interes" class="form-control" id="sel1">
+                                                                <option value="0">-- Select account month --</option>
+                                                                <option value="3">3 months</option>
                                                                 <option value="6">6 months</option>
+                                                                <option value="9">9 months</option>
                                                                 <option value="12">12 months</option>
-                                                                <option value="18">18 months</option>
-                                                                <option value="24">24 months</option>
                                                             </select>           
                                                         </div>
                                                     </div>
@@ -342,24 +343,30 @@ $('#submit-search').click(function(){
     var category_id = $("input[name=category_id]").val();
     var loan_amount_interes=$("input[name=loan_amount]").val();
     var month_interes=$("select[name=month_interes]").val();
-    $.ajax({
-        type: "POST",
-        url: full_url + "/loan-application/bank-account",
-        data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
-        dataType: 'json',
-        beforeSend: function() {
-            App.blockUI({boxed: true});
-        },
-        success: function(itemJson) {
-            App.unblockUI();
-            $('#results').html(itemJson.html);
-            Loan.detail();
-        },
+    if(month_interes==0)
+    {
+        alert("You not select account month");
+    }else
+    {
+        $.ajax({
+            type: "POST",
+            url: full_url + "/loan-application/bank-account-filter",
+            data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
+            dataType: 'json',
+            beforeSend: function() {
+                App.blockUI({boxed: true});
+            },
+            success: function(itemJson) {
+                App.unblockUI();
+                $('#results').html(itemJson.html);
+                Loan.detail();
+            },
 
-        error : function(xhr, status){
-            console.log(status);
-        },
-    });
+            error : function(xhr, status){
+                console.log(status);
+            },
+        });
+    }
 })
 
 var form = $("#question_form");
