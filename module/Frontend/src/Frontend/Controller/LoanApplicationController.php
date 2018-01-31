@@ -314,8 +314,7 @@ class LoanApplicationController extends AbstractActionController
         $faq = $application_model_faq->fetchRow(array("type" => "business_loan"));
 
         $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
-        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1));
-
+        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1,"display"=>$seo));
         // Count apply today
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
         $business_loan = $application_model_business_loan->fetchDate(array("category_id" => $category->getId()), date("d"), date("m"), date("Y"));
@@ -848,7 +847,7 @@ class LoanApplicationController extends AbstractActionController
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array("type" => "bank_account"));
         $application_model_bank_interest_rate = $this->getServiceLocator()->get('application_model_bank_interest_rate');
-        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1));
+        $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1,"display"=>$seo));
         $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate,"current_category"=>$category,"seo"=>$seo));
         return $view_model;
     }

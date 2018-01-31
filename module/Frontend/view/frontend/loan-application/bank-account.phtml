@@ -32,7 +32,7 @@ $this->headTitle($title);
                                                     <b class="col-xs-12 lb-loan"><?php echo $this->translate("I want to put") ?></b>
                                                     <div class="col-xs-12">
                                                         <div class="input-group">
-                                                            <input type="text" name="loan_amount" value="50000" id="loan_amount" class="form-control" placeholder="50000" />
+                                                            <input type="text" name="loan_amount" value="100000" id="loan_amount" class="form-control" placeholder="100000" />
                                                             <span class="input-group-addon"><i class="fa fa-usd"></i></span>
                                                         </div>
                                                     </div>
@@ -138,19 +138,13 @@ $this->headTitle($title);
                         <div id="column-right" class="col-sm-3 col-xs-12">
                             <div class="box-featured-bank">
                                 <?php 
-                                $array_interest_rate=[
-                                    'Lowest Interest Rates'=>'Highest Interest Earned for 6 months FD',
-                                    'Lowest Processing Fees'=>'Highest Interest Earned for 12 months FD',
-                                    'Lowest Penalty Fees'=>'Highest Interest Earned for 18 months FD',
-                                    'Promo Interest Rates'=>'Highest Interest Earned for 24 months FD'
-                                ];
                                 foreach ($this->interest_rate as $loan):
                                 if($i<=4)
                                 {
                                 $img_bank = $this->Bank(array("id" => $loan->getBankId()));
                                 ?>
                                 <div class="featured-bank lowest-interest">
-                                    <h3 class="title-featured"><?php echo $array_interest_rate[$loan->getType()] ?></h3>
+                                    <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
                                     <div class="item-bank">
                                     <div class="img-bank">
                                         <img class="logo-bank" src="<?php echo $this->basePath('data/bank/'.$loan->getBankId().'/'.$img_bank->getLogo()) ?>" title="" alt="" />

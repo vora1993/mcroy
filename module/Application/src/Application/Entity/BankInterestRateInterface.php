@@ -11,4 +11,5 @@ interface BankInterestRateInterface
     public function getType();
     public function getStatus();
     public function getSort();
+    public function getDisplay();
 }

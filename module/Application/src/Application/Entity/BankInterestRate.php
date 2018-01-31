@@ -10,6 +10,7 @@ class BankInterestRate implements BankInterestRateInterface
     protected $type;
     protected $status;
     protected $sort;
+    protected $display;
     
     public function getId()
     {
@@ -78,6 +79,16 @@ class BankInterestRate implements BankInterestRateInterface
     public function setSort($sort)
     {
         $this->sort = (int) $sort;
+        return $this;
+    }
+
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+    public function setDisplay($display)
+    {
+        $this->display = $display;
         return $this;
     }
 }
