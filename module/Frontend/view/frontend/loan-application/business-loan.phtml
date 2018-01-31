@@ -140,15 +140,16 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                             <div class="filters-table-container" id="results"></div>
                             <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
                         </div>
+                        <?php $i=1;?>
+                            <?php if(count($this->interest_rate) > 0): ?>
+                        ?>
                         <div id="column-right" class="col-sm-3 col-xs-12">
                             <div class="box-featured-bank">
-                                <?php $i=1;?>
-                                <?php if(count($this->interest_rate) > 0): ?>
-                                <?php foreach ($this->interest_rate as $loan):
+                            <?php foreach ($this->interest_rate as $loan):
                                 if($i<=4)
                                 {
                                 $img_bank = $this->Bank(array("id" => $loan->getBankId()));
-                                ?>
+                            ?>
                                 <div class="featured-bank lowest-interest">
                                     <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
                                     <div class="item-bank">
@@ -164,9 +165,9 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                     }
                                  endforeach;
                                 ?>
-                                <?php endif;?>
                             </div>
                         </div>
+                        <?php endif;?>
                     </div>
 
                     <div id="info" class="tab-pane fade">

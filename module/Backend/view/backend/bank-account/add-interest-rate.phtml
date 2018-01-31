@@ -99,6 +99,21 @@ if(count($banks) > 0) {
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Display") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select id="display" name="display" class="form-control">
+                                            <option value="business-term-loan">Business Term Loan</option>
+                                             <option value="government-assisted-loan"> Government Assisted Loan</option>
+                                              <option value="lefs-micro-loan-s">LEFS - Micro Loan </option>
+                                              <option value="working-capital-loan">Working Capital Loan</option>
+                                              <option value="p2p-lending">P2P Lending</option>
+                                              <option value="factoring">Factoring</option>
+                                              <option value="residential-equity-term-loan">Residential Equity Term Loan</option>
+                                              <option value="fixed-deposit">Fixed Deposit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="not_fixed_deposit" class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Type") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
                                         <select name="type" class="form-control">
@@ -106,6 +121,17 @@ if(count($banks) > 0) {
                                              <option value="Lowest Processing Fees"> Lowest Processing Fees</option>
                                               <option value="Lowest Penalty Fees">Lowest Penalty Fees</option>
                                               <option value="Promo Interest Rates">Promo Interest Rates</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="fixed_deposit" class="form-group">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Type") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select name="type_fixed" class="form-control">
+                                            <option value="Highest Interest Earned for 6 months FD">Highest Interest Earned for 6 months FD</option>
+                                            <option value="Highest Interest Earned for 12 months FD">Highest Interest Earned for 12 months FD</option>
+                                            <option value="Highest Interest Earned for 18 months FD">Highest Interest Earned for 18 months FD</option>
+                                            <option value="Highest Interest Earned for 24 months FD">Highest Interest Earned for 24 months FD</option>
                                         </select>
                                     </div>
                                 </div>
@@ -161,6 +187,22 @@ $('select[name=category_id]').on("change", function() {
         $('.minimum_balance label').text('Minimum Balance');
     }
 });
+
+$('#not_fixed_deposit').show();
+$('#fixed_deposit').hide();
+
+$('#display').change(function(){
+    var display=$('#display').val();
+    if(display=='fixed-deposit')
+    {
+        $('#not_fixed_deposit').hide();
+        $('#fixed_deposit').show();
+    }else
+    {
+        $('#not_fixed_deposit').show();
+        $('#fixed_deposit').hide();
+    }
+})
 
 tinymce.init({
     selector: '.editor',

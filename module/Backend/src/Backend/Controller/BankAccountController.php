@@ -585,12 +585,16 @@ class BankAccountController extends AbstractActionController
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_bank_interest_rate= $this->getServiceLocator()->get('application_model_bank_interest_rate');
             $loan = new \Application\Entity\BankInterestRate;
+            $display=$post['display'];
+            $type=$post['type'];
+            if($display=='fixed-deposit') $type=$post['type_fixed'];
             $loan->setBankId($post['bank_id']);
             $loan->setName($post['name']);
             $loan->setRate($post['rate']);
-            $loan->setType($post['type']);
+            $loan->setType($type);
             $loan->setSort($post['sort']);
             $loan->setStatus(1);
+            $loan->setDisplay($display);
             $added = $application_model_bank_interest_rate->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -618,12 +622,16 @@ class BankAccountController extends AbstractActionController
                 $post = $request->getPost();
                 $error = 0;
                 if(!$error) {
+                    $display=$post['display'];
+                    $type=$post['type'];
+                    if($display=='fixed-deposit') $type=$post['type_fixed'];
                     $loan->setBankId($post['bank_id']);
                     $loan->setName($post['name']);
                     $loan->setRate($post['rate']);
-                    $loan->setType($post['type']);
+                    $loan->setType($type);
                     $loan->setSort($post['sort']);
                     $loan->setStatus($post['status']);
+                    $loan->setDisplay($display);
 
                     $edited = $application_model_bank_interest_rate->update($loan);
                     if($edited) {
