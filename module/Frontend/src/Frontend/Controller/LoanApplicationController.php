@@ -763,13 +763,17 @@ class LoanApplicationController extends AbstractActionController
                         // I = A - P
                         // First, converting R percent to r a decimal
                         // r = R/100 = 0.35%/100 = 0.0035 per year.
-                        $r = $interest_rate / 100;
-                        //Putting time into years for simplicity,
-                        //3 months / 12 months/year = 0.25 years.
-                        $t = $loan_tenure / 12;
-                        // Solving our equation
-                        $A = $loan_amount * (1 + ($r * $t));
-                        $I = round($A - $loan_amount, 2);
+                        // $r = $interest_rate / 100;
+                        // //Putting time into years for simplicity,
+                        // //3 months / 12 months/year = 0.25 years.
+                        // $t = $loan_tenure / 12;
+                        // // Solving our equation
+                        // $A = $loan_amount * (1 + ($r * $t));
+                        // $I = round($A - $loan_amount, 2);
+
+                        $loan_amount_interes=$post['loan_amount_interes'];
+                        $month_interes=$post['month_interes'];
+                        $I=($interest_rate*$loan_amount_interes*$month_interes)/100/12;
 
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getTenor()) .'"><b>' . $loan->getTenor() . '</b>' . $translator->translate("Tenor") .'</span></li>';

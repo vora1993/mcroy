@@ -24,7 +24,7 @@ $this->headTitle($title);
                 ?>
                     <div class="col-md-12">
                             <div class="search-bank">
-                                <form method="post" action="<?php echo $this->url("loan_application", array("action" => "business-loan")) ?>" id="form_loan">
+                                <form method="post" action="<?php echo $this->url("loan_application", array("action" => "bank-account")) ?>" id="form_loan">
                                     <div class="col-md-9 col-xs-12">
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 15px;">
@@ -43,11 +43,11 @@ $this->headTitle($title);
                                                     <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("Over") ?></b>
                                                     <div class="col-xs-12">
                                                         <div class="input-group" style="width: 100%">
-                                                            <select class="form-control" id="sel1">
-                                                                <option>6 months</option>
-                                                                <option>12 months</option>
-                                                                <option>18 months</option>
-                                                                <option>24 months</option>
+                                                            <select name="month_interes" class="form-control" id="sel1">
+                                                                <option value="6">6 months</option>
+                                                                <option value="12">12 months</option>
+                                                                <option value="18">18 months</option>
+                                                                <option value="24">24 months</option>
                                                             </select>           
                                                         </div>
                                                     </div>
@@ -340,8 +340,33 @@ $('#testimonials .box-content').owlCarousel({
 });
 
 
-Loan.load();
+Loan.load_fixed_deposit();
 Loan.load_compare();
+
+//Ajax filter
+$('#submit-search').click(function(){
+    var category_id = $("input[name=category_id]").val();
+    var loan_amount_interes=$("input[name=loan_amount]").val();
+    var month_interes=$("select[name=month_interes]").val();
+    $.ajax({
+        type: "POST",
+        url: full_url + "/loan-application/bank-account",
+        data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
+        dataType: 'json',
+        beforeSend: function() {
+            App.blockUI({boxed: true});
+        },
+        success: function(itemJson) {
+            App.unblockUI();
+            $('#results').html(itemJson.html);
+            Loan.detail();
+        },
+
+        error : function(xhr, status){
+            console.log(status);
+        },
+    });
+})
 
 var form = $("#question_form");
 form.validate({
@@ -387,7 +412,6 @@ form.validate({
         var serializedData = form.serialize();
 
         inputs.prop("disabled", true);
-
         request = $.ajax({
             url: form.attr("action"),
             type: "post",

@@ -58,6 +58,30 @@ var Loan = {
             },
         });
     },
+    load_fixed_deposit: function() {
+        var category_id = $("input[name=category_id]").val();
+        var loan_amount_interes=$("input[name=loan_amount]").val();
+        var month_interes=$("select[name=month_interes]").val();
+        console.log(category_id+'/'+loan_amount_interes+'/'+month_interes);
+        $.ajax({
+            type: "POST",
+            url: full_url + "/loan-application/bank-account",
+            data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
+            dataType: 'json',
+            beforeSend: function() {
+                App.blockUI({boxed: true});
+            },
+            success: function(itemJson) {
+                App.unblockUI();
+                $('#results').html(itemJson.html);
+                Loan.detail();
+            },
+
+            error : function(xhr, status){
+                console.log(status);
+            },
+        });
+    },
     compare: function(a) {
         var b = $(a).data("id");
         if (b > 0) {
