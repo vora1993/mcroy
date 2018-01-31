@@ -13,6 +13,7 @@ return array(
             'loan_application'    => Frontend\Controller\LoanApplicationController::class,
             'bank_account'        => Frontend\Controller\BankAccountController::class,
             'credit_card'         => Frontend\Controller\CreditCardController::class,
+            'design'              => Frontend\Controller\DesignController::class
 		)
 	),
 	'router' => array(
@@ -172,6 +173,20 @@ return array(
 					),
 				),
 			),
+            'design' => array(
+                'type' => 'Segment',
+                'options' => array(
+                'route' => '/design[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'design',
+                        'action' => 'index'
+                    ),
+                ),
+            ),
             'page' => array(
 				'type' => 'segment',
                 'options' => array(

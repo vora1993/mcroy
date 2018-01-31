@@ -255,6 +255,21 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item <?php if($this->view === 'admin_design') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="glyphicon glyphicon-equalizer"></i>
+                    <span class="title"><?php echo $this->translate("Design") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'admin_design') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'admin_design' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_design", array("action" => "index")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Edit design") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item <?php if($this->view === 'post') echo 'active open'?>">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-pin"></i>

@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'font_slide_bold';
-	src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Bold.ttf') format(‘truetype’),
-	font-weight: 100;
+    font-family: 'font_slide_bold';
+    src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Bold.ttf') format(‘truetype’),
+    font-weight: 100;
 }
 @font-face {
-	font-family: 'font_slide_regular';
-	src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Regular.ttf') format(‘truetype’),
-	font-weight: 100;
+    font-family: 'font_slide_regular';
+    src: url('../fonts/rebas_neue/TTF\'s/BebasNeue Regular.ttf') format(‘truetype’),
+    font-weight: 100;
 }
 /*Slide 1*/
 #slideshow
@@ -80,25 +80,25 @@
     {
         font-size: 14px!important;
     }
-	/*Slide2*/
-	#Slide2_button
-	{
-		right: 11%;
-	}
+    /*Slide2*/
+    #Slide2_button
+    {
+        right: 11%;
+    }
     #Slide2_button button
     {
-	    padding: 10px 6px;
-    	font-size: 13px;
+        padding: 10px 6px;
+        font-size: 13px;
 
     }
     /*SLide3*/
     #Slide3_button
     {
-    	right: 47%;
+        right: 47%;
     }
     #Slide3_button button
     {
-    	font-size: 18px;
+        font-size: 18px;
     }
 }
 @media only screen and (max-width: 700px)
@@ -114,18 +114,18 @@
     }
 
     #Slide2_button button
-	{
-	    padding: 4px 1px;
-    	font-size: 8px;;
-	}
-	#Slide3_button
     {
-    	right: 47%;
+        padding: 4px 1px;
+        font-size: 8px;;
+    }
+    #Slide3_button
+    {
+        right: 47%;
     }
     #Slide3_button button
     {
-		padding: 6px 6px;
-    	font-size: 12px;
+        padding: 6px 6px;
+        font-size: 12px;
     }
 }
 @media only screen and (max-width: 400px)
@@ -137,19 +137,629 @@
     }
     #Slide1_button button
     {
-    	padding: 14px 34px;
+        padding: 14px 34px;
         font-size: 5px!important;
     }
-	/*Slide 2*/
+    /*Slide 2*/
     #Slide2_button button
-	{
-	    padding: 4px 1px;
-    	font-size: 8px;;
-	}
-	/*Slide 3*/
+    {
+        padding: 4px 1px;
+        font-size: 8px;;
+    }
+    /*Slide 3*/
     #Slide3_button button
     {
-		padding: 4px 6px;
-    	font-size: 8px;
+        padding: 4px 6px;
+        font-size: 8px;
+    }
+}
+
+#header
+{
+    background-image: url('../img/design/banner_bg.png');
+    background-repeat: repeat;  
+    height: 472px;
+    padding-left: 0;
+}
+#header nav
+{
+    background-color: #0f2a42;
+    border: none;
+    margin-bottom: 0;
+    height: 14%;
+}
+
+#banner
+{
+    padding-right: 0!important;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    z-index: 99;
+}
+#signup
+{
+    margin-top: 1%;
+}
+#signup a
+{
+    border-radius: 18px;
+}
+.container.title
+{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 4%;
+}
+.container.title h1
+{
+    font-size: 35px;
+    
+    font-weight: bold;
+}
+.container.title p
+{
+    font-size: 16px;
+}
+.container.title hr
+{
+    width: 7%;
+}
+.post
+{
+    background-color: #ff5057;
+    z-index: 999;
+    position: relative;
+    top: 19%;
+    left: -17%;
+    width: 63%;
+}
+.icon-group
+{
+    padding: 4px;
+    margin-right: 12px;
+}
+.icon-group div
+{
+    color: white;
+    margin-top: 3px; 
+}
+.last
+{
+    border-right: 1px groove;
+    padding-right: 20px;
+    padding-top: 3px;
+    padding-bottom: 4px;
+}
+.post button
+{
+    position: absolute!important;
+    top: 8%!important;
+    border-radius: 22px!important;
+}
+.icon_render
+{
+    background-image: url(../img/design/render.png);
+    display: inline-block;
+    width: 36px;
+    height: 32px;
+    background-size: 36px;
+    background-position: -72px -1px;
+}
+.icon_slaries
+{
+    background-image: url(../img/design/slaries.png);
+    display: inline-block;
+    width: 36px;
+    height: 32px;
+    background-size: 40px;
+    background-position: -82px 1px;
+}
+.icon_tax
+{
+    background-image: url(../img/design/tax.png);
+    display: inline-block;
+    width: 28px;
+    height: 32px;
+    background-size: 25px;
+    background-position: -49px -1px;;
+}
+.icon_invoices
+{
+    background-image: url(../img/design/invoke.png);
+    display: inline-block;
+    width: 36px;
+    height: 34px;
+    background-size: 36px;
+    background-position: -72px -1px;
+}
+.icon_vendor
+{
+    background-image: url(../img/design/vendor.png);
+    display: inline-block;
+    width: 36px;
+    height: 34px;
+    background-size: 36px;
+    background-position: -72px -1px;
+}
+
+.icon_supplies
+{
+    background-image: url(../img/design/supplies.png);
+    display: inline-block;
+    width: 36px;
+    height: 34px;
+    background-size: 36px;
+    background-position: -72px -1px;
+}
+.button-cricle
+{
+    display: inline-block;
+    width: 17%;
+    height: 17%;
+    background: #BA8F32;
+    border-radius: 25px;
+    padding: 9px;
+}
+#signup a 
+{
+    width: 100%;
+}
+#hide_button
+{
+    display: none;
+}
+/*content-card*/
+#content-card .col-md-5
+{
+    margin-top:9%;
+}
+#content-card h1 span
+{
+    color: #ff5057;
+}
+#content-card hr
+{
+    width: 37%;
+    height: 1px;
+    border: none;
+    background-color: #D4D4D4;
+}
+#content-card .row
+{
+    margin-top: 4%;
+}
+#card-banner
+{
+    padding-right: 0;
+}
+.card-button-cricle
+{
+    display: inline-block;
+    width: 10%;
+    height: 17%;
+    background: #e5333a;
+    border-radius: 25px;
+    padding: 12px;
+}
+#content-card button
+{
+    background-color: #ff5057;
+    border-radius: 27px;
+    padding-right: 7px;
+}
+/*features*/
+#features
+{
+    background-color: #1a446f;
+}
+#features h1
+{
+    text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.features-group
+{
+    margin-bottom: 9%;
+}
+.features-group i.access
+{
+    background-image: url(../img/design/access.png);
+    display: inline-block;
+    width: 131px;
+    height: 81px;
+    background-size: 129px;
+    background-position: 0px -1px;
+    display: block;
+    margin: 0 auto;
+}
+.features-group i.flexible
+{
+    background-image: url(../img/design/flexible.png);
+    display: inline-block;
+    width: 105px;
+    height: 81px;
+    background-size: 109px;
+    background-position: -2px -2px;
+    display: block;
+    margin: 0 auto;
+}
+.features-group i.early
+{
+    background-image: url(../img/design/early.png);
+    display: inline-block;
+    width: 89px;
+    height: 81px;
+    background-size: 89px;
+    background-position: -2px -2px;
+    display: block;
+    margin: 0 auto;
+}
+.features-group i.earn
+{
+    background-image: url(../img/design/earn.png);
+    display: inline-block;
+    width: 101px;
+    height: 81px;
+    background-size: 102px;
+    background-position: -2px -2px;
+    display: block;
+    margin: 0 auto;
+}
+.features-group i.tax1
+{
+    background-image: url(../img/design/tax1.png);
+    display: inline-block;
+    width: 101px;
+    height: 81px;
+    background-size: 102px;
+    background-position: -2px -2px;
+    display: block;
+    margin: 0 auto;
+}
+.features-group i.improve
+{
+    background-image: url(../img/design/improve.png);
+    display: inline-block;
+    width: 83px;
+    height: 81px;
+    background-size: 83px;
+    background-position: 0px -2px;
+    display: block;
+    margin: 0 auto;
+}
+.features-title
+{
+    text-align: center;
+    color: white;
+}
+/*works*/
+#works
+{
+    margin-bottom: 7%;
+}
+#works h1
+{
+    text-align: center;
+    color: #283F59;
+    margin-top: 5%; 
+    font-family: 'Open Sans', sans-serif;
+}
+#works .col-md-1
+{
+    width: 11%;
+}
+#works .col-md-1 hr
+{
+    margin-top: 162%;
+    border: none;
+    height: 1px;
+    color: #E3E3E3;
+    background-color: #E3E3E3;
+}
+.works-group .works1
+{
+    background-image: url(../img/design/works1.png);
+    display: inline-block;
+    width: 69px;
+    height: 69px;
+    background-size: 68px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works2
+{
+    background-image: url(../img/design/works2.png);
+    display: inline-block;
+    width: 79px;
+    height: 59px;
+    background-size: 79px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works3
+{
+    background-image: url(../img/design/works3.png);
+    display: inline-block;
+    width: 68px;
+    height: 63px;
+    background-size: 66px;
+    background-position: 2px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-group .works4
+{
+    background-image: url(../img/design/works4.png);
+    display: inline-block;
+    width: 60px;
+    height: 59px;
+    background-size: 60px;
+    background-position: 0px 0px;
+    display: block;
+    margin: 0 auto;
+}
+.works-title
+{
+    margin-top: 25%;
+}
+.works-title span
+{
+    display: block;
+    margin-top: 4%;
+    width: 28%;
+    height: 23%;
+    background: #324C76;
+    border-radius: 25px;
+    padding: 8px;
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+}
+.work-title-sub span
+{
+    background:none;
+    border: 1px solid #9F9F9F;
+    color: #858585;
+}
+.works-content
+{
+    text-align: center;
+    margin-top: 10%;
+    font-family: 'Source Sans Pro', sans-serif
+}
+/*note*/
+#note
+{
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    position: relative;
+}
+#note img
+{
+    height: 400px;
+}
+#note>div
+{
+    position: absolute;
+    width: 28%;
+    text-align: center;
+    top: 26%;
+    left: 46%;
+    font-style: italic;
+}
+#note>div p
+{
+    color: #ff5057;
+}
+.note-content
+{
+    height: 170px;
+    overflow: hidden;
+}
+/*footer*/
+.title-footer
+{
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+.title-footer div
+{
+    font-size: 26px;
+    text-align: center;
+}
+#button-title
+{
+    border-radius: 25px;
+    padding: 1px;
+    padding-right: 27px;
+    padding-left: 31px;
+    margin-left: 8%;
+}
+.footer-button-cricle
+{
+    display: inline-block;
+    width: 30%;
+    height: 17%;
+    background: #BA8F32;
+    border-radius: 25px;
+    padding: 9px;
+    margin-left: 19%;
+}
+.text-input
+{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DEDEDE;
+    margin-bottom: 8%;
+}
+.button-payment
+{
+    background-color: #F34E65;
+}
+#form_payment .row
+{
+    margin-left: 0; 
+    margin-right: 0; 
+}
+#contact-icon
+{
+    text-align: center;
+}
+#contact-icon i.fa-facebook
+{
+    color: #2D4989;
+    font-size: 250%;
+}
+#contact-icon i.fa-twitter
+{
+    color: #75CEEF;
+    font-size: 250%;
+}
+#contact-icon i.fa-linkedin
+{
+    color: #71A8EE;
+    font-size: 250%;
+}
+#contact-icon i.fa-google-plus
+{
+    color: #EC6771;
+    font-size: 250%;
+}
+.group-contact-icon
+{
+    display: inline;
+    margin-right: 2%;
+}
+@media only screen and (max-width: 1000px)
+{
+    #banner
+    {
+        width: 45%;
+    }
+    .post
+    {
+        width: 92%;
+        left: 5%;
+    }
+    #content-card .col-md-5
+    {
+        margin-top: 0;
+    }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .works-title
+    {
+        margin-top: 5%;
+    }
+    .works-content
+    {
+        margin-top: 4%;
+        margin-bottom: 5%;
+    }
+    .works-title span
+    {
+        width: 6%;
+    }
+}
+@media only screen and (max-width: 768px)
+{
+    #header
+    {
+        padding-right: 0;
+    }
+    #banner
+    {
+        display: none;
+    }
+    .post
+    {
+        top:5%;
+        left: 0;
+        width: 100%;
+        padding-right: 0;
+    }
+    .post button
+    {
+        display: none;
+    }
+    #hide_button
+    {
+        display: block;
+        margin-top:11%;
+    }
+    .last
+    {
+        border-right: none;
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .icon-group
+    {
+        margin-right: 10px;
+    }
+    #content-card button 
+    {
+        margin-bottom: 20px;
+    }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .works-title
+    {
+        display: none;
+    }
+    .works-content
+    {
+        margin-bottom: 10%;
+    }
+}
+@media only screen and (max-width: 400px)
+{
+    #header
+    {
+        padding-right: 0;
+    }
+    #banner
+    {
+        display: none;
+    }
+    .icon-group
+    {
+        display: none;
+    }
+    .post button
+    {
+        display: none;
+    }
+    #hide_button
+    {
+        display: block;
+        margin-top:11%;
+    }
+    #content-card button 
+    {
+        font-size: 10px;
+        margin-bottom: 20px;
+    }
+    #works .col-md-1 hr
+    {
+        display: none;
+    }
+    .works-title
+    {
+        display: none;
+    }
+    .works-content
+    {
+        margin-bottom: 10%;
     }
 }
