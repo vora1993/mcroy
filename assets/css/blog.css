@@ -607,12 +607,26 @@ Blog Page
     font-weight:bold; 
 }
 
+.related .col-md-4
+{
+  font-size: 14px;
+  margin-bottom: 8%;
+  margin-top: 4%;
+  padding-left: 0;
+}
+.related .col-md-4 div,.related .col-md-4 span
+{
+  color: #373a3c;
+  opacity: 0.6;
+  font-size: 14px;
+}
 
 
 @media (min-width: 992px) {
     .blog-page .col-md-4 {
-        width: 28.3333%;
-        margin-left: 5%;
+        /*width: 28.3333%;*/
+        /*margin-left: 5%;*/
+        width: 33.3333%;
     }
 }
 
@@ -626,6 +640,9 @@ Blog Page
     .blog-content-1 .blog-video > .blog-img-thumb img {
       height: auto;
       width: 100%; } }
+
+  }
+
 
 @media (max-width: 480px) {
   .blog-content-1 .blog-post-lg > .blog-post-content > .blog-post-foot {
