@@ -113,6 +113,8 @@ if(count($banks) > 0) {
                                               <option <?php if($this->loan->getDisplay()=="p2p-lending") echo "selected"?> value="p2p-lending">P2P Lending</option>
                                               <option <?php if($this->loan->getDisplay()=="factoring") echo "selected"?> value="factoring">Factoring</option>
                                               <option <?php if($this->loan->getDisplay()=="residential-equity-term-loan") echo "selected"?> value="residential-equity-term-loan">Residential Equity Term Loan</option>
+                                              <option <?php if($this->loan->getDisplay()=="current-account-usd") echo "selected"?> value="current-account-usd">Current Account (USD)</option>
+                                              <option <?php if($this->loan->getDisplay()=="current-account-sgd") echo "selected"?> value="current-account-sgd">Current Account (SGD)</option>
                                               <option <?php if($this->loan->getDisplay()=="fixed-deposit") echo "selected"?> value="fixed-deposit">Fixed Deposit</option>
                                         </select>
                                     </div>
