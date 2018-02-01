@@ -63,7 +63,7 @@ $this->headMeta()->setProperty('og:site_name', $this->setting()->company_name);
                                                                 }
                                                 ?>
                                                 <div class="col-md-4 col-sm-12">
-                                                    <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $value->getId(), "seo" => $value->getSeo())) ?>""><img src="<?php echo $this->basePath($image_thumb_src) ?>" height="134px" width="100%">
+                                                    <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $value->getId(), "seo" => $value->getSeo())) ?>""><img src="<?php echo $this->basePath($image_thumb_src) ?>" width="100%" style="height: 134px">
                                                     <p><?php echo $value->getPostTitle()?></p></a>
                                                     <span><?php echo $value->getPostDate()?></span>
                                                     <div>In "<?php echo $this->category(array("id" => $value->getCategoryId()))->getName() ?>"</div>
