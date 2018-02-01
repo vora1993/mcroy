@@ -798,7 +798,7 @@ class LoanApplicationController extends AbstractActionController
                             $html .= '<ul>';
                             foreach ($interest_rates as $value) {
                                 if($category->getName() === 'Fixed Deposit') {
-                                    $html .= '<li><label>'.$value->tier.' months</label><span>'.$value->percentage.' %</span></li>';
+                                    $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.' %</span></li>';
                                 } else {
                                     $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
                                 }
@@ -964,7 +964,7 @@ class LoanApplicationController extends AbstractActionController
                                 $html .= '<ul>';
                                 foreach ($interest_rates as $value) {
                                     if($category->getName() === 'Fixed Deposit') {
-                                        $html .= '<li><label>'.$value->tier.' months</label><span>'.$value->percentage.' %</span></li>';
+                                        $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.' %</span></li>';
                                     } else {
                                         $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
                                     }

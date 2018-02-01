@@ -6,7 +6,7 @@
             <nav class="navbar navbar-default">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="user/auth">
                             <img width="63%" src="/data/company/logo.png" alt="logo" class="logo-default">
                         </a>
                     </div>
@@ -50,7 +50,7 @@
                     <i class="icon_supplies"></i>
                     <div>Suppliers</div>
                 </div>
-                <button class="btn btn-warning">
+                <button id="show_button" class="btn btn-warning">
                 Click Here To Find Out More &nbsp<span class="button-cricle">+</span>
                 </button>
             </div>
@@ -194,15 +194,15 @@
             <div id="form_payment" class="row">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <form>
+                        <form id="question_form" action="<?php echo $this->url("page", array("action" => "post-question")) ?>" class="form-horizontal" id="question_form">
                             <div class="col-md-6">
-                                <input type="text" name="" class="text-input" placeholder="Name">
-                                <input type="text" name="" class="text-input" placeholder="Email">
-                                <input type="text" name="" class="text-input" placeholder="Phone">
+                                <input type="text" name="name" class="text-input" placeholder="Name">
+                                <input type="email" name="email" class="text-input" placeholder="Email">
+                                <input type="text" name="phone" class="text-input" placeholder="Phone">
                             </div>
                             <div class="col-md-6">
-                                <textarea class="text-input" style="padding-bottom: 17%;" placeholder="Message"></textarea>
-                                <button class="btn btn-danger btn-block button-payment">Submit</button>
+                                <textarea name="message" class="text-input" style="padding-bottom: 17%;" placeholder="Message"></textarea>
+                                <button type="Submit" class="btn btn-danger btn-block button-payment">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -227,4 +227,104 @@
                 <p>copyright 2018 MoneyCompare.SG Pte. Ltd. All rights reserved</p> 
             </div>
         </footer>
-    </body>
+        <script type="text/javascript" src="/assets/js/respond.min.js"></script>
+        <script type="text/javascript" src="/assets/js/excanvas.min.js"></script>
+        <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/js/js.cookie.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+        <script type="text/javascript" src="/assets/js/jquery.blockui.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/jquery-validation/js/additional-methods.min.js"></script>
+        <script type="text/javascript" src="/assets/js/user_login.js"></script>
+        <script type="text/javascript" src="/assets/js/user_register.js"></script>
+        <script type="text/javascript" src="/assets/plugins/owl-carousel/owl.carousel.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+        <script type="text/javascript" src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/select2/js/select2.full.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/ladda/spin.min.js"></script>
+        <script type="text/javascript" src="/assets/plugins/ladda/ladda.min.js"></script>
+        <script type="text/javascript" src="/assets/js/app.js"></script>
+        <script type="text/javascript" src="/assets/js/layout3.min.js"></script>
+        <script type="text/javascript" src="/assets/js/custom4.js"></script>
+
+        <script type="text/javascript">
+            var form = $("#question_form");
+            form.validate({
+                errorElement: "span",
+                errorClass: "help-block",
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                        number: true
+                    },
+                    message: {
+                        required: true
+                    }
+                },
+
+                highlight: function(element) {
+                    $(element).closest(".form-group").addClass("has-error");
+                },
+
+                success: function(label) {
+                    label.closest(".form-group").removeClass("has-error");
+                    label.remove();
+                },
+
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element);
+                },
+
+                submitHandler: function (form) {
+                    var form = $(form);
+
+                    var inputs = form.find("input, select, button, textarea");
+
+                    var serializedData = form.serialize();
+
+                    inputs.prop("disabled", true);
+                    request = $.ajax({
+                        url: form.attr("action"),
+                        type: "post",
+                        data: serializedData
+                    });
+
+                    $("#question_form .form-group").removeClass("has-error");
+                    $("#question_form .help-block, #question_form .alert").remove();
+
+                    request.done(function (response, textStatus, jqXHR) {
+                        var result = $.parseJSON(response);
+                        if(result.error) {
+                            toastr.error("Something error. Please check");
+                        } else {
+                            if(result.success) {
+                                toastr.success(result.msg);
+                            } else {
+                                toastr.warning(result.msg);
+                            }
+                        }
+                    });
+
+                    request.fail(function (jqXHR, textStatus, errorThrown) {
+                        toastr.error("The following error occured: " + textStatus, errorThrown);
+                    });
+
+                    request.always(function () {
+                        inputs.prop("disabled", false);
+                    });
+                }
+            });
+        </script>
+</body>

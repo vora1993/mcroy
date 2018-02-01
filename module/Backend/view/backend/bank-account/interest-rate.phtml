@@ -84,6 +84,7 @@ $this->headTitle($title);
                                     <th> <?php echo $this->translate("Name") ?> </th>
                                     <th> <?php echo $this->translate("Bank name") ?> </th>
                                     <th> <?php echo $this->translate("Rate") ?> </th>
+                                    <th> <?php echo $this->translate("Display") ?> </th>
                                     <th> <?php echo $this->translate("Type") ?> </th>
                                     <th> <?php echo $this->translate("Status") ?> </th>
                                     <th> <?php echo $this->translate("Actions") ?> </th>
@@ -93,6 +94,16 @@ $this->headTitle($title);
                                 <?php if(count($this->loans) > 0): ?>
                                 <?php foreach ($this->loans as $loan):
                                 $list_rate = $this->BankInterestRate(array("id" => $loan->getId()));
+                                $arr_display=[
+                                    'business-term-loan'=>'Business Term Loan',
+                                    'government-assisted-loan'=>'Government Assisted Loan',
+                                    'lefs-micro-loan-s'=>'LEFS - Micro Loan',
+                                    'working-capital-loan'=>'Working Capital Loan',
+                                    'p2p-lending'=>'P2P Lending',
+                                    'factoring'=>'factoring',
+                                    'residential-equity-term-loan'=>'Residential Equity Term Loan',
+                                    'fixed-deposit'=>'Fixed Deposit'
+                                ];
                                 ?>
                                 <tr class="odd gradeX">
                                     <td>
@@ -104,6 +115,7 @@ $this->headTitle($title);
                                     <td><a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "edit-interest-rate", "id" => $loan->getId())) ?>"> <?php echo $loan->getName() ?></a></td>
                                     <td><?php echo $this->bank(array("id" => $loan->getBankId())) ? $this->bank(array("id" => $loan->getBankId()))->getName() : ''; ?></td>
                                     <td><?php echo $loan->getRate() ?>%</td>
+                                    <td><?php echo $arr_display[$loan->getDisplay() ]?></td>
                                     <td><?php echo $loan->getType()?></td>
                                     <td>
                                     <?php
