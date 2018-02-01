@@ -99,6 +99,9 @@ class BlogController extends AbstractActionController
         $id = $this->params()->fromRoute('id');
         $application_model_post = $this->getServiceLocator()->get('application_model_post');
         $post = $application_model_post->fetchRow(array("id" => $id));
+
+        //Get related post
+        $post_related = $application_model_post->fetchAll(array("category_id" => $post->getCategoryId(),"id !=?"=>$post->getId()));
         
         $current_hits = $post->getHits() ? $post->getHits() : 0;
         // Update hits
@@ -106,7 +109,7 @@ class BlogController extends AbstractActionController
         $post->setHits($current_hits + 1);
         $application_model_post->update($post);
         
-        return array("post" => $post);
+        return array("post" => $post,"post_related"=>$post_related);
     }
     
     public function downloadAttachmentAction() {

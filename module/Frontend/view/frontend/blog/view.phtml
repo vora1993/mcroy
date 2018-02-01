@@ -43,6 +43,40 @@ $this->headMeta()->setProperty('og:site_name', $this->setting()->company_name);
                                                 <?php echo $this->post->getPostContent(); ?>
                                             </div>
                                             <?php endif;?>
+                                            <?php
+                                                if(count($this->post_related)>0)
+                                                {
+                                                    $i=1;
+                                            ?>
+                                            <div class="related">
+                                                <h3>Related</h3>
+                                                <?php
+                                                    foreach ($this->post_related as $key => $value)
+                                                    {
+                                                        if($i<4)
+                                                        {
+                                                            $featured_image_src = 'data/image/'.$value->getFeaturedImage();
+                                                                if(file_exists($featured_image_src)) {
+                                                                $image_thumb_src = $featured_image_src;
+                                                                } else {
+                                                                $image_thumb_src = 'data/image/no-image.png';
+                                                                }
+                                                ?>
+                                                <div class="col-md-4 col-sm-12">
+                                                    <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $value->getId(), "seo" => $value->getSeo())) ?>""><img src="<?php echo $this->basePath($image_thumb_src) ?>" height="134px" width="100%">
+                                                    <p><?php echo $value->getPostTitle()?></p></a>
+                                                    <span><?php echo $value->getPostDate()?></span>
+                                                    <div>In "<?php echo $this->category(array("id" => $value->getCategoryId()))->getName() ?>"</div>
+                                                </div>
+                                                <?php
+                                                            $i++;
+                                                        }
+                                                    }
+                                                ?>
+                                            </div>
+                                            <?php
+                                                }
+                                            ?>
                                             <div class="blog-single-comment">
                                                 <div class="fb-comments" data-href='<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>' data-numposts="5" data-width="100%"></div>
                                             </div>
