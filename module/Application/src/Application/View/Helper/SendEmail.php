@@ -94,12 +94,12 @@ class SendEmail extends AbstractHelper implements ServiceLocatorAwareInterface
             $options   = new SmtpOptions(array(
                 'name'              => $email_name,
                 'host'              => $email_host,
-                'port'              => 465, // Notice port change for TLS is 587
-                'connection_class'  => 'smtp',
+                'port'              => 587, // Notice port change for TLS is 587
+                'connection_class'  => 'plain',
                 'connection_config' => array(
                     'username' => $username,
                     'password' => $password,
-                    'ssl'      => 'ssl',
+                    'ssl'      => 'tls',
                 ),
             ));
             $transport->setOptions($options);
