@@ -218,6 +218,7 @@
 {
     padding: 4px;
     margin-right: 12px;
+    text-align: center;
 }
 .icon-group div
 {
@@ -308,6 +309,14 @@
 #hide_button
 {
     display: none;
+}
+#show_button:hover
+{
+    background-color: #F1C40F;
+}
+#signup a:hover
+{
+    background-color: #F1C40F;
 }
 /*content-card*/
 #content-card .col-md-5
@@ -579,6 +588,10 @@
     padding-right: 27px;
     padding-left: 31px;
     margin-left: 8%;
+}
+#button-title:hover
+{
+    background-color: #F1C40F;
 }
 .footer-button-cricle
 {
