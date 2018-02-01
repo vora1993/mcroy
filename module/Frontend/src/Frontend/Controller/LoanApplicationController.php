@@ -774,7 +774,7 @@ class LoanApplicationController extends AbstractActionController
                         $I=($interest_rate*$loan_amount_interes)/100;
 
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
-                        $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getTenor()) .'"><b>' . $loan->getTenor() . '</b>' . $translator->translate("Tenor") .'</span></li>';
+                        $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getCategoryAccount()) .'"><b>' . $loan->getCategoryAccount() . '</b>' . $translator->translate("Tenor") .'</span></li>';
                         $html .= '<li class="box__interest_rates"><span class="interest_rates" data-value="' . $this->string_to_number($interest_rate) .'"><b>' . $interest_rate . '%</b>' . $translator->translate("Interest Rates") .'</span></li>';
                         $html .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.$I.'"><b>'.$I.'$</b>' . $translator->translate("Interest Earned") .'</span></li>';
                     } else {
@@ -946,7 +946,7 @@ class LoanApplicationController extends AbstractActionController
                             $I=($interest_rate*$loan_amount_interes)/100;
 
                             $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
-                            $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getTenor()) .'"><b>' . $loan->getTenor() . '</b>' . $translator->translate("Tenor") .'</span></li>';
+                            $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $this->string_to_number($loan->getCategoryAccount()) .'"><b>' . $loan->getCategoryAccount() . '</b>' . $translator->translate("Tenor") .'</span></li>';
                             $html .= '<li class="box__interest_rates"><span class="interest_rates" data-value="' . $this->string_to_number($interest_rate) .'"><b>' . $interest_rate . '%</b>' . $translator->translate("Interest Rates") .'</span></li>';
                             $html .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.$I.'"><b>'.$I.'$</b>' . $translator->translate("Interest Earned") .'</span></li>';
                         }
