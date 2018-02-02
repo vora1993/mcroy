@@ -85,6 +85,7 @@ $this->headTitle($title);
                                     <th> <?php echo $this->translate("Image") ?> </th>
                                     <th> <?php echo $this->translate("Date") ?> </th>
                                     <th> <?php echo $this->translate("Location") ?></th>
+                                    <th> <?php echo $this->translate("Sort") ?> </th>
                                     <th> <?php echo $this->translate("Status") ?> </th>
                                     <th> <?php echo $this->translate("Actions") ?> </th>
                                 </tr>
@@ -117,6 +118,9 @@ $this->headTitle($title);
                                                 break;
                                             }
                                         ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $slider->getSortOrder()?>
                                     </td>
                                     <td>
                                     <?php
