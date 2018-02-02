@@ -372,4 +372,34 @@ $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plug
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/select2/js/select2.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-match-height-master/dist/jquery.matchHeight-min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/credit_cards.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('#search_input').keyup(function(){
+  var search_input_value=$('#search_input').val().toLowerCase();
+  if(search_input_value!='')
+  {
+    var product=$('div.product-add-item');
+    for(var i=0;i<product.length;i++)
+    {
+      var item_name=product[i].innerText.toLowerCase();
+      if(item_name.indexOf(search_input_value)>=0)
+      {
+        product[i].style.display='block';
+      }else
+      {
+        product[i].style.display='none';
+      }
+    }
+  }else
+  {
+    var product=$('div.product-add-item');
+    for(var i=0;i<product.length;i++)
+    {
+        product[i].style.display='block';
+    }
+  }
+  
+})
+JS;
+$this->inlineScript()->captureEnd();
 ?>

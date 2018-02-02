@@ -100,11 +100,14 @@ class Menu extends AbstractHelper implements ServiceLocatorAwareInterface
                             $html .= '</li>';
                         } else {
                             $style="";
+                            $new="";
                             if($submenu['name']=="Business Loan Calculator")
                             {
-                                $style="<span style='color:green;font-weight:bold'>(NEW!!)</span>";
+                                $new="<span style='color:green;font-weight:bold'>(NEW!!)</span>";
+                                $style="style='background-color:coral'";
+                                $html .= '<li id="new" aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link" '.$style.'>'.$submenu['name'].$new.'</a></li>';
                             }
-                            $html .= '<li aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link">'.$submenu['name'].$style.'</a></li>';    
+                            $html .= '<li aria-haspopup="true" class="'.$class.'"><a href="'.$url.'" class="nav-link" >'.$submenu['name'].'</a></li>';    
                         }
                     }
                     $html .= '</ul>';
