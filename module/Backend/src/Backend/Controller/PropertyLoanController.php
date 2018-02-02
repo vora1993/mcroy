@@ -34,6 +34,14 @@ class PropertyLoanController extends AbstractActionController
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
+            if((int)$post['int_year_2']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Interest 2 year must is greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             
             $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
             $loan = new \Application\Entity\PropertyLoanPackage;
@@ -105,6 +113,13 @@ class PropertyLoanController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
+                if((int)$post['int_year_2']<=0)
+                {
+                    $messages['success'] = false;
+                    $messages['msg'] = $translator->translate("Interest 2 year must is greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 $loan->setTitle($post['title']);
                 $loan->setPromotions($post['promotions']);
                 $loan->setMinLoanAmount($post['min_loan_amount']);
