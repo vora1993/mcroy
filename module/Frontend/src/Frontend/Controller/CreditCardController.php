@@ -345,7 +345,7 @@ class CreditCardController extends AbstractActionController
     return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
-  public function addItemCompare()
+  public function addItemCompareAction()
   {
     $session = new Session('credit_card');
     $request = $this->getRequest();
@@ -387,8 +387,21 @@ class CreditCardController extends AbstractActionController
       }
 
       $session->offsetSet('select', $select_arr);
+      $select = $session->offsetGet('select');
+      //ajax html product compare
+      if(count($select)>0) {
+        $html="";
+        $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+        $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
+        $html="";
+        foreach ($credit_cards_compare as $key => $credit_card) {
+          $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+          $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+        }
+      }
+
       $response = $this->getResponse();
-      $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca) ) );
+      $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca,"html"=>$html) ) );
       return $response;
     }
     if($session->offsetExists('select')) $select = $session->offsetGet('select');
