@@ -105,7 +105,7 @@ $this->headTitle($title);
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Sort") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <input type="number" name="sort" data-required="1" class="form-control" value="<?php echo $this->post->getSortOrder() ?>" />
+                                        <input type="number" name="sort" data-required="1" min="0" class="form-control" value="<?php echo $this->post->getSortOrder() ?>" />
                                     </div>
                                 </div>
                             </div>

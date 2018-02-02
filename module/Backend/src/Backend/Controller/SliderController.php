@@ -88,6 +88,7 @@ class SliderController extends AbstractActionController
                 $post_entity->setStatus($post['status']);
                 $post_entity->setType($post['type']);
                 $post_entity->setLink($post['link']);
+                $post_entity->setSortOrder($data['sort']);
                 $style_button='';
                 if(isset($post['link']) && isset($post['style'])) $style_button=$post['style'];
                 $post_entity->setStyle($style_button);
