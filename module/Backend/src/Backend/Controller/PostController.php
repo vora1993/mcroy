@@ -187,6 +187,22 @@ class PostController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $data = $request->getPost();
+
+                //Get all id category
+                $application_model_category = $this->getServiceLocator()->get('application_model_category');
+                $category = $application_model_category->fetchAll();
+                $arr=[];
+                foreach ($category as $key => $value) {
+                    $arr[]=$value->getId();
+                }
+                if(!in_array($data['category_id'], $arr))
+                {
+                    $messages['success'] = false;
+                    $messages['msg']     = $translator->translate("Category invalid");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
+
                 $error = 0;
                 $current_seo = $post->getSeo();
                 if($current_seo !== $data['seo']) {
@@ -251,6 +267,23 @@ class PostController extends AbstractActionController
         $messages = array();
         if ($request->isPost()) {
             $post = $request->getPost();
+
+            //Get all id category
+            $application_model_category = $this->getServiceLocator()->get('application_model_category');
+            $category = $application_model_category->fetchAll();
+            $arr=[];
+            foreach ($category as $key => $value) {
+                $arr[]=$value->getId();
+            }
+            
+            if(!in_array($post['category_id'], $arr))
+            {
+                $messages['success'] = false;
+                $messages['msg']     = $translator->translate("Category invalid");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+
             $error = 0;
             $application_model_post = $this->getServiceLocator()->get('application_model_post');
             $current_seo = $application_model_post->fetchRow(array("seo" => $post['seo']));
