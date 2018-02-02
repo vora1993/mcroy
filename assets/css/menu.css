@@ -137,6 +137,11 @@ color: #fff;
     max-width: 32px;
 }
 
+#new a:hover
+{
+	background: #f3b633!important;
+}
+
 @media (max-width:  768px) {
 	body.toggled {
 		position: fixed;
