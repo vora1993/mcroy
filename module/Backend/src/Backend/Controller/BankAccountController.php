@@ -23,6 +23,14 @@ class BankAccountController extends AbstractActionController
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
 
+            if($post['int_rate']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg']     = $translator->translate("Interest Rate must greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
             $loan = new \Application\Entity\BankAccountPackage;
             $loan->setBankId($post['bank_id']);
@@ -33,7 +41,7 @@ class BankAccountController extends AbstractActionController
             $loan->setLink($post['link']);
             $loan->setTenor($post['tenor']);
             $loan->setDateAdded(new Expression('NOW()'));
-            $loan->setIntRate($post['int_rate']);
+            $loan->setIntRate($post['int_rate']/100);
             $loan->setInitialDepositAmount($post['initial_deposit_amount']);
             $loan->setMinimumBalance($post['minimum_balance']);
             $loan->setChequeBookFees($post['cheque_book_fees']);
@@ -86,6 +94,13 @@ class BankAccountController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
+                if($post['int_rate']<=0)
+                {
+                    $messages['success'] = false;
+                    $messages['msg']     = $translator->translate("Interest Rate must greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
@@ -96,7 +111,7 @@ class BankAccountController extends AbstractActionController
                     if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
                     $loan->setLink($post['link']);
                     $loan->setTenor($post['tenor']);
-                    $loan->setIntRate($post['int_rate']);
+                    $loan->setIntRate($post['int_rate']/100);
                     $loan->setInitialDepositAmount($post['initial_deposit_amount']);
                     $loan->setMinimumBalance($post['minimum_balance']);
                     $loan->setChequeBookFees($post['cheque_book_fees']);
