@@ -325,23 +325,16 @@
         <i class="cat-icon large summary"></i>
         <h4>Add a card for Comparison</h4>
         <div class="category_dropdown_container">
-          <select class="category_dropdown select2" tabindex="-1" aria-hidden="true">
-            <option value="">All Cards</option>
-            <option value="cash-back">Cash Back</option>
-            <option value="air-miles">Air Miles</option>
-            <option value="rewards">Rewards</option>
-            <option value="petrol">Petrol</option>
-            <option value="shopping">Shopping</option>
-            <option value="grocery">Grocery</option>
-            <option value="dining">Dining</option>
-            <option value="promo">Promo</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="student">Student</option>
-            <option value="online-shopping">Online Shopping</option>
+          <select id="category_credit_card" class="category_dropdown" tabindex="-1" aria-hidden="true">
+            <option value="all">All Cards</option>
+            <option value="discount">Discount</option>
+            <option value="points">Points</option>
+            <option value="air_miles">Air Miles</option>
+            <option value="cashback">Cash Back</option>
           </select>
         </div>
         <div class="compare-product-search">
-          <div class="compare-add-input">
+          <div class="compare-add-input" style="margin-top: 70px">
             <input class="compare-add-input__input" type="text" id="search_input" placeholder="Type to search by card name">
             <span class="compare-add-input__addon">
               <i class="fa fa-search"></i>
@@ -407,7 +400,10 @@ $('body').on('keyup', '#search_input', function(){
         product[i].style.display='block';
     }
   }
-  
+})
+$('body').on('change','#category_credit_card',function(){
+  var category_credit=$('#category_credit_card').val();
+  CreditCard.list_compare(category_credit);
 })
 JS;
 $this->inlineScript()->captureEnd();

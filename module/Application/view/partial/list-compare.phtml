@@ -294,19 +294,12 @@
         <i class="cat-icon large summary"></i>
         <h4>Add a card for Comparison</h4>
         <div class="category_dropdown_container">
-          <select class="category_dropdown select2" tabindex="-1" aria-hidden="true">
-            <option value="">All Cards</option>
-            <option value="cash-back">Cash Back</option>
-            <option value="air-miles">Air Miles</option>
-            <option value="rewards">Rewards</option>
-            <option value="petrol">Petrol</option>
-            <option value="shopping">Shopping</option>
-            <option value="grocery">Grocery</option>
-            <option value="dining">Dining</option>
-            <option value="promo">Promo</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="student">Student</option>
-            <option value="online-shopping">Online Shopping</option>
+          <select id="category_credit_card" class="category_dropdown select2" tabindex="-1" aria-hidden="true">
+            <option <?php if($this->category=='all') echo 'selected'?> value="all">All Cards</option>
+            <option <?php if($this->category=='discount') echo 'selected'?> value="discount">Discount</option>
+            <option <?php if($this->category=='points') echo 'selected'?> value="points">Points</option>
+            <option <?php if($this->category=='air_miles') echo 'selected'?> value="air_miles">Air Miles</option>
+            <option <?php if($this->category=='cashback') echo 'selected'?> value="cashback">Cash Back</option>
           </select>
         </div>
         <div class="compare-product-search">
