@@ -111,7 +111,10 @@ class BankAccountController extends AbstractActionController
                     if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
                     $loan->setLink($post['link']);
                     $loan->setTenor($post['tenor']);
-                    $loan->setIntRate($post['int_rate']/100);
+                    if($loan->getIntRate()!=($post['int_rate']))
+                    {
+                        $loan->setIntRate($post['int_rate']/100);
+                    }                  
                     $loan->setInitialDepositAmount($post['initial_deposit_amount']);
                     $loan->setMinimumBalance($post['minimum_balance']);
                     $loan->setChequeBookFees($post['cheque_book_fees']);
