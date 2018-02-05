@@ -252,11 +252,11 @@ if(count($categories) > 0) {
                                                                 <div class="row mt-repeater-row">
                                                                     <div class="col-md-8">
                                                                         <label class="control-label"><?php echo $this->translate("Tier(for Savings Account) / Months(for Fixed Deposit)") ?></label>
-                                                                        <input type="text" name="tier" class="form-control" value="<?php echo $value->tier ?>" /> 
+                                                                        <input type="number" min="0" name="tier" class="form-control" value="<?php echo $value->tier ?>" /> 
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="control-label"><?php echo $this->translate("Percentage") ?></label>
-                                                                        <input type="text" name="percentage" class="form-control" value="<?php echo $value->percentage ?>" />
+                                                                        <input type="number" min="0" name="percentage" class="form-control" value="<?php echo $value->percentage ?>" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-repeater-row">
