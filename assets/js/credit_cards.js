@@ -183,11 +183,11 @@ var CreditCard = {
       toastr.error("Sorry you haven't selected right.");
     }
   },
-  'list_compare': function() {
+  'list_compare': function(category='all') {
       $.ajax({
         url: full_url + '/credit-cards/get-list-compare',
         type: 'post',
-        data: {},
+        data: {category:category},
         dataType: 'html',
         async:false,
         beforeSend: function(xhr, settings) {
