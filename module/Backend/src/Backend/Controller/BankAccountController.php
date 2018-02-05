@@ -52,7 +52,6 @@ class BankAccountController extends AbstractActionController
             $loan->setCitizenship($post['citizenship']);
             $loan->setAge($post['age']);
             $loan->setStatus($post['status']);
-
             // Calculate
             $interest_rate = $post['interest-rate'];
             if(count($interest_rate) > 0) {
@@ -67,7 +66,6 @@ class BankAccountController extends AbstractActionController
                 }
                 $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
             }
-
             $added = $application_model_bank_account_package->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -139,6 +137,13 @@ class BankAccountController extends AbstractActionController
                                 'percentage' => $percentage
                             );
                         }
+                        $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
+                    }else{
+                        $loan_tenure = array();
+                        $loan_tenure[] = array(
+                            'tier'  => $tier,
+                            'percentage' => $percentage
+                        );
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
 

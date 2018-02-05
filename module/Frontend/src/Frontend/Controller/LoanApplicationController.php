@@ -745,19 +745,26 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<li><a href="#"><img src="' . $basePath($dir_logo) .'" alt="' . $loan->getLoanTitle() . '" class="logo" /></a></li>';
                     if($category->getName() === 'Fixed Deposit') {
                         $month_interes=$post['month_interes'];
+                        if($month_interes==0)
+                        {
+                            $month_interes=$loan->getTenor();
+                        }
                         $interest_rate = $this->string_to_number($loan->getIntRate());
                         // A = P x (1 + r/n)nt
                         // I = A - P
+                        $is_month_correct=0;
                         if($loan->getInterestRate()) {
                             $interest_rates = \Zend\Json\Json::decode($loan->getInterestRate());
                             if(count($interest_rates) > 0) {
                                 foreach ($interest_rates as $value) {
                                     if($value->tier == $month_interes) {
                                         $interest_rate = $value->percentage;
+                                        $is_month_correct=1;
                                     }
                                 }
                             }
                         }
+                        if($is_month_correct==0) $month_interes=$loan->getTenor();
                         // Formula:
                         // A = P x (1 + r/n)nt
                         // I = A - P
@@ -799,7 +806,11 @@ class LoanApplicationController extends AbstractActionController
                             $html .= '<ul>';
                             foreach ($interest_rates as $value) {
                                 if($category->getName() === 'Fixed Deposit') {
-                                    $html .= '<li><label>'.$value->tier.' months -> </label><span> '.$value->percentage.' %</span></li>';
+                                    $value_tier=$value->tier;
+                                    $value_percentage=$value->percentage;
+                                    if($value_tier=='') $value_tier=$loan->getTenor();
+                                    if($value_percentage=='') $value_percentage=$interest_rate;
+                                    $html .= '<li><label>'.$value_tier.' months -> </label><span> '.$value_percentage.' %</span></li>';
                                 } else {
                                     $html .= '<li><label>'.$value->tier.'</label><span>'.$value->percentage.'</span></li>';
                                 }
