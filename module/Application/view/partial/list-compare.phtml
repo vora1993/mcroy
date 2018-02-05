@@ -1,39 +1,8 @@
-<section class="compare-page">
-  <header>
-    <h3 class="cp-head-title"><?php echo $this->translate("Compare the best Singapore Credit Cards"); ?></h3>
-    <a href="/credit-cards" class="btn btn-backto-result"><?php echo $this->translate("Back to Credit Cards List") ?></a>
-  </header>
-  <div class="compare-top-drawer" style="display: none;">
-    <div class="compare-top-container compare-top-container--without-sponsored">
-      <div class="compare-top-item" data-compare-id="874">
-        <div class="compare-top-content">
-          <div class="compare-top-product">
-            <a class="" href="/credit-cards/citi-cash-back-card">
-              <img src="https://d11zeux9tyyeep.cloudfront.net/product/874/image_citi-cashback-visa@2x.jpg" alt="Citi Cash Back Card" onerror="this.onerror=null;this.src='https://d2wlck0zlc0wy5.cloudfront.net/prod-v4/v4/img/card-placeholder.svg';">
-            </a>
-            <a class="compare-product-link" href="/credit-cards/citi-cash-back-card">Citi Cash Back Card</a>
-          </div>
-          <div class="compare-top-action">
-            <a class="apply-now-btn btn-sm apply-btn btn-block   without-suggested applyFromActiveResult" href="/credit-cards/citi-cash-back-card/form/page1" data-enquiry-type="" data-product-id="874" data-channel="credit-cards" data-hop-off="1" data-name="Citi Cash Back Card" data-provider="Citibank" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="&quot;_blank&quot;">
-              <i class="fa fa-angle-double-right pull-right"></i>
-              apply now
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<!--   <?php //echo $this->partial('list_compare'); ?> -->
-  <div id="compare_id" class="compare-content compare-content--without-sponsored">
-    <?php 
-      $list_item=[];
-      if ($this->credit_cards_compare): 
-    ?>
+    <?php if ($this->credit_cards_compare): ?>
       <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
         <?php
           $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
           $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
-          $list_item[]=$credit_card->getId();
         ?>
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
@@ -353,62 +322,17 @@
               if(!in_array($credit_card->getId(), $this->list_item))
               {
                 $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+              
               ?>
               <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" onclick="CreditCard.add_item_compare(this);">
                 <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
                 <span class="product-add-title"><?php echo $credit_card->getName(); ?></span>
               </div>
-            <?php 
-                }
-                endforeach; 
+            <?php
+                } 
+              endforeach; 
             ?>
           </div>
         </div>
       </div>
-    <?php endif ?>
-  </div>
-</section>
-<?php
-$offStyle = 12;
-$offScript = 30;
-$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
-$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/credit-card-compare.css'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
-$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
-$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/select2/css/select2.css'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/select2/js/select2.js'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-match-height-master/dist/jquery.matchHeight-min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/credit_cards.js'));
-$this->inlineScript()->captureStart();
-echo <<<JS
-$('body').on('keyup', '#search_input', function(){
-  var search_input_value=$('#search_input').val().toLowerCase();
-  if(search_input_value!='')
-  {
-    var product=$('div.product-add-item');
-    for(var i=0;i<product.length;i++)
-    {
-      var item_name=product[i].innerText.toLowerCase();
-      if(item_name.indexOf(search_input_value)>=0)
-      {
-        product[i].style.display='block';
-      }else
-      {
-        product[i].style.display='none';
-      }
-    }
-  }else
-  {
-    var product=$('div.product-add-item');
-    for(var i=0;i<product.length;i++)
-    {
-        product[i].style.display='block';
-    }
-  }
-  
-})
-JS;
-$this->inlineScript()->captureEnd();
-?>
+<?php endif ?>

@@ -155,7 +155,7 @@ var CreditCard = {
     }
   },
   'add_item_compare': function(element) {
-    var id = $(element).data("compare-add");
+    var id = $(element).data("compare-add");  
     if(id > 0) {
       var data = 'id='+id;
       $.ajax({
@@ -171,7 +171,8 @@ var CreditCard = {
           if(json['success'] === false){
             toastr.error(json['msg']);
           } else {
-
+            CreditCard.list_compare();
+            $('[data-compare-add='+id+']').hide();
           }
         },
         error : function(xhr, ajaxOptions, thrownError){
@@ -182,6 +183,26 @@ var CreditCard = {
       toastr.error("Sorry you haven't selected right.");
     }
   },
+  'list_compare': function() {
+      $.ajax({
+        url: full_url + '/credit-cards/get-list-compare',
+        type: 'post',
+        data: {},
+        dataType: 'html',
+        async:false,
+        beforeSend: function(xhr, settings) {
+          App.blockUI({boxed: true});
+        },
+        success: function(html) {
+          App.unblockUI();
+          $('#compare_id').html(html);
+        },
+        error : function(xhr, ajaxOptions, thrownError){
+          toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        },
+      });
+  },
+
   'shortlist2': function(a) {
     $(".credit-card-shortlist .shortlist-container").slideToggle();
   },
@@ -254,6 +275,7 @@ var CreditCard = {
         if (a["success"]) {
           toastr.success(a["msg"]);
           $this.closest('.compare-item').remove();
+          CreditCard.list_compare();
         }
       },
       error: function(a, b, c) {

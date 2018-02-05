@@ -277,8 +277,7 @@ class CreditCardController extends AbstractActionController
         $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
       }
     }
-
-    return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards);
+    return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards,"list_item"=>$select);
   }
 
   public function pointsAction()
@@ -388,23 +387,34 @@ class CreditCardController extends AbstractActionController
 
       $session->offsetSet('select', $select_arr);
       $select = $session->offsetGet('select');
-      //ajax html product compare
-      if(count($select)>0) {
-        $html="";
-        $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
-        $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
-        $html="";
-        foreach ($credit_cards_compare as $key => $credit_card) {
-          $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
-          $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
-        }
-      }
 
       $response = $this->getResponse();
-      $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca,"html"=>$html) ) );
+      $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca) ) );
       return $response;
     }
     if($session->offsetExists('select')) $select = $session->offsetGet('select');
     return array("select" => $select);
+  }
+
+  public function getListCompareAction()
+  {
+    $session = new Session('credit_card');
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    if ($session->offsetExists('select'))
+    {
+      $select = $session->offsetGet('select');
+      if (count($select) > 0)
+      {
+        $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
+      }
+    }
+    $credit_cards = $application_model_credit_card->fetchAll();
+
+    $htmlView = new ViewModel(array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards,"list_item"=>$select));
+    $htmlOutput = $htmlView
+      ->setTerminal(true)
+      ->setTemplate('list_compare');
+    return $htmlOutput;
   }
 }
