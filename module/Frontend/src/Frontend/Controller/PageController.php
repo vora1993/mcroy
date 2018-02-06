@@ -28,7 +28,6 @@ class PageController extends AbstractActionController
   public function viewAction() {
     $id = $this->params()->fromRoute('id');  // From RouteMatch
     $seo = $this->params()->fromRoute('seo');  // From RouteMatch
-
     $viewModel = new ViewModel();
     if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
 
@@ -182,5 +181,38 @@ class PageController extends AbstractActionController
     }
 
     return array('income_factor_addons' => $income_factor_addons);
+  }
+
+  public function mortgageRefinanceCalculatorAction()
+  {
+    
+  }
+  public function privacyPolicyAction()
+  {
+    $seo='privacy-policy';
+    $viewModel = new ViewModel();
+    if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
+
+    $application_model_page = $this->getServiceLocator()->get('application_model_page');
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
+  }
+  public function termsOfUseAction()
+  {
+    $seo='terms-of-use';
+    $viewModel = new ViewModel();
+    if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
+
+    $application_model_page = $this->getServiceLocator()->get('application_model_page');
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
   }
 }
