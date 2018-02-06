@@ -2846,7 +2846,7 @@ h2.title-faq {
       display: flex;
   }
 
-  #lastest-news .news-content .col-sm-4.col-xs-12 {
+  #lastest-news .news-content .col-xs-12 {
       display: flex;
   }
 }
