@@ -22,6 +22,14 @@ class BusinessLoanController extends AbstractActionController
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
+            if($post['int_rate']<=0)
+            {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Interest Rate must greater than 0");
+                $response = $this->getResponse();
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
             $loan = new \Application\Entity\Loan;
@@ -93,7 +101,14 @@ class BusinessLoanController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-                
+                if($post['int_rate']<=0)
+                {
+                    $messages['success'] = false;
+                    $messages['msg'] = $translator->translate("Interest Rate must greater than 0");
+                    $response = $this->getResponse();
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
