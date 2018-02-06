@@ -70,13 +70,26 @@
               <header>
                 <div class="rating excellent">
                   <ul class="">
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
+                    <?php
+                      $color='';
+                      if($credit_card->getStar()<=3) $color='#F5A623';
+                      for($i=1;$i<=5;$i++)
+                      {
+                        if($credit_card->getStar()>=$i)
+                        {
+                    ?>
+                    <li style="color:<?php echo $color?>"><i class="fa fa-star"></i></li>
+                    <?php
+                        }else
+                        {
+                    ?>
+                    <li style="color: #9FA8B7;font-size: 5px;position: relative;top: -3px;"><i class="fa fa-circle"></i></li>
+                    <?php
+                        }
+                      } 
+                    ?>
                   </ul>
-                  <span class="rating-desc rate-2-text"><?php echo $this->translate("Excellent") ?></span>
+                  <!-- <span class="rating-desc rate-2-text"><?php echo $this->translate("Excellent") ?></span> -->
                 </div>
                 <span class="must-have-card"><b><?php echo $this->translate("Must Have Card") ?></b></span>
               </header>

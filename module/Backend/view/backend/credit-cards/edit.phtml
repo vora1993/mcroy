@@ -390,6 +390,15 @@ $this->headTitle($title);
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Rate star") ?></label>
+                  <div class="col-md-9">
+                    <div class="bigstars">
+                      <div class="rateit" data-rateit-value="<?php echo $this->credit_card->getStar()?>" data-rateit-min="0" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-max="5"></div>
+                    </div>
+                    <input type="hidden" readonly name="rate" data-required="1" class="form-control" value="<?php echo $this->credit_card->getStar()?>" />
+                  </div>
+                </div>
               </div>
               <div class="form-actions">
                 <div class="row">
@@ -413,6 +422,8 @@ $offStyle = 12;
 $offScript = 10;
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/rateit/scripts/rateit.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/rateit/scripts/jquery.rateit.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
@@ -420,4 +431,14 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
 $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/credit_cards_backend.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('.rateit').rateit({min: 0, max: 5, step: 1});
+$('.rateit').bind('rated', function (e) {
+  var ri = $(this);
+  var value = ri.rateit('value');
+  $("[name='rate']").val(value);
+});
+JS;
+$this->inlineScript()->captureEnd();
 ?>
