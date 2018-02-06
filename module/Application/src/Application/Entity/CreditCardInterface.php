@@ -22,4 +22,5 @@ interface CreditCardInterface
     public function getDiscountValue();
     public function getPointsValue();
     public function getAirMilesValue();
+    public function getStar();
 }
