@@ -71,8 +71,9 @@ var Loan = {
         var b = $(a).data("id");
         var c = formatIntNumber($("input[name=loan_amount]").val());
         var d = $("input[name=loan_tenure]").val();
+        var seo=$("input[name=seo]").val();
         if (c > 0 && d > 0) {
-            var e = "id=" + b + "&loan_amount=" + c + "&loan_tenure=" + d;
+            var e = "id=" + b + "&loan_amount=" + c + "&loan_tenure=" + d+"&seo="+seo;
             $.ajax({
                 url: full_url + "/business-term-loan/compare",
                 type: "post",

@@ -108,7 +108,7 @@ $loan_tenure = $personal['loan_tenure'];
                                             <div class="card-holder-description">
                                                 <?php echo $this->translate("Add a Business Term Loan for comparison, you will be returned to the Business Term Loan Listing") ?>
                                             </div>
-                                            <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("personal_loan", array("action" => "index")) ?>"><?php echo $this->translate("Add Business Term Loan") ?></a>
+                                            <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("loan_application", array("action" => "business-loan","seo"=>$this->loan['seo'])) ?>"><?php echo $this->translate("Add Business Term Loan") ?></a>
                                         </div>
                                     </div>
                                     <?php

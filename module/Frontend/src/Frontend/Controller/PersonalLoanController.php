@@ -476,6 +476,7 @@ class PersonalLoanController extends AbstractActionController
             $translator = $this->getServiceLocator()->get('translator');
             $post = $request->getPost();
             $id = $post['id'];
+            $seo=$post['seo'];
             $loan_amount = $post['loan_amount'];
             $loan_tenure = $post['loan_tenure'];
             $success = false;
@@ -520,6 +521,7 @@ class PersonalLoanController extends AbstractActionController
             $personal_loan = array(
                 'loan_amount' => $loan_amount,
                 'loan_tenure' => $loan_tenure,
+                'seo'        => $seo
                 );
             $session->offsetSet('loan', $personal_loan);
             $response = $this->getResponse();
