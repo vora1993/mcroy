@@ -262,7 +262,6 @@ var Loan = {
             if ("bank" === c) if ("asc" === e) return $(a).find(".bank-title > a").text() < $(b).find(".bank-title > a").text(); else return $(a).find(".bank-title > a").text() > $(b).find(".bank-title > a").text();
             if ("initial_deposit_amount" === c || "minimum_balance" === c || "interest_rates" === c || "tenor" === c || "interest_earned" === c) {
                 var d = ".box__" + c;
-                // console.log($(a).find(d + " > span").data("value"));
                 console.log($(a).find(d + " > span").data("value") +'/'+ $(b).find(d + " > span").data("value"));
                 if ("asc" === e) return $(b).find(d + " > span").data("value")-$(a).find(d + " > span").data("value"); 
                 else return $(a).find(d + " > span").data("value") - $(b).find(d + " > span").data("value");
