@@ -1165,7 +1165,7 @@ output {
     padding: 20px 30px !important;
     width: 100%;
     float: left;
-    border: 2px solid #eeeeee;
+    /*border: 2px solid #eeeeee;*/
 }
 .form-actions {
     width: 100%;

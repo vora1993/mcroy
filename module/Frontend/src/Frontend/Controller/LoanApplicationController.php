@@ -121,8 +121,8 @@ class LoanApplicationController extends AbstractActionController
                     }else
                     {
                         $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
--                       $total_amount_payable = $monthly_payment * $loan_tenure * 12;
--                       $total_interest_payable = $total_amount_payable - $loan_amount;
+                        $total_amount_payable = $monthly_payment * $loan_tenure * 12;
+                        $total_interest_payable = $total_amount_payable - $loan_amount;
                     }
 
                     $class = "";
@@ -309,7 +309,6 @@ class LoanApplicationController extends AbstractActionController
         $seo = $this->params()->fromRoute('seo');
         $application_model_category = $this->getServiceLocator()->get('application_model_category');
         $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "business_loan"));
-
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array("type" => "business_loan"));
 

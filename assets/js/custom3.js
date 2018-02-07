@@ -136,7 +136,7 @@ var Loan = {
         var loan_amount = $("input[name=loan_amount]").val();
         var loan_tenure = $("input[name=loan_tenure]").val();
         var seo         = $("input[name=seo]").val();
-        var id          = $(button).closest("#selected-holder").find(".fa.fa-times").data("id");
+        var id          = button;
 
         if(id > 0 && loan_amount > 0 && loan_tenure > 0) {
             var data = 'seo='+seo+'&loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&id='+id;

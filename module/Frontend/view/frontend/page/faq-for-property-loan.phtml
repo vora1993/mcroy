@@ -16,18 +16,15 @@ $this->headTitle($title);
                                     $k = 1;
                                     foreach ($_faq as $key => $value) {
                                         ?>
-                                        <div class="faq">
-                                            <div class="faq-title">
-                                                <h3 data-toggle="collapse" data-target="#faq<?php echo $k ?>"><?php echo $value->question ?></h3>
-                                                <button class="btn btn-faq collapsed" data-toggle="collapse" data-target="#faq<?php echo $k ?>"><span class="icn-collapsed-red"></span></button>
+                                        <div class="faq-panel">
+                                          <div role="tab" id="heading1">
+                                            <h4 class="faq-panel-header"><a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $k?>" aria-expanded="true" aria-controls="collapse1"> <i class="fa fa-caret-down" aria-hidden="true"></i> <i class="fa fa-caret-up" aria-hidden="true"></i> <span><?php echo $value->question ?></span> </a></h4>
+                                          </div>
+                                          <div id="collapse<?php echo $k?>" class="collapse" role="tabpanel" aria-labelledby="heading1">
+                                            <div class="faq-panel-body">
+                                              <?php echo $value->answer ?>
                                             </div>
-                                            <div class="collapse" id="faq<?php echo $k; ?>">
-                                                <div class="row">
-                                                    <div class="col-md-12 faq-item">
-                                                        <?php echo $value->answer ?>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                          </div>
                                         </div>
                                         <?php 
                                         $k++;   

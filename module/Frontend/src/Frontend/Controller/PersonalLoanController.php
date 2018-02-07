@@ -278,16 +278,21 @@ class PersonalLoanController extends AbstractActionController
                     {
                         $int_rates = $year->{$loan_tenure};
                     }*/
-                    $condition = $value->condition;
-                    $percentage = $value->percentage;
-                    $condition = str_replace('{m}', $loan_amount, $condition);
-                    $str = '$result = (bool)(' . $condition . ');';
-                    eval($str);
-                    if ($result) {
-                        $int_rates = $percentage;
+                    if($value->condition!='' && $value->percentage!='')
+                    {
+                        $condition = $value->condition;
+                        $percentage = $value->percentage;
+                        $condition = str_replace('{m}', $loan_amount, $condition);
+                        $str = '$result = (bool)(' . $condition . ');';
+                        eval($str);
+                        if ($result) {
+                            $int_rates = $percentage;
+                        }
                     }
                 }
             }
+
+            if($int_rates==0) $int_rates=$loan->getIntRate();
             // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
             // Where: r = decimal rate / 12.
             $r = ($int_rates / 100) / 12;

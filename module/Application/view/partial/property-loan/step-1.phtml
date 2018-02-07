@@ -203,58 +203,64 @@ $slider_loan_percent = '$slider_loan_percent';
             <div class="row indented form-wizard-subtitle">
                 <h4 class="font-blue"><?php echo $this->translate("How long do you want your tenure to be") ?>?</h4>
             </div>
-            <div class="row indented">
-                <div class="col-md-4">
-                    <div class="slider-container">
-                        <div class="slider-loan-tenure" data-min="5" data-max="35" data-value="25" data-soft-cap="30"></div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="slider-value">
-                        <span class="current info" id="loan_tenure-label">20</span>
-                        <span class="unit">Years</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row indented form-wizard-subtitle">
-                <h4 class="font-blue"><?php echo $this->translate("What % of the price would you like to loan") ?>?</h4>
-            </div>
-            <div class="row indented">
-                <div class="col-md-4">
-                    <div class="slider-container">
-                        <div class="slider-loan-amount" data-min="10" data-max="80" data-value="80" data-soft-cap="80"></div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="slider-value">
-                        <span class="current info" id="loan_amount-label">80</span>
-                        <span class="unit">Percent</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row indented easy-pie-chart">
-                <div class="number loans" data-percent="80"><span>80%</span></div>
-                <div class="pie-chart-info">
-                    <div style="display: inline-block; margin: 15px 10px;">
-                        <div class="info-heading"><?php echo $this->translate("Loan Amount") ?>
-                            <em><span class="main-percentage">(80%)</span></em>
+            <div class="container">
+                <div class="col-md-6">
+                    <div class="row indented">
+                        <div class="col-md-8">
+                            <div class="slider-container">
+                                <div class="slider-loan-tenure" data-min="5" data-max="35" data-value="25" data-soft-cap="30"></div>
+                            </div>
                         </div>
-                        <div class="info-amount">
-                            $<span class="loan-amount" id="loan-amount-label">-</span>
+                        <div class="col-md-4">
+                            <div class="slider-value">
+                                <span class="current info" id="loan_tenure-label">20</span>
+                                <span class="unit">Years</span>
+                            </div>
                         </div>
                     </div>
-                    <div style="display: inline-block; margin: 15px 10px;">
-                        <div class="info-heading minor"><?php echo $this->translate("Downpayment") ?>
-                            <em><span class="minor-percentage">(20%)</span></em>
+                    <div class="row indented form-wizard-subtitle">
+                        <h4 class="font-blue"><?php echo $this->translate("What % of the price would you like to loan") ?>?</h4>
+                    </div>
+                    <div class="row indented">
+                        <div class="col-md-8">
+                            <div class="slider-container">
+                                <div class="slider-loan-amount" data-min="10" data-max="80" data-value="80" data-soft-cap="80"></div>
+                            </div>
                         </div>
-                        <div class="info-amount minor">
-                            $<span class="downpayment" id="downpayment-label">-</span>
+                        <div class="col-md-4">
+                            <div class="slider-value">
+                                <span class="current info" id="loan_amount-label">80</span>
+                                <span class="unit">Percent</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="loan_amount" value="0" />
-                <input type="hidden" name="loan_tenure" value="20" />
-                <input type="hidden" name="loan_percent" value="80" />
+                <div class="col-md-6">
+                    <div class="row indented easy-pie-chart">
+                        <div class="number loans" data-percent="80"><span>80%</span></div>
+                        <div class="pie-chart-info">
+                            <div style="display: inline-block; margin: 15px 10px;">
+                                <div class="info-heading"><?php echo $this->translate("Loan Amount") ?>
+                                    <em><span class="main-percentage">(80%)</span></em>
+                                </div>
+                                <div class="info-amount">
+                                    $<span class="loan-amount" id="loan-amount-label">-</span>
+                                </div>
+                            </div>
+                            <div style="display: inline-block; margin: 15px 10px;">
+                                <div class="info-heading minor"><?php echo $this->translate("Downpayment") ?>
+                                    <em><span class="minor-percentage">(20%)</span></em>
+                                </div>
+                                <div class="info-amount minor">
+                                    $<span class="downpayment" id="downpayment-label">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="loan_amount" value="0" />
+                        <input type="hidden" name="loan_tenure" value="20" />
+                        <input type="hidden" name="loan_percent" value="80" />
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">

@@ -95,14 +95,16 @@ class HomeLoanController extends AbstractActionController
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
                 }
+
                 $purchase_price = $session->offsetGet('purchase_price') ? $session->offsetGet('purchase_price') : 0;
                 if(!$session->offsetExists('existing_home_loans') && $purchase_price <= 0) {
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
-                    return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 3));
+                    $redirect='/user/auth';                 
+                    $response->setContent ( \Zend\Json\Json::encode ( array("success" => true, "redirect" => $redirect) ) );
+                    return $response;
                 }
-
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_bank');
                 $condition = array('property' => "home_loan", 'status' => 1);
                 if($session->offsetExists('property_type')) {
@@ -125,7 +127,6 @@ class HomeLoanController extends AbstractActionController
                     $total_interest_for_years = $post['total_interest_for_years'];
                     $preferred_rate_package   = $post['preferred_rate_package'];
                     $no_lock_in_only          = $post['no_lock_in_only'];
-
                     if($loan_amount && $loan_tenure) {
                         $session->offsetSet('loan_amount', $loan_amount);
                         $session->offsetSet('loan_tenure', $loan_tenure);
