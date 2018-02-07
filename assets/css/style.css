@@ -1343,6 +1343,8 @@ span.note-cart {
     list-style: none;
     padding-left: 0;
     margin-bottom: 0;
+    height: 100%;
+    overflow: auto;
 }
 
 .list-label-value {
