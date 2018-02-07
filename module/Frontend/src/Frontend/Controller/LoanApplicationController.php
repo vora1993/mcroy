@@ -164,7 +164,7 @@ class LoanApplicationController extends AbstractActionController
                     //$html .= '<div class="col-xs-4 box__processing"><span class="processing" data-value="'.$loan->getProcessingFee().'"><b>' .$loan->getProcessingFee() . '</b>' . $translator->translate("Processing Fee") .'</span></div>';
                     //$html .= '<div class="col-xs-4 box__penalty"><span class="penalty" data-value="'.$loan->getPrepaymentPenaltyFee().'"><b>'.$loan->getPrepaymentPenaltyFee().'</b>' .$translator->translate("Penalty Fee") . '</span></div>';
                     $html .= '<div class="col-xs-4 box__processing"><span class="processing"><b>' .$loan->getProcessingFee() . '</b>' . $translator->translate("Processing Fee") .'</span></div>';
-                    $html .= '<div class="col-xs-4 box__penalty"><span class="penalty"><b>'.$loan->getPrepaymentPenaltyFee().'</b>' .$translator->translate("Penalty Fee") . '</span></div>';
+                    $html .= '<div class="col-xs-4 box__penalty"><span class="penalty" data-value="'.str_replace('%','',$loan->getPrepaymentPenaltyFee()).'"><b>'.$loan->getPrepaymentPenaltyFee().'</b>' .$translator->translate("Penalty Fee") . '</span></div>';
                     $html .= '</div></div>';
                     if($loan->getPromotions()) $html .= '<div class="vourcher"><span>'.$loan->getPromotions().'</span></div>';
                     $html .= '</div>'; // End row-content
