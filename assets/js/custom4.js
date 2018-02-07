@@ -62,7 +62,6 @@ var Loan = {
         var category_id = $("input[name=category_id]").val();
         var loan_amount_interes=$("input[name=loan_amount]").val();
         var month_interes=$("select[name=month_interes]").val();
-        console.log(category_id+'/'+loan_amount_interes+'/'+month_interes);
         $.ajax({
             type: "POST",
             url: full_url + "/loan-application/bank-account",

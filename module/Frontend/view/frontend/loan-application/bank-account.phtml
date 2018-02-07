@@ -8,7 +8,7 @@ $this->headTitle($title);
         <div class="box-title-compare">
             <div class="title-compare"><?php echo $title ?></div>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#business" aria-expanded="true"><i class="fa fa-university" aria-hidden="true"></i> <span class="title-lag"><?php echo $this->translate("Business Bank Account") ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
+                <li class="active"><a data-toggle="tab" href="#business" aria-expanded="true"><i class="fa fa-university" aria-hidden="true"></i> <span class="title-lag"><?php echo $title ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
     		    <li><a data-toggle="tab" href="#info" aria-expanded="true"><i class="fa fa-comments-o"></i> <?php echo $this->translate("Faq") ?> </a></li>
     		    <li><a data-toggle="tab" href="#need"><i class="fa fa-question-circle"></i><span class="title-lag"><?php echo $this->translate("Need Help") ?></span><span class="title-xs"><?php echo $this->translate("Help") ?></span></a></li>
             </ul>
@@ -78,10 +78,16 @@ $this->headTitle($title);
                                                 </aside>
                                             </li><!--
                                             <?php if($this->category->getName() === 'Fixed Deposit'): ?>
-                                            --><li>
+                                            -->
+                                            <li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Interest Earned") ?></div>
+                                                </aside>
+                                            </li>
+                                            <li>
                                                 <aside class="head-title">
                                                     <div class="name"><?php echo $this->translate("Fixed Deposit Amt") ?></div>
-                                                    <div class="sort" data-field="rate"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                    <div class="sort" data-field="initial_deposit_amount"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                                 </aside>
                                             </li><!--
                                             --><li>
@@ -93,14 +99,10 @@ $this->headTitle($title);
                                                 <aside class="head-title">
                                                     <div class="name"><?php echo $this->translate("Interest Rates") ?><span></span></div>
                                                     <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                                    <div class="sort" data-field="month"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                    <div class="sort" data-field="interest_rates"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                                 </aside>
                                                 </li><!--
-                                            --><li>
-                                                <aside class="head-title">
-                                                    <div class="name"><?php echo $this->translate("Interest Earned") ?></div>
-                                                </aside>
-                                            </li>
+                                            -->
                                             <?php else: ?>
                                             --><li>
                                                 <aside class="head-title">

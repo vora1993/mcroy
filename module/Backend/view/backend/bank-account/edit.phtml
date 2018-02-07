@@ -342,15 +342,18 @@ echo <<<JS
 var category_name = $("select[name=category_id] option:selected").text();
 if(category_name === 'Fixed Deposit') {
     $('.tenor').removeClass('hide');
+    $('input[name=tenor]').attr('required',true);
 }
 $('select[name=category_id]').on("change", function() {
     var category_name = $("select[name=category_id] option:selected").text();    
     if(category_name === 'Fixed Deposit') {
         $('.tenor').removeClass('hide');
+        $('input[name=tenor]').attr('required',true);
         $('.initial_deposit_amount label').text('Fixed Deposit Amount');
         $('.minimum_balance label').text('Minimum Deposit');
     } else {
         $('.tenor').addClass('hide');
+        $('input[name=tenor]').attr('required',false);
         $('.initial_deposit_amount label').text('Initial Deposit Amount');
         $('.minimum_balance label').text('Minimum Balance');
     }

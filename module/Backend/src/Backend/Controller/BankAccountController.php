@@ -22,7 +22,14 @@ class BankAccountController extends AbstractActionController
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
-
+            if($post['tenor']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg']     = $translator->translate("Tenor must greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             if($post['int_rate']<=0)
             {
                 $response = $this->getResponse();
@@ -92,6 +99,14 @@ class BankAccountController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
+                if($post['tenor']<=0)
+                {
+                    $response = $this->getResponse();
+                    $messages['success'] = false;
+                    $messages['msg']     = $translator->translate("Tenor must greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 if($post['int_rate']<=0)
                 {
                     $messages['success'] = false;

@@ -778,12 +778,11 @@ class LoanApplicationController extends AbstractActionController
                         // $I = round($A - $loan_amount, 2);
 
                         $loan_amount_interes=$post['loan_amount_interes'];
-                        $I=($interest_rate*$loan_amount_interes)/100;
-
+                        $I=($interest_rate*$loan_amount_interes/100/$month_interes/12);
+                        $html  .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.number_format($I,2).'"><b>'.number_format($I,2).'$</b>' . $translator->translate("Interest Earned") .'</span></li>';
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $month_interes .'"><b>' . $month_interes . '</b>' . $translator->translate("Tenor") .'</span></li>';
                         $html .= '<li class="box__interest_rates"><span class="interest_rates" data-value="' . $this->string_to_number($interest_rate) .'"><b>' . $interest_rate . '%</b>' . $translator->translate("Interest Rates") .'</span></li>';
-                        $html .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.$I.'"><b>'.$I.'$</b>' . $translator->translate("Interest Earned") .'</span></li>';
                     } else {
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Initial Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__minimum_balance"><span class="minimum_balance" data-value="' . $this->string_to_number($loan->getMinimumBalance()) .'"><b>' . $loan->getMinimumBalance() . '</b>' . $translator->translate("Minimum Balance") .'</span></li>';
@@ -822,10 +821,9 @@ class LoanApplicationController extends AbstractActionController
                     /*$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Citizenship").'</div><div class="col-md-6">'.$loan->getCitizenship().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Age").'</div><div class="col-md-6">'.$loan->getAge().'</div></div>';*/
                     if($category->getName() === 'Fixed Deposit') $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Minimum Deposit").'</div><div class="col-md-6">'.$loan->getMinimumBalance().'</div></div>'; 
-                    $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Annual Fee").'</div><div class="col-md-6">'.$loan->getAnnualFee().'</div></div>';
-                    $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Service Fee").'</div><div class="col-md-6">'.$loan->getServiceFee().'</div></div>';
+                    //$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Annual Fee").'</div><div class="col-md-6">'.$loan->getAnnualFee().'</div></div>';
+                    //$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Service Fee").'</div><div class="col-md-6">'.$loan->getServiceFee().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Highlight").'</div><div class="col-md-6">'.$loan->getHighlight().'</div></div>';
-
                     $html .= '</div>'; // End summary-details
 
                     $html .= '<div class="col-md-12 more-detail">';
@@ -836,6 +834,7 @@ class LoanApplicationController extends AbstractActionController
 
                     $html .= '<div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">';
                     $html .= '<div class="col-md-6 col-sm-6 col-xs-12 box__compare"><button type="button" onclick="Loan.compare(this)" data-id="' .$loan->getId() . '" class="btn btn-lg btn-block ladda-button compare' . $class . '" title="' . $translator->translate("Compare") . '"><i class="fa fa-copy"></i><span>' . $translator->translate("Compare") . '</span></button></div>';
+
                     $html .= '<div class="col-md-6 col-sm-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="' .$loan->getId() . '" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="' .$translator->translate("Apply") . '"><i class="fa fa-check-square-o"></i> ' . $translator->translate("Apply Now") .'</button></div>';
                     $html .= '</div>';
 

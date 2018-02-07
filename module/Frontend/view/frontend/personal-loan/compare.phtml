@@ -53,18 +53,22 @@ $loan_tenure = $personal['loan_tenure'];
                                     $interest_rate = \Zend\Json\Json::decode ( $loan->getInterestRate() );
                                     if(count($interest_rate) > 0 ) {
                                         foreach ($interest_rate as $key => $value) {
-                                            $condition = $value->condition;
-                                            $percentage = $value->percentage;
-                                            $condition = str_replace('{m}', $loan_amount, $condition);
-                                            $str = '$result = (bool)(' . $condition . ');';
-                                            eval($str);
-                                            if ($result)
+                                            if($value->condition!='' && $value->percentage!='')
                                             {
-                                                //$int_rates = $year->{$loan_tenure};
-                                                $int_rates = $percentage;
+                                                $condition = $value->condition;
+                                                $percentage = $value->percentage;
+                                                $condition = str_replace('{m}', $loan_amount, $condition);
+                                                $str = '$result = (bool)(' . $condition . ');';
+                                                eval($str);
+                                                if ($result)
+                                                {
+                                                    //$int_rates = $year->{$loan_tenure};
+                                                    $int_rates = $percentage;
+                                                }
                                             }
                                         }
                                     }
+                                    if($int_rates==0) $int_rates=$loan->getIntRate();
                                     // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
                                     // Where: r = decimal rate / 12.
                                     $r = ($int_rates / 100) / 12;
@@ -104,7 +108,7 @@ $loan_tenure = $personal['loan_tenure'];
                                             <div class="card-holder-description">
                                                 <?php echo $this->translate("Add a Business Term Loan for comparison, you will be returned to the Business Term Loan Listing") ?>
                                             </div>
-                                            <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("personal_loan", array("action" => "index")) ?>"><?php echo $this->translate("Add Business Term Loan") ?></a>
+                                            <a class="btn blue btn-block btn-outline" href="<?php echo $this->url("loan_application", array("action" => "business-loan","seo"=>$this->loan['seo'])) ?>"><?php echo $this->translate("Add Business Term Loan") ?></a>
                                         </div>
                                     </div>
                                     <?php
