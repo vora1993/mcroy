@@ -85,15 +85,19 @@ class LoanApplicationController extends AbstractActionController
                         $interest_rate = \Zend\Json\Json::decode($loan->getInterestRate());
                         if (count($interest_rate) > 0) {
                             foreach ($interest_rate as $key => $value) {
-                                $condition = $value->condition;
-                                $percentage = $value->percentage;
-                                if($condition && $percentage) {
-                                    $condition = str_replace('{m}', $loan_amount, $condition);
-                                    $str = '$result = (bool)(' . $condition . ');';
-                                    eval($str);
-                                    if ($result) {
-                                        //$int_rates = $year->{$loan_tenure};
-                                        $int_rates = $percentage;
+                                if($value->condition!='' && $value->percentage!='')
+                                {
+                                    $condition = $value->condition;
+                                    $percentage = $value->percentage;
+                                    if($condition && $percentage) {
+                                        $condition = str_replace('{m}', $loan_amount, $condition);
+
+                                        $str = '$result = (bool)(' . $condition . ');';
+                                        eval($str);
+                                        if ($result) {
+                                            //$int_rates = $year->{$loan_tenure};
+                                            $int_rates = $percentage;
+                                        }
                                     }
                                 }
                             }
@@ -156,7 +160,11 @@ class LoanApplicationController extends AbstractActionController
 
                     $html .= '<div class="col-md-5"><div class="row">';
                     $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates .'"><b>' . $int_rates . '%</b>' . $translator->translate("Interest Rate") .'</span></div>';
-                    $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$checked . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
+                    $arr_check=[
+                        'no'=>0,
+                        'yes'=>1
+                    ];
+                    $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$arr_check[$checked] . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
                     $html .= '<div class="col-xs-4 box__month"><span class="month" data-value="' . $monthly_payment .'"><b>$' . number_format($monthly_payment, 2) . '</b>' . $translator->translate("Per Month") .'</span></div>';
                     $html .= '</div></div>';
                     $html .= '<div class="col-md-5"><div class="row">';
