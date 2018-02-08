@@ -116,7 +116,7 @@ class BusinessLoanController extends AbstractActionController
                     $loan->setType($post['type']);
                     $loan->setCategoryId($post['category_id']);
                     $loan->setLoanTitle($post['loan_title']);
-                    if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
+                    $loan->setPromotions($this->clearHtml($post['promotions']));
                     $loan->setBenefit($post['benefit']);
                     $loan->setMaxLoanAmount($post['max_loan_amount']);
                     $loan->setMaxTenor($post['max_tenor']);
