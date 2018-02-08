@@ -189,9 +189,103 @@ class PropertyLoanController extends AbstractActionController
         return array('loan' => $loan);
     }
     
-    public function faqAction() {
+    public function faqForCommercialAction() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
-        $faq = $application_model_faq->fetchRow(array('type' => 'property_loan'));
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_commercial'));
+        if($faq) {
+            $translator = $this->getServiceLocator()->get('translator');
+            
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $id = $faq->getId();
+                $post = $request->getPost();
+                $error = 0;
+                if(!$error) {
+                    $faq->setId($id);
+                    $_faq = $post['faq'];
+                    if(count($_faq) > 0) {
+                        $loan_tenure = array();
+                        foreach ($_faq as $key => $value) {
+                            $question = $value['question'];
+                            $answer = $value['answer'];
+                            $loan_tenure[] = array(
+                                'question'  => $question,
+                                'answer' => $answer
+                            );
+                        }
+                        $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
+                        $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
+                    }
+                    
+                    $edited = $application_model_faq->update($faq);
+                    if($edited) {
+                        $messages['success'] = true;
+                        $messages['msg']     = $translator->translate("Successfully updated");
+                    } else {
+                        $messages['success'] = false;
+                        $messages['msg']     = $translator->translate("Something error. Please check");
+                    }
+                }
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('faq' => $faq);
+        } 
+    }
+
+    public function faqForResidentialAction() {
+        $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_residential'));
+        if($faq) {
+            $translator = $this->getServiceLocator()->get('translator');
+            
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $id = $faq->getId();
+                $post = $request->getPost();
+                $error = 0;
+                if(!$error) {
+                    $faq->setId($id);
+                    $_faq = $post['faq'];
+                    if(count($_faq) > 0) {
+                        $loan_tenure = array();
+                        foreach ($_faq as $key => $value) {
+                            $question = $value['question'];
+                            $answer = $value['answer'];
+                            $loan_tenure[] = array(
+                                'question'  => $question,
+                                'answer' => $answer
+                            );
+                        }
+                        $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
+                        $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
+                    }
+                    
+                    $edited = $application_model_faq->update($faq);
+                    if($edited) {
+                        $messages['success'] = true;
+                        $messages['msg']     = $translator->translate("Successfully updated");
+                    } else {
+                        $messages['success'] = false;
+                        $messages['msg']     = $translator->translate("Something error. Please check");
+                    }
+                }
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('faq' => $faq);
+        } 
+    }
+
+    public function faqForAlternativeAction() {
+        $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_alternative'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
             

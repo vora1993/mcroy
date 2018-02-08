@@ -147,6 +147,11 @@
                             <span class="title"><?php echo $this->translate("FAQ for Government Assisted Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'faq-alternative-funding') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "faq-alternative-funding")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Alternative Funding") ?></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item <?php if($this->view === 'property_loan') echo 'active open'?>">
@@ -182,9 +187,19 @@
                             <span class="title"><?php echo $this->translate("Refinancing") ?></span>
                         </a>
                     </li>
-                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq') echo ' active'?>">
-                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq")) ?>" class="nav-link ">
-                            <span class="title"><?php echo $this->translate("FAQ for Property Loan") ?></span>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-commercial') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-commercial")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Commercial/ Industrial Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-residential') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-residential")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ Residential Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-alternative') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-alternative")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ Alternative Financing") ?></span>
                         </a>
                     </li>
                 </ul>
