@@ -61,6 +61,34 @@ class PageController extends AbstractActionController
     return array("faq" => $faq);
   }
 
+  public function faqAlternativeFundingAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_alternative_funding"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForCommercialAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_commercial"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForResidentialAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_residential"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForAlternativeAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_alternative"));
+
+    return array("faq" => $faq);
+  }
+
   public function contactUsAction() {
     $seo = "contact-us";  // From RouteMatch
     $application_model_page = $this->getServiceLocator()->get('application_model_page');

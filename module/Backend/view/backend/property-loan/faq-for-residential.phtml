@@ -1,0 +1,239 @@
+<?php
+$title = $this->translate("FAQ For Residential Loan");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'faq-for-residential')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/property_loan') ?>"><?php echo $this->translate("Property Loan") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("FAQ") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light bordered form-fit">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bank"></i>
+                            <span class="caption-subject sbold uppercase"><?php echo $this->translate($title) ?></span>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <!-- BEGIN FORM-->
+                        <form action="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-residential")) ?>" id="form_bank" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="form-group mt-repeater">
+                                            <div data-repeater-list="faq" style="border-left: 0;">
+                                                <?php
+                                                $_faq = \Zend\Json\Json::decode($this->faq->getQuestion());
+                                                if(count($_faq) > 0) {
+                                                    foreach ($_faq as $key => $value) {
+                                                        ?>
+                                                        <div data-repeater-item class="mt-repeater-item">
+                                                            <div class="row mt-repeater-row">
+                                                                <div class="col-md-6">
+                                                                    <label class="control-label"><?php echo $this->translate("Question") ?></label>
+                                                                    <textarea name="question" class="form-control"><?php echo $value->question ?></textarea>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="control-label"><?php echo $this->translate("Answer") ?></label>
+                                                                    <textarea name="answer" class="form-control"><?php echo $value->answer ?></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mt-repeater-row">
+                                                                <div class="col-md-12" style="padding-top: 20px;">
+                                                                    <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                                                        <i class="fa fa-close"></i> <?php echo $this->translate("Remove Row") ?></a>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php    
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <div data-repeater-item class="mt-repeater-item">
+                                                        <div class="row mt-repeater-row">
+                                                            <div class="col-md-6">
+                                                                <label class="control-label"><?php echo $this->translate("Question") ?></label>
+                                                                <textarea name="question" class="form-control"></textarea>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="control-label"><?php echo $this->translate("Answer") ?></label>
+                                                                <textarea name="answer" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-repeater-row">
+                                                            <div class="col-md-12" style="padding-top: 20px;">
+                                                                <a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete">
+                                                                    <i class="fa fa-close"></i> <?php echo $this->translate("Remove Row") ?></a>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div style="border-left: 0;">
+                                                <a href="javascript:;" data-repeater-create class="btn btn-info mt-repeater-add">
+                                                    <i class="fa fa-plus"></i> <?php echo $this->translate("Add Row") ?></a>
+                                            </div>
+                                        </div>        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                                        <button type="button" class="btn btn-outline" onclick="cancel('admin/property-loan')"><?php echo $this->translate("Cancel") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-repeater/jquery.repeater.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+tinymce.init({
+    selector: '.editor',
+    height: 300,
+    plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    content_css: full_url+'/assets/css/codepen.min.css',
+    setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
+});
+
+$('.mt-repeater').each(function(){
+    $(this).repeater({
+        show: function () {
+       	    $(this).slideDown();
+        },
+        hide: function (deleteElement) {
+            if(confirm('Are you sure you want to delete this element?')) {
+                $(this).slideUp(deleteElement);
+            }
+        },
+        ready: function (setIndexes) {
+            
+        }
+    });
+});
+
+var form = $('#form_bank');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+    
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_bank .form-group').removeClass('has-error');
+        $('#form_bank .help-block, #form_bank .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/property-loan/faq-for-residential'; }, 1500);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

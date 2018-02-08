@@ -1,9 +1,9 @@
 <?php
-$title = $this->translate("FAQ for Property Loan");
+$title = $this->translate("FAQ For Alternative Financing");
 $this->headTitle($title);
 ?>
 <!-- BEGIN SIDEBAR -->
-<?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'faq')); ?>
+<?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'faq-for-alternative')); ?>
 <!-- END SIDEBAR -->
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
@@ -37,7 +37,7 @@ $this->headTitle($title);
                     </div>
                     <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="<?php echo $this->url("admin/property_loan", array("action" => "faq")) ?>" id="form_bank" class="form-horizontal form-bordered">
+                        <form action="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-alternative")) ?>" id="form_bank" class="form-horizontal form-bordered">
                             <div class="form-body">
                                 <div class="form-group">
                                     <div class="col-md-12">
@@ -213,7 +213,7 @@ form.validate({
             } else {
                 if(result.success) {
                     toastr.success(result.msg);
-                    setTimeout(function(){ window.location.href = full_url+'/admin/property-loan/faq'; }, 1500);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/property-loan/faq-for-alternative'; }, 1500);
                 } else {
                     toastr.warning(result.msg);
                 }

@@ -87,7 +87,7 @@ class Menu extends AbstractHelper implements ServiceLocatorAwareInterface
                         // Level 3
                         if($submenu['sub']) {
                             $sub_menu_v3 = $submenu['sub'];
-                            $html .= '<li aria-haspopup="true" class="dropdown-submenu'.$class.'"><a href="'.$url.'">'.$submenu['name'].'<span class="arrow"></span></a>';
+                            $html .= '<li aria-haspopup="true" class="dropdown-submenu'.$class.'"><a href="javascript:;">'.$submenu['name'].'<span class="arrow"></span></a>';
                             $html .= '<ul class="dropdown-menu">';
                             foreach ($sub_menu_v3 as $submenu3) {
                                 if($submenu3['route'] === $routeName) $class = ' active';
