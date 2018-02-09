@@ -30,7 +30,14 @@ class BusinessLoanController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+            if(!preg_match('/^[a-zA-Z0-9]*$/', $post['lock_in_period']))
+            {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Lock in Period container only: alphabet,number ");
+                $response = $this->getResponse();
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
             $loan = new \Application\Entity\Loan;
             $loan->setBankId($post['bank_id']);
@@ -113,6 +120,14 @@ class BusinessLoanController extends AbstractActionController
                 {
                     $messages['success'] = false;
                     $messages['msg'] = $translator->translate("Interest Rate must greater than 0");
+                    $response = $this->getResponse();
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
+                if(!preg_match('/^[a-zA-Z0-9]*$/', $post['lock_in_period']))
+                {
+                    $messages['success'] = false;
+                    $messages['msg'] = $translator->translate("Lock in Period container only: alphabet,number ");
                     $response = $this->getResponse();
                     $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                     return $response;
