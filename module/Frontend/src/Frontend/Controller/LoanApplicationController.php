@@ -91,7 +91,7 @@ class LoanApplicationController extends AbstractActionController
                                     $percentage = $value->percentage;
                                     if($condition && $percentage) {
                                         $condition = str_replace('{m}', $loan_amount, $condition);
-
+                                        $condition = str_replace(',', $loan_amount, $condition);
                                         $str = '$result = (bool)(' . $condition . ');';
 -                                       eval($str);
                                         if ($result) {
