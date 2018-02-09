@@ -67,8 +67,16 @@ class BusinessLoanController extends AbstractActionController
                 foreach ($interest_rate as $key => $value) {
                     $condition = $value['condition'];
                     $percentage = $value['percentage'];
+                    if(!preg_match('/([<>=])+([0-9])+/', $condition))
+                    {
+                        $messages['success'] = false;
+                        $messages['msg'] = $translator->translate("Condition container only: <,=,>,0,number ");
+                        $response = $this->getResponse();
+                        $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                        return $response;
+                    }
                     $loan_tenure[] = array(
-                        'condition'  => $condition,
+                        'condition'  => '{m}'.$condition,
                         'percentage' => $percentage
                     );
                 }
@@ -129,10 +137,10 @@ class BusinessLoanController extends AbstractActionController
                     $loan->setUrl($post['url']);
                     $loan->setIntRate($post['int_rate']);
                     $loan->setMaxTenure($post['max_tenure']);
-                    $loan->setMaxLoanAmt($post['max_loan_amt']);
+                    $loan->setMaxLoanAmt(str_replace(',', '',$post['max_loan_amt']));
                     $loan->setPrepaymentPenaltyFee($post['prepayment_penalty_fee']);
                     $loan->setRestructuringOfLoanTenor($post['restructuring_of_loan_tenor']);
-                    $loan->setMinTurnover($post['min_turnover']);
+                    $loan->setMinTurnover(str_replace(',', '',$post['min_turnover']));
                     $loan->setMinYearsIncorporation($post['min_years_incorporation']);
                     $loan->setMinAge($post['min_age']);
                     $loan->setBankruptcy($post['bankruptcy']);
@@ -146,8 +154,16 @@ class BusinessLoanController extends AbstractActionController
                         foreach ($interest_rate as $key => $value) {
                             $condition = $value['condition'];
                             $percentage = $value['percentage'];
+                            if(!preg_match('/([<>=])+([0-9])+/', $condition))
+                            {
+                                $messages['success'] = false;
+                                $messages['msg'] = $translator->translate("Condition container only: <,=,>,0,number ");
+                                $response = $this->getResponse();
+                                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                                return $response;
+                            }
                             $loan_tenure[] = array(
-                                'condition'  => $condition,
+                                'condition'  => '{m}'.$condition,
                                 'percentage' => $percentage
                             );
                         }

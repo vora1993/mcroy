@@ -53,12 +53,12 @@ class LoanApplicationController extends AbstractActionController
 
                 $loan_amount = $post['loan_amount'] ? (int) $post['loan_amount'] : 0;
                 $loan_tenure = $post['loan_tenure'] ? (int) $post['loan_tenure'] : 0;
-
                 $int_rates = '';
                 $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
                 $html .= '<div class="filters-table-body">';
                 foreach ($loans as $k => $loan)
                 {
+
                     $bank = $application_model_bank->fetchRow(array("id" => $loan->getBankId()));
                     if ($k == 0)
                     {
@@ -80,7 +80,7 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<div class="col-md-2"><a href="#"><img src="' . $basePath($dir_logo) . '" alt="' . $loan->getLoanTitle() . '" class="logo" /></a></div>';
 
                     // Interest rate
-                    $int_rates = 0;
+                    $int_rates=$loan->getIntRate();
                     if($loan->getInterestRate()) {
                         $interest_rate = \Zend\Json\Json::decode($loan->getInterestRate());
                         if (count($interest_rate) > 0) {
@@ -92,7 +92,8 @@ class LoanApplicationController extends AbstractActionController
                                     if($condition && $percentage) {
                                         $condition = str_replace('{m}', $loan_amount, $condition);
 
-                                        $str = '$result = (' . $condition . ');';
+                                        $str = '$result = (bool)(' . $condition . ');';
+-                                       eval($str);
                                         if ($result) {
                                             //$int_rates = $year->{$loan_tenure};
                                             $int_rates = $percentage;
@@ -102,7 +103,6 @@ class LoanApplicationController extends AbstractActionController
                             }
                         }
                     }
-                    $int_rates=$loan->getIntRate();
                     // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
                     // Where: r = decimal rate / 12.
                     $r = ($int_rates / 100) / 12;
@@ -120,9 +120,10 @@ class LoanApplicationController extends AbstractActionController
                     {
                         $unit_rate='month';
                         $unit_loan_tenure='month';
-                        $loan_tenure=$loan_tenure*12;
+                        $loan_tenure_compare=$loan_tenure*12;
                     }else
                     {
+                        $loan_tenure_compare=$loan_tenure;
                         $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
                         $total_amount_payable = $monthly_payment * $loan_tenure * 12;
                         $total_interest_payable = $total_amount_payable - $loan_amount;
@@ -144,11 +145,18 @@ class LoanApplicationController extends AbstractActionController
                     // Applicable
                     $get_max_loan_amt = $loan->getMaxLoanAmt() ? $loan->getMaxLoanAmt() : 0;
                     $get_max_tenure = $loan->getMaxTenure() ? $loan->getMaxTenure() : 0;
+                    if($post['seo']=='p2p-lending')
+                    {
+                        $get_max_tenure_compare=$get_max_tenure*12;
+                    }else
+                    {
+                        $get_max_tenure_compare=$get_max_tenure;
+                    }
                     $min_sales_turnover = $post['min_sales_turnover'] ? (int) $post['min_sales_turnover'] : 0;
                     $min_years_of_incorporation = $post['min_years_of_incorporation'] ? (int) $post['min_years_of_incorporation'] : 0;
                     $loan_min_sales_turnover = $loan->getMinTurnover() ? $loan->getMinTurnover() : 0;
                     $loan_years_of_incorporation = $loan->getMinYearsIncorporation() ? $loan->getMinYearsIncorporation() : 0;
-                    if ($loan_amount <= $get_max_loan_amt && $loan_tenure <= $get_max_tenure && $min_sales_turnover >= $loan_min_sales_turnover && $min_years_of_incorporation >= $loan_years_of_incorporation)
+                    if ($loan_amount <= $get_max_loan_amt && $loan_tenure_compare <= $get_max_tenure_compare && $min_sales_turnover >= $loan_min_sales_turnover && $min_years_of_incorporation >= $loan_years_of_incorporation)
                     {
                         $dir_c = 'assets/img/checked-yes.png';
                         $checked = "yes";
@@ -181,14 +189,14 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<div class="row">
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("INT RATES") .'</strong></div>
-                                <div class="col-md-4">' . $loan->getIntRate() . '</div>
+                                <div class="col-md-4">' . $int_rates . '</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("Min Turnover") .'</strong>
 
                                         <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->min_turnover.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
                                 </div>
-                                <div class="col-md-4">$' . $loan->getMinTurnover() . '</div>
+                                <div class="col-md-4">$' . number_format($loan->getMinTurnover()) . '</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("Principle Loan Amount") .'</strong></div>
@@ -217,7 +225,7 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Max Loan Amount") .'</strong></div>
-                        <div class="col-md-4">$' . $loan->getMaxLoanAmt() . '</div>
+                        <div class="col-md-4">$' . number_format($loan->getMaxLoanAmt()) . '</div>
                         </div>
 
                         <div class="col-md-4">
@@ -246,22 +254,15 @@ class LoanApplicationController extends AbstractActionController
                         </div>
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Loan Tenure") .'</strong></div>
-                        <div class="col-md-4">' . $loan_tenure . $unit_loan_tenure.'</div>
+                        <div class="col-md-4">' . $loan_tenure .' '. $unit_loan_tenure.'</div>
                         </div>
                         </div>';
-                    if($loan->getLockInPeriod()>0)
-                    {
-                        $value_Period=$loan->getLockInPeriod();
-                    }else
-                    {
-                        $value_Period=0;
-                    }
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Lock In Period") .'</strong>
                             <a href="#" data-toggle="tooltip" data-placement="top" title="'.$obj->lock_in_period.'"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></a>
                         </div>
-                        <div class="col-md-4">' . $value_Period . ' year</div>
+                        <div class="col-md-4">' . $loan->getLockInPeriod() . '</div>
                         </div>
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
