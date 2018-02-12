@@ -149,14 +149,14 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Interest Rate") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="int_rate" class="form-control" value="<?php echo $this->loan->getIntRate() ?>" required/> 
+                                        <input type="number" name="int_rate" class="form-control" value="<?php echo $this->loan->getIntRate() ?>" required/> 
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Max Tenure") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="max_tenure" class="form-control" value="<?php echo $this->loan->getMaxTenure() ?>" /> 
+                                        <input type="number" name="max_tenure" class="form-control" value="<?php echo $this->loan->getMaxTenure() ?>" /> 
                                     </div>
                                 </div>
                                 

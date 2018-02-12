@@ -44,7 +44,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                                     <div class="col-xs-12">
                     							    	<div class="input-group">
                                                             <input type="text" name="loan_tenure" value="3" id="loan_tenure" class="form-control" placeholder="3" />
-                    							    	    <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("Years") ?></i></span>
+                    							    	    <span class="input-group-addon"><i class="fa-year"><?php echo $this->seo=='p2p-lending'?$this->translate("Months"):$this->translate("Years") ?></i></span>
                                                         </div>
                     						    	</div>
                                                 </div>
@@ -72,7 +72,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                                     <div class="col-xs-12">
                                                         <div class="input-group">
                                                             <input type="text" name="min_years_of_incorporation" value="3" id="min_years_of_incorporation" class="form-control" placeholder="3" />
-                                                            <span class="input-group-addon"><i class="fa-year"><?php echo $this->translate("Years") ?></i></span>
+                                                            <span class="input-group-addon"><i class="fa-year"><?php echo $this->seo=='p2p-lending'?$this->translate("Months"):$this->translate("Years") ?></i></span>
                                                         </div>
                                                     </div> 
                                                 </div>

@@ -91,9 +91,9 @@ class LoanApplicationController extends AbstractActionController
                                     $percentage = $value->percentage;
                                     if($condition && $percentage) {
                                         $condition = str_replace('{m}', $loan_amount, $condition);
-                                        $condition = str_replace(',', $loan_amount, $condition);
+                                        $condition = str_replace(',','', $condition);
                                         $str = '$result = (bool)(' . $condition . ');';
--                                       eval($str);
+                                        eval($str);
                                         if ($result) {
                                             //$int_rates = $year->{$loan_tenure};
                                             $int_rates = $percentage;
@@ -108,10 +108,9 @@ class LoanApplicationController extends AbstractActionController
                     $r = ($int_rates / 100) / 12;
                     if($int_rates <= 0) $r = 1;
                     // $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) - 1)) * $loan_amount;
-                    $monthly_payment=($int_rates/100)*$loan_amount;
-                    $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
+                    // $monthly_payment=($int_rates/100)*$loan_amount;
+                    // $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
                     // $total_interest_payable = $total_amount_payable - $loan_amount;
-                    $total_interest_payable=$monthly_payment*$loan_tenure;
 
                     //Only p2p module
                     $unit_rate='year';
@@ -121,6 +120,9 @@ class LoanApplicationController extends AbstractActionController
                         $unit_rate='month';
                         $unit_loan_tenure='month';
                         $loan_tenure_compare=$loan_tenure*12;
+                        $monthly_payment=($loan_amount/$loan_tenure)+(($int_rates/100)*$loan_amount);;
+                        $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
+                        $total_interest_payable=$monthly_payment*$loan_tenure;
                     }else
                     {
                         $loan_tenure_compare=$loan_tenure;
@@ -145,9 +147,11 @@ class LoanApplicationController extends AbstractActionController
                     // Applicable
                     $get_max_loan_amt = $loan->getMaxLoanAmt() ? $loan->getMaxLoanAmt() : 0;
                     $get_max_tenure = $loan->getMaxTenure() ? $loan->getMaxTenure() : 0;
+                    $unit_interest_rate='';
                     if($post['seo']=='p2p-lending')
                     {
                         $get_max_tenure_compare=$get_max_tenure*12;
+                        $unit_interest_rate='per month';
                     }else
                     {
                         $get_max_tenure_compare=$get_max_tenure;
@@ -166,16 +170,16 @@ class LoanApplicationController extends AbstractActionController
                     }
 
                     $html .= '<div class="col-md-5"><div class="row">';
-                    $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates .'"><b>' . $int_rates . '%</b>' . $translator->translate("Interest Rate") .'</span></div>';
+                    $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates.'"><b>' . $int_rates . '% '.$unit_interest_rate.'</b>' . $translator->translate("Interest Rate") .'</span></div>';
                     $arr_check=[
                         'no'=>0,
                         'yes'=>1
                     ];
                     $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$arr_check[$checked] . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
-                    $html .= '<div class="col-xs-4 box__month"><span class="month" data-value="' . $monthly_payment .'"><b>$' . number_format($monthly_payment, 2) . '</b>' . $translator->translate("Per Month") .'</span></div>';
+                    $html .= '<div class="col-xs-4 box__month"><span class="month" data-value="' . $monthly_payment .'"><b>$' . number_format($monthly_payment) . '</b>' . $translator->translate("Per Month") .'</span></div>';
                     $html .= '</div></div>';
                     $html .= '<div class="col-md-5"><div class="row">';
-                    $html .= '<div class="col-xs-4 box__interest"><span class="interest" data-value="'.$total_interest_payable.'"><b>$' .number_format($total_interest_payable, 2) . '</b>' . $translator->translate("Interest Total") .'</span></div>';
+                    $html .= '<div class="col-xs-4 box__interest"><span class="interest" data-value="'.$total_interest_payable.'"><b>$' .number_format($total_interest_payable) . '</b>' . $translator->translate("Interest Total") .'</span></div>';
                     //$html .= '<div class="col-xs-4 box__processing"><span class="processing" data-value="'.$loan->getProcessingFee().'"><b>' .$loan->getProcessingFee() . '</b>' . $translator->translate("Processing Fee") .'</span></div>';
                     //$html .= '<div class="col-xs-4 box__penalty"><span class="penalty" data-value="'.$loan->getPrepaymentPenaltyFee().'"><b>'.$loan->getPrepaymentPenaltyFee().'</b>' .$translator->translate("Penalty Fee") . '</span></div>';
                     $html .= '<div class="col-xs-4 box__processing"><span class="processing"><b>' .$loan->getProcessingFee() . '</b>' . $translator->translate("Processing Fee") .'</span></div>';
@@ -218,7 +222,7 @@ class LoanApplicationController extends AbstractActionController
                             </div>
                             <div class="col-md-4">
                             <div class="col-md-8"><strong>' . $translator->translate("Monthly Instalment") .'</strong></div>
-                            <div class="col-md-4">$' . number_format($monthly_payment, 2) . '</div>
+                            <div class="col-md-4">$' . number_format(round($monthly_payment,2), 2) . '</div>
                             </div>
                         </div>';
 
@@ -267,7 +271,7 @@ class LoanApplicationController extends AbstractActionController
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Total Amount Payable") .'</strong></div>
-                        <div class="col-md-4">$' . number_format($total_amount_payable, 2) .'</div>
+                        <div class="col-md-4">$' . number_format(round($total_amount_payable,2), 2) .'</div>
                         </div>
                         </div>';
 
