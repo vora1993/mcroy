@@ -4,6 +4,7 @@ $this->headTitle($title);
 $min_loan_amount = $this->setting()->min_loan_amount;
 $max_loan_amount = $this->setting()->max_loan_amount;
 $max_loan_tenure = $this->setting()->max_loan_tenure;
+$seo=$this->seo;
 ?>
 
 <div id="content" class="box-compare">
@@ -440,20 +441,32 @@ $(document).ready(function() {
         return isEnterNumber(charCode);
 
     });
+    var seo='{$seo}';
+    if(seo=='p2p-lending')
+    {
+        $("#loan_tenure").on("keyup", function() {
 
-    $("#loan_tenure, #min_years_of_incorporation").on("keyup", function() {
+            var val = $(this).val();
+            if (val > MAX_LOAN_TENURE*5-1) {
 
-        var val = $(this).val();
+                toastr.warning("No unsecured loans above 24 months");
+                
+                $(this).val(24);
+            }
 
-        if (val > MAX_LOAN_TENURE) {
+        });
+    }else
+    {
+        $("#loan_tenure").on("keyup", function() {
+            var val = $(this).val();
+            if (val > MAX_LOAN_TENURE) {
 
-            toastr.warning("No unsecured loans above {$max_loan_tenure} years");
+                toastr.warning("No unsecured loans above {$max_loan_tenure} years");
 
-            $(this).val(MAX_LOAN_TENURE);
-
-        }
-
-    });
+                $(this).val(MAX_LOAN_TENURE);
+            }
+        })
+    }
   
 
     // Trigger

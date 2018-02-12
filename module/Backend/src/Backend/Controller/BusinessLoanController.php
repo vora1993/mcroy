@@ -163,27 +163,40 @@ class BusinessLoanController extends AbstractActionController
                     $loan->setStatus($post['status']);
                     
                     // Calculate
-                    $interest_rate = $post['interest-rate'];
-                    if(count($interest_rate) > 0) {
-                        $loan_tenure = array();
-                        foreach ($interest_rate as $key => $value) {
-                            $condition = $value['condition'];
-                            $percentage = $value['percentage'];
-                            if(!preg_match('/([<>=])+([0-9])+/', $condition))
-                            {
-                                $messages['success'] = false;
-                                $messages['msg'] = $translator->translate("Condition container only: <,=,>,0,number ");
-                                $response = $this->getResponse();
-                                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
-                                return $response;
+                    if($post['interest-rate'])
+                    {
+                        $interest_rate = $post['interest-rate'];
+                        if(count($interest_rate) > 0) {
+                            $loan_tenure = array();
+                            foreach ($interest_rate as $key => $value) {
+                                $condition = $value['condition'];
+                                $percentage = $value['percentage'];
+                                if(!preg_match('/([<>=])+([0-9])+/', $condition))
+                                {
+                                    $messages['success'] = false;
+                                    $messages['msg'] = $translator->translate("Condition container only: <,=,>,0,number ");
+                                    $response = $this->getResponse();
+                                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                                    return $response;
+                                }
+                                $loan_tenure[] = array(
+                                    'condition'  => '{m}'.$condition,
+                                    'percentage' => $percentage
+                                );
                             }
-                            $loan_tenure[] = array(
-                                'condition'  => '{m}'.$condition,
-                                'percentage' => $percentage
-                            );
+                            
+                            $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                         }
+                    }else
+                    {
+                        $loan_tenure = array();
+                        $loan_tenure[] = array(
+                            'condition'  => '',
+                            'percentage' => ''
+                        );
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
+                    
                     
                     $edited = $application_model_business_loan_package->update($loan);
                     if($edited) {

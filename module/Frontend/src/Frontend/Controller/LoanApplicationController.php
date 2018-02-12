@@ -122,7 +122,7 @@ class LoanApplicationController extends AbstractActionController
                         $loan_tenure_compare=$loan_tenure*12;
                         $monthly_payment=($loan_amount/$loan_tenure)+(($int_rates/100)*$loan_amount);;
                         $total_amount_payable =$loan_amount+ ($monthly_payment * $loan_tenure);
-                        $total_interest_payable=$monthly_payment*$loan_tenure;
+                        $total_interest_payable=$monthly_payment*$loan_tenure-$loan_amount;
                     }else
                     {
                         $loan_tenure_compare=$loan_tenure;
@@ -193,7 +193,7 @@ class LoanApplicationController extends AbstractActionController
                     $html .= '<div class="row">
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("INT RATES") .'</strong></div>
-                                <div class="col-md-4">' . $int_rates . '</div>
+                                <div class="col-md-4">' . $int_rates . ' %</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="col-md-8"><strong>' . $translator->translate("Min Turnover") .'</strong>
@@ -271,7 +271,7 @@ class LoanApplicationController extends AbstractActionController
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
                         <div class="col-md-8"><strong>' . $translator->translate("Total Amount Payable") .'</strong></div>
-                        <div class="col-md-4">$' . number_format(round($total_amount_payable,2), 2) .'</div>
+                        <div class="col-md-4">$' . number_format(round($total_interest_payable+$loan_amount,2), 2) .'</div>
                         </div>
                         </div>';
 
