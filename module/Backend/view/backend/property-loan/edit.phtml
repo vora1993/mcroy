@@ -105,15 +105,15 @@ if(count($categories) > 0) {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"><?php echo $this->translate("Are you buying a new home or refinancing your property") ?>?</label>
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Are you Purchasing or Refinancing an Industrial/Commercial unit") ?>?</label>
                                     <div class="col-md-6">
                                         <div class="mt-radio-inline">
                                             <div class="md-radio inline-block" style="margin-right: 15px;">
-                                                <input type="radio" name="property" id="home_loan" class="md-check" value="home_loan"<?php if($this->loan->getProperty() === 'home_loan') echo ' checked="checked"' ?>> 
+                                                <input type="radio" name="property" id="home_loan" class="md-check" value="Purchasing"<?php if($this->loan->getProperty() === 'Purchasing') echo ' checked="checked"' ?>> 
                                                 <label for="home_loan">
                                                     <span></span>
                                                     <span class="check"></span>
-                                                    <span class="box"></span><?php echo $this->translate("Home Loan") ?>
+                                                    <span class="box"></span><?php echo $this->translate("Purchasing") ?>
                                                 </label>
                                             </div>
                                             <div class="md-radio inline-block">
@@ -170,10 +170,10 @@ if(count($categories) > 0) {
                                     <label class="control-label col-md-4"><?php echo $this->translate("What type of property are you buying") ?>?</label>
                                     <div class="col-md-6">
                                         <select name="property_type" class="form-control">
-                                            <option value="HDB Flat"<?php if($this->loan->getType() === 'HDB Flat') echo ' selected'; ?>><?php echo $this->translate("HDB Flat") ?></option>
-                                            <option value="Executive Condo"<?php if($this->loan->getType() === 'Executive Condo') echo ' selected'; ?>><?php echo $this->translate("Executive Condo") ?></option>
-                                            <option value="Condo / Apartment"<?php if($this->loan->getType() === 'Condo / Apartment') echo ' selected'; ?>><?php echo $this->translate("Condo / Apartment") ?></option>
-                                            <option value="Landed Property"<?php if($this->loan->getType() === 'Landed Property') echo ' selected'; ?>><?php echo $this->translate("Landed Property") ?></option>
+                                            <option value="Industrial"<?php if($this->loan->getType() === 'Industrial') echo ' selected'; ?>><?php echo $this->translate("Industrial (B1/B2 units)") ?></option>
+                                            <option value="Commercial"<?php if($this->loan->getType() === 'Commercial') echo ' selected'; ?>><?php echo $this->translate("Commercial (Shophouse, Retail, Office units)") ?></option>
+                                            <option value="JTC Propertyt"<?php if($this->loan->getType() === 'JTC Property') echo ' selected'; ?>><?php echo $this->translate("JTC Property") ?></option>
+                                            <option value="Industrial/Commercial and JTC"<?php if($this->loan->getType() === 'Industrial/Commercial and JTC') echo ' selected'; ?>><?php echo $this->translate("Industrial/Commercial and JTC") ?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -195,6 +195,29 @@ if(count($categories) > 0) {
                                                     <span></span>
                                                     <span class="check"></span>
                                                     <span class="box"></span><?php echo $this->translate("Under Construction") ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("What type of corporate entity will you be using for the purchase") ?>?</label>
+                                    <div class="col-md-6">
+                                        <div class="mt-radio-inline">
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="type_of_corporate" id="completed1" class="md-check" value="Investment Holding Company" <?php if($this->loan->getTypeOfCorporate() === 'Investment Holding Company') echo ' checked="checked"' ?>> 
+                                                <label for="completed1">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Investment Holding Company") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="type_of_corporate" id="under_construction2" class="md-check" value="Operating Business" <?php if($this->loan->getTypeOfCorporate() === 'Operating Business') echo ' checked="checked"' ?>> 
+                                                <label for="under_construction2">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Operating Business") ?>
                                                 </label>
                                             </div>
                                         </div>

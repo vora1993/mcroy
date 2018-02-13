@@ -53,6 +53,7 @@ class PropertyLoanController extends AbstractActionController
             $loan->setBankId($post['bank_id']);
             $loan->setDateAdded(new Expression('NOW()'));
             $loan->setType($post['property_type']);
+            $loan->setTypeOfCorporate($post['type_of_corporate']);
             $loan->setPropertyStatus($post['property_status']);
             $loan->setPackage($post['property_package']);
             if($post['property_package'] === 'Floating') {
@@ -128,6 +129,7 @@ class PropertyLoanController extends AbstractActionController
                 $loan->setCategoryId($post['category_id']);
                 $loan->setDateModified(new Expression('NOW()'));
                 $loan->setType($post['property_type']);
+                $loan->setTypeOfCorporate($post['type_of_corporate']);
                 $loan->setPropertyStatus($post['property_status']);
                 $loan->setPackage($post['property_package']);
                 if($post['property_package'] === 'Floating') {
@@ -535,5 +537,19 @@ class PropertyLoanController extends AbstractActionController
         }
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
+    }
+
+    public function commercialAndIndustrialAction()
+    {
+        $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
+        $loans = $application_model_property_loan_package->fetchAll();
+        return array("loans" => $loans);
+    }
+
+    public function residentialAction()
+    {
+        $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
+        $loans = $application_model_property_loan_package->fetchAll();
+        return array("loans" => $loans);
     }
 }
