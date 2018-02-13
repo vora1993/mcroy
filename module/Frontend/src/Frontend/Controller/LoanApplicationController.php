@@ -346,7 +346,6 @@ class LoanApplicationController extends AbstractActionController
         $response = $this->getResponse();
         $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
         $success = false;
-
         switch($id){
             case 1:
                 $session->offsetUnset('apply');
@@ -366,7 +365,7 @@ class LoanApplicationController extends AbstractActionController
                     $loan_tenure            = $post['loan_tenure'];
                     $loan_percent           = $post['loan_percent'];
                     $preferred_rate_package = $post['preferred_rate_package'];
-
+                    $corporate_entity=$post['corporate_entity'];
                     if($property && $property_type && $property_status && $option_fee && $loan_amount && $loan_tenure) {
                         $session->offsetSet('property', $property);
                         $session->offsetSet('property_type', $property_type);
@@ -381,6 +380,7 @@ class LoanApplicationController extends AbstractActionController
                         $session->offsetSet('loan_tenure', $loan_tenure);
                         $session->offsetSet('loan_percent', $loan_percent);
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
+                        $session->offsetSet('corporate_entity', $corporate_entity);
 
                         $success = true;
                         $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 2), array('name' => "loan_application"));
@@ -420,7 +420,11 @@ class LoanApplicationController extends AbstractActionController
                 }
 
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_package');
-                $condition = array('category_id' => $category->getId(), 'status' => 1);
+                // $condition = array('category_id' => $category->getId(), 'status' => 1);
+                $condition = array('status' => 1);
+                $condition['property']=$session->offsetGet('property');
+                $condition['type']=$session->offsetGet('property_type');
+                $condition['type_of_corporate']=$session->offsetGet('corporate_entity');
                 if($session->offsetExists('property_type')) {
                     $condition['type'] = $session->offsetGet('property_type');
                 }
@@ -435,6 +439,8 @@ class LoanApplicationController extends AbstractActionController
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
+                // print_r($condition);
+                // exit;
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();

@@ -1,5 +1,18 @@
 <?php 
 $title = $this->category->getName();
+if($this->seo=='residential-equity-term-loan-new-purchase')
+{
+    $title='Commercial/Industrial – New Purchase';
+}elseif($this->seo=='residential-loan-new-purchase')
+{
+    $title='Residential Loan – New Purchase';
+}elseif($this->seo=='residential-equity-term-loan-refinancing')
+{
+    $title='Commercial/Industrial – Refinancing';
+}elseif($this->seo=='residential-loan-refinancing')
+{
+    $title='Residential Loan – Refinancing';
+}
 $this->headTitle($title);
 $_text_completed = $this->translate("When do you intend to select your unit / make an offer");
 $_text_under_construction = $this->translate("Do you qualify for a Home Loan based on the Home Loan Eligibility (HLE) Letter from HDB");

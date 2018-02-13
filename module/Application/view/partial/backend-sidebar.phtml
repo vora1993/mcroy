@@ -172,6 +172,16 @@
                             <span class="title"><?php echo $this->translate("List of Property Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'commercial-and-industrial') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "commercial-and-industrial")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Commercial and Industrial") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'residential') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "residential")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Residential") ?></span>
+                        </a>
+                    </li>
                     <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'add') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/property_loan", array("action" => "add")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Add New Property Loan") ?></span>

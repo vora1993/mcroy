@@ -11,6 +11,7 @@ class PropertyLoanPackage implements PropertyLoanPackageInterface
     protected $min_loan_amount;
     protected $property;
     protected $type;
+    protected $type_of_corporate;
     protected $property_status;
     protected $package;
     protected $floating_type;
@@ -120,6 +121,16 @@ class PropertyLoanPackage implements PropertyLoanPackageInterface
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
+    }
+
+    public function getTypeOfCorporate()
+    {
+        return $this->type_of_corporate;
+    }
+    public function setTypeOfCorporate($type)
+    {
+        $this->type_of_corporate = $type;
         return $this;
     }
     

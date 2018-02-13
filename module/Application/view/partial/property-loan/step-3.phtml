@@ -14,7 +14,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                             <div class="form-group">
                                 <label><?php echo $this->translate("Loan Type") ?></label>
                                 <select name="preferred_rate_package" class="form-control">
-                                    <option value="All"><?php echo $this->translate("All") ?></option>
+                                    <option value="All" <?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("All") ?></option>
                                     <option value="Fixed"<?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("Fixed") ?></option>
                                     <option value="Floating"<?php if($this->preferred_rate_package === 'Floating') echo " selected" ?>><?php echo $this->translate("Floating") ?></option>
                                 </select>
@@ -167,9 +167,13 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
 						                    </div>
                                             <div class="col-md-2">
                                                 <?php 
-                                                switch ($loan->getFloatingType()) {
+                                                switch ($loan->getPackage()) {
                                                     case 'SIBOR':
                                                         $type = $this->translate("SIBOR");
+                                                    break;
+                                                    
+                                                    case 'Floating':
+                                                        $type = $this->translate("Floating");
                                                     break;
                                                     
                                                     case 'Variable':
@@ -183,7 +187,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                     case 'SOR':
                                                         $type = $this->translate("SOR");
                                                     break; 
-                                                    
+
                                                     default:
                                                         $type = $this->translate("Fixed");
                                                     break;   
