@@ -420,8 +420,8 @@ class LoanApplicationController extends AbstractActionController
                 }
 
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_package');
-                // $condition = array('category_id' => $category->getId(), 'status' => 1);
-                $condition = array('status' => 1);
+                $condition = array('category_id' => $category->getId(), 'status' => 1);
+                // $condition = array('status' => 1);
                 $condition['property']=$session->offsetGet('property');
                 $condition['type']=$session->offsetGet('property_type');
                 $condition['type_of_corporate']=$session->offsetGet('corporate_entity');
