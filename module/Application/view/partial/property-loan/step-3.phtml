@@ -1,4 +1,10 @@
 <?php
+if($category->getSeo() == 'residential-equity-term-loan-new-purchase' || $category->getSeo() == 'residential-equity-term-loan-refinancing')
+{
+    $category_all=$this->Category(array('seo'=>'commercial-new-purchase-and-refinancing'));
+    $category_all_id=$category_all->getId();
+}
+
 $slider_loan_tenture = '$slider_loan_tenture';
 $slider_loan_percent = '$slider_loan_percent';
 $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
@@ -117,6 +123,10 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                 <div class="filters-table-body filters-table-property">
                                 <?php foreach ($this->loans as $key => $loan): ?>
                                     <?php
+                                    if($loan->getCategoryId()==$category->getId() || $loan->getCategoryId()==$category_all_id)
+                                    {
+                                        if($loan->getType()==$property_type || $loan->getType()=='Industrial/Commercial and JTC')
+                                        {
                                     $bank = $this->bank(array("id" => $loan->getBankId()));
                                     $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";
                                     
@@ -339,7 +349,11 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                         if($loan->getPromotions()) echo '<div class="promotion"><span>'.$loan->getPromotions().'</span></div>';
                                         ?>
                                     </div>
-                                <?php endforeach;?>
+                                <?php 
+                                        }
+                                    }
+                                    endforeach;
+                                ?>
                                 </div>
                                 <?php endif;?> 
                             </div>
