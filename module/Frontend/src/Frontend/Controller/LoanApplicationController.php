@@ -423,11 +423,11 @@ class LoanApplicationController extends AbstractActionController
                 // $condition = array('category_id' => $category->getId(), 'status' => 1);
                 $condition = array('status' => 1);
                 $condition['property']=$session->offsetGet('property');
-                $condition['type']=$session->offsetGet('property_type');
+                // $condition['type']=$session->offsetGet('property_type');
                 $condition['type_of_corporate']=$session->offsetGet('corporate_entity');
-                if($session->offsetExists('property_type')) {
-                    $condition['type'] = $session->offsetGet('property_type');
-                }
+                // if($session->offsetExists('property_type')) {
+                //     $condition['type'] = $session->offsetGet('property_type');
+                // }
                 if($session->offsetExists('property_status')) {
                     $condition['property_status'] = $session->offsetGet('property_status');
                 }
@@ -439,8 +439,6 @@ class LoanApplicationController extends AbstractActionController
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
-                // print_r($condition);
-                // exit;
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();

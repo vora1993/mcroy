@@ -42,6 +42,14 @@ if(count($categories) > 0) {
         );
     }
 }
+foreach ($rows as $key => $value) {
+    if($value['name']=='Residential Loan')
+    {
+        $id_parent=$value['id'];
+    }
+}
+$arr_resident=buildTree($rows,$id_parent);
+$arr_resident=json_encode($arr_resident);
 ?>
 <!-- BEGIN SIDEBAR -->
 <?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'add')); ?>
@@ -90,7 +98,7 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("Category") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name="category_id" class="form-control">
+                                        <select id="category_id" name="category_id" class="form-control">
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
                                             <?php 
                                             $tree = buildTree($rows);
@@ -159,13 +167,20 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("What type of property are you buying") ?>?</label>
                                     <div class="col-md-6">
-                                        <select name="property_type" class="form-control">
+                                        <select id="comercial" name="property_type" class="form-control">
                                             <option value="Industrial" ><?php echo $this->translate("Industrial (B1/B2 units)") ?> </option>
                                             <option value="Commercial"><?php echo $this->translate("Commercial (Shophouse, Retail, Office units)") ?></option>
                                             <option value="JTC Propertyt"><?php echo $this->translate("JTC Property") ?></option>
                                             <option value="Industrial/Commercial and JTC"><?php echo $this->translate("Industrial/Commercial and JTC") ?></option>
                                         </select>
-                                    </div>
+                                        <select id="residential" name="property_type_residential" class="form-control">
+                                            <option value="HDB Flat"><?php echo $this->translate("HDB Flat") ?></option>
+                                        <option value="Executive Condo"><?php echo $this->translate("Executive Condo") ?></option>
+                                        <option value="Condo / Apartment"><?php echo $this->translate("Condo / Apartment") ?></option>
+                                        <option value="Landed Property"><?php echo $this->translate("Landed Property") ?></option>
+                                        </select>
+                                    </div>                              
+                                    <input type="hidden" name="check_property_buy">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("Is the property completed or under construction") ?>?</label>
@@ -436,6 +451,27 @@ tinymce.init({
         });
     }
 });
+//Change category
+$('#residential').hide();
+$('#comercial').hide();
+$('#category_id').change(function(){
+    var arr={$arr_resident};
+    var arr_check=[{$id_parent}];
+    arr.forEach(function(item){
+        arr_check.push(item.id);
+    })
+    if(arr_check.indexOf(parseInt(this.value))>-1)
+    {
+        $('input[name="check_property_buy"]').val('residential');
+        $('#residential').show();
+        $('#comercial').hide();
+    }else
+    {
+        $('input[name="check_property_buy"]').val('comercial');
+        $('#comercial').show();
+        $('#residential').hide();
+    }
+})
 
 /*
 $('select[name=property_package]').on('change', function() {

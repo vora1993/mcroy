@@ -52,7 +52,13 @@ class PropertyLoanController extends AbstractActionController
             $loan->setProperty($post['property']);
             $loan->setBankId($post['bank_id']);
             $loan->setDateAdded(new Expression('NOW()'));
-            $loan->setType($post['property_type']);
+            if($post['check_property_buy']=='residential')
+            {
+                $loan->setType($post['property_type_residential']);
+            }else
+            {
+                $loan->setType($post['property_type']);
+            }            
             $loan->setTypeOfCorporate($post['type_of_corporate']);
             $loan->setPropertyStatus($post['property_status']);
             $loan->setPackage($post['property_package']);
@@ -128,7 +134,14 @@ class PropertyLoanController extends AbstractActionController
                 $loan->setBankId($post['bank_id']);
                 $loan->setCategoryId($post['category_id']);
                 $loan->setDateModified(new Expression('NOW()'));
-                $loan->setType($post['property_type']);
+                if($post['check_property_buy']=='residential')
+                {
+                    $loan->setType($post['property_type_residential']);
+                }else
+                {
+                    $loan->setType($post['property_type']);
+                }  
+                // $loan->setType($post['property_type']);
                 $loan->setTypeOfCorporate($post['type_of_corporate']);
                 $loan->setPropertyStatus($post['property_status']);
                 $loan->setPackage($post['property_package']);

@@ -106,24 +106,33 @@ class RefinancingController extends AbstractActionController
                     $condition['property_status'] = $session->offsetGet('property_status');
                 }
                 if($session->offsetExists('preferred_rate_package')) {
-                    $condition['package'] = $session->offsetGet('preferred_rate_package');
+                    if(!$session->offsetGet('preferred_rate_package')=='both')
+                    {
+                        $condition['package'] = $session->offsetGet('preferred_rate_package');
+                    }                   
                 }
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
+                if($session->offsetGet('current_bank_name')) {
+                    $condition['bank_id'] = $session->offsetGet('current_bank_name');
+                }
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();
-                    $loan_amount              = $post['loan_amount'];
+                    $remaining_loan_amount              = $post['remaining_loan_amount'];
                     $loan_tenure              = $post['loan_tenure'];
                     $total_interest_for_years = $post['total_interest_for_years'];
+                    $current_interest_rate=$post['current_interest_rate'];
                     $preferred_rate_package   = $post['preferred_rate_package'];
                     $no_lock_in_only          = $post['no_lock_in_only'];
-
-                    if($loan_amount && $loan_tenure) {
+                    if($remaining_loan_amount && $loan_tenure) {
+                        $session->offsetSet('remaining_loan_amount', $remaining_loan_amount);
                         $session->offsetSet('loan_amount', $loan_amount);
-                        $session->offsetSet('loan_tenure', $loan_tenure);
+                        $session->offsetSet('new_loan_tenure', $loan_tenure);
                         $session->offsetSet('total_interest_for_years', $total_interest_for_years);
+                        $session->offsetSet('total_interest_for_years', $total_interest_for_years);
+                        $session->offsetSet('current_interest_rate', $current_interest_rate);
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
                         if($no_lock_in_only == 1) $session->offsetSet('no_lock_in_only', 1);
                         else $session->offsetSet('no_lock_in_only', 0);

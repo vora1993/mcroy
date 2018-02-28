@@ -30,7 +30,6 @@ class HomeLoanController extends AbstractActionController
                     $property_status = $post['property_status'];
                     $option_fee = $post['option_fee'];
                     $offer_opts = $post['offer_opts'];
-
                     if($property_type && $property_status && $option_fee) {
                         $session->offsetSet('property_type', $property_type);
                         $session->offsetSet('property_status', $property_status);
@@ -53,7 +52,7 @@ class HomeLoanController extends AbstractActionController
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
                 }
                 if ($request->isPost()) {
-                    $post = $request->getPost();
+                    $post = $request->getPost();              
                     $existing_home_loans    = $post['existing_home_loans'];
                     $purchase_price         = $post['purchase_price'];
                     $loan_amount            = $post['loan_amount'];
@@ -106,7 +105,8 @@ class HomeLoanController extends AbstractActionController
                     return $response;
                 }
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_bank');
-                $condition = array('property' => "home_loan", 'status' => 1);
+                // $condition = array('property' => "home_loan", 'status' => 1);
+                $condition = array('property' => "Purchasing", 'status' => 1);
                 if($session->offsetExists('property_type')) {
                     $condition['type'] = $session->offsetGet('property_type');
                 }
@@ -119,6 +119,8 @@ class HomeLoanController extends AbstractActionController
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
+                // print_r($condition);
+                // exit;
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();
@@ -136,7 +138,7 @@ class HomeLoanController extends AbstractActionController
                         else $session->offsetSet('no_lock_in_only', 0);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "step", "id" => 5), array('name' => "home_loan"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     }

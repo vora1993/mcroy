@@ -73,7 +73,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                     <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
                     <input type="hidden" name="loan_tenure" value="<?php echo $this->loan_tenure ?>" />
                     <input type="hidden" name="loan_percent" value="<?php echo $this->loan_percent ?>" />
-                    <button type="button" class="btn blue btn-block btn-lg ladda-button" onclick="Loan.filter(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
+                    <button type="button" class="btn blue btn-block btn-lg ladda-button" onclick="Loan.filter_loan(this)" data-style="expand-left"><i class="fa fa-refresh"></i> <?php echo $this->translate("Refresh Results") ?></button>
                 </div>
             </div>
         </div>

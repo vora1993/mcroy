@@ -157,7 +157,7 @@ if(count($categories) > 0) {
                                 <div class="form-group initial_deposit_amount">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Initial Deposit Amount") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="initial_deposit_amount" class="form-control" value="<?php echo $this->loan->getInitialDepositAmount() ?>" /> 
+                                        <input type="text" name="initial_deposit_amount" class="form-control" value="<?php echo $this->loan->getInitialDepositAmount() ?>" required/> 
                                     </div>
                                 </div>
                                 
