@@ -132,7 +132,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                     
                                     $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
                                     $loan_amount = $this->loan_amount;
-                                    $int_rates = $loan->getIntYear2();
+                                    $int_rates = ($loan->getIntYear2()+$loan->getIntYear1())/2;
                                     
                                     // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
                                     // Where: r = decimal rate / 12.

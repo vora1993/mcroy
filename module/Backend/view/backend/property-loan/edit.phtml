@@ -46,7 +46,14 @@ if(count($categories) > 0) {
         );
     }
 }
-
+foreach ($rows as $key => $value) {
+    if($value['name']=='Residential Loan')
+    {
+        $id_parent=$value['id'];
+    }
+}
+$arr_resident=buildTree($rows,$id_parent);
+$arr_resident=json_encode($arr_resident);
 ?>
 <!-- BEGIN SIDEBAR -->
 <?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'index')); ?>
@@ -95,7 +102,7 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("Category") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name="category_id" class="form-control">
+                                        <select id="category_id" name="category_id" class="form-control">
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
                                             <?php 
                                             $tree = buildTree($rows);
@@ -169,12 +176,19 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("What type of property are you buying") ?>?</label>
                                     <div class="col-md-6">
-                                        <select name="property_type" class="form-control">
+                                        <select id="comercial" name="property_type" class="form-control">
                                             <option value="Industrial"<?php if($this->loan->getType() === 'Industrial') echo ' selected'; ?>><?php echo $this->translate("Industrial (B1/B2 units)") ?></option>
                                             <option value="Commercial"<?php if($this->loan->getType() === 'Commercial') echo ' selected'; ?>><?php echo $this->translate("Commercial (Shophouse, Retail, Office units)") ?></option>
                                             <option value="JTC Propertyt"<?php if($this->loan->getType() === 'JTC Property') echo ' selected'; ?>><?php echo $this->translate("JTC Property") ?></option>
                                             <option value="Industrial/Commercial and JTC"<?php if($this->loan->getType() === 'Industrial/Commercial and JTC') echo ' selected'; ?>><?php echo $this->translate("Industrial/Commercial and JTC") ?></option>
                                         </select>
+                                        <select id="residential" name="property_type_residential" class="form-control">
+                                            <option value="HDB Flat" <?php if($this->loan->getType() === 'HDB Flat') echo ' selected'; ?>><?php echo $this->translate("HDB Flat") ?></option>
+                                        <option value="Executive Condo" <?php if($this->loan->getType() === 'Executive Condo') echo ' selected'; ?>><?php echo $this->translate("Executive Condo") ?></option>
+                                        <option value="Condo / Apartment" <?php if($this->loan->getType() === 'Condo / Apartment') echo ' selected'; ?>><?php echo $this->translate("Condo / Apartment") ?></option>
+                                        <option value="Landed Property" <?php if($this->loan->getType() === 'Landed Property') echo ' selected'; ?>><?php echo $this->translate("Landed Property") ?></option>
+                                        </select>
+                                        <input type="hidden" name="check_property_buy">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -446,6 +460,44 @@ tinymce.init({
         });
     }
 });
+
+//Change category
+var current_category_id={$this->loan->getCategoryId()};
+var arr={$arr_resident};
+var arr_check=[{$id_parent}];
+arr.forEach(function(item){
+    arr_check.push(item.id);
+})
+if(arr_check.indexOf(parseInt(current_category_id))>-1)
+{
+    $('input[name="check_property_buy"]').val('residential');
+    $('#residential').show();
+    $('#comercial').hide();
+}else
+{
+    $('input[name="check_property_buy"]').val('comercial');
+    $('#comercial').show();
+    $('#residential').hide();
+}
+$('#category_id').change(function(){
+    var arr={$arr_resident};
+    var arr_check=[{$id_parent}];
+    arr.forEach(function(item){
+        arr_check.push(item.id);
+    })
+    if(arr_check.indexOf(parseInt(this.value))>-1)
+    {
+        $('input[name="check_property_buy"]').val('residential');
+        $('#residential').show();
+        $('#comercial').hide();
+    }else
+    {
+        $('input[name="check_property_buy"]').val('comercial');
+        $('#comercial').show();
+        $('#residential').hide();
+    }
+})
+
 /*
 $('select[name=property_package]').on('change', function() {
     $('.floating_rate').addClass('hide');
