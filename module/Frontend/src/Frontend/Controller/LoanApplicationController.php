@@ -621,6 +621,9 @@ class LoanApplicationController extends AbstractActionController
         $session_user = new Session('user');
         $session_user->offsetSet('redirect', $redirect);
 
+        $application_model_property_cost_out_play = $this->getServiceLocator()->get('application_model_property_cost_out_play');
+        $total_cost_outplay_value = $application_model_property_cost_out_play->fetchRow();
+
         return array(
             "category"                 => $category,
             "seo"                      => $seo,
@@ -638,7 +641,8 @@ class LoanApplicationController extends AbstractActionController
             "select"                   => $select,
             "apply"                    => $apply,
             "loan"                     => $loan,
-            "redirect_url"             => $redirect
+            "redirect_url"             => $redirect,
+            "total_cost_outplay_value" => $total_cost_outplay_value
         );
     }
 

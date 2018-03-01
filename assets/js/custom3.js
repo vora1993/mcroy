@@ -593,9 +593,36 @@ var Loan = {
         $('#stamp-duty-fee').text(stampDutyFee);
         return stampDutyFeeValue;
     },
+    caculateStampDutyFeeCommercial: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var residency = $('input[name="residency"]').val();
+        var existingProperty = $('input[name="existing_property"]').val();
+        var stampDutyFee = ( purchasePrice * 3 / 100 ) - DEFAULT_FEE;
+        stampDutyFeeValue = Number(stampDutyFee.toFixed(2));
+        if (stampDutyFeeValue >= 0){
+            stampDutyFee = formatNumber(stampDutyFeeValue, '$');
+        } else{
+            stampDutyFee = formatNumber(stampDutyFeeValue * -1, '-$');
+        }
+
+        $('#stamp-duty-fee').text(stampDutyFee);
+        return stampDutyFeeValue;
+    },
     totalCostOutlay: function() {
         var purchasePrice = getNumber($('input[name="purchase_price"]').val());
         var stampDutyFee = this.caculateStampDutyFee();
+        var totalCostOutlay = stampDutyFee + mortgageStampDuty + valuationFee + legalFee + fireInsurance + ( purchasePrice * 20 / 100 );
+        totalCostOutlayValue = Number(totalCostOutlay.toFixed(2));
+        if (totalCostOutlayValue >= 0){
+            totalCostOutlay = formatNumber(totalCostOutlayValue, '$');
+        } else{
+            totalCostOutlay = formatNumber(totalCostOutlayValue * -1, '-$');
+        }
+        $('#total-costs-outlay-amount').text(totalCostOutlay);
+    },
+    totalCostOutlayCommercial: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var stampDutyFee = this.caculateStampDutyFeeCommercial();
         var totalCostOutlay = stampDutyFee + mortgageStampDuty + valuationFee + legalFee + fireInsurance + ( purchasePrice * 20 / 100 );
         totalCostOutlayValue = Number(totalCostOutlay.toFixed(2));
         if (totalCostOutlayValue >= 0){

@@ -6,18 +6,18 @@ use Zend\View\Model\ViewModel;
 use Zend\Db\Sql\Expression;
 use Zend\Session\Container as Session;
 
-class RefinancingController extends AbstractActionController
+class RefinancingCommercialController extends AbstractActionController
 {
     public function indexAction()
     {
-      $this->layout('layout/refinancing');
-      return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 1));
+      $this->layout('layout/refinancing_commercial');
+      return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 1));
     }
 
      public function stepAction() {
         $id = $this->params()->fromRoute('id');  // From RouteMatch
         $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
-        $session = new Session('refinancing');
+        $session = new Session('refinancing_commercial');
         $request = $this->getRequest();
         $response = $this->getResponse();
         $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
@@ -54,7 +54,7 @@ class RefinancingController extends AbstractActionController
 
             case 2:
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 1));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 1));
                 }
                 if ($request->isPost()) {
                     $post = $request->getPost();
@@ -66,9 +66,9 @@ class RefinancingController extends AbstractActionController
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "step", "id" => 3), array('name' => "refinancing"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 3), array('name' => "refinancing_commercial"));
                     } else {
-                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing_commercial"));
                     }
 
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
@@ -78,23 +78,23 @@ class RefinancingController extends AbstractActionController
 
             case 3:
                 if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 2));
                 }
                 if($this->getServiceLocator()->get('AuthService')->hasIdentity()) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 4));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 4));
                 }
-                $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "refinancing"));
+                $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "refinancing_commercial"));
             break;
 
             case 4:
                 if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 1));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 1));
                 }
                 if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
-                    return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 3));
+                    return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 3));
                 }
 
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_bank');
@@ -138,9 +138,9 @@ class RefinancingController extends AbstractActionController
                         else $session->offsetSet('no_lock_in_only', 0);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "refinancing"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "refinancing_commercial"));
                     } else {
-                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing_commercial"));
                     }
 
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );

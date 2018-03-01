@@ -8,6 +8,7 @@ return array(
             'alternative_funding' => Frontend\Controller\AlternativeFundingController::class,
             'home_loan'           => Frontend\Controller\HomeLoanController::class,
             'refinancing'         => Frontend\Controller\RefinancingController::class,
+            'refinancing_commercial'         => Frontend\Controller\RefinancingCommercialController::class,
             'blog'                => Frontend\Controller\BlogController::class,
             'page'                => Frontend\Controller\PageController::class,
             'loan_application'    => Frontend\Controller\LoanApplicationController::class,
@@ -127,6 +128,20 @@ return array(
                         'controller' => 'refinancing',
 		                'action' => 'index'
 		            ),
+                ),
+            ),
+            'refinancing_commercial' => array(
+                'type' => 'segment',
+                'options' => array(
+                'route' => '/refinancing-commercial[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'refinancing_commercial',
+                        'action' => 'index'
+                    ),
                 ),
             ),
             'credit-cards' => array(

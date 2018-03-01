@@ -407,6 +407,13 @@ class Module
                 	$model->setHydrator(new Mapper\PropertyLoanHydrator());
                 	return $model;
                 },
+                'application_model_property_cost_out_play' => function ($sm) {
+                    $model = new Model\PropertyCostOutPlay();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\PropertyCostOutPlay());
+                    $model->setHydrator(new Mapper\PropertyCostOutPlayHydrator());
+                    return $model;
+                },
                 'application_model_referral' => function ($sm) {
                 	$model = new Model\Referral();
                     $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));

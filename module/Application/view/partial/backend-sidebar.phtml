@@ -187,6 +187,11 @@
                             <span class="title"><?php echo $this->translate("Add New Property Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'total-costs-outlay') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "total-costs-outlay")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Edit Total Costs Outlay") ?></span>
+                        </a>
+                    </li>
                     <li class="hide nav-item <?php if($this->view === 'property_loan' && $this->action === 'home_loan') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/property_loan", array("action" => "home-loan")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Home Loan") ?></span>
