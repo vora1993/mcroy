@@ -27,6 +27,35 @@ class PropertyLoanController extends AbstractActionController
         $loans = $application_model_property_loan->fetchAll(array("type" => "refinancing"));
         return array("loans" => $loans);
     }
+
+    public function totalCostsOutlayAction()
+    {
+        $application_model_property_cost_out_play = $this->getServiceLocator()->get('application_model_property_cost_out_play');
+        $loans = $application_model_property_cost_out_play->fetchRow();
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        $messages = array();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $loans->setMortgageStampDuty($post['mortgage_stamp_duty']);
+            $loans->setValuationFee($post['valuation_fee']);
+            $loans->setLegalFee($post['legal_fee']);
+            $loans->setFireInsurance($post['fire_insurance']);
+            $updated = $application_model_property_cost_out_play->update($loans);
+            if($updated) {
+                $messages['success'] = true;
+                $messages['msg'] = $translator->translate("Successfully updated");
+            } else {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Something error. Please check");
+            }
+            
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+        return array("loans"=>$loans);
+    }
     
     public function addAction() {
         $request = $this->getRequest();

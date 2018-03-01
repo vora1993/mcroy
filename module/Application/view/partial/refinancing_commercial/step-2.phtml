@@ -1,0 +1,84 @@
+<?php
+$slider_loan_tenture = '$slider_loan_tenture';
+$slider_loan_percent = '$slider_loan_percent';
+?>
+<form class="form-horizontal form-refinancing form-wizard" action="<?php echo $this->url("refinancing_commercial", array("action" => "step", "id" => 2)) ?>" method="POST">
+    <div class="form-body">
+        <div class="form-group">
+            <div class="row existing_home_loans form-wizard-title">
+                <h3>5. <?php echo $this->translate("Would you prefer Fixed or Floating Package when refinancing") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>Floating rates packages are pegged to either SIBOR or SOR index rates and a “spread” is added on to it. The sum of the spread and the SIBOR or SOR rates gives the total interest rate.</p><p>Fixed rates packages have interest rates fixed for a duration of one to five years and are available only to completed properties. They offer stability when it comes to monthly payments but start off higher than floating rates.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("Fixed vs Floating Rates") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="md-radio-list">
+                <div class="md-radio">
+                    <input type="radio" id="preferred_rate_package_floating" name="preferred_rate_package" value="Floating" class="md-radiobtn" checked="checked">
+                    <label for="preferred_rate_package_floating">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span> <?php echo $this->translate("Floating") ?>
+                    </label>
+                </div>
+                <div class="md-radio">
+                    <input type="radio" id="preferred_rate_package_fixed" name="preferred_rate_package" value="Fixed" class="md-radiobtn">
+                    <label for="preferred_rate_package_fixed">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span> <?php echo $this->translate("Fixed") ?>
+                    </label>
+                </div>
+                <div class="md-radio">
+                    <input type="radio" id="preferred_rate_package_both" name="preferred_rate_package" value="both" class="md-radiobtn">
+                    <label for="preferred_rate_package_both">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span> <?php echo $this->translate("Both") ?>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group with-pie purchase_price">
+            <div class="row form-wizard-title">
+                <h3>6. <?php echo $this->translate("What the preferred loan tenor you preferred for the refinance loan") ?>?</h3>
+                <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="left" data-container="body" data-content="<p>You can re-adjust your loan tenure when refinancing. However, based on MAS rulings, your total loan tenure (since purchasing your property) should not exceed 35 years.</p><p>Note that a shorter loan tenure means you pay less interest but higher monthly instalments, while a longer loan tenure means you pay more interest but lower monthly instalments.</p>" data-html="true" data-original-title="<span><?php echo $this->translate("New Loan Tenure") ?></span>"><i class="fa fa-question-circle"></i></a>
+            </div>
+            <div class="row">
+                <div class="row col-md-12">
+                    <div class="col-md-3">
+                        <div class="slider-container">
+                            <div class="slider-new-loan-tenure" data-min="5" data-max="35" data-value="25" data-soft-cap="35"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="slider-value">
+                            <span class="current info" id="loan_tenure-label">25</span>
+                            <span class="unit">Years</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-md-6 indented easy-pie-chart">
+                    <input type="hidden" name="new_loan_tenure" value="25" />
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+    <div class="form-actions">
+        <input type="hidden" name="property_type" value="<?php echo $this->property_type ?>" />
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <a class="btn grey-mint btn-lg btn-fullwidth" href="<?php echo $this->url("home_loan", array("action" => "step", "id" => 1)) ?>"><?php echo $this->translate("Back") ?></a>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <button type="submit" class="btn btn-lg blue"><?php echo $this->translate("Next Step") ?> <i class="fa fa-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+<?php
+$offStyle = 12;
+$offScript = 30;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/residential-loan-refinancing.js'));
+?>

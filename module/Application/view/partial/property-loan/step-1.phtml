@@ -259,6 +259,53 @@ $slider_loan_percent = '$slider_loan_percent';
                         <input type="hidden" name="loan_amount" value="0" />
                         <input type="hidden" name="loan_tenure" value="20" />
                         <input type="hidden" name="loan_percent" value="80" />
+                        <div class="clearfix"></div>
+                        <div class="">
+                    <h4 class="font-blue inline-block"><?php echo $this->translate("Keen to know your expected Total Costs Outlay") ?></h4>
+                    <a href="javascript:void(0);" id="expected-total-costs-outlay">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+
+                    <div class="collapse" id="total-costs-outlay">
+                          <div class="row col-md-12 mx-auto mg-top-sm">
+                            <h3 class="mg-bottom-xs"><?php echo $this->translate("Based on loan amount, below is your expected Total Cost Layout") ?></h3>
+                            <table class="table table-bordered table-striped table-condensed flip-content" id="complete-total-costs">
+                                <tbody class="flip-content">
+                                    <tr>
+                                        <td><label><?php echo $this->translate("Stamp Duty Fee") ?></label></td>
+                                        <td class="text-right"><strong id="stamp-duty-fee">$0</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label><?php echo $this->translate("Mortgage Stamp Duty"); ?></label></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getMortgageStampDuty()?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label><?php echo $this->translate("Valuation Fee"); ?></label></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getValuationFee()?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label><?php echo $this->translate("Legal Fee"); ?></label></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getLegalFee()?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label><?php echo $this->translate("Fire Insurance"); ?></label></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getFireInsurance()?></strong></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <h3 class="inline-block"><?php echo $this->translate("Total Cost Outlay"); ?></h3>
+                                            <a href="javascript:;" class="tooltip-icon popovers inline-block" data-trigger="hover" data-placement="right" data-container="body" data-content="<p>Can be partially paid by Cash + CPF</p>" data-html="true"><i class="fa fa-question-circle"></i></a>
+                                        </td>
+                                        <td>
+                                            <strong id="total-costs-outlay-amount" class="text-right" ></strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                </div>
                     </div>
                 </div>
             </div>
@@ -344,6 +391,7 @@ $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plug
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/commercial-loan-refinancing.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 $('input[name=property_status]').on('change', function() {

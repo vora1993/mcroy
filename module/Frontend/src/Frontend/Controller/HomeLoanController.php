@@ -276,6 +276,9 @@ class HomeLoanController extends AbstractActionController
         $session_user = new Session('user');
         $session_user->offsetSet('redirect', $redirect);
 
+        $application_model_property_cost_out_play = $this->getServiceLocator()->get('application_model_property_cost_out_play');
+        $total_cost_outplay_value = $application_model_property_cost_out_play->fetchRow();
+
         return array(
             "step"                     => $id,
             "property_type"            => $property_type,
@@ -288,7 +291,8 @@ class HomeLoanController extends AbstractActionController
             "total_interest_for_years" => $total_interest_for_years,
             "no_lock_in_only"          => $no_lock_in_only,
             "select"                   => $select,
-            "redirect_url"             => $redirect
+            "redirect_url"             => $redirect,
+            "total_cost_outplay_value" => $total_cost_outplay_value
         );
     }
 

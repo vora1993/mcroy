@@ -163,19 +163,19 @@ $slider_loan_percent = '$slider_loan_percent';
                                     </tr>
                                     <tr>
                                         <td><label><?php echo $this->translate("Mortgage Stamp Duty"); ?></label></td>
-                                        <td class="text-right"><strong>$500</strong></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getMortgageStampDuty()?></strong></td>
                                     </tr>
                                     <tr>
                                         <td><label><?php echo $this->translate("Valuation Fee"); ?></label></td>
-                                        <td class="text-right"><strong>$300</strong></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getValuationFee()?></strong></td>
                                     </tr>
                                     <tr>
                                         <td><label><?php echo $this->translate("Legal Fee"); ?></label></td>
-                                        <td class="text-right"><strong>$2,000</strong></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getLegalFee()?></strong></td>
                                     </tr>
                                     <tr>
                                         <td><label><?php echo $this->translate("Fire Insurance"); ?></label></td>
-                                        <td class="text-right"><strong>$250</strong></td>
+                                        <td class="text-right"><strong>$<?php echo $this->total_cost_outplay_value->getFireInsurance()?></strong></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
