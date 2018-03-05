@@ -116,7 +116,7 @@ $arr_resident=json_encode($arr_resident);
                                     <div class="col-md-6">
                                         <div class="mt-radio-inline">
                                             <div class="md-radio inline-block" style="margin-right: 15px;">
-                                                <input type="radio" name="property" id="home_loan" class="md-check" value="Purchasing"<?php if($this->loan->getProperty() === 'Purchasing') echo ' checked="checked"' ?>> 
+                                                <input type="radio" name="property" id="home_loan" class="md-check" value="Purchasing"<?php if($this->loan->getProperty() === 'Purchasing') echo ' checked="checked"' ?> disabled> 
                                                 <label for="home_loan">
                                                     <span></span>
                                                     <span class="check"></span>
@@ -124,11 +124,19 @@ $arr_resident=json_encode($arr_resident);
                                                 </label>
                                             </div>
                                             <div class="md-radio inline-block">
-                                                <input type="radio" name="property" id="refinancing" class="md-check" value="refinancing"<?php if($this->loan->getProperty() === 'refinancing') echo ' checked="checked"' ?>> 
+                                                <input type="radio" name="property" id="refinancing" class="md-check" value="refinancing"<?php if($this->loan->getProperty() === 'refinancing') echo ' checked="checked"' ?> disabled> 
                                                 <label for="refinancing">
                                                     <span></span>
                                                     <span class="check"></span>
                                                     <span class="box"></span><?php echo $this->translate("Refinancing") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="property" id="purchase_and_refinance" class="md-check" value="purchase and refinance" <?php if($this->loan->getProperty() === 'purchase and refinance') echo ' checked="checked"' ?> disabled> 
+                                                <label for="purchase_and_refinance">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("purchase and refinance") ?>
                                                 </label>
                                             </div>
                                         </div>
@@ -475,6 +483,18 @@ if(arr_check.indexOf(parseInt(current_category_id))>-1)
     $('#residential').hide();
 }
 $('#category_id').change(function(){
+    var conceptName = $('#category_id').find(":selected").text();
+    // $("input[name='property']").attr('checked', false);
+    if(conceptName=='- New Purchase (s)')
+    {
+        $("input[name=property][value='Purchasing']").prop('checked', true);
+    }else if(conceptName=='- Refinancing (s)')
+    {
+        $("input[name=property][value='refinancing']").prop('checked', true);
+    }else
+    {
+        $("input[name=property][value='purchase and refinance']").prop('checked', true);
+    }
     var arr={$arr_resident};
     var arr_check=[{$id_parent}];
     arr.forEach(function(item){
