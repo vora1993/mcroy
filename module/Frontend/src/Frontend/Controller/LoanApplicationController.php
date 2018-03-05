@@ -806,7 +806,7 @@ class LoanApplicationController extends AbstractActionController
                         $loan_amount_interes=$post['loan_amount_interes'];
                         $I=($interest_rate*$loan_amount_interes/100/$month_interes/12);
                         $html  .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.number_format($I,2).'"><b>$'.number_format($I,2).'</b>' . $translator->translate("Interest Earned") .'</span></li>';
-                        $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' . $this->string_to_number($loan->getInitialDepositAmount()) .'"><b>' . $loan->getInitialDepositAmount() . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
+                        $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' .$loan_amount_interes .'"><b>' . number_format($loan_amount_interes) . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $month_interes .'"><b>' . $month_interes . '</b>' . $translator->translate("Tenor") .'</span></li>';
                         $html .= '<li class="box__interest_rates"><span class="interest_rates" data-value="' . $this->string_to_number($interest_rate) .'"><b>' . $interest_rate . '%</b>' . $translator->translate("Interest Rates") .'</span></li>';
                     } else {
