@@ -788,7 +788,8 @@ class LoanApplicationController extends AbstractActionController
                                 }
                             }
                         }
-                        if($is_month_correct==0) $month_interes=$loan->getTenor();
+                        // if($is_month_correct==0) $month_interes=$loan->getTenor();
+                        
                         // Formula:
                         // A = P x (1 + r/n)nt
                         // I = A - P
