@@ -26,6 +26,7 @@ class RefinancingCommercialController extends AbstractActionController
             case 1:
                 if ($request->isPost()) {
                     $post = $request->getPost();
+                    $session->offsetSet('yes_or_no',1);
                     $property_type = $post['property_type'];
                     $current_bank_name = $post['current_bank_name'];
                     $remaining_loan_amount = $post['remaining_loan_amount'];

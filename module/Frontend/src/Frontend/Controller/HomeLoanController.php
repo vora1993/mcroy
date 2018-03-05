@@ -26,6 +26,7 @@ class HomeLoanController extends AbstractActionController
             case 1:
                 if ($request->isPost()) {
                     $post = $request->getPost();
+                    $session->offsetSet('yes_or_no',1);
                     $property_type = $post['property_type'];
                     $property_status = $post['property_status'];
                     $option_fee = $post['option_fee'];
@@ -119,8 +120,9 @@ class HomeLoanController extends AbstractActionController
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
-                // print_r($condition);
-                // exit;
+                if($session->offsetGet('yes_or_no')==0) {
+                    $condition=[];
+                }
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();
@@ -382,6 +384,29 @@ class HomeLoanController extends AbstractActionController
         $html .= '</div>';
         $response = $this->getResponse();
         $response->setContent(\Zend\Json\Json::encode(array("html" => $html, "count" => count($select))));
+        return $response;
+    }
+
+    public function selectNoAction() {
+        $seo = $this->params()->fromPost('seo');
+        $session = new Session('home_loan');
+        $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        if ($request->isPost()) {
+            $session->offsetSet('property', 'Purchasing');
+            $session->offsetSet('property_type', '');
+            $session->offsetSet('property_status', '');
+            $session->offsetSet('yes_or_no',0);
+            $session->offsetSet('loan_amount', 10000);
+            $session->offsetSet('loan_tenure', 20);
+            $session->offsetSet('loan_percent', 80);
+            // $session->offsetSet('preferred_rate_package', 'Floating');
+            // $session->offsetSet('existing_home_loans', 'Floating');
+            $session->offsetSet('purchase_price', 10000);
+            $redirect = $router->assemble(array("action" => "step", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "home_loan"));
+        }
+        $response->setContent ( \Zend\Json\Json::encode ( array("redirect" => $redirect) ) );
         return $response;
     }
 
