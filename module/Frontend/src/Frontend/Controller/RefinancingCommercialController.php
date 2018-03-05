@@ -78,7 +78,7 @@ class RefinancingCommercialController extends AbstractActionController
             break;
 
             case 3:
-                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure') && $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 2));
                 }
                 if($this->getServiceLocator()->get('AuthService')->hasIdentity()) {
@@ -88,10 +88,10 @@ class RefinancingCommercialController extends AbstractActionController
             break;
 
             case 4:
-                if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
+                if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status') && $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 1));
-                }
-                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
+                };
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure') & $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing_commercial", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
