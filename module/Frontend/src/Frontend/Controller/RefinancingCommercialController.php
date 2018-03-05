@@ -117,6 +117,9 @@ class RefinancingCommercialController extends AbstractActionController
                 if($session->offsetGet('current_bank_name')) {
                     $condition['bank_id'] = $session->offsetGet('current_bank_name');
                 }
+                if($session->offsetGet('yes_or_no')==0) {
+                    $condition=[];
+                }
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();
@@ -290,5 +293,30 @@ class RefinancingCommercialController extends AbstractActionController
             "select"                   => $select,
             "redirect_url"             => $redirect
         );
+    }
+
+    public function selectNoAction() {
+        $seo = $this->params()->fromPost('seo');
+        $session = new Session('home_loan');
+        $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        if ($request->isPost()) {
+            $session->offsetSet('property', 'Purchasing');
+            $session->offsetSet('property_type', '');
+            $session->offsetSet('property_status', '');
+            $session->offsetSet('yes_or_no',0);
+
+            $session->offsetSet('loan_amount', 10000);
+            $session->offsetSet('loan_tenure', 20);
+            $session->offsetSet('loan_percent', 80);
+            // $session->offsetSet('preferred_rate_package', 'Floating');
+            // $session->offsetSet('existing_home_loans', 'Floating');
+            $session->offsetSet('purchase_price', 10000);
+
+            $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "loan_application"));
+        }
+        $response->setContent ( \Zend\Json\Json::encode ( array("redirect" => $redirect) ) );
+        return $response;
     }
 }

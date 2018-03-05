@@ -4,7 +4,10 @@ if($category->getSeo() == 'residential-equity-term-loan-new-purchase' || $catego
     $category_all=$this->Category(array('seo'=>'commercial-new-purchase-and-refinancing'));
     $category_all_id=$category_all->getId();
 }
-
+if($property_type=='')
+{
+    $property_type='Industrial/Commercial and JTC';
+}
 $slider_loan_tenture = '$slider_loan_tenture';
 $slider_loan_percent = '$slider_loan_percent';
 $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
@@ -125,7 +128,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                     <?php
                                     if($loan->getCategoryId()==$category->getId() || $loan->getCategoryId()==$category_all_id)
                                     {
-                                        if($loan->getType()==$property_type || $loan->getType()=='Industrial/Commercial and JTC')
+                                        if($loan->getType()==$property_type || $loan->getType()=='Industrial/Commercial and JTC' || $property_type='Industrial/Commercial and JTC')
                                         {
                                     $bank = $this->bank(array("id" => $loan->getBankId()));
                                     $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";

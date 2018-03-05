@@ -422,16 +422,21 @@ class LoanApplicationController extends AbstractActionController
                 $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_package');
                 // $condition = array('category_id' => $category->getId(), 'status' => 1);
                 $condition = array('status' => 1);
-                $condition['property']=$session->offsetGet('property');
+                // if($session->offsetExists('property') && $session->offsetExists('property')!='') {
+                //     $condition['property']=$session->offsetGet('property');
+                // }
+                $condition['property']='Purchasing';
                 // $condition['type']=$session->offsetGet('property_type');
-                $condition['type_of_corporate']=$session->offsetGet('corporate_entity');
+                if($session->offsetExists('corporate_entity') && $session->offsetGet('corporate_entity')!=''){
+                    $condition['type_of_corporate']=$session->offsetGet('corporate_entity');
+                }
                 // if($session->offsetExists('property_type')) {
                 //     $condition['type'] = $session->offsetGet('property_type');
                 // }
-                if($session->offsetExists('property_status')) {
+                if($session->offsetExists('property_status') && $session->offsetGet('property_status')!='') {
                     $condition['property_status'] = $session->offsetGet('property_status');
                 }
-                if($session->offsetExists('preferred_rate_package')) {
+                if($session->offsetExists('preferred_rate_package') && $session->offsetGet('preferred_rate_package')!='') {
                     if($session->offsetGet('preferred_rate_package') === 'Fixed' || $session->offsetGet('preferred_rate_package') === 'Floating') {
                         $condition['package'] = $session->offsetGet('preferred_rate_package');
                     }
@@ -682,15 +687,15 @@ class LoanApplicationController extends AbstractActionController
         $request = $this->getRequest();
         $response = $this->getResponse();
         if ($request->isPost()) {
-            $session->offsetSet('property', 'home_loan');
-            $session->offsetSet('property_type', 'HDB Flat');
-            $session->offsetSet('property_status', 'Completed');
+            $session->offsetSet('property', 'Purchasing');
+            $session->offsetSet('property_type', '');
+            $session->offsetSet('property_status', '');
 
             $session->offsetSet('loan_amount', 10000);
             $session->offsetSet('loan_tenure', 20);
             $session->offsetSet('loan_percent', 80);
-            $session->offsetSet('preferred_rate_package', 'Floating');
-            $session->offsetSet('existing_home_loans', 'Floating');
+            // $session->offsetSet('preferred_rate_package', 'Floating');
+            // $session->offsetSet('existing_home_loans', 'Floating');
             $session->offsetSet('purchase_price', 10000);
 
             $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "loan_application"));

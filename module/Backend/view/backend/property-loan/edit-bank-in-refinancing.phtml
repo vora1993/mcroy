@@ -1,0 +1,219 @@
+<?php
+$title = $this->translate("Edit Property Loan");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'bank-in-refinancing')); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Property Loan") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $title ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit bordered">
+                    <div class="portlet-title" style="margin-bottom: 0;">
+                        <div class="caption font-dark">
+                            <i class="icon-share-alt font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <a href="javascript:;" onclick="window.history.back()" class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm"> <?php echo $this->translate("Back") ?>
+                                    <i class="fa fa-history"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <!-- BEGIN FORM-->
+                        <form action="<?php echo $this->url("admin/property_loan", array('action' => "edit-bank-in-refinancing", "id" => $this->loan->getId())) ?>" id="form_post" class="form-horizontal form-bordered">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Bank Name") ?></label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="name" class="form-control" value="<?php echo $this->loan->getName(); ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                                        <button type="button" class="btn btn-outline" onclick="cancel('admin/property-loan')"> <?php echo $this->translate("Cancel") ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FORM-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile(30, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile(31, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+tinymce.init({
+    selector: '.editor',
+    height: 300,
+    plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+    ],
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+    content_css: full_url+'/assets/css/codepen.min.css',
+    setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
+});
+
+/*
+$('select[name=property_package]').on('change', function() {
+    $('.floating_rate').addClass('hide');
+    if( this.value === 'Fixed' ) {
+        $('input[name=lock_in_year]').prop('readonly', true);
+    }
+    if( this.value === 'Floating' ) {
+        $('.floating_rate').removeClass('hide');
+        $('input[name=lock_in_year]').prop('readonly', false);
+    }
+});
+
+$("input[name=sibor]").change(function() {
+    if(this.checked) {
+        //Do stuff
+        $('.fixed_rate').removeClass('hide');
+    } else {
+        $('.fixed_rate').addClass('hide');
+    }
+});
+*/
+$( "select[name=property_package], input[name=sibor]" ).trigger( "change" );
+
+var form = $('#form_post');
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "",
+    rules: {
+        category_id: {
+            required: true
+        },
+        bank_id: {
+            required: true
+        },
+        property_type: {
+            required: true
+        },
+        property_status: {
+            required: true
+        },
+        property_package: {
+            required: true
+        },
+        lock_in_year: {
+            number: true
+        }
+    },
+    
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label.closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+
+    errorPlacement: function(error, element) {
+        error.insertAfter(element);
+    },
+
+    submitHandler: function (form) {
+        // setup some local variables
+        var form = $(form);
+        
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+        
+        // serialize the data in the form
+        var serializedData = form.serialize();
+        
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+        
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+        
+        // Clear Message
+        $('#form_post .form-group').removeClass('has-error');
+        $('#form_post .help-block, #form_post .alert').remove();
+        
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.error) {
+                toastr.error("Something error. Please check");
+            } else {
+                if(result.success) {
+                    toastr.success(result.msg);
+                    setTimeout(function(){ window.location.href = full_url+'/admin/property-loan/bank-in-refinancing'; }, 1500);
+                } else {
+                    toastr.warning(result.msg);
+                }
+            }
+        });
+        
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            toastr.error("The following error occured: " + textStatus, errorThrown);
+        });
+        
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

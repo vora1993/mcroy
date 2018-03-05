@@ -139,17 +139,12 @@ $arr_resident=json_encode($arr_resident);
                                     <div class="col-md-6">
                                         <select name="bank_id" class="form-control">
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <?php 
+                                            foreach ($this->list_bank as $key => $value) 
+                                            {
+                                            ?>
+                                            <option value="<?php echo $value->getId()?>" <?php echo $loan->getBankId()==$value->getId()?'selected':''?>><?php echo $value->getName() ?></option>
                                             <?php
-                                            $banks = $this->banks(array("status" => 1));
-                                            if(count($banks) > 0) {
-                                                foreach ($banks as $bank) {
-                                                    if($bank->getId() == $this->loan->getBankId()) {
-                                                        echo '<option value="'.$bank->getId().'" selected>'.$bank->getName().'</option>';
-                                                    } else {
-                                                        echo '<option value="'.$bank->getId().'">'.$bank->getName().'</option>';
-                                                    }
-                                                    
-                                                }
                                             }
                                             ?>
                                         </select>

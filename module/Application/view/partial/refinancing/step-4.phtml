@@ -1,4 +1,6 @@
 <?php
+$tooltip=$this->tooltip_for_property(array('id'=>2));
+$tooltip=json_decode($tooltip->getValue());
 $slider_loan_tenture = '$slider_loan_tenture';
 $slider_loan_percent = '$slider_loan_percent';
 $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
@@ -10,14 +12,14 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                 <div class="loan-title-portlet"><h2><i class="fa fa-cogs"></i> <?php echo $this->translate("Filter"); ?></h2></div>
                 <p><?php echo $this->translate("Click the Refresh button below after you make any changes") ?>.</p>
                 <div class="loan-filter">
-                    <label><?php echo $this->translate("Loan Type") ?></label>
+                    <label><?php echo $this->translate("Loan Type") ?><a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content="<?php echo $tooltip->loan_type?>"><i class="fa fa-question-circle"></i></a></label>
                     <select name="preferred_rate_package" class="form-control">
                         <option value="Fixed"<?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("Fixed") ?></option>
                         <option value="Floating"<?php if($this->preferred_rate_package === 'Floating') echo " selected" ?>><?php echo $this->translate("Floating") ?></option>
                     </select>
                 </div>
                 <div class="loan-filter">
-                    <label><?php echo $this->translate("Based on total interest for") ?> <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content="Home loan packages are ranked according to the total interest payable over a fixed duration. Borrowers typically plan to sell their property or refinance their home loan after this period. Common durations to compare packages are: 3/5/10 years."><i class="fa fa-question-circle"></i></a></label>
+                    <label><?php echo $this->translate("Based on total interest for") ?> <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content="<?php echo $tooltip->total_interest?>"><i class="fa fa-question-circle"></i></a></label>
                     <select name="total_interest_for_years" class="form-control">
                         <option value="1"<?php if($this->$total_interest_for_years == 1) echo ' selected'; ?>><?php echo $this->translate("1 year") ?></option>
                         <option value="2"<?php if($this->$total_interest_for_years == 2) echo ' selected'; ?>><?php echo $this->translate("2 years") ?></option>
@@ -36,13 +38,13 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                 <span class="check"></span>
                                 <span class="box"></span> <?php echo $this->translate("No Lock-in Loans Only") ?>
                             </label>
-                            <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content='No lock-in packages allow you to make partial or full prepayments, as well as refinance without paying a penalty. Lock-in packages might have better rates, but require you to pay a penalty if you do any of the above during the lock-in period.'><i class="fa fa-question-circle"></i></a>
+                            <a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content='<?php echo $tooltip->lock_in?>'><i class="fa fa-question-circle"></i></a>
                         </div>
                     </div>
                 </div>
                 <hr />
                 <div class="loan-filter">
-                    <label><?php echo $this->translate("Remaining Loan Amount") ?></label>
+                    <label><?php echo $this->translate("Remaining Loan Amount") ?><a href="javascript:;" class="tooltip-icon popovers pull-right" data-trigger="hover" data-placement="right" data-container="body" data-content="<?php echo $tooltip->loan_amount?>"><i class="fa fa-question-circle"></i></a></label>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i><?php echo $this->translate("$") ?></i>

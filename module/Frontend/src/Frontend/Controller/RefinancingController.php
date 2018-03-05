@@ -42,9 +42,9 @@ class RefinancingController extends AbstractActionController
                         $session->offsetSet('locked_in', $locked_in);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing_commercial"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "refinancing"));
                     } else {
-                        $redirect = $router->assemble(array("action" => "step", "id" => 1), array('name' => "refinancing_commercial"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 1), array('name' => "refinancing"));
                     }
 
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );

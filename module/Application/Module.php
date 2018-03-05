@@ -217,12 +217,20 @@ class Module
                     $viewHelper = new View\Helper\Banks;
                     return $viewHelper;
                 },
+                'bankInRefinancing' => function($sm) {
+                    $viewHelper = new View\Helper\BankInRefinancing;
+                    return $viewHelper;
+                },
                 'bank' => function($sm) {
                     $viewHelper = new View\Helper\Bank;
                     return $viewHelper;
                 },
                 'BankInterestRate' => function($sm) {
                     $viewHelper = new View\Helper\BankInterestRate;
+                    return $viewHelper;
+                },
+                'tooltip_for_property' => function($sm) {
+                    $viewHelper = new View\Helper\TooltipForProperty;
                     return $viewHelper;
                 },
                 'business_loan' => function($sm) {
@@ -406,6 +414,20 @@ class Module
                 	$model->setEntityPrototype(new \Application\Entity\PropertyLoan());
                 	$model->setHydrator(new Mapper\PropertyLoanHydrator());
                 	return $model;
+                },
+                'application_model_bank_in_refinancing' => function ($sm) {
+                    $model = new Model\BankInRefinancing();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\BankInRefinancing());
+                    $model->setHydrator(new Mapper\BankInRefinancingHydrator());
+                    return $model;
+                },
+                'application_model_tooltip_property_loan' => function ($sm) {
+                    $model = new Model\TooltipPropertyLoan();
+                    $model->setDbAdapter($sm->get('Zend\Db\Adapter\Adapter'));
+                    $model->setEntityPrototype(new \Application\Entity\TooltipPropertyLoan());
+                    $model->setHydrator(new Mapper\TooltipPropertyLoanHydrator());
+                    return $model;
                 },
                 'application_model_property_cost_out_play' => function ($sm) {
                     $model = new Model\PropertyCostOutPlay();
