@@ -313,8 +313,7 @@ class RefinancingCommercialController extends AbstractActionController
             // $session->offsetSet('preferred_rate_package', 'Floating');
             // $session->offsetSet('existing_home_loans', 'Floating');
             $session->offsetSet('purchase_price', 10000);
-
-            $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "loan_application"));
+            $redirect = $router->assemble(array("action" => "step", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "refinancing_commercial"));
         }
         $response->setContent ( \Zend\Json\Json::encode ( array("redirect" => $redirect) ) );
         return $response;
