@@ -136,6 +136,10 @@ a:hover, a:focus {
     padding: 5px 0;
 }
 
+.portlet.light {
+  padding: 0;
+}
+
 .portlet.light > .portlet-head {
     padding: 15px 20px 10px;
 }
@@ -688,8 +692,6 @@ a:hover, a:focus {
 
 .loan-sidebar {
     float: left;
-    width: 300px;
-    margin-right: 20px;
 }
 
 .loan-content {
@@ -709,8 +711,27 @@ a:hover, a:focus {
 	box-shadow: none;
 }
 
+.portlet .loan-sidebar-portlet,
+.loan-filter.no-lock-in-loan{
+  margin-bottom: 0;
+}
+
 .loan-filter {
     margin-bottom: 20px;
+    padding: 20px 15px;
+}
+
+.loan-filter > p {
+    width: 100%;
+    float: left;
+    color: #5d5c5d;
+    font-size: 15px;
+    margin: 0 0 20px;
+    line-height: 18px;
+}
+
+.loan-filter > .refresh-btn {
+  margin-bottom: 20px;
 }
 
 .loan-filter .input-group-addon {
@@ -763,28 +784,7 @@ a:hover, a:focus {
     cursor: pointer;
 }
 
-.loan-title-portlet {
-    border-bottom: 1px solid #ededed;
-    display: block;
-    margin-bottom: 15px;
-    width: 100%;
-    padding: 8px 0;
-}
-
-.loan-title-portlet h2 {
-    background: #11a7e8;
-    color: #fff;
-    -webkit-border-top-right-radius: 35px;
-    -moz-border-radius-topright: 35px;
-    border-top-right-radius: 35px;
-    display: inline;
-    padding: 8px 20px 4px 10px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
 .loan-content-portlet p {
-    color: #7f8c8d;
     margin-bottom: 20px;
 }
 
