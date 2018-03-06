@@ -713,7 +713,7 @@ class LoanApplicationController extends AbstractActionController
         $seo = $this->params()->fromRoute('seo');
         $application_model_category = $this->getServiceLocator()->get('application_model_category');
         $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "bank_account"));
-        
+
         if ($request->isPost())
         {
             $post = $request->getPost();
@@ -789,7 +789,7 @@ class LoanApplicationController extends AbstractActionController
                             }
                         }
                         // if($is_month_correct==0) $month_interes=$loan->getTenor();
-                        
+
                         // Formula:
                         // A = P x (1 + r/n)nt
                         // I = A - P
@@ -804,7 +804,7 @@ class LoanApplicationController extends AbstractActionController
                         // $I = round($A - $loan_amount, 2);
 
                         $loan_amount_interes=$post['loan_amount_interes'];
-                        $I=($interest_rate*$loan_amount_interes/100/$month_interes/12);
+                        $I=($interest_rate*$loan_amount_interes/100)*($month_interes/12);
                         $html  .= '<li class="box__interest_earned"><span class="interest_earned" data-value="'.number_format($I,2).'"><b>$'.number_format($I,2).'</b>' . $translator->translate("Interest Earned") .'</span></li>';
                         $html .= '<li class="box__initial_deposit_amount"><span class="initial_deposit_amount" data-value="' .$loan_amount_interes .'"><b>' . number_format($loan_amount_interes) . '</b>' . $translator->translate("Fixed Deposit Amount") .'</span></li>';
                         $html .= '<li class="box__tenor"><span class="tenor" data-value="' . $month_interes .'"><b>' . $month_interes . '</b>' . $translator->translate("Tenor") .'</span></li>';
@@ -846,7 +846,7 @@ class LoanApplicationController extends AbstractActionController
 
                     /*$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Citizenship").'</div><div class="col-md-6">'.$loan->getCitizenship().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Age").'</div><div class="col-md-6">'.$loan->getAge().'</div></div>';*/
-                    if($category->getName() === 'Fixed Deposit') $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Minimum Deposit").'</div><div class="col-md-6">'.$loan->getMinimumBalance().'</div></div>'; 
+                    if($category->getName() === 'Fixed Deposit') $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Minimum Deposit").'</div><div class="col-md-6">'.$loan->getMinimumBalance().'</div></div>';
                     //$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Annual Fee").'</div><div class="col-md-6">'.$loan->getAnnualFee().'</div></div>';
                     //$html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Service Fee").'</div><div class="col-md-6">'.$loan->getServiceFee().'</div></div>';
                     $html .= '<div class="row"><div class="col-md-6">'.$translator->translate("Highlight").'</div><div class="col-md-6">'.$loan->getHighlight().'</div></div>';
@@ -896,7 +896,7 @@ class LoanApplicationController extends AbstractActionController
     //     $seo = $this->params()->fromRoute('seo');
     //     $application_model_category = $this->getServiceLocator()->get('application_model_category');
     //     $category = $application_model_category->fetchRow(array("seo" => $seo, "type" => "bank_account"));
-        
+
     //     if ($request->isPost())
     //     {
     //         $post = $request->getPost();
