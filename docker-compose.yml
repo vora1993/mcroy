@@ -1,0 +1,35 @@
+version: "3.1"
+services:
+  mysql:
+    image: mysql:5.6
+    container_name: moneycompare-mysql
+    working_dir: /application
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=moneycompare
+      - MYSQL_USER=moneycompare
+      - MYSQL_PASSWORD=root
+
+  webserver:
+    image: webdevops/php-apache-dev:ubuntu-14.04
+    container_name: moneycompare-webserver
+    working_dir: /application
+    volumes:
+      - .:/app
+      - ./phpdocker/php-fpm/php-ini-overrides.ini:/opt/docker/etc/php/php.ini
+    ports:
+     - "80:80"
+    links:
+      - mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: moneycompare-phpmyadmin
+    working_dir: /application
+    ports:
+     - "8080:80"
+    links:
+     - mysql
+    environment:
+      - PMA_HOST=mysql
