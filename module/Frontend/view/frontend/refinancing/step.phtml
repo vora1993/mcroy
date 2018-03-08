@@ -52,7 +52,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
 <?php if($this->step == 4): ?>
 <section class="selectlist">
     <div class="container" id="selected-holder">
-        <div class="row">
+        <div class="row compare-row" style="display: none;">
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-xs-12">
@@ -72,6 +72,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
                 </div>
             </div>
         </div>
+        <div class="compare-arrow"><a href="javascript:;" onclick="Loan.shortlist2(this)"><i class="fa fa-angle-double-down"></i></a></div>
     </div>
 </section>
 <?php endif;?>
@@ -84,7 +85,7 @@ $_text_under_construction = $this->translate("Do you qualify for a Home Loan bas
             <a href="javascript:;" class="btn btn-yes popup_close"><?php echo $this->translate("Yes"); ?></a>
             <a href="javascript:;" onclick="no()" class="btn btn-no"><?php echo $this->translate("No"); ?></a>
         </div>
-    </div>  
+    </div>
 </div>
 <?php endif; ?>
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
@@ -106,7 +107,7 @@ function no() {
         data: {seo: seo},
         dataType: 'json',
         success: function(itemJson) {
-            if(itemJson.redirect) window.location.href = itemJson.redirect; 
+            if(itemJson.redirect) window.location.href = itemJson.redirect;
         },
         error : function(xhr, status){
             console.log(status);

@@ -137,196 +137,187 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                   <div class="row-header" style="background-color: <?php echo $bank_color;?>;">
                     <h4 class="bank-title" style="background-color: <?php echo $bank_color; ?>"><a href="#"><?php echo $loan->getTitle(); ?> <?php echo $loan->getPromotions(); ?></a></h4>
                   </div>
-                  <div class="filters-content not-sponsored">
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="ribbon ribbon-vertical-left ribbon-shadow ribbon-color-primary uppercase">
-                                <div class="ribbon-sub ribbon-bookmark"></div>
-                                <?php echo $key+1; ?>
-                            </div>
-                        </div>
-                    </div> -->
-                    <?php
-                    $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
-                    $loan_amount = $this->loan_amount;
-                    $int_rates = $loan->getIntYear2();
 
-                    // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
-                    // Where: r = decimal rate / 12.
-                    $r = ($int_rates / 100) / 12;
-                    $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                    ?>
-                    <div class="row loan-info row-content row-content-1">
-                      <div class="col-md-2">
-                        <div class="bank-logo">
+                  <?php
+                  $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+                  $loan_amount = $this->loan_amount;
+                  $int_rates = $loan->getIntYear2();
+
+                  // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
+                  // Where: r = decimal rate / 12.
+                  $r = ($int_rates / 100) / 12;
+                  $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                  ?>
+                  <div class="row loan-info row-content row-content-1">
+                    <div class="col-md-2">
+                      <div class="bank-logo">
+                          <?php
+                          $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                          if(!file_exists($dir_logo)) {
+                              $dir_logo = 'data/image/no-image-64.png';
+                          }
+                          ?>
+                          <img src="<?php echo $this->basePath($dir_logo); ?>" />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="box__interest">
+                        <span class="interest"><b><?php echo $int_rates ?>%</b>
+                        <?php echo $this->translate("Avg Interest Rate") ?>
+                        <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div></span>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="box__interest">
+                        <span class="interest">
+                          <b>$<?php echo number_format($monthly_payment); ?></b>
+                          <?php echo $this->translate("Monthly Instalments") ?>
+                          <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="lockin-period box__interest">
+                          <span class="interest"><b>
                             <?php
-                            $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
-                            if(!file_exists($dir_logo)) {
-                                $dir_logo = 'data/image/no-image-64.png';
+                            $lock_in_year = $loan->getLockInYear();
+                            if($lock_in_year > 0) {
+                                echo $lock_in_year.' '.$this->translate("Year");
+                            } else {
+                                echo $this->translate("No Lock-in");
                             }
-                            ?>
-                            <img src="<?php echo $this->basePath($dir_logo); ?>" />
+                            ?></b>
+                            <?php echo $this->translate("Lock-In Period") ?></span>
                         </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="box__interest">
-                          <span class="interest"><b><?php echo $int_rates ?>%</b>
-                          <?php echo $this->translate("Avg Interest Rate") ?>
-                          <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div></span>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="box__interest">
-                          <span class="interest">
-                            <b>$<?php echo number_format($monthly_payment); ?></b>
-                            <?php echo $this->translate("Monthly Instalments") ?>
-                            <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div>
-                          </span>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                          <div class="lockin-period box__interest">
-                            <span class="interest"><b>
-                              <?php
-                              $lock_in_year = $loan->getLockInYear();
-                              if($lock_in_year > 0) {
-                                  echo $lock_in_year.' '.$this->translate("Year");
-                              } else {
-                                  echo $this->translate("No Lock-in");
-                              }
-                              ?></b>
-                              <?php echo $this->translate("Lock-In Period") ?></span>
-                          </div>
-                      </div>
-                      <div class="col-md-2">
-                          <div class="rate-type box__interest">
-                            <span class="interest"><b>
-                              <?php
-                              switch ($loan->getFloatingType()) {
-                                  case 'SIBOR':
-                                      echo $this->translate("SIBOR");
-                                  break;
-
-                                  case 'Variable':
-                                      echo $this->translate("Variable");
-                                  break;
-
-                                  case 'SOR':
-                                      echo $this->translate("SOR");
-                                  break;
-
-                                  default:
-                                      echo $this->translate("Fixed");
-                                  break;
-                              }
-                              ?></b>
-                              <?php echo $this->translate("Rate Type") ?></span>
-                          </div>
-                      </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="rate-type box__interest">
+                          <span class="interest"><b>
+                            <?php
+                            switch ($loan->getFloatingType()) {
+                                case 'SIBOR':
+                                    echo $this->translate("SIBOR");
+                                break;
 
-                    <!-- More information -->
-                    <div class="row row-footer">
-                      <div class="more-info col-md-12" style="overflow: hidden; display: none;">
-                        <h3 class='title'><?php echo $this->translate("Rates & Payments") ?></h3>
-                        <div class="row">
-                          <!-- Rates & Payments -->
-                          <div class="col-rates content-row-footer">
-                            <ul>
-                              <li>
-                                <div class="col-row-footer-3 text-center padding-left-30"><?php echo $this->translate("Period") ?></div>
-                                <div class="col-row-footer-3"><?php echo $this->translate("Rate") ?></div>
-                                <div class="col-row-footer-3 text-center"><?php echo $this->translate("Payment") ?></div>
-                                <div class="col-row-footer-1">
-                                  <a data-target="#content-row-footer1" data-toggle="collapse" aria-expanded="true">
-                                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                  </a>
-                                </div>
-                                <div id="content-row-footer1" class="content-row-collapse collapse in">
-                                  <ul>
-                                    <?php
-                                    if($loan->getIntYear1() > 0) {
-                                        $int_rates1 = $loan->getIntYear1();
-                                        $r = ($int_rates1 / 100) / 12;
-                                        $monthly_payment1 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                        ?>
-                                        <li>
-                                            <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 1</div>
-                                            <div class="col-row-footer-3"><?php echo $int_rates1 ?>%</div>
-                                            <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment1, 3) ?>/mth</div>
-                                        </li>
-                                        <?php
-                                    }
-                                    if($loan->getIntYear2() > 0) {
-                                        $int_rates2 = $loan->getIntYear2();
-                                        $r = ($int_rates2 / 100) / 12;
-                                        $monthly_payment2 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                        ?>
-                                        <li>
-                                            <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 2</div>
-                                            <div class="col-row-footer-3"><?php echo $int_rates2 ?>%</div>
-                                            <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment2, 3) ?>/mth</div>
-                                        </li>
-                                        <?php
-                                    }
-                                    if($loan->getIntYear3() > 0) {
-                                        $int_rates3 = $loan->getIntYear3();
-                                        $r = ($int_rates3 / 100) / 12;
-                                        $monthly_payment3 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                        ?>
-                                        <li>
-                                            <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 3</div>
-                                            <div class="col-row-footer-3"><?php echo $int_rates3 ?>%</div>
-                                            <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment3, 3) ?>/mth</div>
-                                        </li>
-                                        <?php
-                                    }
-                                    if($loan->getIntYear4() > 0) {
-                                        $int_rates4 = $loan->getIntYear4();
-                                        $r = ($int_rates4 / 100) / 12;
-                                        $monthly_payment4 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                        ?>
-                                        <li>
-                                            <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 4</div>
-                                            <div class="col-row-footer-3"><?php echo $int_rates4 ?>%</div>
-                                            <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment4, 3) ?>/mth</div>
-                                        </li>
-                                        <?php
-                                    }
-                                    ?>
+                                case 'Variable':
+                                    echo $this->translate("Variable");
+                                break;
 
-                                  </ul>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
+                                case 'SOR':
+                                    echo $this->translate("SOR");
+                                break;
 
-                          <!-- Feature -->
-                          <h3 class="title"><?php echo $this->translate("Features") ?></h3>
-                          <div class="row margin-bottom-20 feature-content">
-                            <?php echo $loan->getRemark(); ?>
-                          </div>
+                                default:
+                                    echo $this->translate("Fixed");
+                                break;
+                            }
+                            ?></b>
+                            <?php echo $this->translate("Rate Type") ?></span>
+                        </div>
+                    </div>
+                  </div>
+
+                  <!-- More information -->
+                  <div class="row row-footer">
+                    <div class="more-info col-md-12" style="overflow: hidden; display: none;">
+                      <h3 class='title'><?php echo $this->translate("Rates & Payments") ?></h3>
+                      <div class="row">
+                        <!-- Rates & Payments -->
+                        <div class="col-rates content-row-footer">
+                          <ul>
+                            <li>
+                              <div class="col-row-footer-3 text-center padding-left-30"><?php echo $this->translate("Period") ?></div>
+                              <div class="col-row-footer-3"><?php echo $this->translate("Rate") ?></div>
+                              <div class="col-row-footer-3 text-center"><?php echo $this->translate("Payment") ?></div>
+                              <div class="col-row-footer-1">
+                                <a data-target="#content-row-footer1" data-toggle="collapse" aria-expanded="true">
+                                  <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                                  <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </a>
+                              </div>
+                              <div id="content-row-footer1" class="content-row-collapse collapse in">
+                                <ul>
+                                  <?php
+                                  if($loan->getIntYear1() > 0) {
+                                      $int_rates1 = $loan->getIntYear1();
+                                      $r = ($int_rates1 / 100) / 12;
+                                      $monthly_payment1 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                                      ?>
+                                      <li>
+                                          <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 1</div>
+                                          <div class="col-row-footer-3"><?php echo $int_rates1 ?>%</div>
+                                          <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment1, 3) ?>/mth</div>
+                                      </li>
+                                      <?php
+                                  }
+                                  if($loan->getIntYear2() > 0) {
+                                      $int_rates2 = $loan->getIntYear2();
+                                      $r = ($int_rates2 / 100) / 12;
+                                      $monthly_payment2 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                                      ?>
+                                      <li>
+                                          <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 2</div>
+                                          <div class="col-row-footer-3"><?php echo $int_rates2 ?>%</div>
+                                          <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment2, 3) ?>/mth</div>
+                                      </li>
+                                      <?php
+                                  }
+                                  if($loan->getIntYear3() > 0) {
+                                      $int_rates3 = $loan->getIntYear3();
+                                      $r = ($int_rates3 / 100) / 12;
+                                      $monthly_payment3 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                                      ?>
+                                      <li>
+                                          <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 3</div>
+                                          <div class="col-row-footer-3"><?php echo $int_rates3 ?>%</div>
+                                          <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment3, 3) ?>/mth</div>
+                                      </li>
+                                      <?php
+                                  }
+                                  if($loan->getIntYear4() > 0) {
+                                      $int_rates4 = $loan->getIntYear4();
+                                      $r = ($int_rates4 / 100) / 12;
+                                      $monthly_payment4 = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                                      ?>
+                                      <li>
+                                          <div class="col-row-footer-3"><?php echo $this->translate("Year") ?> 4</div>
+                                          <div class="col-row-footer-3"><?php echo $int_rates4 ?>%</div>
+                                          <div class="col-row-footer-3" style="color: #3498db;"><?php echo round($monthly_payment4, 3) ?>/mth</div>
+                                      </li>
+                                      <?php
+                                  }
+                                  ?>
+
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <!-- Feature -->
+                        <h3 class="title"><?php echo $this->translate("Features") ?></h3>
+                        <div class="row margin-bottom-20 feature-content">
+                          <?php echo $loan->getRemark(); ?>
                         </div>
                       </div>
                     </div>
+                  </div>
 
-                    <!-- Footer -->
-                    <div class="col-md-12 more-detail footer">
-                      <div class="col-md-9 col-sm-8 col-xs-12 button-gr button-gr-s">
-                          <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
-                          <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
-                      </div>
-                      <?php
-                      $class = '';
-                      if(count($select) > 0) {
-                          if(in_array($loan->getId(), $select)) $class = ' active';
-                      }
-                      ?>
+                  <!-- Footer -->
+                  <div class="col-md-12 more-detail footer">
+                    <div class="col-md-9 col-sm-8 col-xs-12 button-gr button-gr-s">
+                        <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
+                    </div>
+                    <?php
+                    $class = '';
+                    if(count($select) > 0) {
+                        if(in_array($loan->getId(), $select)) $class = ' active';
+                    }
+                    ?>
 
-                      <div class="col-md-3 col-sm-4 col-xs-12 box__apply button-gr button-gr-s1">
-                        <button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Select Package"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Select Package"); ?></button>
-                      </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12 box__apply button-gr button-gr-s1">
+                      <button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Select Package"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Select Package"); ?></button>
                     </div>
                   </div>
                 </div>
