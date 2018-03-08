@@ -1452,6 +1452,14 @@ span.note-cart {
     background: #f2fcff;
     position: relative;
 }
+
+.filters-content .row-content-1 {
+    padding: 25px 0px !important;
+    background: #f2fcff;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 .filters-content .row-footer {
     margin-left: 0;
     margin-right: 0;

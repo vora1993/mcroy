@@ -1376,6 +1376,9 @@ output {
 .content-row-footer > ul > li > .col-row-footer-3:first-child {
     text-align: left;
 }
+.content-row-footer > ul > li > .col-row-footer-3.text-center:first-child {
+    text-align: center;
+}
 .col-row-footer-1 a i {
     color: #193d5a;
 }
@@ -1869,6 +1872,19 @@ td {
     background-position: -58px -6px;
 }
 
+h3.title {
+  text-align: left;
+  margin-top: 0;
+}
+
+.feature-content {
+  text-align: left;
+  padding-left: 30px;
+}
+
+.more-detail.footer {
+  padding-top: 0;
+}
 @media (max-width: 1199px) {
     .page-header .page-header-menu .hor-menu .navbar-nav > li > a {
         padding: 16px 13px 15px;
