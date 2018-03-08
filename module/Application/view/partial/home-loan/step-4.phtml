@@ -141,83 +141,82 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           <a href="#"><?php echo $loan->getTitle(); ?> <?php echo $loan->getPromotions(); ?></a>
                         </h4>
                       </div>
-                      <div class="filters-content not-sponsored">
-                        <?php
-                        $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
-                        $loan_amount = $this->loan_amount;
-                        $int_rates = $loan->getIntYear2();
+                      <?php
+                      $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+                      $loan_amount = $this->loan_amount;
+                      $int_rates = $loan->getIntYear2();
 
-                        // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
-                        // Where: r = decimal rate / 12.
-                        $r = ($int_rates / 100) / 12;
-                        $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                        ?>
-                        <div class="row loan-info row-content row-content-1">
-                          <div class="col-md-2">
-                            <div class="bank-logo">
+                      // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
+                      // Where: r = decimal rate / 12.
+                      $r = ($int_rates / 100) / 12;
+                      $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                      ?>
+                      <div class="row loan-info row-content row-content-1">
+                        <div class="col-md-2">
+                          <div class="bank-logo">
+                              <?php
+                              $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                              if(!file_exists($dir_logo)) {
+                                  $dir_logo = 'data/image/no-image-64.png';
+                              }
+                              ?>
+                              <img src="<?php echo $this->basePath($dir_logo); ?>" />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="box__interest">
+                            <span class="interest"><b><?php echo $int_rates ?>%</b>
+                            <?php echo $this->translate("Avg Interest Rate") ?>
+                            <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div></span>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="box__interest">
+                            <span class="interest">
+                              <b>$<?php echo number_format($monthly_payment); ?></b>
+                              <?php echo $this->translate("Monthly Instalments") ?>
+                              <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="lockin-period box__interest">
+                              <span class="interest"><b>
                                 <?php
-                                $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
-                                if(!file_exists($dir_logo)) {
-                                    $dir_logo = 'data/image/no-image-64.png';
+                                $lock_in_year = $loan->getLockInYear();
+                                if($lock_in_year > 0) {
+                                    echo $lock_in_year.' '.$this->translate("Year");
+                                } else {
+                                    echo $this->translate("No Lock-in");
                                 }
-                                ?>
-                                <img src="<?php echo $this->basePath($dir_logo); ?>" />
+                                ?></b>
+                                <?php echo $this->translate("Lock-In Period") ?></span>
                             </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="box__interest">
-                              <span class="interest"><b><?php echo $int_rates ?>%</b>
-                              <?php echo $this->translate("Avg Interest Rate") ?>
-                              <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div></span>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="rate-type box__interest">
+                              <span class="interest"><b>
+                                <?php
+                                switch ($loan->getFloatingType()) {
+                                    case 'SIBOR':
+                                        echo $this->translate("SIBOR");
+                                    break;
+
+                                    case 'Variable':
+                                        echo $this->translate("Variable");
+                                    break;
+
+                                    case 'SOR':
+                                        echo $this->translate("SOR");
+                                    break;
+
+                                    default:
+                                        echo $this->translate("Fixed");
+                                    break;
+                                }
+                                ?></b>
+                                <?php echo $this->translate("Rate Type") ?></span>
                             </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="box__interest">
-                              <span class="interest">
-                                <b>$<?php echo number_format($monthly_payment); ?></b>
-                                <?php echo $this->translate("Monthly Instalments") ?>
-                                <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div>
-                              </span>
-                            </div>
-                          </div>
-                          <div class="col-md-2">
-                              <div class="lockin-period box__interest">
-                                <span class="interest"><b>
-                                  <?php
-                                  $lock_in_year = $loan->getLockInYear();
-                                  if($lock_in_year > 0) {
-                                      echo $lock_in_year.' '.$this->translate("Year");
-                                  } else {
-                                      echo $this->translate("No Lock-in");
-                                  }
-                                  ?></b>
-                                  <?php echo $this->translate("Lock-In Period") ?></span>
-                              </div>
-                          </div>
-                          <div class="col-md-2">
-                              <div class="rate-type box__interest">
-                                <span class="interest"><b>
-                                  <?php
-                                  switch ($loan->getFloatingType()) {
-                                      case 'SIBOR':
-                                          echo $this->translate("SIBOR");
-                                      break;
-
-                                      case 'Variable':
-                                          echo $this->translate("Variable");
-                                      break;
-
-                                      case 'SOR':
-                                          echo $this->translate("SOR");
-                                      break;
-
-                                      default:
-                                          echo $this->translate("Fixed");
-                                      break;
-                                  }
-                                  ?></b>
-                                  <?php echo $this->translate("Rate Type") ?></span>
-                              </div>
                           </div>
                         </div>
 
@@ -322,7 +321,6 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                             <button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Select Package"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Select Package"); ?></button>
                           </div>
                         </div>
-                      </div>
                     </div>
                   <?php endforeach;?>
                 </div>
