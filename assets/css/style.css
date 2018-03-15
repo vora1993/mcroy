@@ -613,6 +613,33 @@ footer .newsletter .social-footer {
     float: left;
     padding: 50px 0px 80px;
     text-align: center;
+    background: url('/assets/img/sub-footer-banner.jpg');
+    background-position: center;
+}
+#personal-loan .container{
+    background-color: #ffffff;
+    opacity: 0.8;
+    padding: 40px 0;
+}
+#personal-loan .container h3{
+    color: #020202;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 0px;
+    text-align: left;
+}
+#personal-loan .container h3.title-loans{
+    text-align: center;
+    font-size: 30px;
+}
+#personal-loan .container p{
+    color: #565656;
+    text-align: left;
+    font-weight: 500;
+}
+#personal-loan .container span{
+    color: #565656;
+    font-size: 24px;
 }
 #personal-loan h2 {
     display: block;
@@ -641,6 +668,7 @@ footer .newsletter .social-footer {
     width: 125px;
     height: 125px;
     margin: 0 auto;
+    margin-top: 5px;
 }
 #compare-tab .tab-content {
     width: 100%;
