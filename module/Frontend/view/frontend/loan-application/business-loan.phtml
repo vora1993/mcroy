@@ -257,11 +257,7 @@ $seo=$this->seo;
 
         </div>
 
-        <div class="compare-disclaimer">
-            <div class="container">
-               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>
-            </div>
-		</div>
+        <?php echo $this->partial('compare_disclaimer'); ?>
 
         <?php echo $this->partial('frontend_sub_footer'); ?>
     </div>
