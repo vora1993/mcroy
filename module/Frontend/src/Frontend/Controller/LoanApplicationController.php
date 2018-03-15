@@ -12,7 +12,8 @@ class LoanApplicationController extends AbstractActionController
         $session = new Session('business_loan');
         $session->offsetUnset('success');
         $request = $this->getRequest();
-
+        $application_model_testimonial = $this->getServiceLocator()->get('application_model_testimonial');
+        $testimonials = $application_model_testimonial->fetchAll(array("status" => 1));
         if ($request->isPost())
         {
             $post = $request->getPost();
@@ -330,7 +331,7 @@ class LoanApplicationController extends AbstractActionController
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
         $business_loan = $application_model_business_loan->fetchDate(array("category_id" => $category->getId()), date("d"), date("m"), date("Y"));
 
-        return array("category" => $category, "faq" => $faq, "count" => count($business_loan),"seo"=>$seo,"interest_rate"=>$interest_rate);
+        return array("category" => $category, "faq" => $faq, "count" => count($business_loan),"seo"=>$seo,"interest_rate"=>$interest_rate, "testimonials" => $testimonials);
     }
 
     public function propertyLoanAction()

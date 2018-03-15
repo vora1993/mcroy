@@ -137,6 +137,7 @@ return array(
             'credit_card_details'      => __DIR__ . '/../view/partial/credit-card-details.phtml',
             'last_news'                => __DIR__ . '/../view/partial/last-news.phtml',
             'credit_card_sliders'   => __DIR__ . '/../view/partial/credit-card-sliders.phtml',
+            'testimonials'                => __DIR__ . '/../view/partial/testimonials.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

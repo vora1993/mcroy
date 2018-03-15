@@ -75,7 +75,7 @@ $seo=$this->seo;
                                                             <input type="text" name="min_years_of_incorporation" value="3" id="min_years_of_incorporation" class="form-control" placeholder="3" />
                                                             <span class="input-group-addon"><i class="fa-year"><?php echo $this->seo=='p2p-lending'?$this->translate("Months"):$this->translate("Years") ?></i></span>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@ $seo=$this->seo;
                                             <div class="name"><?php echo $this->translate("Monthly Installment") ?><span></span></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
                                             <div class="sort" data-field="month"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>  
+                                        </aside>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
@@ -174,7 +174,7 @@ $seo=$this->seo;
                     <div id="info" class="tab-pane fade">
         				<div class="body-info">
                             <div class="content-faq">
-                                <?php 
+                                <?php
                                 $_faq = \Zend\Json\Json::decode($this->faq->getQuestion());
                                 if(count($_faq) > 0) {
                                     $k = 1;
@@ -195,18 +195,18 @@ $seo=$this->seo;
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php 
-                                        $k++;   
+                                        <?php
+                                        $k++;
                                     }
                                 }
                                 ?>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
                     <div id="need" class="tab-pane fade">
                         <div class="body-info">
-                            <div class="content-faq">                               
+                            <div class="content-faq">
                                 <form action="<?php echo $this->url("page", array("action" => "post-question")) ?>" class="form-horizontal" id="question_form">
                                     <div class="form-body">
                                         <div class="form-group">
@@ -247,7 +247,7 @@ $seo=$this->seo;
                                         </div>
                                     </div>
                                 </form>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
@@ -259,7 +259,7 @@ $seo=$this->seo;
 
         <div class="compare-disclaimer">
             <div class="container">
-               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
+               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>
             </div>
 		</div>
 
@@ -267,7 +267,7 @@ $seo=$this->seo;
     </div>
 </div>
 
-<section class="shortlist"> 
+<section class="shortlist">
     <div class="container" id="shortlisted-holder">
         <div class="row compare-row" style="display: none;">
             <div class="col-xs-4">
@@ -339,7 +339,7 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-growl/jquery.bootstrap-growl.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 /*var settings = {
@@ -348,21 +348,12 @@ echo <<<JS
     verticalEdge: 'right'
 };
 
-setTimeout(function(){ 
+setTimeout(function(){
     $.notific8($.trim("There are 10 people viewed these loans today"), settings);
     $.notific8($.trim("There are 5 customer applied these loans today"), settings);
 }, 3000);
 */
 
-$('#testimonials .box-content').owlCarousel({
-    items: 1,
-   	autoPlay: 5000,
-   	singleItem: true,
-   	navigation: false,
-   	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-   	pagination: true
-});
-    
 var BACKSPACE_KEY = 8;
 var DELETE_KEY = 46;
 var MAX_LOAN_AMOUNT = {$max_loan_amount};
@@ -371,7 +362,7 @@ $(document).ready(function() {
     Loan.load_compare();
     $('.btn_calculate').on('click', function() {
         var category_id = $("input[name=category_id]").val();
-        
+
         var loan_amount = formatIntNumber($("input[name=loan_amount]").val());
         var loan_tenure = $("input[name=loan_tenure]").val();
 
@@ -402,7 +393,7 @@ $(document).ready(function() {
         }
     });
 
-    
+
 
     $("#loan_amount, #min_sales_turnover").val(formatNumber($("#loan_amount, #min_sales_turnover").val(), ""));
 
@@ -414,7 +405,7 @@ $(document).ready(function() {
         return isEnterNumber(charCode);
     });
 
-    
+
 
     $("#loan_amount, #min_sales_turnover").on("keyup", function() {
         var val = $(this).val();
@@ -450,7 +441,7 @@ $(document).ready(function() {
             if (val > MAX_LOAN_TENURE*5-1) {
 
                 toastr.warning("No unsecured loans above 24 months");
-                
+
                 $(this).val(24);
             }
 
@@ -467,7 +458,7 @@ $(document).ready(function() {
             }
         })
     }
-  
+
 
     // Trigger
 
@@ -499,7 +490,7 @@ form.validate({
             required: true
         }
     },
-    
+
     highlight: function(element) {
         $(element).closest(".form-group").addClass("has-error");
     },
@@ -515,22 +506,22 @@ form.validate({
 
     submitHandler: function (form) {
         var form = $(form);
-        
+
         var inputs = form.find("input, select, button, textarea");
-        
+
         var serializedData = form.serialize();
-    
+
         inputs.prop("disabled", true);
-        
+
         request = $.ajax({
             url: form.attr("action"),
             type: "post",
             data: serializedData
         });
-        
+
         $("#question_form .form-group").removeClass("has-error");
         $("#question_form .help-block, #question_form .alert").remove();
-        
+
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
             if(result.error) {
@@ -543,11 +534,11 @@ form.validate({
                 }
             }
         });
-        
+
         request.fail(function (jqXHR, textStatus, errorThrown) {
             toastr.error("The following error occured: " + textStatus, errorThrown);
         });
-        
+
         request.always(function () {
             inputs.prop("disabled", false);
         });

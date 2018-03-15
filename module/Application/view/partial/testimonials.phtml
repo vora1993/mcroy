@@ -1,0 +1,25 @@
+<div id="testimonials">
+    <div class="container">
+        <h3>Words <b>From Our Customers</b></h3>
+        <h4>We love to hear</h4>
+        <div class="row">
+        <div class="box-content">
+              <?php
+                if(count($this->testimonials) > 0) {
+                    foreach ($this->testimonials as $testimonial) {
+                        ?>
+                        <div class="item col-xs-12">
+                          <div class="content-test">
+                            <p><?php echo $testimonial->getContent() ?></p>
+                              <div class="image-test" style="background: url('<?php echo $this->basePath('data/image/'.$testimonial->getUrl()) ?>') no-repeat center center;"></div>
+                              <span><b><?php echo $testimonial->getName() ?></b><i><?php echo $testimonial->getPosition() ?></i></span>
+                            </div>
+                    </div>
+                        <?php
+                    }
+                }
+                ?>
+        </div>
+        </div>
+  </div>
+</div>

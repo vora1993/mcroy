@@ -1,26 +1,4 @@
-<div id="testimonials" class="test-businesss">
-    <div class="container">
-        <h3 class="title-test">Satisfied customers agree!</h3>
-        <div class="row">
-            <div class="box-content">
-				<div class="item col-xs-12">
-					<div class="content-test">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                        <div class="image-test" style="background: url('<?php echo $this->basePath('assets/img/user-1.jpg') ?>') no-repeat center center;">							</div>
-						<span><b>Michael LH</b><i>ACB Officer</i></span>
-					</div>
-				</div>
-				<div class="item col-xs-12">
-					<div class="content-test">
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                        <div class="image-test" style="background: url('<?php echo $this->basePath('assets/img/user-2.jpg') ?>') no-repeat center center;"></div>
-						<span><b>Michael LH</b><i>ACB Officer</i></span>
-					</div>
-				</div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php echo $this->partial('testimonials', array('testimonials' => $testimonials)); ?>
 
 <div id="personal-loan">
     <div class="container">
