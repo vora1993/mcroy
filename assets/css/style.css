@@ -1126,9 +1126,9 @@ h5.sponsored {
 .benefit-title{
   text-align: center;
 }
-.benefit-title h3{
+.benefit-title p{
   font-size: 32px;
-  font-weight: 400;
+  font-weight: 600;
   padding: 10px 20px;
   color: #0f304b;
   display: inline;
@@ -2865,6 +2865,10 @@ h2.title-faq {
   width: 20px;
 }
 
+.benefit-content-container{
+  margin-bottom: 20px;
+}
+
 .benefit-item .benefit-content{
   padding-right: 0;
 }
@@ -2916,6 +2920,46 @@ h2.title-faq {
     display: flex !important;
 }
 @media (max-width: 991px) {
+    .approved-large-image{
+      display: none;
+    }
+
+    .row .method{
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .row .method .benefit-item{
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .benefit-title p{
+      font-size: 22px;
+    }
+
+    .benefit-item .benefit-content{
+      padding-right: 15px;
+    }
+
+    .benefit-icon{
+      padding-right: 0;
+      padding-left: 30px;
+    }
+
+    .benefit-item .benefit-content h4{
+      font-size: 15px;
+    }
+
+
+    .action-cart-container{
+      margin: 0 15px;
+    }
+
+    .action-cart {
+        padding: 0;
+    }
+
     .page-header .page-header-menu {
         padding-bottom: 20px;
     }
@@ -2931,8 +2975,17 @@ h2.title-faq {
   #lastest-news .news-content .col-xs-12 {
       display: flex;
   }
+
+  .benefit-icon{
+      padding-right: 30px;
+    }
+
 }
 @media (max-width: 767px){
+  .benefit-icon{
+      padding-right: 0;
+      padding-top: 5px;
+    }
     .rtcc-more-content-side, .rtcc-more-content_left, .rtcc-more-content_right{
         width: 100%;
     }

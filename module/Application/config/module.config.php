@@ -138,6 +138,7 @@ return array(
             'last_news'                => __DIR__ . '/../view/partial/last-news.phtml',
             'credit_card_sliders'   => __DIR__ . '/../view/partial/credit-card-sliders.phtml',
             'testimonials'                => __DIR__ . '/../view/partial/testimonials.phtml',
+            'action_cart_benefit'                => __DIR__ . '/../view/partial/action-cart-benefit.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
