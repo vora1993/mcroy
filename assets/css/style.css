@@ -1122,6 +1122,23 @@ h5.sponsored {
     color: #0f304b;
     display: inline;
 }
+
+.benefit-title{
+  text-align: center;
+}
+.benefit-title h3{
+  font-size: 32px;
+  font-weight: 400;
+  padding: 10px 20px;
+  color: #0f304b;
+  display: inline;
+}
+
+.action-cart-container{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
 .content-action {
     width: 100%;
     float: left;
@@ -2842,6 +2859,33 @@ h2.title-faq {
 .method .post-thumb {
     float: left
 }
+
+.post-thumb img{
+  height: 20px;
+  width: 20px;
+}
+
+.benefit-item .benefit-content{
+  padding-right: 0;
+}
+
+.benefit-item .benefit-content h4{
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.benefit-item .benefit-content p{
+  font-size: 17px;
+}
+
+.row .method {
+  margin-top: 50px;
+}
+
+.approved-img{
+  padding-top: 90px;
+}
+
 .method .post-thumb img {
     display: block
 }
