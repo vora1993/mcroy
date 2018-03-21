@@ -70,7 +70,7 @@ $this->headTitle($title);
 <?php
 $this->inlineScript()->offsetSetFile(99, 'https://www.google.com/recaptcha/api.js');
 $this->inlineScript()->offsetSetFile(100, 'http://maps.google.com/maps/api/js?key=AIzaSyCqSalLJqoF5OqFrm0Z3mMaEF2GtuoFa0k');
-$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/plugins/gmaps/gmaps.min.js')); 
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/plugins/gmaps/gmaps.min.js'));
 $this->inlineScript()->offsetSetFile(102, $this->basePath('assets/js/custom.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
@@ -120,11 +120,11 @@ form.validate({
             }
         }
     },
-    
-    invalidHandler: function(event, validator) { //display error alert on form submit              
+
+    invalidHandler: function(event, validator) { //display error alert on form submit
         App.scrollTo($(".has-error"), -15);
     },
-    
+
     errorPlacement: function(error, element) {
         if(element.attr("name") == "contact_name") {
             $('.contact_name').addClass("has-error");
@@ -142,54 +142,54 @@ form.validate({
             $('.contact_captcha').addClass("has-error");
         }
     },
-    
+
     submitHandler: function(form) {
         // form validation success, call ajax form submit
         // setup some local variables
         var form = $(form);
-                
+
         // let's select and cache all the fields
         var inputs = form.find("input, select, button, textarea");
-                
+
         // serialize the data in the form
         var serializedData = form.serialize();
-            
+
         // let's disable the inputs for the duration of the ajax request
         inputs.prop("disabled", true);
-                
+
         // fire off the request to /form.php
-        
+
         request = $.ajax({
             url: form.attr("action"),
             type: "post",
             data: serializedData
         });
-        
+
         // Clear Message
         $('.line-c').removeClass('has-error');
-                
+
         // callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
             var result = $.parseJSON(response);
             if(result.success) {
                 App.blockUI({boxed: true});
                 $('#success').html("Your message has been successfully sent. We will contact you very soon!");
-            } 
-            setTimeout(function(){ 
+            }
+            setTimeout(function(){
                 App.unblockUI();
                 $('.form-contact input, .form-contact textarea').val('');
             }, 1000);
-            setTimeout(function(){ 
+            setTimeout(function(){
                 $('#success').empty();
             }, 5000);
         });
-                
+
         // callback handler that will be called on failure
         request.fail(function (jqXHR, textStatus, errorThrown) {
             // log the error to the console
             console.log("The following error occured: " + textStatus, errorThrown);
         });
-                
+
         // callback handler that will be called regardless
         // if the request failed or succeeded
         request.always(function () {
