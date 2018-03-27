@@ -53,7 +53,7 @@ class HomeLoanController extends AbstractActionController
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 1));
                 }
                 if ($request->isPost()) {
-                    $post = $request->getPost();              
+                    $post = $request->getPost();
                     $existing_home_loans    = $post['existing_home_loans'];
                     $purchase_price         = $post['purchase_price'];
                     $loan_amount            = $post['loan_amount'];
@@ -101,7 +101,7 @@ class HomeLoanController extends AbstractActionController
                     return $this->redirect()->toRoute("home_loan", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
-                    $redirect='/user/auth';                 
+                    $redirect='/user/auth';
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => true, "redirect" => $redirect) ) );
                     return $response;
                 }
@@ -140,7 +140,7 @@ class HomeLoanController extends AbstractActionController
                         else $session->offsetSet('no_lock_in_only', 0);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "home_loan"));
+                        $redirect = $router->assemble(array("action" => "apply"), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     }
@@ -449,29 +449,185 @@ class HomeLoanController extends AbstractActionController
 
     public function applyAction() {
         $session = new Session('home_loan');
+
         $request = $this->getRequest();
-        if($request->isPost()) {
-            $translator = $this->getServiceLocator()->get('translator');
+
+        if ($session->offsetExists('select'))
+          {
+            $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_bank');
+            $loans = $application_model_property_loan_bank->fetchAll(array("id" => $session->offsetGet('select')));
+          }
+
+        $personal_loans = array();
+
+
+        foreach ($loans as $loan){
+          $loan_amount = (float) $session['loan_amount'];
+          $total_interest_for_years = (float) $session['total_interest_for_years'];
+          $total_interest_for_years = (float) $total_interest_for_years > 0 ? $total_interest_for_years : 2;
+          $int_rates = (float) $loan -> getIntYear2();
+          $r = ($int_rates / 100) / 12;
+          // var_dump($loan_amount);
+          // var_dump($total_interest_for_years);
+          // var_dump($int_rates);
+          // var_dump($r);
+          // exit;
+          $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+
+          $personal_loan = array(
+              'loan_id' => $loan-> getId(),
+              'title' => $loan -> getTitle(),
+              'type' => "business_loan",
+              'bank_id' => $loan -> getBankId(),
+              'int_year_2' => $loan -> getIntYear2(),
+              'lock_in_year' => $loan -> getLockInYear(),
+              'monthly_payment' => $monthly_payment
+          );
+          array_push($personal_loans, $personal_loan);
+        }
+
+        return array("loans" => $personal_loans);
+        // return array("apply" => $apply);
+    }
+
+
+    public function applyFormAction()
+    {
+        $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
+        $session = new Session('business_loan');
+        $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+        $application_view_helper_auth = $viewHelperManager->get('auth');
+        $application_view_helper_setting = $viewHelperManager->get('setting');
+        $user = $application_view_helper_auth();
+        $setting = $application_view_helper_setting();
+        $request = $this->getRequest();
+        if ($request->isPost())
+        {
             $post = $request->getPost();
             $success = false;
+            if ($session->offsetExists('loan'))
+            {
+                $loan = $session->offsetGet('loan');
+                $translator = $this->getServiceLocator()->get('translator');
+                $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
+                $personal_loan = new \Application\Entity\PersonalLoan;
+                $personal_loan->setUserId($post['user_id']);
+                $personal_loan->setLoanId($loan['loan_id']);
+                $personal_loan->setCategoryId($loan['category_id']);
+                $personal_loan->setType($post['type']);
+                $firstname = $post['firstname'];
+                $lastname = $post['lastname'];
+                $name = $firstname . ' ' . $lastname;
+                $personal_loan->setName($name);
+                $personal_loan->setEmail($post['email']);
+                $personal_loan->setPhone($post['phone']);
+                $personal_loan->setCompanyName($post['company_name']);
+                $personal_loan->setRemark($post['remark']);
+                $personal_loan->setIntRate($loan['int_rate']);
+                $personal_loan->setLoanAmount($loan['loan_amount']);
+                $personal_loan->setLoanTenure($loan['loan_tenure']);
+                $personal_loan->setMonthlyPayment($loan['monthly_payment']);
+                $personal_loan->setDateAdded(new Expression('NOW()'));
+                $personal_loan->setStatus($post['status']);
+                $added = $application_model_business_loan->insert($personal_loan);
+                if ($added)
+                {
+                    $success = true;
+                    $redirect = $router->assemble(array("action" => "success"), array('name' => 'personal_loan'));
 
-            $id = $post['id'];
-            if($id > 0) {
-                $session->offsetSet('apply', $id);
-                $success = true;
-                $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
-                $redirect = $router->assemble(array("action" => "property-loan", "seo" => $post['seo'], "step" => "step", "id" => 4), array('name' => "loan_application"));
+                    $id = $added->getGeneratedValue();
+                    $business_loan = $application_model_business_loan->fetchRow(array("id" => $id));
+                    if($business_loan) {
+                        // Send email
+                        $application_view_helper_send_email = $viewHelperManager->get('send_email');
+                        $subject = $translator->translate("You have a application form from business loan");
+                        $text = $translator->translate("Best regard");
+
+                        $html = '<table rules="all" style="border: 1px solid #f9f9f9;" cellpadding="8" cellspacing="8">';
+                        $html .= '<tr><th colspan="2" align="center"><strong>'.$translator->translate("Information").'</strong></th></tr>';
+                        if($name) $html .= '<tr><td><strong>'.$translator->translate("Name").'</strong></td><td>'.$name.'</td></tr>';
+                        if($post['email']) $html .= '<tr><td><strong>'.$translator->translate("Email").'</strong></td><td>'.$post['email'].'</td></tr>';
+                        if($post['phone']) $html .= '<tr><td><strong>'.$translator->translate("Phone").'</strong></td><td>'.$post['phone'].'</td></tr>';
+                        if($post['company_name']) $html .= '<tr><td><strong>'.$translator->translate("Company Name").'</strong></td><td>'.$post['company_name'].'</td></tr>';
+                        $html .= '<tr><th colspan="2" align="center"><strong>'.$translator->translate("Package").'</strong></th></tr>';
+                        if($post['type']) $html .= '<tr><td><strong>'.$translator->translate("Type").'</strong></td><td>'.$post['type'].'</td></tr>';
+                        if($loan['loan_id']) {
+                            $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
+                            $business_loan_package = $application_model_business_loan_package->fetchRow(array("id" => $loan['loan_id']));
+                            if($business_loan_package) {
+                                $html .= '<tr><td><strong>'.$translator->translate("Loan").'</strong></td><td>'.$business_loan_package->getLoanTitle().'</td></tr>';
+                            }
+                        }
+                        if($loan['int_rate']) $html .= '<tr><td><strong>'.$translator->translate("Interest Rate").'</strong></td><td>'.$loan['int_rate'].'%</td></tr>';
+                        if($loan['loan_amount']) $html .= '<tr><td><strong>'.$translator->translate("Loan Amount").'</strong></td><td>'.number_format($loan['loan_amount']).'$</td></tr>';
+                        if($loan['loan_tenure']) $html .= '<tr><td><strong>'.$translator->translate("Loan Tenure").'</strong></td><td>'.$loan['loan_tenure'].' years</td></tr>';
+                        if($loan['monthly_payment']) $html .= '<tr><td><strong>'.$translator->translate("Monthly Payment").'</strong></td><td>'.number_format($loan['monthly_payment']).'$ per month</td></tr>';
+                        $html .= '<tr><th colspan="2" align="center"><strong>'.$translator->translate("Status").'</strong></th></tr>';
+                        $html .= '<tr><td><strong>'.$translator->translate("Creation Date").'</strong></td><td>'.date("d-m-Y H:i A", strtotime($business_loan->getDateAdded())).'</td></tr>';
+
+                        $application_view_helper_status = $viewHelperManager->get('status');
+                        $html .= '<tr><td><strong>'.$translator->translate("Status").'</strong></td><td>'.$application_view_helper_status($business_loan).'</td></tr>';
+                        $html .= '</table>';
+
+                        $application_view_helper_send_email($subject, $html, $text);
+                    }
+
+                    // Referrals
+                    $user_id = $user ? $user->getId() : 0;
+                    if ($user_id > 0)
+                    {
+                        $application_model_user_ref = $this->getServiceLocator()->get('application_model_user_ref');
+                        $users_ref = $application_model_user_ref->fetchRow(array("user_id" => $user_id));
+                        if ($users_ref)
+                        {
+                            $ref = $users_ref->getRef();
+                            $application_model_user = $this->getServiceLocator()->get('application_model_user');
+                            $fuser = $application_model_user->fetchRow(array("ref" => $ref));
+                            if ($fuser)
+                            {
+                                $application = $added->getGeneratedValue();
+                                $referral = new \Application\Entity\Referral;
+                                $referral->setUserId($fuser->getId());
+                                $referral->setType('business_loan');
+                                $referral->setApplication($application);
+                                $referral->setCredit($setting->amt_business_loan);
+                                $referral->setDateAdded(new Expression('NOW()'));
+                                $referral->setStatus(0);
+                                $application_model_referral = $this->getServiceLocator()->get('application_model_referral');
+                                $application_model_referral->insert($referral);
+                            }
+                        }
+                    }
+
+                    // Unset session personal
+                    $session->offsetSet('success', 1);
+                    $session->offsetUnset('loan');
+                }
             } else {
-                $msg = $translator->translate("Please select at least 1 loan package so that we can email a copy of the package details to you");
+                $redirect = $router->assemble(array("action" => "apply"), array('name' => 'personal_loan'));
             }
-
             $response = $this->getResponse();
-            $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "msg" => $msg , "redirect" => $redirect) ) );
+            $response->setContent(\Zend\Json\Json::encode(array("success" => $success, "redirect" => $redirect)));
             return $response;
         }
-        if($session->offsetExists('apply')) $select = $session->offsetGet('apply');
-        return array("apply" => $apply);
+        $loan = $session->offsetGet('loan');
+        if ($this->getServiceLocator()->get('AuthService')->hasIdentity())
+        {
+            var_dump($session->offsetExists('loan'));
+                    exit;
+            $application_view_helper_auth = $viewHelperManager->get('auth');
+            $user = $application_view_helper_auth();
+            if ($session->offsetExists('loan'))
+            {
+                return array("loan" => $loan, "user" => $user);
+            }
+        } else {
+            $session_user = new Session('user');
+            $session_user->offsetSet('redirect', $router->assemble(array("action" => "apply-form"), array('name' => 'personal_loan')));
+            return $this->redirect()->toRoute("frontend_user", array("action" => "auth"));
+        }
     }
+
 
     public function applyXXXAction() { // May be compare
         $session = new Session('home_loan');

@@ -1,0 +1,87 @@
+<?php
+  $title = "Apply Property Loan";
+  $this->headTitle($title);
+  $property_loan = $this->loan;
+?>
+
+<div id="page-apply" class="page-title"><h1><?php echo $title ?></h1></div>
+<div id="content">
+  <div class="apply-cart">
+    <div class="container">
+      <div class="row">
+          <div class="content-cart">
+            <?php
+              $bank = $this->bank(array("id" => $property_loan['bank_id']));
+              $dir_logo = 'data/bank/'.$property_loan['bank_id'].'/m_'.$bank->getLogo();
+              if(!file_exists($dir_logo)) {
+                  $dir_logo = 'data/image/no-image-128.png';
+                }
+              $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+              $loan_amount = $property_loan['loan_amount'];
+              $int_rates = $property_loan['int_rates'];
+              $r = ($int_rates / 100) / 12;
+              $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+            ?>
+            <div class="filters-table-content">
+              <div class="row-header">
+                <h4 class="bank-title"><a href="#"><?php echo $property_loan['loan_title'] ?></a></h4>
+              </div>
+
+              <div class="row-content">
+                <div class="col-md-3 col-xs-12">
+                  <a href="#">
+                    <img src="<?php echo $this->basePath($dir_logo) ?>" alt="<?php echo $property_loan['title'] ?>">
+                  </a>
+                </div>
+                <div class="col-md-3 col-xs-4 box__rate">
+                  <span class="rate"><b><?php echo $int_rates ?>%</b><?php echo $this->translate("Interest Rate") ?></span>
+                </div>
+                <div class="col-md-3 col-xs-4 box__loan">
+                  <div class="lockin-period box__total_interest_payable">
+                    <span class="total_interest_payable" data-value="<?php echo number_format($total_interest_payable); ?>"><b>
+                      <?php
+                      $lock_in_year = (float) $property_loan['lock_in_year'];
+                      if($lock_in_year > 0) {
+                          echo $lock_in_year.' '.$this->translate("Year");
+                      } else {
+                          echo $this->translate("No Lock-in");
+                      }
+                      $total_interest_payable = $lock_in_year
+                      ?></b>
+                      <?php echo $this->translate("Lock-In Period") ?>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3 col-xs-4 box__month">
+                  <span class="month"><b>$<?php echo number_format($monthly_payment); ?></b><?php echo $this->translate("Per Month") ?></span>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <?php echo $this->partial('action_cart_benefit', array('loan' => $property_loan, 'controller' => 'loan_application')); ?>
+
+  </div>
+  </div>
+</div>
+
+<?php
+
+$offStyle = 12;
+
+$offScript = 10;
+
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+
+JS;
+
+$this->inlineScript()->captureEnd();
+
+?>

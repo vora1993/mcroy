@@ -1824,6 +1824,10 @@ td {
     padding-bottom: 5px;
 }
 
+h4 .bank-title{
+  text-transform: uppercase;
+}
+
 .icon-cat.medium {
     width: 36px;
     height: 36px;

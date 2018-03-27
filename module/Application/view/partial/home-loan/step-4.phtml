@@ -106,8 +106,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
               --><li>
                   <aside class="head-title">
                       <div class="name"><?php echo $this->translate("Monthly Repayment") ?><span></span></div>
-                      <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_repayment ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                      <div class="sort" data-field="monthly_repayment"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                      <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_payment ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                      <div class="sort" data-field="monthly_payment"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                   </aside>
                   </li><!--
               --><li>
@@ -165,14 +165,14 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                         </div>
                         <div class="col-md-3">
                           <div class="box__interest">
-                            <span class="interest"><b><?php echo $int_rates ?>%</b>
+                            <span class="interest" data-value="<?php echo $int_rates ?>"><b><?php echo $int_rates ?>%</b>
                             <?php echo $this->translate("Avg Interest Rate") ?>
                             <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div></span>
                           </div>
                         </div>
                         <div class="col-md-3">
-                          <div class="box__interest">
-                            <span class="interest">
+                          <div class="box__monthly_payment">
+                            <span class="monthly_payment" data-value="<?php echo number_format($monthly_payment); ?>">
                               <b>$<?php echo number_format($monthly_payment); ?></b>
                               <?php echo $this->translate("Monthly Instalments") ?>
                               <div class="sub-info"><?php echo $total_interest_for_years ?><?php echo $this->translate(" Year Average") ?></div>
@@ -180,8 +180,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                           </div>
                         </div>
                         <div class="col-md-2">
-                            <div class="lockin-period box__interest">
-                              <span class="interest"><b>
+                            <div class="lockin-period box__total_interest_payable">
+                              <span class="total_interest_payable" data-value="<?php echo number_format($total_interest_payable); ?>"><b>
                                 <?php
                                 $lock_in_year = $loan->getLockInYear();
                                 if($lock_in_year > 0) {
@@ -189,13 +189,14 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                 } else {
                                     echo $this->translate("No Lock-in");
                                 }
+                                $total_interest_payable = $lock_in_year
                                 ?></b>
                                 <?php echo $this->translate("Lock-In Period") ?></span>
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <div class="rate-type box__interest">
-                              <span class="interest"><b>
+                            <div class="rate-type box__type">
+                              <span class="type" data-value="<?php echo $type ?>"><b>
                                 <?php
                                 switch ($loan->getFloatingType()) {
                                     case 'SIBOR':
