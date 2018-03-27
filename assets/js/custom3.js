@@ -305,6 +305,41 @@ var Loan = {
             toastr.error("Sorry you haven't selected right");
         }
     },
+    'property_loan_apply' : function(button) {
+        var loan_amount = $("input[name=loan_amount]").val();
+        var loan_tenure = $("input[name=loan_tenure]").val();
+        var seo         = $("input[name=seo]").val();
+        var id          = button;
+        var total_interest_for_years = $("select[name=total_interest_for_years]").val();
+        console.log(loan_amount, id);
+
+        if( loan_amount > 0 && loan_tenure > 0) {
+            var data = 'seo='+seo+'&loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&id='+id;
+            console.log('hiep ga');
+            $.ajax({
+                url: full_url + '/loan-application/apply',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function(xhr, settings) {
+                    App.blockUI({boxed: true});
+                },
+                success: function(json) {
+                  if (json['success']) {
+                    window.location.href = json['redirect'];
+                  } else {
+                    toastr.warning(json['msg']);
+                  }
+                    App.unblockUI();
+                },
+                error : function(xhr, ajaxOptions, thrownError){
+                    toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                },
+            });
+        } else {
+            toastr.error("Sorry you haven't selected right");
+        }
+    },
     'select' : function(button) {
         var id = $(button).data("id");
         if(id > 0) {
