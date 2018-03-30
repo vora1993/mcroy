@@ -384,13 +384,10 @@ class LoanApplicationController extends AbstractActionController
                         $session->offsetSet('corporate_entity', $corporate_entity);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 2), array('name' => "loan_application"));
+                        return $this->redirect()->toRoute("loan_application", array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 2));
                     } else {
-                        $redirect = $router->assemble(array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 1), array('name' => "loan_application"));
+                        return $this->redirect()->toRoute("loan_application", array("action" => "property-loan", "seo" => $seo, "step" => "step", "id" => 1));
                     }
-
-                    $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
-                    return $response;
                 }
             break;
 
@@ -886,6 +883,192 @@ class LoanApplicationController extends AbstractActionController
         $interest_rate = $application_model_bank_interest_rate->fetchAllSort(array("status" => 1,"display"=>$seo));
         $view_model = new ViewModel(array("category" => $category, "faq" => $faq,"interest_rate"=>$interest_rate,"current_category"=>$category,"seo"=>$seo));
         return $view_model;
+    }
+
+    public function successAction()
+    {
+        $session_user = new Session('user');
+        $session_user->offsetUnset('redirect');
+        $session = new Session('property_loan');
+        $success = $session->offsetExists('success');
+        if (empty($success)) return $this->redirect()->toRoute("loan_application", array("action" => "index"));
+    }
+
+
+    public function applyAction() {
+      $session = new Session('property_loan');
+      $request = $this->getRequest();
+      $property_loan = array();
+
+      if ($request->isPost()){
+        $post = $request->getPost();
+        $id = $post['id'];
+        $loan_amount = $post['loan_amount'];
+        $loan_tenure = $post['loan_tenure'];
+        $loan_percent             = $post['loan_percent'];
+        $no_lock_in_only          = $post['no_lock_in_only'];
+        $application_model_property_loan_bank = $this->getServiceLocator()->get('application_model_property_loan_package');
+        $loan = $application_model_property_loan_bank->fetchRow(array("id" => $id));
+        $property_loan = array(
+              'loan_id' => $loan-> getId(),
+              'loan_title' => $loan -> getTitle(),
+              'type' => "property_loan",
+              'bank_id' => $loan -> getBankId(),
+              'int_rates' => $loan -> getIntYear2(),
+              'lock_in_year' => $loan -> getLockInYear(),
+              'loan_amount' => $loan_amount
+
+          );
+        $session->offsetSet('loan', $property_loan);
+        $redirect = "/loan-application/apply";
+        $response = $this->getResponse();
+        $response->setContent(\Zend\Json\Json::encode(array("success"=> true, "redirect" => $redirect)));
+        return $response;
+      }
+
+      if ($session->offsetExists('loan'))
+      {
+        $loan = $session->offsetGet('loan');
+        return array("loan" => $loan);
+      }
+      return array("loan" => $property_loan);
+    }
+
+    public function applyFormAction(){
+      $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
+      $session = new Session('property_loan');
+      $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+      $application_view_helper_auth = $viewHelperManager->get('auth');
+      $application_view_helper_setting = $viewHelperManager->get('setting');
+      $user = $application_view_helper_auth();
+      $user_id = $user ? $user->getId() : 0;
+      $setting = $application_view_helper_setting();
+      $seo = $this->params()->fromRoute('seo');
+      $application_model_category = $this->getServiceLocator()->get('application_model_category');
+      $category = $application_model_category->fetchRow(array("type" => "property_loan"));
+      $request = $this->getRequest();
+      if ($request->isPost())
+      {
+        $post = $request->getPost();
+        $message = "";
+        $phone = $post['phone'];
+        if($phone) $message .= "<p>From phone: $phone</p>";
+        $company = $post['company'];
+        if($company) $message .= "<p>From phone: $company</p>";
+        $message .= '<p>'.$post['message'].'</p>';
+
+        // Send email
+        $application_view_helper_send_email = $viewHelperManager->get('send_email');
+
+        if($session->offsetExists('loan_amount')) {
+          $loan_amount = $session->offsetGet('loan_amount');
+        }
+
+        if($session->offsetExists('loan_tenure')) {
+          $loan_tenure = $session->offsetGet('loan_tenure');
+        }
+
+        if($session->offsetExists('loan_percent')) {
+          $loan_percent = $session->offsetGet('loan_percent');
+        } else{
+          $loan_percent = 80;
+        }
+
+        $success = false;
+
+        if ($session->offsetExists('loan'))
+        {
+          $loan = $session->offsetGet('loan');
+          $translator = $this->getServiceLocator()->get('translator');
+          $application_model_property_loan = $this->getServiceLocator()->get('application_model_property_loan');
+          $property_loan = new \Application\Entity\PropertyLoan;
+          $property_loan->setUserId($user_id);
+          $property_loan->setType('property_loan');
+          $property_loan->setCategoryId($category->getId());
+          $property_loan->setPropertyType($session->offsetGet('property_type'));
+          $property_loan->setProjectName($session->offsetGet('project_name'));
+          $property_loan->setPropertyStatus($session->offsetGet('property_status'));
+          $property_loan->setOptionFee($session->offsetGet('option_fee'));
+          $property_loan->setOfferOpts($session->offsetGet('offer_opts'));
+          $property_loan->setExisting($session->offsetGet('existing_home_loans'));
+          $property_loan->setExisting($session->offsetGet('existing_home_loans'));
+          $property_loan->setLoanAmount($session->offsetGet('loan_amount'));
+          $property_loan->setLoanTenure($session->offsetGet('loan_tenure'));
+          $property_loan->setLoanPercent($loan_percent);
+          $property_loan->setFixedRates($session->offsetGet('preferred_rate_package'));
+          $property_loan->setRemark($message);
+          $property_loan->setDateAdded(new Expression('NOW()'));
+          $property_loan->setStatus(1);
+          $added = $application_model_property_loan->insert($property_loan);
+
+          if ($added)
+          {
+            $id = $added->getGeneratedValue();
+            $property_loan = $application_model_property_loan->fetchRow(array("id" => $id));
+
+            // Send email to Admin
+            $html = '<p>Dear Admin,</p>';
+            $html .= '<p>You have one loan application ('.$category->getName().')</p>';
+            $html .= '<p>Please check your admin for more information.</p>';
+            $html .= '<p>'.$message.'</p>';
+            $application_view_helper_send_email("You have a ".$category->getName()." application form", $html, 'Best regard');
+
+            // Referrals
+            $user_id = $user ? $user->getId() : 0;
+            if ($user_id > 0)
+            {
+              $application_model_user_ref = $this->getServiceLocator()->get('application_model_user_ref');
+              $users_ref = $application_model_user_ref->fetchRow(array("user_id" => $user_id));
+              if ($users_ref)
+              {
+                $ref = $users_ref->getRef();
+                $application_model_user = $this->getServiceLocator()->get('application_model_user');
+                $fuser = $application_model_user->fetchRow(array("ref" => $ref));
+                if ($fuser)
+                {
+                  $application = $added->getGeneratedValue();
+                  $referral = new \Application\Entity\Referral;
+                  $referral->setUserId($fuser->getId());
+                  $referral->setType('property_loan');
+                  $referral->setApplication($application);
+                  $referral->setCredit($setting->amt_business_loan);
+                  $referral->setDateAdded(new Expression('NOW()'));
+                  $referral->setStatus(0);
+                  $application_model_referral = $this->getServiceLocator()->get('application_model_referral');
+                  $application_model_referral->insert($referral);
+                }
+              }
+            }
+
+            // Unset session property
+            $session->offsetSet('success', 1);
+            $session->offsetUnset('property_loan');
+
+            $success = true;
+            $redirect = $router->assemble(array("action" => "success"), array('name' => "loan_application"));
+          }
+        } else {
+          $redirect = $router->assemble(array("action" => "apply"), array('name' => 'loan_application'));
+        }
+        $response = $this->getResponse();
+        $response->setContent(\Zend\Json\Json::encode(array("success" => $success, "redirect" => $redirect)));
+        return $response;
+      }
+
+      if ($this->getServiceLocator()->get('AuthService')->hasIdentity())
+      {
+        $application_view_helper_auth = $viewHelperManager->get('auth');
+        $user = $application_view_helper_auth();
+        if ($session->offsetExists('loan'))
+        {
+            $loan = $session->offsetGet('loan');
+            return array("loan" => $loan, "user" => $user);
+        }
+      } else {
+        $session_user = new Session('user');
+        $session_user->offsetSet('redirect', $router->assemble(array("action" => "apply-form"), array('name' => 'loan_application')));
+        return $this->redirect()->toRoute("frontend_user", array("action" => "auth"));
+      }
     }
 
     // public function bankAccountFilterAction()

@@ -90,76 +90,7 @@ $personal_loan = $this->loan;
 
   </div>
 
-  <?php echo $this->partial('action_cart_benefit', array('loan' => $loan)); ?>
-
-  <!-- <div class="action-cart">
-    <div class="action-cart-container">
-      <div class="row">
-        <div class="col-md-4 col-xs-12">
-          <img class="approved-img" src="<?php echo $this->basePath() ?>/assets/img/icon-apply-9.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
-        </div>
-        <div class="col-md-8 col-xs-12">
-          <div class="row">
-            <div class="col-md-12 benefit-title">
-              <h3><?php echo $this->translate('Benefits of  applying through MoneyCompare.sg'); ?></h3>
-            </div>
-          </div>
-
-          <div class="row content-action">
-            <div class="row method">
-              <div class="col-md-6 col-xs-12 benefit-item">
-                <div class="col-md-4 col-xs-12">
-                  <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-5.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
-                </div>
-                <div class="col-md-8 col-xs-12 benefit-content">
-                  <h4>HIGHER APPROVAL RATE</h4>
-                  <p>As a team of ex bankers, we are very familiar with credit criteria of individual banks with a solid track record of >60% approval rate.</p>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-xs-12 benefit-item">
-                <div class="col-md-4 col-xs-12">
-                  <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-6.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
-                </div>
-                <div class="col-md-8 col-xs-12 benefit-content">
-                  <h4>HASSLE FREE APPROACH</h4>
-                  <p>Leave the application process to our specialists while you focus your resources on your core business.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="row method">
-              <div class="col-md-6 col-xs-12 benefit-item">
-                <div class="col-md-4 col-xs-12">
-                  <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-7.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
-                </div>
-                <div class="col-md-8 col-xs-12 benefit-content">
-                  <h4>FASTER TURNARAOUND TIME</h4>
-                  <p>Tired of waiting for unresponsive bankers revert? Your application is our priority, reduce processing time by 3-5 working days through us!</p>
-                </div>
-              </div>
-
-              <div class="col-md-6 col-xs-12 benefit-item">
-                <div class="col-md-4 col-xs-12 ">
-                  <img src="<?php echo $this->basePath() ?>/assets/img/icon-apply-8.png" title="<?php echo $loan->getLoanTitle(); ?>" alt="<?php echo $loan->getLoanTitle(); ?>" />
-                </div>
-                <div class="col-md-8 col-xs-12 benefit-content">
-                  <h4>RISK FREE PROCESS</h4>
-                  <p>No upftont fees, no fees applicable if we’re not enable to secure financing for your company. Performance guarantee, pay only for results!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  	  </div>
-      <div class="row">
-        <div class="button-action">
-  		    <a href="<?php echo $this->url("personal_loan", array("action" => "apply-form")) ?>" class="btn blue btn-lg"><?php echo $this->translate("Apply") ?></a>
-  		  </div>
-      </div>
-
-    </div>
-  </div> -->
+  <?php echo $this->partial('action_cart_benefit', array('loan' => $loan, 'controller' => 'personal_loan')); ?>
 
 		  <?php if($loan->getUrl()): ?>
         <div class="text-center"><a href="<?php echo $loan->getUrl(); ?>"><?php echo $this->translate("No thanks, I can apply by myself") ?></a></div>
