@@ -497,6 +497,11 @@
                             <span class="title"><?php echo $this->translate("Income Factor - Addon") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'view-support-info') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'view-support-info')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Support Info") ?></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item <?php if($this->view === 'user') echo 'active open'?>">

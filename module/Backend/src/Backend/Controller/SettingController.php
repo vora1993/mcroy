@@ -1053,4 +1053,69 @@ class SettingController extends AbstractActionController
     }
     return new JsonModel($result);
   }
+
+  public function viewSupportInfoAction() {
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $settings = $application_model_setting->fetchAll();
+    return array('settings' => $settings);
+  }
+
+  public function editSupportInfoAction() {
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $settings = $application_model_setting->fetchAll();
+    if($settings) {
+      $translator = $this->getServiceLocator()->get('translator');
+      $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+      $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
+      $application_view_helper_folder = $viewHelperManager->get('folder');
+
+      $request = $this->getRequest();
+      $response = $this->getResponse();
+      $messages = array();
+      if ($request->isPost()) {
+        $post = $request->getPost();
+        $error = 0;
+        $now = new Expression('NOW()');
+        $supporter_array_key = array('supporter_name', 'supporter_email', 'supporter_phone', 'supporter_image');
+        foreach ($settings as $setting) {
+          if(in_array($setting->getKey(), $supporter_array_key)) {
+            $setting->setId($setting->getId());
+            $setting->setValue($post[$setting->getKey()]);
+            $setting->setDateModified($now);
+            $edited = $application_model_setting->update($setting);
+            if(!$edited) $error = $error + 1;
+          }
+        }
+
+        // Logo
+        $dir_setting = 'data/user';
+        if($post['supporter_image']) {
+          $dir_image = $dir_setting;
+          if (!file_exists($dir_image)) mkdir($dir_image, 0777, true);
+
+          $dir_tmp = $dir_setting.'/tmp/'.$post['supporter_image'];
+          $dir_new = $dir_image.'/'.$post['supporter_image'];
+          if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
+
+          $application_view_helper_resizeimage($dir_image, $post['supporter_image']);
+          $application_view_helper_folder("delete", $dir_setting.'/tmp');
+        }
+
+        if(!$error) {
+          $messages['success'] = true;
+          $messages['msg']     = $translator->translate("Successfully updated");
+        } else {
+          $messages['success'] = false;
+          $messages['msg']     = $translator->translate("Something error. Please check");
+        }
+
+        $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+        return $response;
+      }
+
+      return array('settings' => $settings);
+    } else {
+      return $this->redirect()->toRoute("setting");
+    }
+  }
 }
