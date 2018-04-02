@@ -780,7 +780,7 @@ class SettingController extends AbstractActionController
         $error = 0;
 
         $now = new Expression('NOW()');
-        $array_key = array('facebook_app_id', 'facebook_app_secret', 'facebook_link', 'twitter_link', 'linkedin_link', 'google_plus_link');
+        $array_key = array('facebook_app_id', 'facebook_app_secret', 'facebook_link', 'twitter_link', 'linkedin_link', 'google_plus_link', 'instagram_link');
         foreach ($settings as $setting) {
           if(in_array($setting->getKey(), $array_key)) {
             $setting->setId($setting->getId());
