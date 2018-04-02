@@ -467,11 +467,7 @@ class HomeLoanController extends AbstractActionController
           $total_interest_for_years = (float) $total_interest_for_years > 0 ? $total_interest_for_years : 2;
           $int_rates = (float) $loan -> getIntYear2();
           $r = ($int_rates / 100) / 12;
-          // var_dump($loan_amount);
-          // var_dump($total_interest_for_years);
-          // var_dump($int_rates);
-          // var_dump($r);
-          // exit;
+
           $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
 
           $personal_loan = array(

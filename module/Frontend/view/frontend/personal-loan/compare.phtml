@@ -58,6 +58,7 @@ $loan_tenure = $personal['loan_tenure'];
                                                 $condition = $value->condition;
                                                 $percentage = $value->percentage;
                                                 $condition = str_replace('{m}', $loan_amount, $condition);
+                                                $condition = str_replace(',','', $condition);
                                                 $str = '$result = (bool)(' . $condition . ');';
                                                 eval($str);
                                                 if ($result)
@@ -73,7 +74,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     // Where: r = decimal rate / 12.
                                     $r = ($int_rates / 100) / 12;
                                     $monthly_payment = ($r + $r / (pow(1 + $r, ($loan_tenure * 12)) -1 ) ) * $loan_amount;
-                                            
+
                                     $total_amount_payable = $monthly_payment * $loan_tenure * 12;
                                     $total_interest_payable = $total_amount_payable - $loan_amount;
                                     $personal_loan[] = array(
@@ -132,7 +133,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['int_rate'] ?>%</div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -151,7 +152,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['max_tenor'] ?> years</div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -170,7 +171,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item">$<?php echo number_format($row['max_loan_amount']) ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -189,7 +190,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['processing_fee'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -208,7 +209,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['annual_fee'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -227,7 +228,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['penalty_fee'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -246,7 +247,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['lock_in_period'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -265,7 +266,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['min_sales_turnover'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -284,7 +285,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['min_years_of_incorporation'] ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -312,7 +313,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item">$<?php echo number_format($loan_amount) ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -331,7 +332,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item">$<?php echo number_format($row['monthly_payment']) ?> years</div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -350,7 +351,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $row['int_rate'] ?>%</div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -369,7 +370,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item"><?php echo $loan_tenure ?> years</div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -388,7 +389,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item">$<?php echo number_format($row['total_amount_payable']) ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -407,7 +408,7 @@ $loan_tenure = $personal['loan_tenure'];
                                     foreach ($personal_loan as $row) {
                                         ?>
                                         <div class="col-md-3 card-item">$<?php echo number_format($row['total_interest_payable']) ?></div>
-                                        <?php        
+                                        <?php
                                     }
                                 }
                                 if($remain > 0){
@@ -425,7 +426,7 @@ $loan_tenure = $personal['loan_tenure'];
             </div>
         </div>
     </div>
-    <section class="compare-shortlist" style="overflow: hidden; display: none;"> 
+    <section class="compare-shortlist" style="overflow: hidden; display: none;">
         <div class="container">
             <div class="clearfix">
                 <div class="col-xs-3">
@@ -441,7 +442,7 @@ $loan_tenure = $personal['loan_tenure'];
                             <button type="button" onclick="Loan.apply(this)" data-id="<?php echo $row['loan_id']; ?>" class="btn yellow-gold btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply") ?>"><?php echo $this->translate("Apply Now") ?></button>
                             <a href="javascript:;" onclick="Loan.clear_compare(this)" data-id="<?php echo $row['loan_id']; ?>" data-page="compare"><i class="fa fa-times"></i></a>
                         </div>
-                    <?php        
+                    <?php
                     }
                 }
                 if($remain > 0){
@@ -451,7 +452,7 @@ $loan_tenure = $personal['loan_tenure'];
                     <?php
                     }
                 }
-                ?>    
+                ?>
             </div>
         </div>
     </section>

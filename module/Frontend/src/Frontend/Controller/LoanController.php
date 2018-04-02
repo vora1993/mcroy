@@ -36,10 +36,10 @@ class LoanController extends AbstractActionController
                 $html .= '<div class="col-md-4"><span class="head-title-penalty" data-field="penalty"><a href="javascript:;" onclick="Loan.sort(this)">' . $translator->translate("Penalty Fee") .'</a></span></div>';
                 $html .= '</div></div>';
                 $html .= '</div>';
-                
+
                 $loan_amount = $post['loan_amount'] ? (int) $post['loan_amount'] : 0;
                 $loan_tenure = $post['loan_tenure'] ? (int) $post['loan_tenure'] : 0;
-                
+
                 $int_rates = '';
                 $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
                 $html .= '<div class="filters-table-body">';
@@ -74,6 +74,7 @@ class LoanController extends AbstractActionController
                             $percentage = $value->percentage;
                             $condition = str_replace('{m}', $loan_amount, $condition);
                             $str = '$result = (bool)(' . $condition . ');';
+                            $condition = str_replace(',','', $condition);
                             eval($str);
                             if ($result)
                             {
@@ -101,7 +102,7 @@ class LoanController extends AbstractActionController
                             }
                         }
                     }
-                    
+
                     // Applicable
                     $get_max_loan_amt = $loan->getMaxLoanAmt() ? $loan->getMaxLoanAmt() : 0;
                     $get_max_tenure = $loan->getMaxTenure() ? $loan->getMaxTenure() : 0;
@@ -117,7 +118,7 @@ class LoanController extends AbstractActionController
                         $dir_c = 'assets/img/checked-no.png';
                         $checked = "no";
                     }
-                    
+
                     $html .= '<div class="col-md-5"><div class="row">';
                     $html .= '<div class="col-xs-4 box__rate"><span class="rate" data-value="' . $int_rates .'"><b>' . $int_rates . '%</b>' . $translator->translate("Interest Rate") .'</span></div>';
                     $html .= '<div class="col-xs-4 box__requirement"><span class="requirement" data-value="' .$checked . '"><img src="' . $basePath($dir_c) . '" /><br/>' . $translator->translate("Min requirement") . '</span></div>';
@@ -147,7 +148,7 @@ class LoanController extends AbstractActionController
                                 <div class="col-md-8 line-top">' . number_format($loan_amount) . '</div>
                             </div>
                         </div>';
-                    
+
                     $html .= '<div class="row">
                         <div class="col-md-4">
                             <div class="col-md-4 line-top"><strong>' . $translator->translate("Max Tenure") .'</strong></div>
@@ -161,7 +162,7 @@ class LoanController extends AbstractActionController
                             <div class="col-md-8 line-top">$' . number_format($monthly_payment, 2) . '</div>
                             </div>
                         </div>';
-                        
+
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-4 line-top"><strong>' . $translator->translate("Max Loan Amount") .'</strong></div>
@@ -176,7 +177,7 @@ class LoanController extends AbstractActionController
                         <div class="col-md-8 line-top">' . $int_rates . '%</div>
                         </div>
                         </div>';
-                        
+
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-4 line-top"><strong>' . $translator->translate("Annual Fee") .'</strong></div>
@@ -191,7 +192,7 @@ class LoanController extends AbstractActionController
                         <div class="col-md-8 line-top">' . $loan_tenure . ' years</div>
                         </div>
                         </div>';
-                        
+
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-4 line-top"><strong>' . $translator->translate("Lock In Period") .'</strong></div>
@@ -203,7 +204,7 @@ class LoanController extends AbstractActionController
                         <div class="col-md-8 line-top">$' . number_format($total_amount_payable, 2) .'</div>
                         </div>
                         </div>';
-                    
+
                     $html .= '<div class="row">
                         <div class="col-md-4">
                         <div class="col-md-4 line-top"><strong>' . $translator->translate("Restructuring Of Loan Tenor") .'</strong></div>
@@ -215,7 +216,7 @@ class LoanController extends AbstractActionController
                         <div class="col-md-8 line-top">$' . number_format($total_interest_payable, 2) .'</div>
                         </div>
                         </div>';
-                    /*    
+                    /*
                     $html .= '<div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-4"></div>
@@ -224,7 +225,7 @@ class LoanController extends AbstractActionController
                         <div class="col-md-8 line-top">$' . number_format($total_interest_payable, 2) .'</div>
                         </div>
                         </div>';*/
-                        
+
                     $html .= '</div>';
                     $html .= '<div class="col-md-12 more-detail">
                         <div class="col-sm-5 col-xs-6 button-gr"><i class="fa fa-share-square-o"></i> Share</div>
@@ -246,6 +247,6 @@ class LoanController extends AbstractActionController
             return $response;
         }
     }
-    
-    
+
+
 }

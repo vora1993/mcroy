@@ -74,6 +74,7 @@ class PersonalLoanController extends AbstractActionController
                             $condition = $value->condition;
                             $percentage = $value->percentage;
                             $condition = str_replace('{m}', $loan_amount, $condition);
+                            $condition = str_replace(',','', $condition);
                             $str = '$result = (bool)(' . $condition . ');';
                             eval($str);
                             if ($result)
