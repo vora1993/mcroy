@@ -15,7 +15,7 @@ class BusinessLoanController extends AbstractActionController
         $loans = $application_model_business_loan_package->fetchAll(array("status" => array(0,1,2,3)));
         return array("loans" => $loans);
     }
-    
+
     public function addAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -66,7 +66,7 @@ class BusinessLoanController extends AbstractActionController
             $loan->setMinAge($post['min_age']);
             $loan->setBankruptcy($post['bankruptcy']);
             $loan->setStatus($post['status']);
-            
+
             // Calculate
             $interest_rate = $post['interest-rate'];
             if(count($interest_rate) > 0) {
@@ -89,7 +89,7 @@ class BusinessLoanController extends AbstractActionController
                 }
                 $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
             }
-            
+
             $added = $application_model_business_loan_package->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -103,14 +103,14 @@ class BusinessLoanController extends AbstractActionController
             return $response;
         }
     }
-    
+
     public function editAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_business_loan_package = $this->getServiceLocator()->get('application_model_business_loan_package');
         $loan = $application_model_business_loan_package->fetchRow(array('id' => $id));
         if($loan) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -161,7 +161,7 @@ class BusinessLoanController extends AbstractActionController
                     $loan->setBankruptcy($post['bankruptcy']);
                     $loan->setDateModified(new Expression('NOW()'));
                     $loan->setStatus($post['status']);
-                    
+
                     // Calculate
                     if($post['interest-rate'])
                     {
@@ -184,7 +184,7 @@ class BusinessLoanController extends AbstractActionController
                                     'percentage' => $percentage
                                 );
                             }
-                            
+
                             $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                         }
                     }else
@@ -196,8 +196,8 @@ class BusinessLoanController extends AbstractActionController
                         );
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
-                    
-                    
+
+
                     $edited = $application_model_business_loan_package->update($loan);
                     if($edited) {
                         $messages['success'] = true;
@@ -210,19 +210,24 @@ class BusinessLoanController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('loan' => $loan);
         } else {
-            return $this->redirect()->toRoute("admin/view-business-loan"); 
+            return $this->redirect()->toRoute("admin/view-business-loan");
         }
     }
-    
+
+    public function eligibilityCalculatorAction() {
+        $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
+        $business_loan_eligibility = $model_business_loan_eligibility->fetchRow(array('token' => $params['_token']));
+    }
+
     public function faqAction() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array('type' => 'business_loan'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -246,7 +251,7 @@ class BusinessLoanController extends AbstractActionController
                         $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
                         $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
                     }
-                    
+
                     $edited = $application_model_faq->update($faq);
                     if($edited) {
                         $messages['success'] = true;
@@ -259,17 +264,17 @@ class BusinessLoanController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('faq' => $faq);
-        } 
+        }
     }
-    
+
     public function faq6Action() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array('type' => 'government_assisted_loan'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -293,7 +298,7 @@ class BusinessLoanController extends AbstractActionController
                         $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
                         $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
                     }
-                    
+
                     $edited = $application_model_faq->update($faq);
                     if($edited) {
                         $messages['success'] = true;
@@ -306,9 +311,9 @@ class BusinessLoanController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('faq' => $faq);
-        } 
+        }
     }
 
     public function faqAlternativeFundingAction() {
@@ -316,7 +321,7 @@ class BusinessLoanController extends AbstractActionController
         $faq = $application_model_faq->fetchRow(array('type' => 'faq_alternative_funding'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
-            
+
             $request = $this->getRequest();
             $response = $this->getResponse();
             $messages = array();
@@ -352,11 +357,11 @@ class BusinessLoanController extends AbstractActionController
                 $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
                 return $response;
             }
-            
+
             return array('faq' => $faq);
-        } 
+        }
     }
-    
+
     public function statusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -367,11 +372,11 @@ class BusinessLoanController extends AbstractActionController
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -408,11 +413,11 @@ class BusinessLoanController extends AbstractActionController
                 case 'active':
                     $status = 1;
                 break;
-                
+
                 case 'trash':
                     $status = 4;
                 break;
-                
+
                 case 'deactive':
                     $status = 0;
                 break;
@@ -438,40 +443,40 @@ class BusinessLoanController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     public function businessTermLoanAction() {
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
         $loans = $application_model_business_loan->fetchAll(array("type" => "business_term_loan"));
         return array("loans" => $loans);
     }
-    
+
     public function individualAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
-        $loan = $application_model_business_loan->fetchRow(array('id' => $id)); 
+        $loan = $application_model_business_loan->fetchRow(array('id' => $id));
         return array('loan' => $loan);
     }
-    
+
     public function setStatusAction() {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_business_loan = $this->getServiceLocator()->get('application_model_business_loan');
-            
+
             $action = $this->params()->fromPost('action');
             switch ($action) {
                 case 'approved':
                     $status = 1;
                 break;
-                
+
                 case 'cancelled':
                     $status = 2;
                 break;
-                
+
                 case 'rejected':
                     $status = 3;
                 break;
-                
+
                 case 'pending':
                     $status = 0;
                 break;
@@ -479,12 +484,12 @@ class BusinessLoanController extends AbstractActionController
             $id = $this->params()->fromPost('id');
             $credit = $this->params()->fromPost('credit');
             $result = array();
-                
+
             $business_loan = $application_model_business_loan->fetchRow(array('id' => $id));
             $business_loan->setId($id);
             $business_loan->setStatus($status);
             $business_loan->setDateModified(new Expression('NOW()'));
-                
+
             $updated = $application_model_business_loan->update($business_loan);
             if($updated) {
                 if($action === 'approved') {
@@ -507,7 +512,7 @@ class BusinessLoanController extends AbstractActionController
         }
         return new JsonModel($result);
     }
-    
+
     /**
      * Category
      */
@@ -519,15 +524,15 @@ class BusinessLoanController extends AbstractActionController
             $translator  = $this->getServiceLocator()->get('translator');
             $source      = $this->params()->fromPost('source');
             $destination = $this->params()->fromPost('destination', 0);
-            
+
             $category = $application_model_category->fetchRow(array('id' => $source));
             $category->setId($source);
             $category->setParentId($destination);
             $application_model_category->update($category);
-            
+
             $ordering       = \Zend\Json\Json::decode($this->params()->fromPost('order'));
 	        $rootOrdering   = \Zend\Json\Json::decode($this->params()->fromPost('rootOrder'));
-            
+
             if($ordering) {
                 foreach ($ordering as $order => $item_id) {
                     $order = $order + 1;
@@ -553,10 +558,10 @@ class BusinessLoanController extends AbstractActionController
         }
         $categories     = $application_model_category->fetchAll(array("type" => "business_loan"))->toArray();
         $category_html  = $this->buildCategory($categories);
-        
+
         return array("category_html" => $category_html);
     }
-    
+
     public function buildCategory($categories, $id_parent = 0) {
         $html = "";
         $translator = $this->getServiceLocator()->get('translator');
@@ -568,10 +573,10 @@ class BusinessLoanController extends AbstractActionController
                 unset($categories[$key]);
             }
         }
-        if ($category_tmp) 
+        if ($category_tmp)
         {
             $html .= '<ol class="dd-list" id="accordion">';
-            foreach ($category_tmp as $item) 
+            foreach ($category_tmp as $item)
             {
                 $id = $item['id'];
                 $label = $item['name'];
@@ -590,10 +595,10 @@ class BusinessLoanController extends AbstractActionController
             }
             $html .= '</ol>';
         }
-        
+
         return $html;
     }
-    
+
     public function createCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -601,7 +606,7 @@ class BusinessLoanController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category_group = $this->getServiceLocator()->get('application_model_category_group');
-            
+
             $name = $this->params()->fromPost('name');
             $category_group = $application_model_category_group->fetchRow(array('name' => $name));
             if($category_group) {
@@ -614,7 +619,7 @@ class BusinessLoanController extends AbstractActionController
                 $category_group->setSortOrder(2);
                 $category_group->setDateModified(new Expression('NOW()'));
                 $category_group->setStatus(1);
-                    
+
                 $added = $application_model_category_group->insert($category_group);
                 if($added) {
                     $messages['success'] = true;
@@ -628,14 +633,14 @@ class BusinessLoanController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function addCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
         $request = $this->getRequest();
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
-            $application_model_category = $this->getServiceLocator()->get('application_model_category');            
+            $application_model_category = $this->getServiceLocator()->get('application_model_category');
             $name     = $this->params()->fromPost('name');
 
             $category = new \Application\Entity\Category;
@@ -646,7 +651,7 @@ class BusinessLoanController extends AbstractActionController
             $category->setDateAdded(new Expression('NOW()'));
             $category->setParentId(0);
             $category->setStatus(1);
-                    
+
             $added = $application_model_category->insert($category);
             if($added) {
                 $messages['success'] = true;
@@ -659,7 +664,7 @@ class BusinessLoanController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function editCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -667,16 +672,16 @@ class BusinessLoanController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category = $this->getServiceLocator()->get('application_model_category');
-            
+
             $category_id   = $this->params()->fromPost('category_id');
             $category_name = $this->params()->fromPost('category_name');
-            
+
             $category = $application_model_category->fetchRow(array('id' => $category_id));
             if($category) {
                 $category->setId($category_id);
                 $category->setName($category_name);
                 $category->setDateModified(new Expression('NOW()'));
-                    
+
                 $updated = $application_model_category->update($category);
                 if($updated) {
                     $messages['success'] = true;
@@ -692,7 +697,7 @@ class BusinessLoanController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     public function removeCategoryAction() {
         $messages = array();
         $response = $this->getResponse();
@@ -700,7 +705,7 @@ class BusinessLoanController extends AbstractActionController
         if ($request->isPost()) {
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_category = $this->getServiceLocator()->get('application_model_category');
-            
+
             $category_id   = $this->params()->fromPost('category_id');
             $deleted = $application_model_category->delete(array('id' => $category_id));
             if($deleted) {
@@ -714,7 +719,7 @@ class BusinessLoanController extends AbstractActionController
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
     }
-    
+
     function clearHtml($html) {
         $html = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $html);
         $html = preg_replace("/<div>(.*?)<\/div>/", "$1", $html);
