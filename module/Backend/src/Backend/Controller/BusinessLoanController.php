@@ -219,7 +219,8 @@ class BusinessLoanController extends AbstractActionController
 
     public function eligibilityCalculatorAction() {
         $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
-        $business_loan_eligibility = $model_business_loan_eligibility->fetchRow(array('token' => $params['_token']));
+        $business_loan_eligibility = $model_business_loan_eligibility->fetchAll();
+        return array('data' => $data);
     }
 
     public function faqAction() {
