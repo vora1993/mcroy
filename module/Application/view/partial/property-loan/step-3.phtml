@@ -340,7 +340,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                 ?>
                                                 <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
                                                     <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
-                                                    <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(<?php echo $loan->getId(); ?>)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+                                                    <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.property_loan_apply(<?php echo $loan->getId(); ?>)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
                                                 </div>
                                             </div>
                                         </div>

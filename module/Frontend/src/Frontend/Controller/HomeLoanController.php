@@ -43,6 +43,7 @@ class HomeLoanController extends AbstractActionController
                         $redirect = $router->assemble(array("action" => "step", "id" => 1), array('name' => "home_loan"));
                     }
 
+
                     $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success, "redirect" => $redirect) ) );
                     return $response;
                 }
@@ -140,7 +141,8 @@ class HomeLoanController extends AbstractActionController
                         else $session->offsetSet('no_lock_in_only', 0);
 
                         $success = true;
-                        $redirect = $router->assemble(array("action" => "apply"), array('name' => "home_loan"));
+                        // $redirect = $router->assemble(array("action" => "apply"), array('name' => "home_loan"));
+                        $redirect = $router->assemble(array("action" => "step", "id" => 4), array('name' => "home_loan"));
                     } else {
                         $redirect = $router->assemble(array("action" => "step", "id" => 2), array('name' => "home_loan"));
                     }
@@ -483,7 +485,6 @@ class HomeLoanController extends AbstractActionController
         }
 
         return array("loans" => $personal_loans);
-        // return array("apply" => $apply);
     }
 
 
@@ -609,8 +610,6 @@ class HomeLoanController extends AbstractActionController
         $loan = $session->offsetGet('loan');
         if ($this->getServiceLocator()->get('AuthService')->hasIdentity())
         {
-            var_dump($session->offsetExists('loan'));
-                    exit;
             $application_view_helper_auth = $viewHelperManager->get('auth');
             $user = $application_view_helper_auth();
             if ($session->offsetExists('loan'))

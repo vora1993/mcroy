@@ -1828,6 +1828,37 @@ h4 .bank-title{
   text-transform: uppercase;
 }
 
+h4 .email-style{
+  color:#3c8093;
+}
+
+h4.message-style{
+  color:#798289;
+}
+
+.suppoter-icon{
+  position: absolute;
+  top: -28px;
+  /*right: 15px;*/
+  left: -75px;
+
+}
+.suppoter-icon a:hover,
+.suppoter-icon a:active{
+  color: #8dc63e;
+}
+.suppoter-icon i{
+  font-size: 60px;
+  color: #8dc63e;
+}
+
+.supporter-container .suppoter-image{
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+
+}
+
 .icon-cat.medium {
     width: 36px;
     height: 36px;
