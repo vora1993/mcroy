@@ -1,0 +1,444 @@
+<?php
+$title = $this->translate("Edit Credit Card");
+$this->headTitle($title);
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'credit_cards', 'action' => 'index')); ?>
+<?php $_dataAttributes = \Zend\Json\Json::decode($this->credit_card->getDataAttributes()); ?>
+<!-- END SIDEBAR -->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <div class="page-content">
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <a href="<?php echo $this->url('admin/credit_cards') ?>"><?php echo $this->translate("Credit Cards") ?></a>
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+          <span><?php echo $this->translate("Edit") ?></span>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="portlet light bordered form-fit">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="icon-credit-card"></i>
+              <span class="caption-subject sbold uppercase"><?php echo $this->translate($title) ?></span>
+            </div>
+          </div>
+          <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="<?php echo $this->url("admin/credit_cards", array("action" => "edit", "id" => $this->credit_card->getId())) ?>" id="form_credit_card" class="form-horizontal form-bordered">
+              <div class="form-body">
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Name") ?><span class="required"> * </span></label>
+                  <div class="col-md-6">
+                    <input type="text" name="name" data-required="1" class="form-control" value="<?php echo $this->credit_card->getName() ?>" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Status") ?></label>
+                  <div class="col-md-6">
+                    <select class="form-control" name="status">
+                      <option value="1"<?php if($this->credit_card->getStatus() == 1) echo ' selected="selected"'; ?>><?php echo $this->translate("Active") ?></option>
+                      <option value="0"<?php if($this->credit_card->getStatus() == 0) echo ' selected="selected"'; ?>><?php echo $this->translate("Deactive") ?></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Select Logo") ?></label>
+                  <div class="col-md-6">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                      <div class="input-group input-large">
+                        <div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                          <i class="fa fa-camera fileinput-exists"></i>&nbsp;
+                          <span class="fileinput-filename"> </span>
+                        </div>
+                        <span class="input-group-addon btn default btn-file">
+                          <span class="fileinput-new"> <?php echo $this->translate("Select file") ?> </span>
+                          <span class="fileinput-exists"> <?php echo $this->translate("Change") ?> </span>
+                          <input type="file" name="photoupload" id="photoupload" />
+                          <input type="hidden" name="logo" id="logo" value="<?php echo $this->credit_card->getLogo() ?>" />
+                        </span>
+                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput"> <?php echo $this->translate("Remove") ?> </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-offset-3 col-xs-6">
+                    <?php
+                    if ($this->credit_card->getLogo()) {
+                      $logo = $this->credit_card->getLogo();
+                      if (!file_exists('data/credit_card/'.$this->credit_card->getId().'/logo/m_'.$logo)) {
+                        $image_logo = $this->basePath('data/credit_cards/'.$this->credit_card->getId().'/'.$logo);
+                      } else {
+                        $image_logo = $this->basePath('data/credit_cards/'.$this->credit_card->getId().'/m_'.$logo);
+                      }
+                    } else {
+                      $image_logo = $this->basePath('data/image/no-image-128.png');
+                    }
+                    ?>
+                    <img id="photo" alt="logo" class="img-responsive" src="<?php echo $image_logo ?>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Color") ?></label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control colorpicker" name="color" value="<?php echo $this->credit_card->getColor() ?>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Bank") ?></label>
+                  <div class="col-md-9">
+                    <select class="form-control" name="bank_id">
+                      <option value=""><?php echo $this->translate("Select Bank") ?></option>
+                      <?php if(count($this->banks) > 0): ?>
+                        <?php foreach ($this->banks as $bank): ?>
+                          <option value="<?php echo $bank->getId(); ?>" <?php echo $this->credit_card->getBankId() == $bank->getId() ? 'selected' : ''; ?> ><?php echo $bank->getName() ?></option>
+                        <?php endforeach;?>
+                      <?php endif;?>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Provider") ?></label>
+                  <div class="col-md-9">
+                    <select class="form-control" name="provider_ids[]" multiple="multiple">
+                      <?php if(count($this->providers) > 0): ?>
+                        <?php foreach ($this->providers as $provider): ?>
+                          <option value="<?php echo $provider->getId(); ?>" <?php echo in_array($provider->getId(), explode('|', $this->credit_card->getProviderIds())) ? 'selected' : ''; ?> ><?php echo $provider->getName() ?></option>
+                        <?php endforeach;?>
+                      <?php endif;?>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Apply Url") ?></label>
+                  <div class="col-md-9">
+                    <input name="apply_url" class="form-control" type="text" value="<?php echo $credit_card->getApplyUrl(); ?>" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Credit Card Promotions & Deals") ?></label>
+                  <div class="col-md-9">
+                    <textarea name="data[promotion_and_deals]" class="form-control tinymce"><?php echo $_dataAttributes->promotion_and_deals ;?></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Exclusive") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="data[exclusive]" value="1" <?php echo $_dataAttributes->exclusive ? "checked" : "" ?> >
+                  </div>
+                </div>
+                <div class="exclusive-section <?php echo $_dataAttributes->exclusive ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Exclusive Details") ?></label>
+                    <div class="col-md-9">
+                      <input class="form-control" name="data[exclusive_details]" value="<?php echo $_dataAttributes->exclusive_details ?>" >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Cash Back") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="cash_back" value="1" <?php echo $credit_card->getCashBack() ? "checked" : "" ?> >
+                  </div>
+                </div>
+                <div class="card-back-section <?php echo $credit_card->getCashBack() ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Cash Back Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[cash_back_details]"><?php echo $_dataAttributes->cash_back_details ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Savings per year") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="cashback_value" value="<?php echo $this->credit_card->getCashbackValue() ?>" />
+                      <span class="input-group-addon"><?php echo $this->translate("$") ?></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Air Miles") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="air_miles" value="1" <?php echo $credit_card->getAirMiles() ? "checked" : "" ?> >
+                  </div>
+                </div>
+                <div class="air-miles-section <?php echo $credit_card->getAirMiles() ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Air Miles Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[air_miles_details]"><?php echo $_dataAttributes->air_miles_details ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Miles per Year") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="air_miles_value" value="<?php echo $this->credit_card->getAirMilesValue() ?>" />
+                      <span class="input-group-addon"><?php echo $this->translate("Miles/Year") ?></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="discount" value="1" <?php echo $credit_card->getDiscount() ? "checked" : "" ?> >
+                  </div>
+                </div>
+                <div class="discount-section <?php echo $credit_card->getDiscount() ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[discount_details]"><?php echo $_dataAttributes->discount_details ?></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Discount") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input class="form-control nobtngrp" name="discount_value" value="<?php echo $this->credit_card->getDiscountValue() ?>">
+                      <span class="input-group-addon">%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Points") ?></label>
+                  <div class="col-md-9">
+                    <input type="checkbox" class="form-control" name="points" value="1" <?php echo $credit_card->getPoints() ? "checked" : "" ?>>
+                  </div>
+                </div>
+                <div class="points-section <?php echo $credit_card->getPoints() ? "" : "collapse" ?>">
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Points Details") ?></label>
+                    <div class="col-md-9">
+                      <textarea class="form-control tinymce" name="data[points_details]"><?php echo $_dataAttributes->points_details ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3"><?php echo $this->translate("Total Points Per Year") ?></label>
+                    <div class="col-md-9 input-group">
+                      <input type="text" class="form-control nobtngrp" name="points_value" value="<?php echo $this->credit_card->getPointsValue() ?>" />
+                      <span class="input-group-addon"><?php echo $this->translate("Points/Year") ?></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Things to Look Out For") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[look_out_for]"><?php echo $_dataAttributes->look_out_for ?></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Card Features") ?></label>
+                  <div class="col-md-9">
+                    <textarea class="form-control tinymce" name="data[card_features]"><?php echo $_dataAttributes->card_features ?></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Requirement") ?></label>
+                  <div class="col-md-9">
+                    <input type="text" name="data[requirement]" class="form-control" value="<?php echo $_dataAttributes->requirement ?>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Interest Free") ?></label>
+                  <div class="col-md-9">
+                    <input type="text" name="data[interest_free]" class="form-control" value="<?php echo $_dataAttributes->interest_free ?>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Eligibility") ?></label>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Singaporean Minimum Income") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[singaporean_income]" class="form-control" value="<?php echo $_dataAttributes->singaporean_income ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Non-Singaporean Minimum Income") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[non_singaporean_income]" class="form-control" value="<?php echo $_dataAttributes->non_singaporean_income ?>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Annual Fees & Rates") ?></label>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Principal Annual Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[principal_annual_fee]" class="form-control" value="<?php echo $_dataAttributes->principal_annual_fee ?>" >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Supplementary Annual Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[supplementary_annual_fee]" class="form-control" value="<?php echo $_dataAttributes->supplementary_annual_fee ?>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Interest Rate & Payment Fees") ?></label>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Interest Rate") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[interest_rate]" class="form-control" value="<?php echo $_dataAttributes->interest_rate ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Annual Interest Rate") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[annual_interest_rate]" class="form-control" value="<?php echo $_dataAttributes->annual_interest_rate ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Fee Waiver") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[fee_waiver]" class="form-control" value="<?php echo $_dataAttributes->fee_waiver ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Late Payment Fees") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[late_payment_fees]" class="form-control" value="<?php echo $_dataAttributes->late_payment_fees ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Minimum Monthly Repayment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[minimum_monthly_repayment]" class="form-control" value="<?php echo $_dataAttributes->minimum_monthly_repayment ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Interest-free Period") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[interest_free_period]" class="form-control" value="<?php echo $_dataAttributes->interest_free_period ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Foreign Currency Transaction Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[foreign_currency_transaction_fee]" class="form-control" value="<?php echo $_dataAttributes->foreign_currency_transaction_fee ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Cash Advance Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[cash_advance_fee]" class="form-control" value="<?php echo $_dataAttributes->cash_advance_fee ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Local Currency Transfer Fee") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[currency_transfer_fee]" class="form-control" value="<?php echo $_dataAttributes->currency_transfer_fee ?>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Other Information") ?></label>
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Card Association") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[card_association]" class="form-control" value="<?php echo $_dataAttributes->card_association ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Wireless Payment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[wireless_payment]" class="form-control" value="<?php echo $_dataAttributes->wireless_payment ?>">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-5"><?php echo $this->translate("Mobile Wallet Payment") ?></label>
+                      <div class="col-md-7">
+                        <input type="text" name="data[mobile_wallet_payment]" class="form-control" value="<?php echo $_dataAttributes->mobile_wallet_payment ?>">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3"><?php echo $this->translate("Rate star") ?></label>
+                  <div class="col-md-9">
+                    <div class="bigstars">
+                      <div class="rateit" data-rateit-value="<?php echo $this->credit_card->getStar()?>" data-rateit-min="0" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-max="5"></div>
+                    </div>
+                    <input type="hidden" readonly name="rate" data-required="1" class="form-control" value="<?php echo $this->credit_card->getStar()?>" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions">
+                <div class="row">
+                  <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn red-thunderbird"><i class="fa fa-check"></i> <?php echo $this->translate("Submit") ?></button>
+                    <button type="button" class="btn btn-outline" onclick="cancel('admin/credit_cards')"><?php echo $this->translate("Cancel") ?></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- END FORM-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT -->
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.css'));
+$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/rateit/scripts/rateit.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/rateit/scripts/jquery.rateit.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-minicolors/jquery.minicolors.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/tinymce/js/tinymce/tinymce.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
+$this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/credit_cards_backend.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('.rateit').rateit({min: 0, max: 5, step: 1});
+$('.rateit').bind('rated', function (e) {
+  var ri = $(this);
+  var value = ri.rateit('value');
+  $("[name='rate']").val(value);
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>
