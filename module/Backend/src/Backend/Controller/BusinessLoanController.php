@@ -220,9 +220,15 @@ class BusinessLoanController extends AbstractActionController
     public function eligibilityCalculatorAction() {
         $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
         $business_loan_eligibility = $model_business_loan_eligibility->fetchAll();
-        return array('data' => $data);
+        return array('business_data' => $business_loan_eligibility);
     }
 
+    public function showEligibilityCalculatorAction() {
+        $id = $this->params()->fromRoute('id');
+        $model_business_loan_eligibility = $this->getServiceLocator()->get('application_model_business_loan_eligibility');
+        $business_loan_eligibility = $model_business_loan_eligibility->fetchRow(array('id' => $id));
+        return array('business' => $business_loan_eligibility);
+    }
     public function faqAction() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
         $faq = $application_model_faq->fetchRow(array('type' => 'business_loan'));

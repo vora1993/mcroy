@@ -25,7 +25,7 @@ class BusinessLoanEligibility implements BusinessLoanEligibilityInterface
     return $this->user_id;
   }
 
-  public function setUserId($id)
+  public function setUserId($user_id)
   {
     $this->user_id = (int) $user_id;
     return $this;

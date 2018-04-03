@@ -21,7 +21,6 @@ $this->headTitle($title);
             </ul>
         </div>
         <!-- END PAGE BAR -->
-
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet light portlet-fit portlet-datatable bordered">
@@ -76,35 +75,39 @@ $this->headTitle($title);
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(count($this->loans) > 0): ?>
-                                <?php foreach ($this->loans as $loan):
-                                $bank = $this->bank(array("id" => $loan->getBankId()));
+                                <?php if(count($this->business_data) > 0): ?>
+                                <?php foreach ($this->business_data as $business):
+                                  $user = $this->user(array("id" => $business->getUserId()));
+                                  $_dataAttributes = \Zend\Json\Json::decode($business->getData());
                                 ?>
                                 <tr class="odd gradeX">
                                     <td>
                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                            <input type="checkbox" class="checkboxes" value="<?php echo $loan->getId() ?>" />
+                                            <input type="checkbox" class="checkboxes" value="<?php echo $business->getId() ?>" />
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td><a href="<?php echo $this->url("admin/business_loan", array("action" => "edit", "id" => $loan->getId())) ?>"> <?php echo $loan->getLoanTitle() ?></a></td>
-                                    <td><?php echo ($loan->getType() === 'company') ? 'Company' : 'Bank'; ?></td>
-                                    <td><a href="<?php echo $this->url("admin/bank", array("action" => "edit", "id" => $bank->getId())) ?>"> <?php echo $bank->getName() ?></a></td>
-                                    <td><?php echo date("d-m-Y H:i A", strtotime($loan->getDateAdded())); ?></td>
+                                    <td><a href="<?php echo $this->url("admin/business_loan", array("action" => "show-eligibility-calculator", "id" => $business->getId())) ?>">
+                                      <?php echo !empty($user) ? $user->getEmail() : 'N/A'; ?>
+                                    </a></td>
                                     <td>
-                                    <?php
-                                    switch ($loan->getStatus()){
-                                        case 1;
-                                            echo '<span class="label label-sm label-success"> '.$this->translate("Active").' </span>';
-                                        break;
-
-                                        default:
-                                            echo '<span class="label label-sm label-danger"> '.$this->translate("Deactive").' </span>';
-                                        break;
-                                    }
-                                    ?>
+                                      <?php echo $_dataAttributes->monthly_turnover; ?>
                                     </td>
-                                    <td><a class="btn red-thunderbird btn-xs" href="<?php echo $this->url("admin/business_loan", array("action" => "edit", "id" => $loan->getId())) ?>"><i class="fa fa-pencil"></i> <?php echo $this->translate("Edit") ?></a></td>
+                                    <td>
+                                      <?php echo $_dataAttributes->monthly_commitment; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $_dataAttributes->industry_type; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $_dataAttributes->net_profit; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $_dataAttributes->annual_depreciation; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $_dataAttributes->annual_interest; ?>
+                                    </td>
                                 </tr>
                                 <?php endforeach;?>
                                 <?php endif;?>
