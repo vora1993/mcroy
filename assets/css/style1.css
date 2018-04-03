@@ -1843,6 +1843,11 @@ h4.message-style{
   left: -5px;
 
 }
+@media (min-width: 1200px){
+    .suppoter-icon {
+        width: -35px;
+    }
+}
 .suppoter-icon a:hover,
 .suppoter-icon a:active{
   color: #8dc63e;
