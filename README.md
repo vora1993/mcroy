@@ -10,6 +10,9 @@
 
 # Development
 
+### System specs:
+    - MySQL 5.5.57
+    - PHP 5.6.31
 ### Installation
 
 1.  `git clone git@github.com:mcroygoh/moneycompare.sg.git && cd moneycompare.sg`
