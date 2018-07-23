@@ -2210,7 +2210,7 @@ ul.stay-connected > li.instagram {
     }
 }
 
-.page-header .page-logo-beta{
+.page-header .page-logo-beta-parent .page-logo-beta:after{
   content: "beta";
   position: absolute;
   background: #EE8E4A;
