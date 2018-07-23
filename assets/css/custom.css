@@ -2210,15 +2210,15 @@ ul.stay-connected > li.instagram {
     }
 }
 
-.page-header .page-logo a:after,
-#footer .page-logo a:after{
+.page-header .page-logo-beta{
   content: "beta";
-  position: fixed;
-  width: 80px;
-  height: 25px;
+  position: absolute;
   background: #EE8E4A;
-  top: 7px;
-  left: -20px;
+  width: 100px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
   text-align: center;
   font-size: 13px;
   font-family: sans-serif;
