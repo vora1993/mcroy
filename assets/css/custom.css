@@ -2210,12 +2210,20 @@ ul.stay-connected > li.instagram {
     }
 }
 
+.page-logo-beta-parent {
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: -20px;
+}
 .page-header .page-logo-beta-parent .page-logo-beta:after{
   content: "beta";
   position: absolute;
   background: #EE8E4A;
-  width: 100px;
-  height: 100%;
+  width: 134px;
+  height: 28px;
   top: 0;
   left: 0;
   overflow: hidden;
