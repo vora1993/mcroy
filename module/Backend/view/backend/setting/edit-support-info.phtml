@@ -3,7 +3,7 @@ $title = $this->translate("Edit Support Information");
 $this->headTitle($title);
 ?>
 <!-- BEGIN SIDEBAR -->
-<?php echo $this->partial('backend_sidebar', array('view' => 'setting', 'action' => 'company')); ?>
+<?php echo $this->partial('backend_sidebar', array('view' => 'setting', 'action' => 'view-support-info')); ?>
 <!-- END SIDEBAR -->
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
@@ -150,7 +150,7 @@ $('#photoupload').on("change", function(){
         }
     }
     // Add any event handlers here...
-    xhr.open('POST', full_url + "/admin/setting/change-logo", true);
+    xhr.open('POST', full_url + "/admin/setting/change-support-logo", true);
     xhr.send(formData);
 });
 

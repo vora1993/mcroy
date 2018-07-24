@@ -766,6 +766,49 @@ class SettingController extends AbstractActionController
     return $response;
   }
 
+  /**
+   * Change Support Logo
+   */
+  public function changeSupportLogoAction() {
+    $translator = $this->getServiceLocator()->get('translator');
+    $messages = array();
+    $response = $this->getResponse();
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $file = $this->params()->fromFiles('file');
+      $valid_formats = array("jpg", "jpeg", "png", "gif", "bmp");
+      $name = $file['name'];
+      if(strlen($name)) {
+        $dir = 'data/company/tmp';
+        if (!file_exists($dir)) {
+          mkdir($dir, 0777, true);
+        }
+
+        list($txt, $ext) = explode(".", $name);
+        if(in_array($ext, $valid_formats)) {
+          $newFilename = 'support_logo.' . $ext;
+          $tmp = $file['tmp_name'];
+          if(move_uploaded_file($tmp, $dir.'/'.$newFilename)) {
+            $messages = array(
+              'success'  => true,
+              'name'     => $newFilename,
+              'src'      => '/data/user/tmp/'.$newFilename,
+              'msg'      => $translator->translate("Upload logo successful"),
+            );
+          } else {
+            $messages = array('success' => false, 'msg' => $translator->translate("Something error. Please check"));
+          }
+        } else {
+          $messages = array('success' => false, 'msg' => $translator->translate("Invalid file formats"));
+        }
+      } else {
+        $messages = array('success' => false, 'msg' => $translator->translate("Please select image"));
+      }
+    }
+    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+    return $response;
+  }
+
   public function editSocialAction() {
     $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
     $settings = $application_model_setting->fetchAll();
