@@ -779,7 +779,7 @@ class SettingController extends AbstractActionController
       $valid_formats = array("jpg", "jpeg", "png", "gif", "bmp");
       $name = $file['name'];
       if(strlen($name)) {
-        $dir = 'data/company/tmp';
+        $dir = 'data/user/tmp';
         if (!file_exists($dir)) {
           mkdir($dir, 0777, true);
         }
