@@ -36,54 +36,47 @@ $this->headMeta()->setProperty('og:site_name', $this->setting()->company_name);
                                                     $image_thumb_src = 'data/image/no-image.png';
                                                 }
                                                 ?>
-                                                <img src="<?php echo $this->basePath($image_thumb_src) ?>">
+                                                <img src="<?php echo $this->basePath($image_thumb_src) ?>"> 
                                             </div>
                                             <?php if($this->post->getPostContent()): ?>
                                             <div class="blog-single-desc">
                                                 <?php echo $this->post->getPostContent(); ?>
                                             </div>
                                             <?php endif;?>
-                                            <div class="clearfix"></div>
-                                            <hr/>
-                                            <div class="related-blog-posted">
-                                                <div class="title-related-blog">
-                                                    <h4><?php echo $this->translate("Related") ?></h4>
-                                                </div>
-                                                <div class="related-blog-box row">
-                                                    <?php
-                                                      if(count($this->posts) > 0) {
-                                                        foreach ($this->posts as $post) {
-                                                          ?>
-                                                          <div class="item col-md-4 col-xs-12">
-                                                            <div class="item-news">
-                                                              <div class="image">
-                                                                <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
-                                                              </div>
-
-                                                              <div class="caption">
-                                                                <h4><?php echo $post->getPostTitle() ?></h4>
-                                                                <span class="date-news"><i class="fa fa-calendar"></i> <?php echo date("F jS, Y", strtotime($post->getPostDate())); ?></span>
-                                                                <?php
-                                                                $introtext = $post->getPostExcerpt();
-                                                                if(strlen($introtext) > 150) {
-                                                                  // truncate string
-                                                                  $stringCut = substr($introtext, 0, 150);
-
-                                                                  // make sure it ends in a word so assassinate doesn't become ass...
-                                                                  $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
+                                            <?php
+                                                if(count($this->post_related)>0)
+                                                {
+                                                    $i=1;
+                                            ?>
+                                            <div class="related">
+                                                <h3>Related</h3>
+                                                <?php
+                                                    foreach ($this->post_related as $key => $value)
+                                                    {
+                                                        if($i<4)
+                                                        {
+                                                            $featured_image_src = 'data/image/'.$value->getFeaturedImage();
+                                                                if(file_exists($featured_image_src)) {
+                                                                $image_thumb_src = $featured_image_src;
+                                                                } else {
+                                                                $image_thumb_src = 'data/image/no-image.png';
                                                                 }
-                                                                ?>
-                                                                <p><?php echo $introtext; ?></p>
-                                                              </div>
-                                                              <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>" class="uppercase"><?php echo $this->translate("Continue Reading") ?>...</a>
-                                                            </div>
-                                                          </div>
-                                                          <?php
-                                                        }
-                                                      }
-                                                      ?>
+                                                ?>
+                                                <div class="col-md-4 col-sm-12">
+                                                    <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $value->getId(), "seo" => $value->getSeo())) ?>""><img src="<?php echo $this->basePath($image_thumb_src) ?>" width="100%" style="height: 134px">
+                                                    <p><?php echo $value->getPostTitle()?></p></a>
+                                                    <span><?php echo $value->getPostDate()?></span>
+                                                    <div>In "<?php echo $this->category(array("id" => $value->getCategoryId()))->getName() ?>"</div>
                                                 </div>
+                                                <?php
+                                                            $i++;
+                                                        }
+                                                    }
+                                                ?>
                                             </div>
+                                            <?php
+                                                }
+                                            ?>
                                             <div class="blog-single-comment">
                                                 <div class="fb-comments" data-href='<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>' data-numposts="5" data-width="100%"></div>
                                             </div>
@@ -128,7 +121,7 @@ $this->headMeta()->setProperty('og:site_name', $this->setting()->company_name);
                                                         <a href="javascript:;" class="btn dark btn-block" onclick="email_newsletter(this)"><?php echo $this->translate("Subscribe") ?> <i class="fa fa-send"></i></a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>      
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +141,7 @@ $offStyle = 12;
 $offScript = 10;
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/css/blog.css'));
 $this->inlineScript()->offsetSetFile($offScript++, '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5301c95928ec6521');
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
 $this->inlineScript()->captureStart();
 echo <<<JS
 function redirect(button) {

@@ -13,7 +13,7 @@
 
 return array(
     'db' => array(
-         'username' => 'websgdem_hai',
-         'password' => '~aMDJ0HT07Ft',
+         'username' => 'root',
+         'password' => 'root',
      ),
 );

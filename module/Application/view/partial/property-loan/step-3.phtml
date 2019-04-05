@@ -1,4 +1,13 @@
 <?php
+if($category->getSeo() == 'residential-equity-term-loan-new-purchase' || $category->getSeo() == 'residential-equity-term-loan-refinancing')
+{
+    $category_all=$this->Category(array('seo'=>'commercial-new-purchase-and-refinancing'));
+    $category_all_id=$category_all->getId();
+}
+if($property_type=='')
+{
+    $property_type='Industrial/Commercial and JTC';
+}
 $slider_loan_tenture = '$slider_loan_tenture';
 $slider_loan_percent = '$slider_loan_percent';
 $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
@@ -7,14 +16,14 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
         <div class="row">
             <div id="column-left" class="col-md-3 col-xs-12">
                 <div class="box-featured-bank">
-                    <div class="featured-bank lowest-interest"> 
+                    <div class="featured-bank lowest-interest">
                         <h3 class="title-featured"><?php echo $this->translate("Filter"); ?></h3>
                         <div class="box-fillter">
                             <p><?php echo $this->translate("Click the Refresh button below after you make any changes") ?>.</p>
                             <div class="form-group">
                                 <label><?php echo $this->translate("Loan Type") ?></label>
                                 <select name="preferred_rate_package" class="form-control">
-                                    <option value="All"><?php echo $this->translate("All") ?></option>
+                                    <option value="All" <?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("All") ?></option>
                                     <option value="Fixed"<?php if($this->preferred_rate_package === 'Fixed') echo " selected" ?>><?php echo $this->translate("Fixed") ?></option>
                                     <option value="Floating"<?php if($this->preferred_rate_package === 'Floating') echo " selected" ?>><?php echo $this->translate("Floating") ?></option>
                                 </select>
@@ -38,7 +47,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                             <span class="input-group-addon">
                                                 <i><?php echo $this->translate("Purchase Price ($)") ?></i>
                                             </span>
-                                            <input type="text" name="purchase_price" class="form-control" value="<?php echo $this->purchase_price ?>"> 
+                                            <input type="text" name="purchase_price" class="form-control" value="<?php echo $this->purchase_price ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +63,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                         <?php echo $this->translate("Loan Tenure") ?>
                                         <span class="pull-right"><span class="loan-tenure-label"><?php echo $this->loan_tenure ?></span> years</span>
                                     </label>
-                                    <div class="slider-loan-tenure" data-min="5" data-max="30" data-value="<?php echo $this->loan_tenure ?>" data-soft-cap="30"></div>
+                                    <div class="slider-loan-tenure" data-min="5" data-max="25" data-value="<?php echo $this->loan_tenure ?>" data-soft-cap="30"></div>
                                 </div>
                                 <div class="loan-filter">
                                     <input type="hidden" name="loan_amount" value="<?php echo $this->loan_amount ?>" />
@@ -75,7 +84,41 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                 <h4> <?php echo $this->translate("Top Floating Rates"); ?></h4>
                                 <p><?php echo $this->translate("Home loans displayed below are ranked according to interest rates. You can click on the product box to view more details or modify your search criteria on the left"); ?></p>
                             </div>
-                            <div class="filter-table-head hidden-sm hidden-xs">
+
+                            <div class="filters-table-container" id="results">
+                                <?php if(count($this->loans) > 0): ?>
+                                <div class="filters-table-body filters-table-property">
+                                <?php foreach ($this->loans as $key => $loan): ?>
+                                    <?php
+                                    if($loan->getCategoryId()==$category->getId() || $loan->getCategoryId()==$category_all_id)
+                                    {
+                                        if($loan->getType()==$property_type || $loan->getType()=='Industrial/Commercial and JTC' || $property_type='Industrial/Commercial and JTC')
+                                        {
+                                    $bank = $this->bank(array("id" => $loan->getBankId()));
+                                    $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";
+
+                                    $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+                                    $loan_amount = $this->loan_amount;
+                                    $int_rates = ($loan->getIntYear2()+$loan->getIntYear1())/2;
+
+                                    // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
+                                    // Where: r = decimal rate / 12.
+                                    $r = ($int_rates / 100) / 12;
+                                    $monthly_repayment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+
+                                    $monthly_payment = $monthly_repayment;
+                                    $loan_tenure = $this->loan_tenure;
+                                    $loan_amount = $this->loan_amount;
+                                    $total_amount_payable = $monthly_payment * $loan_tenure * 12;
+                                    $total_interest_payable = $total_amount_payable - $loan_amount;
+
+                                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                                    if(!file_exists($dir_logo)) {
+                                        $dir_logo = 'data/image/no-image-64.png';
+                                    }
+                                    ?>
+                                    <div class="filters-content not-sponsored">
+                            <div class="form-horizontal form-wizard filter-table-head hidden-sm hidden-xs">
                                 <ul>
                                     <li>
                                         <aside class="head-title">
@@ -86,61 +129,27 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Interest") ?></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->interest_property_loan ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                            <div class="sort" data-field="interest"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Monthly Repayment") ?><span></span></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_repayment ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                            <div class="sort" data-field="monthly_repayment"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>  
+                                        </aside>
                                         </li><!--
                                     --><li>
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Total Interest Payable") ?></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->total_interest_payable ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                            <div class="sort" data-field="total_interest_payable"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </aside>
                                        </li><!--
                                     --><li>
                                         <aside class="head-title">
                                             <div class="name"><?php echo $this->translate("Type") ?></div>
                                             <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->type_property_loan ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                            <div class="sort" data-field="type"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
                                         </aside>
                                     </li>
                                 </ul>
                             </div>
-                            
-                            <div class="filters-table-container" id="results">
-                                <?php if(count($this->loans) > 0): ?>
-                                <div class="filters-table-body filters-table-property">
-                                <?php foreach ($this->loans as $key => $loan): ?>
-                                    <?php
-                                    $bank = $this->bank(array("id" => $loan->getBankId()));
-                                    $bank_color = $bank->getColor() ? $bank->getColor() : "#FFFFFF";
-                                    
-                                    $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
-                                    $loan_amount = $this->loan_amount;
-                                    $int_rates = $loan->getIntYear2();
-                                    
-                                    // Monthly payment = [ r + r / ( (1+r) ^ months -1) ] x principal loan amount
-                                    // Where: r = decimal rate / 12.
-                                    $r = ($int_rates / 100) / 12;
-                                    $monthly_repayment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
-                                    
-                                    $monthly_payment = $monthly_repayment;
-                                    $loan_tenure = $this->loan_tenure;
-                                    $loan_amount = $this->loan_amount;
-                                    $total_amount_payable = $monthly_payment * $loan_tenure * 12;
-                                    $total_interest_payable = $total_amount_payable - $loan_amount;
-                                    
-                                    $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
-                                    if(!file_exists($dir_logo)) {
-                                        $dir_logo = 'data/image/no-image-64.png';
-                                    } 
-                                    ?>
-                                    <div class="filters-content not-sponsored">
                                         <div class="row-header">
 						                    <h4 class="bank-title" style="background-color: <?php echo $bank_color; ?>"><a href="#"><?php echo $loan->getTitle(); ?> <?php echo $loan->getPromotions(); ?></a></h4>
 						                </div>
@@ -155,7 +164,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                 <div class="box__monthly_repayment"><span class="monthly_repayment" data-value="<?php echo number_format($monthly_repayment); ?>"><b>$<?php echo number_format($monthly_repayment); ?></b><?php echo $total_interest_for_years ?> <?php echo $this->translate("Year Average") ?></span></div>
 						                    </div>
                                             <div class="col-md-2">
-                                                <?php 
+                                                <?php
                                                 /*$lock_in_year = $loan->getLockInYear();
                                                 if($lock_in_year > 0) {
                                                     $total_interest_payable = $lock_in_year.' '.$this->translate("Year");
@@ -166,27 +175,31 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                 <div class="box__total_interest_payable"><span class="total_interest_payable" data-value="<?php echo number_format($total_interest_payable); ?>"><b>$<?php echo number_format($total_interest_payable); ?></b></span></div>
 						                    </div>
                                             <div class="col-md-2">
-                                                <?php 
-                                                switch ($loan->getFloatingType()) {
+                                                <?php
+                                                switch ($loan->getPackage()) {
                                                     case 'SIBOR':
                                                         $type = $this->translate("SIBOR");
                                                     break;
-                                                    
+
+                                                    case 'Floating':
+                                                        $type = $this->translate("Floating");
+                                                    break;
+
                                                     case 'Variable':
                                                         $type = $this->translate("Variable");
                                                     break;
-                                                    
+
                                                     case 'Bank Board Rates':
                                                         $type = $this->translate("Bank Board Rates");
                                                     break;
-                                                    
+
                                                     case 'SOR':
                                                         $type = $this->translate("SOR");
-                                                    break; 
-                                                    
+                                                    break;
+
                                                     default:
                                                         $type = $this->translate("Fixed");
-                                                    break;   
+                                                    break;
                                                 }
                                                 ?>
 						                        <div class="box__type"><span class="type" data-value="<?php echo $type ?>"><?php echo $type ?></span></div>
@@ -203,8 +216,8 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
     						                        			<div class="col-row-footer-2"><?php echo $this->translate("Interest Rate") ?></div>
     						                        			<div class="col-row-footer-2 text-right"><?php echo $this->translate("Monthly Payment") ?></div>
                                                                 <div class="col-row-footer-3"><?php echo $this->translate("Remark") ?></div>
-    						                        			<div class="col-row-footer-1"><a data-target="#content-row-footer1" data-toggle="collapse" aria-expanded="true"><i class="fa fa-minus-circle" aria-hidden="true"></i><i class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
-                                                                <div id="content-row-footer1" class="content-row-collapse collapse in">
+    						                        			<div class="col-row-footer-1"><a data-target="#content-row-footer<?php echo $loan->getId(); ?>" data-toggle="collapse" aria-expanded="true"><i class="fa fa-minus-circle" aria-hidden="true"></i><i class="fa fa-plus-circle" aria-hidden="true"></i></a></div>
+                                                                <div id="content-row-footer<?php echo $loan->getId(); ?>" class="content-row-collapse collapse in">
   						                        			 	   <ul>
                                                                        <?php
                                                                         if($loan->getIntYear1() > 0) {
@@ -263,7 +276,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                                             </li>
                                                                             <?php
                                                                         }
-                                                                        ?>                    
+                                                                        ?>
   						                        			 	   </ul>
    						                        			    </div>
     						                        		</li>
@@ -319,7 +332,7 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                     <a href="javascript:void(0)" class="btn btn-more-detail"><?php echo $this->translate("Details"); ?> <i class="fa fa-angle-down"></i></a>
                                                     <a href="javascript:void(0)" class="btn btn-less-detail" style="display: none;"><?php echo $this->translate("Close")?> <i class="fa fa-angle-up"></i></a>
                                                 </div>
-                                                <?php 
+                                                <?php
                                                 $class = '';
                                                 if(count($select) > 0) {
                                                     if(in_array($loan->getId(), $select)) $class = ' active';
@@ -327,17 +340,21 @@ $total_interest_for_years = $this->total_interest_for_years ? $this->total_inter
                                                 ?>
                                                 <div class="col-md-4 col-sm-6 col-xs-12 button-gr button-gr-s1">
                                                     <div class="col-md-6 col-xs-12 box__compare<?php echo $class ?>"><button type="button" onclick="Loan.select(this)" data-id="<?php echo $loan->getId(); ?>" class="btn btn-lg btn-block ladda-button compare<?php echo $class; ?>" data-style="slide-up" title="<?php echo $this->translate("Compare"); ?>"><i class="fa fa-copy"></i><span><?php echo $this->translate("Compare"); ?></span></button></div>
-                                                    <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.apply(this)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
+                                                    <div class="col-md-6 col-xs-12 box__apply"><button type="button" onclick="Loan.property_loan_apply(<?php echo $loan->getId(); ?>)" data-id="<?php echo $loan->getId(); ?>" class="btn yellow-gold btn-lg btn-block ladda-button" data-style="slide-up" title="<?php echo $this->translate("Apply"); ?>"><i class="fa fa-check-square-o"></i> <?php echo $this->translate("Apply"); ?></button></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php 
+                                        <?php
                                         if($loan->getPromotions()) echo '<div class="promotion"><span>'.$loan->getPromotions().'</span></div>';
                                         ?>
                                     </div>
-                                <?php endforeach;?>
+                                <?php
+                                        }
+                                    }
+                                    endforeach;
+                                ?>
                                 </div>
-                                <?php endif;?> 
+                                <?php endif;?>
                             </div>
                         </form>
                     </div>
@@ -355,8 +372,8 @@ $offStyle = 12;
 $offScript = 30;
 $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-ui/jquery-ui.min.js'));
-$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js')); 
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js')); 
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-easypiechart/jquery.easypiechart.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom3.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 // Handle number
@@ -377,7 +394,7 @@ $("input[name=purchase_price]").on("keydown", function(evt) {
     }
     return isEnterNumber(charCode);
 });
-    
+
 $("input[name=purchase_price]").on("keyup", function() {
     var val = $(this).val();
     val = Number(val.replace(/,/g, ""));
@@ -419,7 +436,7 @@ var {$slider_loan_tenture} = $(".slider-loan-tenure").slider({
     change: function(event, ui) {
         updateSlider();
         updateLoanAmount();
-    }  
+    }
 });
 
 $(".btn-less-detail").hide();

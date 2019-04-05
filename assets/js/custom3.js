@@ -50,6 +50,78 @@ function updatePieChart(percent) {
     $(".easy-pie-chart .number.loans").find("span").html(percent+'%');
 }
 
+function updatePieChartResidential(tenor,existing_home_loans) {
+    if(tenor<=25)
+    {
+        if(existing_home_loans==0)
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(80);
+            $(".easy-pie-chart .number.loans").find("span").html('80%');
+            $(".slider-loan-amount").slider({
+                value: 80,
+                max: 80
+            });
+            $("#loan_amount-label").html(80);
+            $("input[name=loan_percent]").val(80);
+        }else if(existing_home_loans==1)
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(50);
+            $(".easy-pie-chart .number.loans").find("span").html('50%');
+            $(".slider-loan-amount").slider({
+                value: 50,
+                max: 50
+            });
+            $("#loan_amount-label").html(50);
+            $("input[name=loan_percent]").val(50);
+        }else
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(40);
+            $(".easy-pie-chart .number.loans").find("span").html('40%');
+            $(".slider-loan-amount").slider({
+                value: 40,
+                max: 40
+            });
+            $("#loan_amount-label").html(40);
+            $("input[name=loan_percent]").val(40);
+        }
+    }else
+    {
+        if(existing_home_loans==0)
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(60);
+            $(".easy-pie-chart .number.loans").find("span").html('60%');
+            $(".slider-loan-amount").slider({
+                value: 60,
+                max: 60
+            });
+            $("#loan_amount-label").html(60);
+            $("input[name=loan_percent]").val(60);
+        }else if(existing_home_loans==1)
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(30);
+            $(".easy-pie-chart .number.loans").find("span").html('30%');
+            $(".slider-loan-amount").slider({
+                value: 30,
+                max: 30
+            });
+            $("#loan_amount-label").html(30);
+            $("input[name=loan_percent]").val(30);
+        }else
+        {
+            $(".easy-pie-chart .number.loans").data("easyPieChart").update(20);
+            $(".easy-pie-chart .number.loans").find("span").html('20%');
+            $(".slider-loan-amount").slider({
+                value: 20,
+                max: 20
+            });
+            $("#loan_amount-label").html(20);
+            $("input[name=loan_percent]").val(20);
+        }
+    }
+    // $(".easy-pie-chart .number.loans").data("easyPieChart").update(percent);
+    // $(".easy-pie-chart .number.loans").find("span").html(percent+'%');
+}
+
 function updateLoanAmount() {
     var e = $("input[name=loan_percent]").val(),
         t = getActualAmount($("input[name=purchase_price]").val()),
@@ -111,7 +183,7 @@ var Loan = {
             var l = Ladda.create(button);
             var data = 'loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&loan_percent='+loan_percent+'&preferred_rate_package='+preferred_rate_package+'&total_interest_for_years='+total_interest_for_years+'&no_lock_in_only='+no_lock_in_only;
             $.ajax({
-                url: full_url + '/loan-application/property-loan/commercial-industrial-loan/step/3',
+                url: full_url + '/loan-application/property-loan/residential-equity-term-loan-new-purchase/step/3',
                 type: 'post',
                 data: data,
                 dataType: 'json',
@@ -132,11 +204,80 @@ var Loan = {
             toastr.error("Sorry you haven't selected right.");
         }
     },
+    'filter_loan' : function(button) {
+        var loan_amount  = $("input[name=loan_amount]").val();
+        var loan_tenure  = $("input[name=loan_tenure]").val();
+        var loan_percent = $("input[name=loan_percent]").val();
+        var purchase_price=$("input[name=purchase_price]").val();
+        var total_interest_for_years = $("select[name=total_interest_for_years]").val();
+        var preferred_rate_package = $("select[name=preferred_rate_package]").val();
+        var no_lock_in_only = $("input[name=no_lock_in_only]:checked").val() ? $("input[name=no_lock_in_only]:checked").val() : 0;
+
+        if(loan_amount > 0 && loan_tenure > 0) {
+            var l = Ladda.create(button);
+            var data = 'loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&loan_percent='+loan_percent+'&preferred_rate_package='+preferred_rate_package+'&total_interest_for_years='+total_interest_for_years+'&no_lock_in_only='+no_lock_in_only+'&existing_home_loans=0&purchase_price='+purchase_price;
+            $.ajax({
+                url: full_url + '/home-loan/step/2',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function(xhr, settings) {
+                    l.start();
+                },
+                success: function(json) {
+                    if (json['success']) {
+                        l.stop();
+                        window.location.href = json['redirect'];
+                    }
+                },
+                error : function(xhr, ajaxOptions, thrownError){
+                    toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                },
+            });
+        } else {
+            toastr.error("Sorry you haven't selected right.");
+        }
+    },
+    'filter_refinancing' : function(button) {
+        var remaining_loan_amount  = $("input[name=remaining_loan_amount]").val();
+        var remaining_loan_amount=remaining_loan_amount.replace(',','');
+        var loan_tenure  = $("input[name=loan_tenure]").val();
+        var current_interest_rate = $("input[name=current_interest_rate]").val();
+        var purchase_price=$("input[name=purchase_price]").val();
+        var total_interest_for_years = $("select[name=total_interest_for_years]").val();
+        var preferred_rate_package = $("select[name=preferred_rate_package]").val();
+        var no_lock_in_only = $("input[name=no_lock_in_only]:checked").val() ? $("input[name=no_lock_in_only]:checked").val() : 0;
+
+        if(remaining_loan_amount > 0 && loan_tenure > 0) {
+            var l = Ladda.create(button);
+            var data = 'remaining_loan_amount='+remaining_loan_amount+'&loan_tenure='+loan_tenure+'&preferred_rate_package='+preferred_rate_package+'&total_interest_for_years='+total_interest_for_years+'&no_lock_in_only='+no_lock_in_only+'&current_interest_rate='+current_interest_rate;
+            $.ajax({
+                url: full_url + '/refinancing/step/4',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function(xhr, settings) {
+                    l.start();
+                },
+                success: function(json) {
+                    if (json['success']) {
+                        l.stop();
+                        window.location.href = json['redirect'];
+                    }
+                },
+                error : function(xhr, ajaxOptions, thrownError){
+                    toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                },
+            });
+        } else {
+            toastr.error("Sorry you haven't selected right.");
+        }
+    },
     'apply' : function(button) {
         var loan_amount = $("input[name=loan_amount]").val();
         var loan_tenure = $("input[name=loan_tenure]").val();
         var seo         = $("input[name=seo]").val();
-        var id          = $(button).closest("#selected-holder").find(".fa.fa-times").data("id");
+        var id          = button;
 
         if(id > 0 && loan_amount > 0 && loan_tenure > 0) {
             var data = 'seo='+seo+'&loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&id='+id;
@@ -154,6 +295,41 @@ var Loan = {
     				} else {
     				    toastr.warning(json['msg']);
     				}
+                    App.unblockUI();
+                },
+                error : function(xhr, ajaxOptions, thrownError){
+                    toastr.error(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                },
+            });
+        } else {
+            toastr.error("Sorry you haven't selected right");
+        }
+    },
+    'property_loan_apply' : function(button) {
+        var loan_amount = $("input[name=loan_amount]").val();
+        var loan_tenure = $("input[name=loan_tenure]").val();
+        var seo         = $("input[name=seo]").val();
+        var id          = button;
+        var total_interest_for_years = $("select[name=total_interest_for_years]").val();
+        console.log(loan_amount, id);
+
+        if( loan_amount > 0 && loan_tenure > 0) {
+            var data = 'seo='+seo+'&loan_amount='+loan_amount+'&loan_tenure='+loan_tenure+'&id='+id;
+            console.log('hiep ga');
+            $.ajax({
+                url: full_url + '/loan-application/apply',
+                type: 'post',
+                data: data,
+                dataType: 'json',
+                beforeSend: function(xhr, settings) {
+                    App.blockUI({boxed: true});
+                },
+                success: function(json) {
+                  if (json['success']) {
+                    window.location.href = json['redirect'];
+                  } else {
+                    toastr.warning(json['msg']);
+                  }
                     App.unblockUI();
                 },
                 error : function(xhr, ajaxOptions, thrownError){
@@ -291,15 +467,50 @@ var Loan = {
     },
     'set_exist': function(button) {
         var $this  = $(button);
+        var value=$this.data('value');
         var value  = $this.data("value");
         var disabled = $this.hasClass('disabled') ? true : false;
+        if(value==0)
+        {
+            $(".slider-loan-amount").slider({
+                value: 80,
+                max: 80
+            });
+            $("#loan_amount-label").html(80);
+            $("input[name=loan_percent]").val(80);
+            $("input[name=existing_home_loans]").val(0);
+            updatePieChartResidential($("input[name=loan_tenure").val(),value)
+        }
+        else if(value==1)
+        {
+            $(".slider-loan-amount").slider({
+                value: 50,
+                max: 50
+            });
+            $("#loan_amount-label").html(50);
+            $("input[name=loan_percent]").val(50);
+            $("input[name=existing_home_loans]").val(1);
+            updatePieChartResidential($("input[name=loan_tenure").val(),value)
+        }
+        else if(value=='2+')
+        {
+            $(".slider-loan-amount").slider({
+                value: 40,
+                max: 40
+            });
+            $("#loan_amount-label").html(40);
+            $("input[name=loan_percent]").val(40);
+            $("input[name=existing_home_loans]").val(2);
+            updatePieChartResidential($("input[name=loan_tenure").val(),value)
+        }
         if(disabled) {
-            $this.removeClass("active");
+            $this.closest(".property-type").find("a").removeClass("active");
+            $this.addClass("active");
         } else {
             $this.closest(".property-type").find("a").removeClass("active");
             $this.addClass("active");
             $('input[name=existing_home_loans]').val(value);
-            updateSlider();
+            // updateSlider();
         }
     },
     'set_property': function(button) {
@@ -417,9 +628,36 @@ var Loan = {
         $('#stamp-duty-fee').text(stampDutyFee);
         return stampDutyFeeValue;
     },
+    caculateStampDutyFeeCommercial: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var residency = $('input[name="residency"]').val();
+        var existingProperty = $('input[name="existing_property"]').val();
+        var stampDutyFee = ( purchasePrice * 3 / 100 ) - DEFAULT_FEE;
+        stampDutyFeeValue = Number(stampDutyFee.toFixed(2));
+        if (stampDutyFeeValue >= 0){
+            stampDutyFee = formatNumber(stampDutyFeeValue, '$');
+        } else{
+            stampDutyFee = formatNumber(stampDutyFeeValue * -1, '-$');
+        }
+
+        $('#stamp-duty-fee').text(stampDutyFee);
+        return stampDutyFeeValue;
+    },
     totalCostOutlay: function() {
         var purchasePrice = getNumber($('input[name="purchase_price"]').val());
         var stampDutyFee = this.caculateStampDutyFee();
+        var totalCostOutlay = stampDutyFee + mortgageStampDuty + valuationFee + legalFee + fireInsurance + ( purchasePrice * 20 / 100 );
+        totalCostOutlayValue = Number(totalCostOutlay.toFixed(2));
+        if (totalCostOutlayValue >= 0){
+            totalCostOutlay = formatNumber(totalCostOutlayValue, '$');
+        } else{
+            totalCostOutlay = formatNumber(totalCostOutlayValue * -1, '-$');
+        }
+        $('#total-costs-outlay-amount').text(totalCostOutlay);
+    },
+    totalCostOutlayCommercial: function() {
+        var purchasePrice = getNumber($('input[name="purchase_price"]').val());
+        var stampDutyFee = this.caculateStampDutyFeeCommercial();
         var totalCostOutlay = stampDutyFee + mortgageStampDuty + valuationFee + legalFee + fireInsurance + ( purchasePrice * 20 / 100 );
         totalCostOutlayValue = Number(totalCostOutlay.toFixed(2));
         if (totalCostOutlayValue >= 0){

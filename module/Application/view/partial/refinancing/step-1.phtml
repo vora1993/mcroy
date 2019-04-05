@@ -41,21 +41,14 @@
                 <div class="row col-md-12">
                     <div class="col-md-3">
                         <select class="form-control nobtngrp floatrate" id="current_bank_name" name="current_bank_name">
-                            <option value=""><?php echo $this->translate("Select current bank or institution") ?></option>
-                            <option value="HDB Loan"><?php echo $this->translate("HDB Concessionary Loan") ?></option>
-                            <option value="ANZ"><?php echo $this->translate("ANZ") ?></option>
-                            <option value="Bank of China"><?php echo $this->translate("Bank of China") ?></option>
-                            <option value="Citibank"><?php echo $this->translate("Citibank") ?></option>
-                            <option value="CIMB"><?php echo $this->translate("CIMB") ?></option>
-                            <option value="DBS"><?php echo $this->translate("DBS") ?></option>
-                            <option value="Hong Leong Finance"><?php echo $this->translate("Hong Leong Finance") ?></option>
-                            <option value="HSBC"><?php echo $this->translate("HSBC") ?></option>
-                            <option value="Maybank"><?php echo $this->translate("Maybank") ?></option>
-                            <option value="OCBC"><?php echo $this->translate("OCBC") ?></option>
-                            <option value="RHB"><?php echo $this->translate("RHB") ?></option>
-                            <option value="Standard Chartered"><?php echo $this->translate("Standard Chartered") ?></option>
-                            <option value="UOB"><?php echo $this->translate("UOB") ?></option>
-                            <option value="Others"><?php echo $this->translate("Others") ?></option>
+                        <?php
+                            foreach ($this->bankInRefinancing() as $key => $value)
+                        {                             
+                        ?>
+                            <option value="<?php echo $value->getId()?>"><?php echo $value->getName()?></option>
+                        <?php
+                        }
+                        ?>
                         </select>
                     </div>
                 </div>

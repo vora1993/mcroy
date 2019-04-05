@@ -1,0 +1,38 @@
+<?php
+$title = $post->getPostTitle();
+$this->headTitle($title);
+?>
+<div class="page-title">
+  <?php
+  if(file_exists('assets/img/bg-'.$post->getSeo().'.png')) {
+    $bg_src = 'assets/img/bg-'.$post->getSeo().'.png';
+  } else {
+    $bg_src = 'assets/img/bg-about-us.png';
+  }
+  ?>
+  <div class="image-title"><img src="<?php echo $this->basePath($bg_src) ?>" class="img-responsive"></div>
+  <div class="container">
+    <h2><?php echo $title ?></h2>
+  </div>
+</div>
+<div class="container">
+  <div class="page-content-justified faq-panel-group" role="tablist" aria-multiselectable="true">
+    <div>
+      <h4 style="margin-top: 22%" class="faq-panel-header text-center">Privacy Policy </h4>
+      <div class="faq-panel-body">
+        <?php echo $post->getPostContent() ?>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>
+<?php
+  $offStyle = 12;
+  $offScript = 10;
+  $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.css'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/owl-carousel/owl.carousel.min.js'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+  $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+  $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+  $this->inlineScript()->offsetSetFile(101, $this->basePath('assets/js/news-article-slider.js'));
+?>

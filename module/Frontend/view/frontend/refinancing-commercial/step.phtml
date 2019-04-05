@@ -1,0 +1,124 @@
+<?php
+$title = $this->translate("Refinancing");
+$this->headTitle($title);
+$_text_completed = $this->translate("When do you intend to select your unit / make an offer");
+$_text_under_construction = $this->translate("Do you qualify for a Home Loan based on the Home Loan Eligibility (HLE) Letter from HDB");
+?>
+<div class="page-title"><h2><?php echo $title ?></h2></div>
+<div class="container">
+    <div class="page-content-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit portlet-form no-shadow">
+                    <div class="portlet-head">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row">
+                                        <div class="stepwizard-step<?php if($this->step == 1 || $this->step == 2 || $this->step == 3 || $this->step == 4 || $this->step == 5) echo ' active'; ?>">
+                                            <div class="step-circle">1</div>
+                                            <p><?php echo $this->translate("Property") ?></p>
+                                        </div>
+                                        <div class="stepwizard-step<?php if($this->step == 2 || $this->step == 3 || $this->step == 4 || $this->step == 5) echo ' active'; ?>">
+                                            <div class="step-circle">2</div>
+                                            <p><?php echo $this->translate("Loan") ?></p>
+                                        </div>
+                                        <div class="stepwizard-step<?php if($this->step == 3 || $this->step == 4 || $this->step == 5) echo ' active'; ?>">
+                                            <div class="step-circle">3</div>
+                                            <p><?php echo $this->translate("Register") ?></p>
+                                        </div>
+                                        <div class="stepwizard-step<?php if($this->step == 4 || $this->step == 5) echo ' active'; ?>">
+                                            <div class="step-circle">4</div>
+                                            <p><?php echo $this->translate("Compare") ?></p>
+                                        </div>
+                                        <div class="stepwizard-step<?php if($this->step == 5) echo ' active'; ?>">
+                                            <div class="step-circle">5</div>
+                                            <p><?php echo $this->translate("Apply") ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <?php echo $this->partial('refinancing_commercial_step_'.$this->step); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php if($this->step == 4): ?>
+<section class="selectlist">
+    <div class="container" id="selected-holder">
+        <div class="row compare-row" style="display: none;">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="shortlist-info-container">
+                            <div class="shortlist-info" id="select-title"><span>0</span> <?php echo $this->translate("Shortlisted Home Loan") ?></div>
+                            <p><?php echo $this->translate("Select up to 3 banks for comparison") ?></p>
+                            <p><?php echo $this->translate("Next Step - Find out more about this Home Loan Package and how to apply from a MoneyCompare Mortgage Specialist") ?></p>
+                            <a class="clear-shortlist" href="javascript:;" onclick="Loan.clear_select(this)"><i class="fa fa-times-circle"></i> <?php echo $this->translate("Clear Shortlist") ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="select-holder"></div>
+            <div class="col-md-2">
+                <div class="row">
+                    <a class="btn blue btn-lg text-uppercase" href="javascipt:;" onclick="Loan.apply()"><?php echo $this->translate("Apply Now") ?></a>
+                </div>
+            </div>
+        </div>
+        <div class="compare-arrow"><a href="javascript:;" onclick="Loan.shortlist2(this)"><i class="fa fa-angle-double-down"></i></a></div>
+    </div>
+</section>
+<?php endif;?>
+<?php if($this->step == 1): ?>
+<div id="popup">
+    <div class="where-you-go">
+        <a href="javascript:;" class="popup_close"><i class="fa fa-close"></i></a>
+        <p><?php echo $this->translate("Do you like to use our <strong>AI Mortgage Assistant</strong> for a more precise rates comparison ?") ?></p>
+        <div class="actions">
+            <a href="javascript:;" class="btn btn-yes popup_close"><?php echo $this->translate("Yes"); ?></a>
+            <a href="javascript:;" onclick="no()" class="btn btn-no"><?php echo $this->translate("No"); ?></a>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#popup').popup({
+        autoopen : true,
+        scrolllock: true,
+        escape: false,
+        blur: false
+    });
+});
+
+function no() {
+    var seo = $("input[name=seo]").val();
+    $.ajax({
+        type: "POST",
+        url: full_url + "/refinancing-commercial/select-no",
+        data: {seo: seo},
+        dataType: 'json',
+        success: function(itemJson) {
+            if(itemJson.redirect) window.location.href = itemJson.redirect;
+        },
+        error : function(xhr, status){
+            console.log(status);
+        },
+    });
+}
+</script>
+<?php
+$offStyle = 12;
+$offScript = 10;
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/js/jquery.popupoverlay.js'));
+?>

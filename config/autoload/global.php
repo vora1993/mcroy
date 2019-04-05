@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=websgdem_moneycompare;host=localhost',
+        'dsn'            => 'mysql:dbname=moneycompare;host=localhost',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
@@ -26,6 +26,7 @@ return array(
     ),
     'application' => array(
         'base_path' => '',
-        'full_url'  => 'http://moneycompare.websgdemo.com',
+        'full_url'  => 'https://moneycompare.sg',
     ),
 );
+

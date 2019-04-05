@@ -14,7 +14,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAll(array('status' => 1));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll(array('status' => 1));
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
@@ -277,8 +277,7 @@ class CreditCardController extends AbstractActionController
         $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
       }
     }
-
-    return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards);
+    return array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards,"list_item"=>$select);
   }
 
   public function pointsAction()
@@ -287,7 +286,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAll(array('points' => '1'));
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll();
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
@@ -303,7 +302,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAllOrder(array('discount' => '1'),'discount_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll();
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
@@ -319,7 +318,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAllOrder(array('air_miles' => '1'),'air_miles_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll();
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
@@ -335,7 +334,7 @@ class CreditCardController extends AbstractActionController
     $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
     $credit_cards = $application_model_credit_card->fetchAllOrder(array('cashback' => '1'),'cashback_value desc');
     $application_model_bank = $this->getServiceLocator()->get('application_model_bank');
-    $banks = $application_model_bank->fetchAll();
+    $banks = $application_model_bank->fetchAll(array('show_credit_card'=>1));
     $application_model_slider = $this->getServiceLocator()->get('application_model_slider');
     $sliders = $application_model_slider->fetchAll(array('status' => array(0,1,2,3), 'type' => 1));
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
@@ -345,7 +344,7 @@ class CreditCardController extends AbstractActionController
     return array("credit_cards" => $credit_cards, "banks" => $banks, "sliders" => $sliders, 'posts' => $posts, 'providers' => $providers);
   }
 
-  public function addItemCompare()
+  public function addItemCompareAction()
   {
     $session = new Session('credit_card');
     $request = $this->getRequest();
@@ -387,11 +386,47 @@ class CreditCardController extends AbstractActionController
       }
 
       $session->offsetSet('select', $select_arr);
+      $select = $session->offsetGet('select');
+
       $response = $this->getResponse();
       $response->setContent ( \Zend\Json\Json::encode ( array("success" => $success,"msg" => $msg , "cr" => $cr, "ca" => $ca) ) );
       return $response;
     }
     if($session->offsetExists('select')) $select = $session->offsetGet('select');
     return array("select" => $select);
+  }
+
+  public function getListCompareAction()
+  {
+    $category='all';
+    $request = $this->getRequest();
+    if($request->isPost()) {
+      $post=$request->getPost();
+      $category=$post['category'];
+    }
+    $session = new Session('credit_card');
+    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+    $application_model_credit_card = $this->getServiceLocator()->get('application_model_credit_card');
+    if ($session->offsetExists('select'))
+    {
+      $select = $session->offsetGet('select');
+      if (count($select) > 0)
+      {
+        $credit_cards_compare = $application_model_credit_card->fetchAll(array("id" => $select));
+      }
+    }
+    if($category!='all')
+    {
+      $credit_cards = $application_model_credit_card->fetchAll(array($category=>1));
+    }else{
+      $credit_cards = $application_model_credit_card->fetchAll();
+    }
+    
+
+    $htmlView = new ViewModel(array("credit_cards_compare" => $credit_cards_compare, "credit_cards" => $credit_cards,"list_item"=>$select,"category"=>$category));
+    $htmlOutput = $htmlView
+      ->setTerminal(true)
+      ->setTemplate('list_compare');
+    return $htmlOutput;
   }
 }

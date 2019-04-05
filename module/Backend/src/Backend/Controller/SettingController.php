@@ -766,6 +766,49 @@ class SettingController extends AbstractActionController
     return $response;
   }
 
+  /**
+   * Change Support Logo
+   */
+  public function changeSupportLogoAction() {
+    $translator = $this->getServiceLocator()->get('translator');
+    $messages = array();
+    $response = $this->getResponse();
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $file = $this->params()->fromFiles('file');
+      $valid_formats = array("jpg", "jpeg", "png", "gif", "bmp");
+      $name = $file['name'];
+      if(strlen($name)) {
+        $dir = 'data/user/tmp';
+        if (!file_exists($dir)) {
+          mkdir($dir, 0777, true);
+        }
+
+        list($txt, $ext) = explode(".", $name);
+        if(in_array($ext, $valid_formats)) {
+          $newFilename = 'support_logo.' . $ext;
+          $tmp = $file['tmp_name'];
+          if(move_uploaded_file($tmp, $dir.'/'.$newFilename)) {
+            $messages = array(
+              'success'  => true,
+              'name'     => $newFilename,
+              'src'      => '/data/user/tmp/'.$newFilename,
+              'msg'      => $translator->translate("Upload logo successful"),
+            );
+          } else {
+            $messages = array('success' => false, 'msg' => $translator->translate("Something error. Please check"));
+          }
+        } else {
+          $messages = array('success' => false, 'msg' => $translator->translate("Invalid file formats"));
+        }
+      } else {
+        $messages = array('success' => false, 'msg' => $translator->translate("Please select image"));
+      }
+    }
+    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+    return $response;
+  }
+
   public function editSocialAction() {
     $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
     $settings = $application_model_setting->fetchAll();
@@ -780,7 +823,7 @@ class SettingController extends AbstractActionController
         $error = 0;
 
         $now = new Expression('NOW()');
-        $array_key = array('facebook_app_id', 'facebook_app_secret', 'facebook_link', 'twitter_link', 'linkedin_link', 'google_plus_link');
+        $array_key = array('facebook_app_id', 'facebook_app_secret', 'facebook_link', 'twitter_link', 'linkedin_link', 'google_plus_link', 'instagram_link');
         foreach ($settings as $setting) {
           if(in_array($setting->getKey(), $array_key)) {
             $setting->setId($setting->getId());
@@ -821,7 +864,7 @@ class SettingController extends AbstractActionController
       $request = $this->getRequest();
       $response = $this->getResponse();
       $messages = array();
-      $company_array_key = array('eligibility_sale_turn_over', 'eligibility_years_of_incorporation', 'min_requirement', 'monthly_instalments', 'total_interest_payable', 'processing_fee', 'penalty_fee', 'interest_property_loan', 'monthly_repayment', 'total_interest_payable', 'type_property_loan');
+      $company_array_key = array('eligibility_sale_turn_over', 'eligibility_years_of_incorporation', 'min_requirement', 'monthly_instalments', 'total_interest_payable', 'processing_fee', 'penalty_fee', 'interest_property_loan', 'monthly_repayment', 'total_interest_payable', 'type_property_loan','min_turnover','min_years_incorporation','annual_fee','lock_in_period','max_tenure');
 
       if ($request->isPost()) {
         $post = $request->getPost();
@@ -1052,5 +1095,70 @@ class SettingController extends AbstractActionController
       }
     }
     return new JsonModel($result);
+  }
+
+  public function viewSupportInfoAction() {
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $settings = $application_model_setting->fetchAll();
+    return array('settings' => $settings);
+  }
+
+  public function editSupportInfoAction() {
+    $application_model_setting = $this->getServiceLocator()->get('application_model_setting');
+    $settings = $application_model_setting->fetchAll();
+    if($settings) {
+      $translator = $this->getServiceLocator()->get('translator');
+      $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+      $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
+      $application_view_helper_folder = $viewHelperManager->get('folder');
+
+      $request = $this->getRequest();
+      $response = $this->getResponse();
+      $messages = array();
+      if ($request->isPost()) {
+        $post = $request->getPost();
+        $error = 0;
+        $now = new Expression('NOW()');
+        $supporter_array_key = array('supporter_name', 'supporter_email', 'supporter_phone', 'supporter_image');
+        foreach ($settings as $setting) {
+          if(in_array($setting->getKey(), $supporter_array_key)) {
+            $setting->setId($setting->getId());
+            $setting->setValue($post[$setting->getKey()]);
+            $setting->setDateModified($now);
+            $edited = $application_model_setting->update($setting);
+            if(!$edited) $error = $error + 1;
+          }
+        }
+
+        // Logo
+        $dir_setting = 'data/user';
+        if($post['supporter_image']) {
+          $dir_image = $dir_setting;
+          if (!file_exists($dir_image)) mkdir($dir_image, 0777, true);
+
+          $dir_tmp = $dir_setting.'/tmp/'.$post['supporter_image'];
+          $dir_new = $dir_image.'/'.$post['supporter_image'];
+          if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
+
+          $application_view_helper_resizeimage($dir_image, $post['supporter_image']);
+          $application_view_helper_folder("delete", $dir_setting.'/tmp');
+        }
+
+        if(!$error) {
+          $messages['success'] = true;
+          $messages['msg']     = $translator->translate("Successfully updated");
+        } else {
+          $messages['success'] = false;
+          $messages['msg']     = $translator->translate("Something error. Please check");
+        }
+
+        $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+        return $response;
+      }
+
+      return array('settings' => $settings);
+    } else {
+      return $this->redirect()->toRoute("setting");
+    }
   }
 }

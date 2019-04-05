@@ -8,112 +8,165 @@ $this->headTitle($title);
         <div class="box-title-compare">
             <div class="title-compare"><?php echo $title ?></div>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#business" aria-expanded="true"><i class="fa fa-percent"></i> <span class="title-lag"><?php echo $this->translate("Business Term Loan") ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
+                <li class="active"><a data-toggle="tab" href="#business" aria-expanded="true"><i class="fa fa-university" aria-hidden="true"></i> <span class="title-lag"><?php echo $title ?></span><span class="title-xs"><?php echo $this->translate("Loan") ?></span></a></li>
     		    <li><a data-toggle="tab" href="#info" aria-expanded="true"><i class="fa fa-comments-o"></i> <?php echo $this->translate("Faq") ?> </a></li>
     		    <li><a data-toggle="tab" href="#need"><i class="fa fa-question-circle"></i><span class="title-lag"><?php echo $this->translate("Need Help") ?></span><span class="title-xs"><?php echo $this->translate("Help") ?></span></a></li>
             </ul>
         </div>
         <div class="tabs-bank"></div>
-
+        
         <div class="tab-content">
             <div class="container">
                 <div class="row">
-                    <div class="tab-pane fade active in">
-                        <div class="col-sm-9 col-xs-12 <?php echo $this->category->getSeo() ?>">
-                            <div class="filter-table-head hidden-sm hidden-xs">
-                                <ul>
-                                    <li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Bank") ?></div>
-                                        </aside>
-                                    </li><!--
-                                    <?php if($this->category->getName() === 'Fixed Deposit'): ?>
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Fixed Deposit Amt") ?></div>
-                                            <div class="sort" data-field="rate"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>
-                                    </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Tenor") ?></div>
-                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->min_requirement ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                        </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Interest Rates") ?><span></span></div>
-                                            <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
-                                            <div class="sort" data-field="month"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>
-                                        </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Interest Earned") ?></div>
-                                        </aside>
-                                    </li>
-                                    <?php else: ?>
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Initial Deposit Amount") ?></div>
-                                            <div class="sort" data-field="initial_deposit_amount"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>
-                                    </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Min Balance") ?></div>
-                                            <div class="sort" data-field="minimum_balance"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Int Rates") ?><span></span></div>
-                                            <div class="sort" data-field="interest_rates"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
-                                        </aside>
-                                        </li><!--
-                                    --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Cheque Book Fees") ?></div>
-                                        </aside>
-                                       </li><!--
-                                       --><li>
-                                        <aside class="head-title">
-                                            <div class="name"><?php echo $this->translate("Internet Banking Fees") ?></div>
-                                        </aside>
-                                       </li>
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
-                            <div class="filters-table-container" id="results"></div>
-                            <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
-                        </div>
-                        <div id="column-right" class="col-sm-3 col-xs-12">
-                            <div class="box-featured-bank">
-                                <?php $i=1;?>
-                                <?php if(count($this->interest_rate) > 0): ?>
-                                <?php foreach ($this->interest_rate as $loan):
-                                if($i<=4)
-                                {
-                                $img_bank = $this->Bank(array("id" => $loan->getBankId()));
-                                ?>
-                                <div class="featured-bank lowest-interest">
-                                    <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
-                                    <div class="item-bank">
-                                    <div class="img-bank">
-                                        <img class="logo-bank" src="<?php echo $this->basePath('data/bank/'.$loan->getBankId().'/'.$img_bank->getLogo()) ?>" title="" alt="" />
-                                    </div>
-                                        <h4 class="name-bank"><?php echo $loan->getName() ?></h4>
-                                        <span class="amout-bank">(<?php echo $loan->getRate() ?>%)</span>
+                    <div id="business" class="tab-pane fade active in">
+                        <?php
+                            if($this->seo=='fixed-deposit')
+                            {
+                        ?>
+                            <div class="col-md-12">
+                                    <div class="search-bank">
+                                        <form method="post" action="<?php echo $this->url("loan_application", array("action" => "bank-account")) ?>" id="form_loan">
+                                            <div class="col-md-9 col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 15px;">
+                                                        <div class="row">
+                                                            <b class="col-xs-12 lb-loan"><?php echo $this->translate("I want to put") ?></b>
+                                                            <div class="col-xs-12">
+                                                                <div class="input-group">
+                                                                    <input type="text" name="loan_amount" value="100000" id="loan_amount" class="form-control" placeholder="100000" />
+                                                                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 15px;">
+                                                        <div class="row">
+                                                            <b class="col-md-5 col-xs-12 lb-loan"><?php echo $this->translate("Over") ?></b>
+                                                            <div class="col-xs-12">
+                                                                <div class="input-group" style="width: 100%">
+                                                                    <select name="month_interes" class="form-control" id="sel1">
+                                                                        <option value="0">-- Selected month --</option>
+                                                                        <option value="3">3 months</option>
+                                                                        <option value="6">6 months</option>
+                                                                        <option value="9">9 months</option>
+                                                                        <option value="12">12 months</option>
+                                                                    </select>           
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-xs-12">
+                                                <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                                                <input type="hidden" name="seo" value="<?php echo $this->seo ?>" />
+                                                <button type="button" id="submit-search" class="btn_calculate" style="margin-top: 24px!important"><?php echo $this->translate("Find Results") ?></button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <?php
-                                        $i++;
-                                    }
-                                 endforeach;
-                                ?>
+                        <?php
+                            }
+                        ?>
+                            <div >
+                                <div class="col-sm-9 col-xs-12 <?php echo $this->category->getSeo() ?>">
+                                    <div class="filter-table-head hidden-sm hidden-xs">
+                                        <ul>
+                                            <li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Bank") ?></div>
+                                                </aside>
+                                            </li><!--
+                                            <?php if($this->category->getName() === 'Fixed Deposit'): ?>
+                                            -->
+                                            <li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Interest Earned") ?></div>
+                                                </aside>
+                                            </li>
+                                            <li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Fixed Deposit Amt") ?></div>
+                                                    <div class="sort" data-field="initial_deposit_amount"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                </aside>
+                                            </li><!--
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Tenor") ?></div>
+                                                    <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->min_requirement ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                                </li><!--
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Interest Rates") ?><span></span></div>
+                                                    <div class="explain"><a href="javascript:;" class="tooltip-icon2 popovers" data-trigger="hover" data-container="body" data-content="<?php echo $this->setting()->monthly_instalments ?>" data-html="true"><i class="fa fa-question-circle"></i></a></div>
+                                                    <div class="sort" data-field="interest_rates"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                </aside>
+                                                </li><!--
+                                            -->
+                                            <?php else: ?>
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Initial Deposit Amount") ?></div>
+                                                    <div class="sort" data-field="initial_deposit_amount"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                </aside>
+                                            </li><!--
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Min Balance") ?></div>
+                                                    <div class="sort" data-field="minimum_balance"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                </li><!--
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Int Rates") ?><span></span></div>
+                                                    <div class="sort" data-field="interest_rates"><a href="javascript:;" onclick="Loan.sort(this)"><i class="fa fa-long-arrow-down"></i></a></div>
+                                                </aside>
+                                                </li><!--
+                                            --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Cheque Book Fees") ?></div>
+                                                </aside>
+                                               </li><!--
+                                               --><li>
+                                                <aside class="head-title">
+                                                    <div class="name"><?php echo $this->translate("Internet Banking Fees") ?></div>
+                                                </aside>
+                                               </li>
+                                            <?php endif; ?>
+                                        </ul>
+                                    </div>
+                                    <div class="filters-table-container" id="results"></div>
+                                    <input type="hidden" name="category_id" value="<?php echo $this->category->getId(); ?>" />
+                                </div>
+                                <?php $i=1;?>
+                                <?php if(count($this->interest_rate) > 0 && $this->current_category->getShowBankInterestRate()!=0): ?>
+                                <div id="column-right" class="col-sm-3 col-xs-12">
+                                    <div class="box-featured-bank">
+                                        <?php 
+                                        foreach ($this->interest_rate as $loan):
+                                        if($i<=4)
+                                        {
+                                        $img_bank = $this->Bank(array("id" => $loan->getBankId()));
+                                        ?>
+                                        <div class="featured-bank lowest-interest">
+                                            <h3 class="title-featured"><?php echo $loan->getType() ?></h3>
+                                            <div class="item-bank">
+                                            <div class="img-bank">
+                                                <img class="logo-bank" src="<?php echo $this->basePath('data/bank/'.$loan->getBankId().'/'.$img_bank->getLogo()) ?>" title="" alt="" />
+                                            </div>
+                                                <h4 class="name-bank"><?php echo $loan->getName() ?></h4>
+                                                <span class="amout-bank">(<?php echo $loan->getRate() ?>%)</span>
+                                            </div>
+                                        </div>
+                                        <?php
+                                                $i++;
+                                            }
+                                         endforeach;
+                                        ?>
+                                    </div>
+                                </div>
                                 <?php endif;?>
                             </div>
-                        </div>
                     </div>
-
                     <div id="info" class="tab-pane fade">
         				<div class="body-info">
                             <div class="content-faq">
@@ -238,8 +291,15 @@ if(count($notify) > 0) {
     echo '<script type="text/javascript">';
     $time_out = 2500;
     foreach ($notify as $value) {
+        if($value=='There are 38 people viewed these loans today')
+        {
+            $message_js='There are '.rand(30,100).' people viewed these loans today';
+        }else
+        {
+            $message_js='There are '.rand(30,100).' customer applied these loans today';
+        }
         echo 'setTimeout(function(){
-                $.bootstrapGrowl("'.$value.'", {
+                $.bootstrapGrowl("'.$message_js.'", {
                     ele: "body",
                     type: "info",
                     offset: {
@@ -278,8 +338,39 @@ $('#testimonials .box-content').owlCarousel({
 });
 
 
-Loan.load();
+Loan.load_fixed_deposit();
 Loan.load_compare();
+
+//Ajax filter
+$('#submit-search').click(function(){
+    var category_id = $("input[name=category_id]").val();
+    var loan_amount_interes=$("input[name=loan_amount]").val();
+    var month_interes=$("select[name=month_interes]").val();
+    if(month_interes==0)
+    {
+        alert("You not select account month");
+    }else
+    {
+        $.ajax({
+            type: "POST",
+            url: full_url + "/loan-application/bank-account",
+            data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
+            dataType: 'json',
+            beforeSend: function() {
+                App.blockUI({boxed: true});
+            },
+            success: function(itemJson) {
+                App.unblockUI();
+                $('#results').html(itemJson.html);
+                Loan.detail();
+            },
+
+            error : function(xhr, status){
+                console.log(status);
+            },
+        });
+    }
+})
 
 var form = $("#question_form");
 form.validate({
@@ -325,7 +416,6 @@ form.validate({
         var serializedData = form.serialize();
 
         inputs.prop("disabled", true);
-
         request = $.ajax({
             url: form.attr("action"),
             type: "post",

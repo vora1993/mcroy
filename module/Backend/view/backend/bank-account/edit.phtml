@@ -96,6 +96,17 @@ if(count($categories) > 0) {
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group hide">
+                                    <label class="control-label col-md-3"><?php echo $this->translate("Category Account") ?><span class="required"> * </span></label>
+                                    <div class="col-md-6">
+                                        <select name="category_account" class="form-control">
+                                            <option <?php if($this->loan->getCategoryAccount()==3) echo 'selected'?> value="3">3 months</option>
+                                            <option <?php if($this->loan->getCategoryAccount()==6) echo 'selected'?> value="6">6 months</option>
+                                            <option <?php if($this->loan->getCategoryAccount()==9) echo 'selected'?> value="9">9 months</option>
+                                            <option <?php if($this->loan->getCategoryAccount()==12) echo 'selected'?> value="12">12 months</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Bank") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
@@ -146,7 +157,7 @@ if(count($categories) > 0) {
                                 <div class="form-group initial_deposit_amount">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Initial Deposit Amount") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="initial_deposit_amount" class="form-control" value="<?php echo $this->loan->getInitialDepositAmount() ?>" /> 
+                                        <input type="text" name="initial_deposit_amount" class="form-control" value="<?php echo $this->loan->getInitialDepositAmount() ?>" required/> 
                                     </div>
                                 </div>
                                 
@@ -157,14 +168,12 @@ if(count($categories) > 0) {
                                     </div>
                                 </div>
                                 
-                                <?php if($this->loan->getCategoryId() == 3): ?>
-                                <div class="form-group tenor">
+                                <div class="form-group tenor hide">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Tenor(Fixed Deposit)") ?></label>
                                     <div class="col-md-6">
                                         <input type="text" name="tenor" class="form-control" value="<?php echo $this->loan->getTenor() ?>" /> 
                                     </div>
                                 </div>
-                                <?php endif; ?>
                                 
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Cheque Book Fees") ?></label>
@@ -197,7 +206,8 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-3"><?php echo $this->translate("Highlight") ?></label>
                                     <div class="col-md-6">
-                                        <input type="text" name="highlight" class="form-control editor" value="<?php echo $this->loan->getHighlight() ?>" /> 
+                                        <!-- <input type="text" name="highlight" class="form-control editor" value="<?php echo $this->loan->getHighlight() ?>" />  -->
+                                        <textarea class="form-control editor"><?php echo $this->loan->getHighlight() ?></textarea>
                                     </div>
                                 </div>
                                 
@@ -240,11 +250,17 @@ if(count($categories) > 0) {
                                                                 <div class="row mt-repeater-row">
                                                                     <div class="col-md-8">
                                                                         <label class="control-label"><?php echo $this->translate("Tier(for Savings Account) / Months(for Fixed Deposit)") ?></label>
-                                                                        <input type="text" name="tier" class="form-control" value="<?php echo $value->tier ?>" /> 
+                                                                        <div class="col-md-12 input-group">
+                                                                            <input type="number" min="0" name="tier" class="form-control" value="<?php echo $value->tier ?>" />
+                                                                            <span class="input-group-addon"><?php echo $this->translate("Month") ?></span>
+                                                                        </div> 
                                                                     </div>
                                                                     <div class="col-md-4">
                                                                         <label class="control-label"><?php echo $this->translate("Percentage") ?></label>
-                                                                        <input type="text" name="percentage" class="form-control" value="<?php echo $value->percentage ?>" />
+                                                                        <div class="col-md-12 input-group">
+                                                                            <input type="number" min="0" name="percentage" class="form-control" value="<?php echo $value->percentage ?>" />
+                                                                            <span class="input-group-addon"><?php echo $this->translate("%") ?></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-repeater-row">
@@ -264,11 +280,17 @@ if(count($categories) > 0) {
                                                         <div class="row mt-repeater-row">
                                                             <div class="col-md-8">
                                                                 <label class="control-label"><?php echo $this->translate("Tier(for Savings Account) / Months(for Fixed Deposit)") ?></label>
-                                                                <input type="text" name="tier" class="form-control" /> 
+                                                                <div class="col-md-12 input-group">
+                                                                    <input type="text" name="tier" class="form-control" />
+                                                                    <span class="input-group-addon"><?php echo $this->translate("Month") ?></span>
+                                                                </div> 
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <label class="control-label"><?php echo $this->translate("Percentage") ?></label>
-                                                                <input type="text" name="percentage" class="form-control" />
+                                                                <div class="col-md-12 input-group">
+                                                                    <input type="text" name="percentage" class="form-control" />
+                                                                    <span class="input-group-addon"><?php echo $this->translate("%") ?></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row mt-repeater-row">
@@ -317,14 +339,21 @@ $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugi
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom_functions.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
+var category_name = $("select[name=category_id] option:selected").text();
+if(category_name === 'Fixed Deposit') {
+    $('.tenor').removeClass('hide');
+    $('input[name=tenor]').attr('required',true);
+}
 $('select[name=category_id]').on("change", function() {
-    var category_name = $("select[name=category_id] option:selected").text();
+    var category_name = $("select[name=category_id] option:selected").text();    
     if(category_name === 'Fixed Deposit') {
         $('.tenor').removeClass('hide');
+        $('input[name=tenor]').attr('required',true);
         $('.initial_deposit_amount label').text('Fixed Deposit Amount');
         $('.minimum_balance label').text('Minimum Deposit');
     } else {
         $('.tenor').addClass('hide');
+        $('input[name=tenor]').attr('required',false);
         $('.initial_deposit_amount label').text('Initial Deposit Amount');
         $('.minimum_balance label').text('Minimum Balance');
     }

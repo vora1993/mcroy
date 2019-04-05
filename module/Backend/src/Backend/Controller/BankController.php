@@ -30,17 +30,33 @@ class BankController extends AbstractActionController
             $bank->setLogo($post['logo']);
             $bank->setColor($post['color']);
             $bank->setStatus($post['status']);
+            $bank->setShowCreditCard($post['status_credit_card']);
+            $bank->setLogoInCreditCard($post['logo_credit_card']);
             $added = $application_model_bank->insert($bank);
             if($added) {
                 $messages['success'] = true;
                 $messages['msg'] = $translator->translate("Successfully added");
+                //Logo bank credit card
+                $dir_bank = 'data/logo_bank_credit_card/';
+                if($post['logo_credit_card']) {
+                    $dir_logo = $dir_bank.$added->getGeneratedValue();
+                    if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
 
+                    $dir_tmp = 'data/bank/tmp/'.$post['logo_credit_card'];
+                    $dir_new = $dir_logo.'/'.$post['logo_credit_card'];
+                    if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
+                    $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+
+                    $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
+                    $application_view_helper_folder = $viewHelperManager->get('folder');
+                    $application_view_helper_resizeimage($dir_logo, $post['logo_credit_card']);
+                    $application_view_helper_folder("delete", $dir_bank.'/tmp');
+                }
                 // Logo
                 $dir_bank = 'data/bank/';
                 if($post['logo']) {
                     $dir_logo = $dir_bank.$added->getGeneratedValue();
                     if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
-
                     $dir_tmp = $dir_bank.'/tmp/'.$post['logo'];
                     $dir_new = $dir_logo.'/'.$post['logo'];
                     if(file_exists($dir_tmp)) copy($dir_tmp, $dir_new);
@@ -52,6 +68,7 @@ class BankController extends AbstractActionController
                     $application_view_helper_resizeimage($dir_logo, $post['logo']);
                     $application_view_helper_folder("delete", $dir_bank.'/tmp');
                 }
+                
             } else {
                 $messages['success'] = false;
                 $messages['msg'] = $translator->translate("Something error. Please check");
@@ -74,13 +91,13 @@ class BankController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-
                 $error = 0;
                 if(!$error) {
                     $bank->setId($id);
                     $bank->setName($post['name']);
                     $bank->setDateModified(new Expression('NOW()'));
                     $bank->setStatus($post['status']);
+                    $bank->setShowCreditCard($post['status_credit_card']);
 
                     // Logo
                     $dir_bank = 'data/bank/';
@@ -107,6 +124,31 @@ class BankController extends AbstractActionController
                             $bank->setLogo($new_logo_name);
                         }
                     }
+
+                    //Logo bank credit card
+                    $dir_bank = 'data/logo_bank_credit_card/';
+                    if($post['logo_credit_card'] !== $bank->getLogoInCreditCard()) {
+                        $dir_logo = $dir_bank.$id;
+                        if (!file_exists($dir_logo)) mkdir($dir_logo, 0777, true);
+
+                        $dir_tmp ='data/bank/tmp/'.$post['logo_credit_card'];
+                        $dir_new = $dir_logo.'/'.$post['logo_credit_card'];
+                        if(file_exists($dir_tmp)) {
+                            copy($dir_tmp, $dir_new);
+                            $ext = pathinfo($post['logo_credit_card'], PATHINFO_EXTENSION);
+                            $new_logo_name = $id.'.'.$ext;
+                            rename($dir_new, $dir_logo.'/'.$new_logo_name);
+
+                            $viewHelperManager = $this->getServiceLocator()->get('ViewHelperManager');
+                            $application_view_helper_resizeimage = $viewHelperManager->get('resize_image');
+                            $application_view_helper_folder = $viewHelperManager->get('folder');
+
+                            $application_view_helper_resizeimage($dir_logo, $new_logo_name);
+                            $application_view_helper_folder("delete", $dir_bank.'/tmp');
+                            $bank->setLogoInCreditCard($new_logo_name);
+                        }
+                    }
+
                     $bank->setColor($post['color']);
 
                     $edited = $application_model_bank->update($bank);

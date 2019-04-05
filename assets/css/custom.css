@@ -136,6 +136,10 @@ a:hover, a:focus {
     padding: 5px 0;
 }
 
+.portlet.light {
+  padding: 0;
+}
+
 .portlet.light > .portlet-head {
     padding: 15px 20px 10px;
 }
@@ -688,8 +692,6 @@ a:hover, a:focus {
 
 .loan-sidebar {
     float: left;
-    width: 300px;
-    margin-right: 20px;
 }
 
 .loan-content {
@@ -709,8 +711,27 @@ a:hover, a:focus {
 	box-shadow: none;
 }
 
+.portlet .loan-sidebar-portlet,
+.loan-filter.no-lock-in-loan{
+  margin-bottom: 0;
+}
+
 .loan-filter {
     margin-bottom: 20px;
+    padding: 20px 15px;
+}
+
+.loan-filter > p {
+    width: 100%;
+    float: left;
+    color: #5d5c5d;
+    font-size: 15px;
+    margin: 0 0 20px;
+    line-height: 18px;
+}
+
+.loan-filter > .refresh-btn {
+  margin-bottom: 20px;
 }
 
 .loan-filter .input-group-addon {
@@ -763,28 +784,7 @@ a:hover, a:focus {
     cursor: pointer;
 }
 
-.loan-title-portlet {
-    border-bottom: 1px solid #ededed;
-    display: block;
-    margin-bottom: 15px;
-    width: 100%;
-    padding: 8px 0;
-}
-
-.loan-title-portlet h2 {
-    background: #11a7e8;
-    color: #fff;
-    -webkit-border-top-right-radius: 35px;
-    -moz-border-radius-topright: 35px;
-    border-top-right-radius: 35px;
-    display: inline;
-    padding: 8px 20px 4px 10px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
 .loan-content-portlet p {
-    color: #7f8c8d;
     margin-bottom: 20px;
 }
 
@@ -923,7 +923,6 @@ a:hover, a:focus {
 }
 
 .results-container .more-info {
-    margin-top: 20px;
     padding: 0 25px;
 }
 
@@ -1711,7 +1710,7 @@ a:hover, a:focus {
     width: 16.66666667%;
 }
 .fixed-deposit .filter-table-head ul > li {
-    width: 20%;
+    width: 19.8%;
 }
 .current-account-sgd .filters-content .row-content ul,
 .current-account-usd .filters-content .row-content ul,
@@ -1881,7 +1880,7 @@ a:hover, a:focus {
     -o-transform: rotate(45deg);
     width: 100%;
     float: left;
-    color: #fff;
+    color: black;
     position: absolute;
     top: -80px;
     width: 71px;
@@ -2154,6 +2153,7 @@ ul.stay-connected > li.instagram {
     margin-top: 15px;
 }
 
+
 .form-wizard #complete-total-costs .tooltip-icon{
     margin-top: 0px;
 }
@@ -2181,83 +2181,10 @@ ul.stay-connected > li.instagram {
     padding-top: 0px;
 }
 
-.margin-top-sm {
-    margin-top: 15px;
-}
-
-.swal2-modal button.styled.margin-top-sm {
-    margin-top: 15px;
-}
-
 @media (max-width: 1280px) {
     .box-services .item {
         padding: 0 20px !important;
     }
-}
-
-.margin-top-sm {
-    margin-top: 15px;
-}
-
-.swal2-modal button.styled.margin-top-sm {
-    margin-top: 15px;
-}
-
-.page-content-justified{
-    text-align: justify;
-}
-
-.faq-panel{
-    border-bottom: solid 1px #e7e6e2;
-    padding: 0;
-    font-size: 14px;
-}
-
-.faq-panel-header{
-    font-weight: 700;
-    padding: 0;
-    margin: 0;
-    font-size: 28px;
-    line-height: 30px;
-}
-
-.faq-panel .faq-panel-header a .fa-caret-down{
-    display: none;
-}
-
-.faq-panel .faq-panel-header a.collapsed .fa-caret-up{
-    display: none;
-}
-
-.faq-panel .faq-panel-header a.collapsed .fa-caret-down{
-    display: inline-block;
-}
-
-.faq-panel .faq-panel-header a i{
-    color: #78aa43;
-}
-
-.faq-panel .faq-panel-header a{
-    display: block;
-    padding: 20px 0 20px 0px;
-    color: #312f2e;
-    position: relative;
-    text-align: left;
-}
-
-.faq-panel .faq-panel-header a span{
-    padding-left: 10px;
-}
-
-.faq-panel-body{
-    margin: 15px 0 25px;
-    font-size: 20px;
-    line-height: 30px;
-    overflow: hidden;
-}
-
-.page-content-wrapper .about-bottom{
-    padding-top: 0px;
 }
 
 @media (max-width: 768px) {
@@ -2283,15 +2210,23 @@ ul.stay-connected > li.instagram {
     }
 }
 
-.page-header .page-logo a:after,
-#footer .page-logo a:after{
+.page-logo-beta-parent {
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: -20px;
+}
+.page-header .page-logo-beta-parent .page-logo-beta:after{
   content: "beta";
-  position: fixed;
-  width: 80px;
-  height: 25px;
+  position: absolute;
   background: #EE8E4A;
-  top: 7px;
-  left: -20px;
+  width: 134px;
+  height: 28px;
+  top: 23px;
+  left: -40px;
+  overflow: hidden;
   text-align: center;
   font-size: 13px;
   font-family: sans-serif;

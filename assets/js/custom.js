@@ -29,14 +29,14 @@ var Loan = {
             $(this).hide();
             $(this).next().show();
         });
-    
+
         $(".btn-less-detail").on('click', function(){
             $("p").slideDown();
             $(this).closest(".row-footer").find(".summary-details").slideUp();
             $(this).hide();
             $(this).prev().show();
         });
-        
+
         $(".btn-less-detail").trigger("click");
     },
     apply: function(a) {
@@ -71,8 +71,9 @@ var Loan = {
         var b = $(a).data("id");
         var c = formatIntNumber($("input[name=loan_amount]").val());
         var d = $("input[name=loan_tenure]").val();
+        var seo=$("input[name=seo]").val();
         if (c > 0 && d > 0) {
-            var e = "id=" + b + "&loan_amount=" + c + "&loan_tenure=" + d;
+            var e = "id=" + b + "&loan_amount=" + c + "&loan_tenure=" + d+"&seo="+seo;
             $.ajax({
                 url: full_url + "/business-term-loan/compare",
                 type: "post",
@@ -143,7 +144,7 @@ var Loan = {
                     Loan.shortlist3('open');
                 } else {
                     Loan.shortlist3('close');
-                } 
+                }
                 Loan.sticky_header();
                 Loan.popup();
                 $(".drawercard-container").mouseleave(function() {
@@ -221,9 +222,10 @@ var Loan = {
         var g = $(".filters-content.not-sponsored");
         var h = g.sort(function(a, b) {
             if ("bank" === c) if ("asc" === e) return $(a).find(".bank-title > a").text() < $(b).find(".bank-title > a").text(); else return $(a).find(".bank-title > a").text() > $(b).find(".bank-title > a").text();
-            if ("rate" === c || "applicable" === c || "loan" === c || "month" === c || "interest" === c || "processing" === c || "penalty" === c) {
+            if ("rate" === c || "applicable" === c || "loan" === c || "month" === c || "interest" === c || "processing" === c || "penalty" === c || "requirement" === c) {
                 var d = ".box__" + c;
-                if ("asc" === e) return $(a).find(d + " > span").data("value") < $(b).find(d + " > span").data("value"); else return $(a).find(d + " > span").data("value") > $(b).find(d + " > span").data("value");
+                if ("asc" === e) return $(b).find(d + " > span").data("value")-$(a).find(d + " > span").data("value");
+                else return $(a).find(d + " > span").data("value") - $(b).find(d + " > span").data("value");
             }
         });
         var i = $(".filters-content.sponsored").clone();
@@ -241,4 +243,15 @@ jQuery(document).ready(function() {
         orientation: "left",
         autoclose: true
     });
+
+    if($('#testimonials .box-content').length > 0){
+        console.log('xxxx');
+        $('#testimonials .box-content').owlCarousel({
+          items: 1,
+          autoPlay: 5000,
+          navigation: true,
+          navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
+          pagination: true
+        });
+    }
 });

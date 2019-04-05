@@ -113,13 +113,13 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
 
                                     </div>
                                     </div>
-                                   
+
                                     <div class="col-md-3 col-xs-12">
 
                                         <button type="button" id="submit-search" class="btn_calculate"><?php echo $this->translate("Calculate My Results") ?></button>
 
                                     </div>
-                                    
+
 
                                 </form>
 
@@ -180,7 +180,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
         				<div class="body-info">
                             <div class="header-faq">
                                 <div class="col-sm-9"><h2 class="title-faq">FREQUENTLY ASKED QUESTIONS</h2></div>
-                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/icon-faq.jpg') ?>"></div> 
+                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/icon-faq.jpg') ?>"></div>
                             </div>
                             <div class="content-faq">
                                 <div class="panel-group">
@@ -273,7 +273,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                     </div>
                                   </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
@@ -281,9 +281,9 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                         <div class="body-info">
                             <div class="header-faq">
                                 <div class="col-sm-9"><h2 class="title-faq">Have questions? Ask us!</h2></div>
-                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/question-notebook.png') ?>"></div> 
+                                <div class="col-sm-3"><img src="<?php echo $this->basePath('data/image/question-notebook.png') ?>"></div>
                             </div>
-                            <div class="content-faq">                               
+                            <div class="content-faq">
                                 <form>
                                     <div class="form-group">
                                         <input type="text" name="firstname" class="form-control" placeholder="Question title">
@@ -291,7 +291,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                     <div class="form-group">
                                         <textarea name="firstname" class="form-control" placeholder="Details"></textarea>
                                     </div>
-                                    <div class="form-group">                                       
+                                    <div class="form-group">
                                         <select class="form-control">
                                             <option value="">Question Categories</option>
                                             <option value="Option 1">Option 1</option>
@@ -307,14 +307,14 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
                                                 <label for="checkbox2">
                                                     <span></span>
                                                     <span class="check"></span>
-                                                    <span class="box"></span> Email me when I receive an answer to this question 
+                                                    <span class="box"></span> Email me when I receive an answer to this question
                                                 </label>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn red">submit question</button>
                                     </div>
                                 </form>
-                            </div>    
+                            </div>
                         </div>
                     </div>
 
@@ -324,11 +324,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
 
         </div>
 
-        <div class="compare-disclaimer">
-            <div class="container">
-               	<p><img src="<?php echo $this->basePath('assets/img/warning.png') ?>" title="" alt=""><b>Disclaimer:</b> Tenures for personal loans ranges from 1 to 7 years. Personal loan rates range up to 10% per annum. Please see the latest personal loan interest rates across all banks above. Keep in mind that the longer your tenure the lower your monthly payments but the more interest you incur.</p>	
-            </div>
-		</div>
+        <?php echo $this->partial('compare_disclaimer'); ?>
 
         <?php echo $this->partial('frontend_sub_footer'); ?>
 
@@ -336,7 +332,7 @@ $max_loan_tenure = $this->setting()->max_loan_tenure;
 
 </div>
 
-<section class="shortlist" style="overflow: hidden; display: none;"> 
+<section class="shortlist" style="overflow: hidden; display: none;">
     <div class="container" id="shortlisted-holder">
         <div class="row">
             <div class="col-xs-4">
@@ -368,7 +364,7 @@ $offScript = 10;
 //$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
-$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js')); 
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
 $this->inlineScript()->captureStart();
 echo <<<JS
 var BACKSPACE_KEY = 8;
@@ -419,7 +415,7 @@ $(document).ready(function() {
         }
     });
 
-    
+
 
     $("#loan_amount, #min_sales_turnover").val(formatNumber($("#loan_amount, #min_sales_turnover").val(), ""));
 
@@ -431,7 +427,7 @@ $(document).ready(function() {
         return isEnterNumber(charCode);
     });
 
-    
+
 
     $("#loan_amount, #min_sales_turnover").on("keyup", function() {
         var val = $(this).val();
@@ -472,7 +468,7 @@ $(document).ready(function() {
         }
 
     });
-  
+
 
     // Trigger
 

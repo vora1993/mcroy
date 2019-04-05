@@ -181,7 +181,7 @@
 .box-services .item .name {
     font-size: 30px;
     padding: 0 15px;
-    text-align: left;
+    text-align: center;
     white-space: nowrap;
 }
 .box-services .item .name a {
@@ -193,8 +193,8 @@
     font-size: 16px;
     padding: 15px;
     margin-bottom: 10px;
-    text-align: left;
-    height: 180px;
+    text-align: center;
+    height: 190px;
     overflow: hidden;
 }
 
@@ -225,7 +225,7 @@
 }
 
 .item_services {
-    /*width: 33.33333%;*/
+    width: 33.33333%;
     float: left;
     margin-bottom: 15px;
 }
@@ -1165,7 +1165,7 @@ output {
     padding: 20px 30px !important;
     width: 100%;
     float: left;
-    border: 2px solid #eeeeee;
+    /*border: 2px solid #eeeeee;*/
 }
 .form-actions {
     width: 100%;
@@ -1376,6 +1376,9 @@ output {
 .content-row-footer > ul > li > .col-row-footer-3:first-child {
     text-align: left;
 }
+.content-row-footer > ul > li > .col-row-footer-3.text-center:first-child {
+    text-align: center;
+}
 .col-row-footer-1 a i {
     color: #193d5a;
 }
@@ -1469,7 +1472,7 @@ output {
     -o-transform: rotate(45deg);
     width: 100%;
     float: left;
-    color: #fff;
+    color: black;
     position: absolute;
     top: -80px;
     width: 71px;
@@ -1821,6 +1824,46 @@ td {
     padding-bottom: 5px;
 }
 
+h4 .bank-title{
+  text-transform: uppercase;
+}
+
+h4 .email-style{
+  color:#3c8093;
+}
+
+h4.message-style{
+  color:#798289;
+}
+
+.suppoter-icon{
+  position: absolute;
+  top: -28px;
+  /*right: 15px;*/
+  left: -5px;
+
+}
+@media (min-width: 1340px){
+    .suppoter-icon {
+        left: -35px;
+    }
+}
+.suppoter-icon a:hover,
+.suppoter-icon a:active{
+  color: #8dc63e;
+}
+.suppoter-icon i{
+  font-size: 60px;
+  color: #8dc63e;
+}
+
+.supporter-container .suppoter-image{
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+
+}
+
 .icon-cat.medium {
     width: 36px;
     height: 36px;
@@ -1869,6 +1912,19 @@ td {
     background-position: -58px -6px;
 }
 
+h3.title {
+  text-align: left;
+  margin-top: 0;
+}
+
+.feature-content {
+  text-align: left;
+  padding-left: 30px;
+}
+
+.more-detail.footer {
+  padding-top: 0;
+}
 @media (max-width: 1199px) {
     .page-header .page-header-menu .hor-menu .navbar-nav > li > a {
         padding: 16px 13px 15px;

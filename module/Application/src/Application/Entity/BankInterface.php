@@ -11,4 +11,6 @@ interface BankInterface
     public function getDateAdded();
     public function getDateModified();
     public function getStatus();
+    public function getLogoInCreditCard();
+    public function getShowCreditCard();
 }

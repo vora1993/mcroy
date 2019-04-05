@@ -123,6 +123,7 @@ if($post->getFeaturedImage()) {
         						<div class="image">
         							<a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" title="" alt=""></a>
         						</div>
+
         						<div class="caption" >
         							<h4><?php echo $post->getPostTitle() ?></h4>
         							<span class="date-news"><i class="fa fa-calendar"></i> <?php echo $post->getDateAdded()?></span>

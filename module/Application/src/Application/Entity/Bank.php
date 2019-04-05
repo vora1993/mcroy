@@ -6,6 +6,8 @@ class Bank implements BankInterface
 	protected $id;
     protected $name;
     protected $logo;
+    protected $logo_in_credit_card;
+    protected $show_credit_card;
     protected $color;
     protected $date_added;
     protected $date_modified;
@@ -39,6 +41,26 @@ class Bank implements BankInterface
     public function setLogo($logo)
     {
         $this->logo = $logo;
+        return $this;
+    }
+
+    public function getLogoInCreditCard()
+    {
+        return $this->logo_in_credit_card;
+    }
+    public function setLogoInCreditCard($logo)
+    {
+        $this->logo_in_credit_card = $logo;
+        return $this;
+    }
+
+    public function getShowCreditCard()
+    {
+        return $this->show_credit_card;
+    }
+    public function setShowCreditCard($status)
+    {
+        $this->show_credit_card = $status;
         return $this;
     }
     

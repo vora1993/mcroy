@@ -16,19 +16,19 @@ class BlogController extends AbstractActionController
 	{
         $application_model_post = $this->getServiceLocator()->get('application_model_post');
         $total_posts = $application_model_post->fetchAll(array("status" => 1));
-        $rec_count = count($total_posts);
-
+        $rec_count = count($total_posts);  
+        
         $url = $this->getServiceLocator()->get('viewhelpermanager')->get('url');
         $paged = $this->params()->fromRoute('paged') ? $this->params()->fromRoute('paged') : 1;
         $offset = 0;
         $rec_limit = 10;
         $max = ceil($rec_count / $rec_limit);
-
+        
         if($paged > 1) $offset = $rec_limit * ($paged - 1);
-
+        
         if($paged >= 1) {
             $links[] = $paged;
-        }
+        } 
         if ( $paged >= 3 ) {
             $links[] = $paged - 1;
             $links[] = $paged - 2;
@@ -37,10 +37,10 @@ class BlogController extends AbstractActionController
     		$links[] = $paged + 2;
     		$links[] = $paged + 1;
     	}
-
+        
         $pagination = '<ul class="pagination pull-right">';
         $pagination .= '<li><a href="'.$url('blog', array('action' => 'index', 'paged' => 1)).'"><i class="fa fa-long-arrow-left"></i></a></li>';
-
+        
         if(!in_array(1, $links)) {
             $class = 1 == $paged ? true : false;
             if($class) {
@@ -49,10 +49,10 @@ class BlogController extends AbstractActionController
                 $link_page = $url('blog', array('action' => 'index', 'paged' => 1));
                 $pagination .= '<li><a href="'.$link_page.'">1</a></li>';
             }
-
+        
             if ( ! in_array( 2, $links ) ) $pagination .= '<li>...</li>';
         }
-
+        
         sort( $links );
         foreach ( (array) $links as $link ) {
     		$class = $paged == $link ? true : false;
@@ -63,11 +63,11 @@ class BlogController extends AbstractActionController
   		        $pagination .= '<li'.$class.'><a href="'.$link_page.'">'.$link.'</a></li>';
             }
     	}
-
+        
         if ( ! in_array( $max, $links ) ) {
     		if ( ! in_array( $max - 1, $links ) )
     			$pagination .= '<li>...</li>' . "\n";
-
+    
     		$class = $paged == $max ? true : false;
             if($class) {
                 $pagination .= '<li><span>'.$max.'</span></li>';
@@ -76,46 +76,47 @@ class BlogController extends AbstractActionController
                 $pagination .= '<li'.$class.'><a href="'.$link_page.'">'.$max.'</a></li>';
             }
     	}
-
+        
         $pagination .= '<li><a href="'.$url('blog', array('action' => 'index', 'paged' => $max)).'"><i class="fa fa-long-arrow-right"></i></a></li>';
         $pagination .= '</ul>';
-
+        
         // Get featured posts
         $featured_posts = $application_model_post->fetchAll(array("featured" => 1), "date_added", "DESC", 0, 3);
-
+        
         // Get popular posts
         $populars = $application_model_post->fetchAll(array("status" => 1), "hits", "DESC", 0, 5);
-
+        
         // Infographic
         $application_model_infographic = $this->getServiceLocator()->get('application_model_infographic');
         $infographics = $application_model_infographic->fetchAll(array("status" => 1));
-
+        
         $posts = $application_model_post->fetchAll(array("status" => 1), "post_date", "DESC", $offset, $rec_limit);
         return array("posts" => $posts, "count" => $rec_count, "pagination" => $pagination, "featured_posts" => $featured_posts, "populars" => $populars, "infographics" => $infographics);
 	}
-
+    
     public function viewAction() {
         $translator = $this->getServiceLocator()->get('translator');
         $id = $this->params()->fromRoute('id');
         $application_model_post = $this->getServiceLocator()->get('application_model_post');
         $post = $application_model_post->fetchRow(array("id" => $id));
 
+        //Get related post
+        $post_related = $application_model_post->fetchAll(array("category_id" => $post->getCategoryId(),"id !=?"=>$post->getId()));
+        
         $current_hits = $post->getHits() ? $post->getHits() : 0;
         // Update hits
         $post->setId($id);
         $post->setHits($current_hits + 1);
         $application_model_post->update($post);
-
-        $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 3);
-
-        return array("post" => $post, "posts" => $posts);
+        
+        return array("post" => $post,"post_related"=>$post_related);
     }
-
+    
     public function downloadAttachmentAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_infographic = $this->getServiceLocator()->get('application_model_infographic');
         $infographic = $application_model_infographic->fetchRow(array('id' => $id));
-
+        
         if($infographic->getPdf() !== null) {
             $file = 'data/pdf/'.$infographic->getPdf();
             $response = new Stream();

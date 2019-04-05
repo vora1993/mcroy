@@ -51,19 +51,19 @@ if($post->getFeaturedImage()) {
           <div class="item">
             <div class="item-news">
               <div class="image">
-                <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img src="<?php echo $this->basePath('assets/img/news-1.jpg') ?>" title="" alt=""></a>
+                <a href="<?php echo $this->url("blog", array("action" => "view", "id" => $post->getId(), "seo" => $post->getSeo())) ?>"><img style="height: 183px" src="<?php echo $this->basePath('data/image/'.$post->getFeaturedImage()) ?>" title="" alt=""></a>
               </div>
 
               <div class="caption">
-                <h4><?php echo $post->getPostTitle() ?></h4>
-                <span class="date-news"><i class="fa fa-calendar"></i> <?php echo date("F jS, Y", strtotime($post->getPostDate())); ?></span>
+                <h4 style="height: 84px; overflow: hidden;"><?php echo $post->getPostTitle() ?></h4>
+                <span class="date-news"><i class="fa fa-calendar"></i><?php echo $post->getPostDate()?></span>
                 <?php
                 $introtext = $post->getPostExcerpt();
                 if(strlen($introtext) > 150) {
-                  // truncate string
+                                                // truncate string
                   $stringCut = substr($introtext, 0, 150);
 
-                  // make sure it ends in a word so assassinate doesn't become ass...
+                                                // make sure it ends in a word so assassinate doesn't become ass...
                   $introtext = substr($stringCut, 0, strrpos($stringCut, ' ')).'... ';
                 }
                 ?>

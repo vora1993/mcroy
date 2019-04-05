@@ -117,6 +117,11 @@
                             <span class="title"><?php echo $this->translate("Add New Business Term Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'eligibility-calculator') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "eligibility-calculator")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Business Loan Eligibility Calculator") ?></span>
+                        </a>
+                    </li>
                     <li class="hide nav-item <?php if($this->view === 'business_loan' && $this->action === 'business-term-loan') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/business_loan", array("action" => "business-term-loan")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Business Term Loan") ?></span>
@@ -147,6 +152,11 @@
                             <span class="title"><?php echo $this->translate("FAQ for Government Assisted Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'business_loan' && $this->action === 'faq-alternative-funding') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/business_loan", array("action" => "faq-alternative-funding")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Alternative Funding") ?></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item <?php if($this->view === 'property_loan') echo 'active open'?>">
@@ -167,9 +177,34 @@
                             <span class="title"><?php echo $this->translate("List of Property Loan") ?></span>
                         </a>
                     </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'commercial-and-industrial') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "commercial-and-industrial")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Commercial and Industrial") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'residential') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "residential")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List of Residential") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'bank-in-refinancing') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "bank-in-refinancing")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("List bank in refinancing") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'add-bank-in-refinancing') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "add-bank-in-refinancing")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Add bank in refinancing") ?></span>
+                        </a>
+                    </li>
                     <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'add') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/property_loan", array("action" => "add")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Add New Property Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'total-costs-outlay') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "total-costs-outlay")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Edit Total Costs Outlay") ?></span>
                         </a>
                     </li>
                     <li class="hide nav-item <?php if($this->view === 'property_loan' && $this->action === 'home_loan') echo ' active'?>">
@@ -182,9 +217,29 @@
                             <span class="title"><?php echo $this->translate("Refinancing") ?></span>
                         </a>
                     </li>
-                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq') echo ' active'?>">
-                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq")) ?>" class="nav-link ">
-                            <span class="title"><?php echo $this->translate("FAQ for Property Loan") ?></span>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-commercial') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-commercial")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ for Commercial/ Industrial Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-residential') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-residential")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ Residential Loan") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'faq-for-alternative') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "faq-for-alternative")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("FAQ Alternative Financing") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'tooltip-for-commercial') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "tooltip-for-commercial")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Tooltip for Commercial") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'property_loan' && $this->action === 'tooltip-for-residential') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/property_loan", array("action" => "tooltip-for-residential")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Tooltip for Residential") ?></span>
                         </a>
                     </li>
                 </ul>
@@ -251,6 +306,21 @@
                     <li class="nav-item <?php if($this->view === 'admin_bank_account' && $this->action === 'faq') echo ' active'?>">
                         <a href="<?php echo $this->url("admin/admin_bank_account", array("action" => "faq")) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("FAQ for Bank Account") ?></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item <?php if($this->view === 'admin_design') echo 'active open'?>">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="glyphicon glyphicon-equalizer"></i>
+                    <span class="title"><?php echo $this->translate("Design") ?></span>
+                    <span class="selected"></span>
+                    <span class="arrow<?php if($this->view === 'admin_design') echo ' open'?>"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item <?php if($this->view === 'admin_design' && $this->action === 'index') echo ' active'?>">
+                        <a href="<?php echo $this->url("admin/admin_design", array("action" => "index")) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Edit design") ?></span>
                         </a>
                     </li>
                 </ul>
@@ -430,6 +500,11 @@
                     <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'edit-income-factor-addon') echo ' active open'?>">
                         <a href="<?php echo $this->url('admin/setting', array('action' => 'edit-income-factor-addon')) ?>" class="nav-link ">
                             <span class="title"><?php echo $this->translate("Income Factor - Addon") ?></span>
+                        </a>
+                    </li>
+                    <li class="nav-item <?php if($this->view === 'setting' && $this->action === 'view-support-info') echo ' active open'?>">
+                        <a href="<?php echo $this->url('admin/setting', array('action' => 'view-support-info')) ?>" class="nav-link ">
+                            <span class="title"><?php echo $this->translate("Support Info") ?></span>
                         </a>
                     </li>
                 </ul>

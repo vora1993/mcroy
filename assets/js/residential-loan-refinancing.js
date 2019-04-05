@@ -93,7 +93,8 @@ var $slider_loan_tenture = $(".slider-loan-tenure").slider({
   },
   change: function(event, ui) {
     $(".slider-loan-tenure").find(".ui-slider-handle").html('<span class="arrow_box">'+ui.value+'</span>');
-    updateSlider();
+    // updateSlider();
+    updatePieChartResidential($("input[name=loan_tenure").val(),$("input[name=existing_home_loans").val());
     updateLoanAmount();
   }
 });

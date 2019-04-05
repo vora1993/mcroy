@@ -361,7 +361,7 @@ $("#submit-prepayment").click(function(){
     } else if (loanAmount !== "" ) {
       collectData();
       return swal({
-        html: "<p>Congratulation! Based on our MoneyCompare Algorithm, you are liable for S$" + addSeparator(loanAmount, 3) + " loan amount.</p><p>Apply through <a href='http://moneycompare.sg/'>MoneyCompare.SG</a>, we will send you an email on the approving bank names!</p>",
+        html: "<p>Congratulation! Based on our MoneyCompare Algorithm, you are eligible for S$" + addSeparator(loanAmount, 3) + " loan amount.</p><p>Apply through <a href='http://moneycompare.sg/'>moneycompare.sg</a>, we will send you an email on the approving bank names!</p>",
         type: 'success',
         showCancelButton: true,
         confirmButtonColor: '#8dc63f',

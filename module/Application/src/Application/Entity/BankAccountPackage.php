@@ -6,6 +6,7 @@ class BankAccountPackage implements BankAccountPackageInterface
 	protected $id;
     protected $bank_id;
     protected $category_id;
+    protected $category_account;
     protected $loan_title;
     protected $promotions;
     protected $initial_deposit_amount;
@@ -52,6 +53,16 @@ class BankAccountPackage implements BankAccountPackageInterface
     public function setCategoryId($category_id)
     {
         $this->category_id = (int) $category_id;
+        return $this;
+    }
+
+    public function getCategoryAccount()
+    {
+        return $this->category_account;
+    }
+    public function setCategoryAccount($category_account)
+    {
+        $this->category_account = (int) $category_account;
         return $this;
     }
     

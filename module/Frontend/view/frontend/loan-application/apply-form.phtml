@@ -1,0 +1,295 @@
+<?php
+$title = "Apply Form Property Loan";
+$this->headTitle($title);
+$property_loan = $this->loan;
+?>
+<div id="page-title"><h2><?php echo $title ?></h2></div>
+<div class="container">
+  <div class="page-content-inner">
+    <div class="mt-content-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet light">
+            <div class="portlet-body">
+              <div class="content-cart">
+                <?php
+                  $loan = $this->loan(array("id" => $property_loan['loan_id']));
+                  $bank = $this->bank(array("id" => $loan->getBankId()));
+                  $dir_logo = 'data/bank/'.$loan->getBankId().'/m_'.$bank->getLogo();
+                  if(!file_exists($dir_logo)) {
+                    $dir_logo = 'data/image/no-image-128.png';
+                  }
+                  ?>
+                <?php
+                  $bank = $this->bank(array("id" => $property_loan['bank_id']));
+                  $dir_logo = 'data/bank/'.$property_loan['bank_id'].'/m_'.$bank->getLogo();
+                  if(!file_exists($dir_logo)) {
+                      $dir_logo = 'data/image/no-image-128.png';
+                    }
+                  $total_interest_for_years = $this->total_interest_for_years ? $this->total_interest_for_years : 2;
+                  $loan_amount = $property_loan['loan_amount'];
+                  $int_rates = $property_loan['int_rates'];
+                  $r = ($int_rates / 100) / 12;
+                  $monthly_payment = ($r + $r / (pow(1 + $r, ($total_interest_for_years * 12)) -1 ) ) * $loan_amount;
+                ?>
+                <div class="filters-table-content">
+                  <div class="row-header text-center">
+                    <h4 class="bank-title" style="text-transform: uppercase;"><?php echo $property_loan['loan_title'] ?></h4>
+                  </div>
+
+                  <div class="row-content">
+                    <div class="col-md-3 col-xs-12">
+                      <a href="#">
+                        <img src="<?php echo $this->basePath($dir_logo) ?>" alt="<?php echo $property_loan['title'] ?>">
+                      </a>
+                    </div>
+                    <div class="col-md-3 col-xs-4 box__rate">
+                      <span class="rate"><b><?php echo $int_rates ?>%</b><?php echo $this->translate("Interest Rate") ?></span>
+                    </div>
+                    <div class="col-md-3 col-xs-4 box__loan">
+                      <div class="lockin-period box__total_interest_payable">
+                        <span class="total_interest_payable" data-value="<?php echo number_format($total_interest_payable); ?>"><b>
+                          <?php
+                          $lock_in_year = (float) $property_loan['lock_in_year'];
+                          if($lock_in_year > 0) {
+                              echo $lock_in_year.' '.$this->translate("Year");
+                          } else {
+                              echo $this->translate("No Lock-in");
+                          }
+                          $total_interest_payable = $lock_in_year
+                          ?></b>
+                          <?php echo $this->translate("Lock-In Period") ?>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-xs-4 box__month">
+                      <span class="month"><b>$<?php echo number_format($monthly_payment); ?></b><?php echo $this->translate("Per Month") ?></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+                  <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                          <!-- BEGIN FORM-->
+                          <form action="<?php echo $this->url("loan_application", array("action" => "apply-form")) ?>" method="post" class="horizontal-form" id="form_apply">
+                              <div class="form-body">
+                                  <div class="alert alert-danger display-hide">
+                                      <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                                  <div class="alert alert-success display-hide">
+                                      <button class="close" data-close="alert"></button> Your form validation is successful! </div>
+
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("First Name") ?>
+                                                  <span class="required">*</span>
+                                              </label>
+                                              <input type="text" class="form-control" name="firstname" value="<?php echo $this->user->getFirstName() ?>" />
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("Last Name") ?>
+                                                  <span class="required">*</span>
+                                              </label>
+                                              <input type="text" class="form-control" name="lastname" value="<?php echo $this->user->getLastName() ?>" />
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("Email") ?>
+                                                  <span class="required">*</span>
+                                              </label>
+                                              <input type="text" class="form-control" name="email" value="<?php echo $this->user->getEmail() ?>">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("Phone") ?>
+                                                  <span class="required">*</span>
+                                              </label>
+                                              <input type="text" class="form-control" name="phone" value="<?php echo $this->user->getPhone() ?>" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("Company Name") ?></label>
+                                              <input type="text" class="form-control" name="company_name" value="<?php echo $this->user->getCompanyName() ?>" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div class="form-group">
+                                              <label class="control-label"><?php echo $this->translate("Remark") ?></label>
+                                              <textarea name="remark" class="form-control" rows="4"></textarea>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-actions">
+                                  <div class="row">
+                                      <div class="col-md-12 text-center">
+                                          <input type="hidden" name="status" value="0" />
+                                          <input type="hidden" name="user_id" value="<?php echo $this->user->getId(); ?>" />
+                                          <input type="hidden" name="type" value="<?php echo $property_loan['type']; ?>" />
+                                          <button type="submit" class="btn dark btn-lg"><?php echo $this->translate("Submit") ?></button>
+                                          <?php if($loan->getUrl()): ?>
+                                          <a class="hide" href="<?php echo $loan->getUrl(); ?>" class="btn dark btn-lg"><?php echo $this->translate("No thanks, I can apply by myself") ?></a>
+                                          <?php endif; ?>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                          <!-- END FORM-->
+                      </div>
+                      <div class="col-md-2"></div>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+$offStyle = 12;
+$offScript = 10;
+//$this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/jquery.validate.min.js'));
+$this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-validation/js/additional-methods.min.js'));
+$this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/custom.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+jQuery.validator.addMethod(
+    "phone",
+    function(phone_number, element) {
+        return this.optional(element) || /^\d{8,}$/.test(phone_number.replace(/\s/g, ''));
+    },
+    "Please enter numbers only"
+);
+
+var form = $('#form_apply');
+var error = $('.alert-danger', form);
+var success = $('.alert-success', form);
+form.validate({
+    errorElement: 'span', //default input error message container
+    errorClass: 'help-block help-block-error', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    ignore: "", // validate all fields including form hidden input
+    rules: {
+        firstname: {
+            minlength: 2,
+            required: true
+        },
+        lastname: {
+            minlength: 2,
+            required: true
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        nric: {
+            required: true
+        },
+        phone: {
+            required: true,
+            phone: true
+        }
+    },
+
+    invalidHandler: function(event, validator) { //display error alert on form submit
+        App.scrollTo(error, -200);
+    },
+
+    errorPlacement: function(error, element) {
+        if (element.is(':checkbox')) {
+            error.insertAfter(element.closest(".md-checkbox-list, .md-checkbox-inline, .checkbox-list, .checkbox-inline"));
+        } else if (element.is(':radio')) {
+            error.insertAfter(element.closest(".md-radio-list, .md-radio-inline, .radio-list,.radio-inline"));
+        } else {
+            error.insertAfter(element); // for other inputs, just perform default behavior
+        }
+    },
+
+    highlight: function(element) { // hightlight error inputs
+        $(element)
+            .closest('.form-group').addClass('has-error'); // set error class to the control group
+    },
+
+    unhighlight: function(element) { // revert the change done by hightlight
+        $(element)
+            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+    },
+
+    success: function(label) {
+        label
+            .closest('.form-group').removeClass('has-error'); // set success class to the control group
+    },
+
+    submitHandler: function(form) {
+        // form validation success, call ajax form submit
+        // setup some local variables
+        var form = $(form);
+
+        // let's select and cache all the fields
+        var inputs = form.find("input, select, button, textarea");
+
+        // serialize the data in the form
+        var serializedData = form.serialize();
+
+        // let's disable the inputs for the duration of the ajax request
+        inputs.prop("disabled", true);
+
+        // fire off the request to /form.php
+
+        request = $.ajax({
+            url: form.attr("action"),
+            type: "post",
+            data: serializedData
+        });
+
+        // Clear Message
+        $('.form-group').removeClass('has-error');
+        $('.help-block, .alert').hide();
+
+        // callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR) {
+            var result = $.parseJSON(response);
+            if(result.success) {
+                App.blockUI({boxed: true, message: 'Loading...' });
+            }
+            setTimeout(function(){
+                App.unblockUI();
+                window.location.href = full_url+result.redirect;
+            }, 1500);
+        });
+
+        // callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log("The following error occured: " + textStatus, errorThrown);
+        });
+
+        // callback handler that will be called regardless
+        // if the request failed or succeeded
+        request.always(function () {
+            // reenable the inputs
+            App.blockUI({boxed: true, message: 'Loading...' });
+            inputs.prop("disabled", false);
+        });
+    }
+});
+JS;
+$this->inlineScript()->captureEnd();
+?>

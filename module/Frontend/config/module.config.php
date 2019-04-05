@@ -8,11 +8,13 @@ return array(
             'alternative_funding' => Frontend\Controller\AlternativeFundingController::class,
             'home_loan'           => Frontend\Controller\HomeLoanController::class,
             'refinancing'         => Frontend\Controller\RefinancingController::class,
+            'refinancing_commercial'         => Frontend\Controller\RefinancingCommercialController::class,
             'blog'                => Frontend\Controller\BlogController::class,
             'page'                => Frontend\Controller\PageController::class,
             'loan_application'    => Frontend\Controller\LoanApplicationController::class,
             'bank_account'        => Frontend\Controller\BankAccountController::class,
             'credit_card'         => Frontend\Controller\CreditCardController::class,
+            'design'              => Frontend\Controller\DesignController::class
 		)
 	),
 	'router' => array(
@@ -128,6 +130,20 @@ return array(
 		            ),
                 ),
             ),
+            'refinancing_commercial' => array(
+                'type' => 'segment',
+                'options' => array(
+                'route' => '/refinancing-commercial[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'refinancing_commercial',
+                        'action' => 'index'
+                    ),
+                ),
+            ),
             'credit-cards' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -172,6 +188,20 @@ return array(
 					),
 				),
 			),
+            'design' => array(
+                'type' => 'Segment',
+                'options' => array(
+                'route' => '/design[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'design',
+                        'action' => 'index'
+                    ),
+                ),
+            ),
             'page' => array(
 				'type' => 'segment',
                 'options' => array(

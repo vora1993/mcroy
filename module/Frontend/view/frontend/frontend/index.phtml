@@ -4,7 +4,7 @@ $this->headTitle("Homepage");
 <link rel="stylesheet" type="text/css" href="assets/css/my-style-slider.css">
 <?php
 $array_message=[
-    1=>'GET RATING NOW!!',
+    1=>'GET RATES NOW!',
     2=>'COMPARE RATES NOW!!',
     3=>'Click Here To Find Out More'
 ];
@@ -28,7 +28,7 @@ if(count($this->sliders) > 0) { ?>
         </div>
     </div>
         <?php
-}   
+}
 ?>
 
 <div id="brand-home">
@@ -188,31 +188,7 @@ if(count($this->sliders) > 0) { ?>
     </div>
 </div>
 
-<div id="testimonials">
-    <div class="container">
-        <h3>Words <b>From Our Customers</b></h3>
-        <h4>We love to hear</h4>
-        <div class="row">
-    		<div class="box-content">
-            	<?php
-                if(count($this->testimonials) > 0) {
-                    foreach ($this->testimonials as $testimonial) {
-                        ?>
-                        <div class="item col-xs-12">
-                        	<div class="content-test">
-                        		<p><?php echo $testimonial->getContent() ?></p>
-                            	<div class="image-test" style="background: url('<?php echo $this->basePath('data/image/'.$testimonial->getUrl()) ?>') no-repeat center center;"></div>
-                            	<span><b><?php echo $testimonial->getName() ?></b><i><?php echo $testimonial->getPosition() ?></i></span>
-                            </div>
-                		</div>
-                        <?php
-                    }
-                }
-                ?>
-    		</div>
-        </div>
-	</div>
-</div>
+<?php echo $this->partial('testimonials', array('testimonials' => $testimonials)); ?>
 
 <?php
 $offStyle = 12;
@@ -244,15 +220,6 @@ $('#brand-home .brand').owlCarousel({
    	navigation: true,
    	navigationText: ['<i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>', '<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>'],
    	pagination: false
-});
-
-
-$('#testimonials .box-content').owlCarousel({
-	items: 1,
-	autoPlay: 5000,
-	navigation: true,
-	navigationText: ['<i class="fa fa-chevron-left fa-5x"></i>', '<i class="fa fa-chevron-right fa-5x"></i>'],
-	pagination: true
 });
 
 $('.floating-box').owlCarousel({

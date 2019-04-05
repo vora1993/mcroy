@@ -23,12 +23,17 @@
       </div>
     </div>
   </div>
-  <div class="compare-content compare-content--without-sponsored">
-    <?php if ($this->credit_cards_compare): ?>
+<!--   <?php //echo $this->partial('list_compare'); ?> -->
+  <div id="compare_id" class="compare-content compare-content--without-sponsored">
+    <?php 
+      $list_item=[];
+      if ($this->credit_cards_compare): 
+    ?>
       <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
         <?php
           $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
           $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+          $list_item[]=$credit_card->getId();
         ?>
         <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
           <div class="compare-section-top">
@@ -65,13 +70,26 @@
               <header>
                 <div class="rating excellent">
                   <ul class="">
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
-                    <li><i class="fa fa-star"></i></li>
+                    <?php
+                      $color='';
+                      if($credit_card->getStar()<=3) $color='#F5A623';
+                      for($i=1;$i<=5;$i++)
+                      {
+                        if($credit_card->getStar()>=$i)
+                        {
+                    ?>
+                    <li style="color:<?php echo $color?>"><i class="fa fa-star"></i></li>
+                    <?php
+                        }else
+                        {
+                    ?>
+                    <li style="color: #9FA8B7;font-size: 5px;position: relative;top: -3px;"><i class="fa fa-circle"></i></li>
+                    <?php
+                        }
+                      } 
+                    ?>
                   </ul>
-                  <span class="rating-desc rate-2-text"><?php echo $this->translate("Excellent") ?></span>
+                  <!-- <span class="rating-desc rate-2-text"><?php echo $this->translate("Excellent") ?></span> -->
                 </div>
                 <span class="must-have-card"><b><?php echo $this->translate("Must Have Card") ?></b></span>
               </header>
@@ -320,23 +338,16 @@
         <i class="cat-icon large summary"></i>
         <h4>Add a card for Comparison</h4>
         <div class="category_dropdown_container">
-          <select class="category_dropdown select2" tabindex="-1" aria-hidden="true">
-            <option value="">All Cards</option>
-            <option value="cash-back">Cash Back</option>
-            <option value="air-miles">Air Miles</option>
-            <option value="rewards">Rewards</option>
-            <option value="petrol">Petrol</option>
-            <option value="shopping">Shopping</option>
-            <option value="grocery">Grocery</option>
-            <option value="dining">Dining</option>
-            <option value="promo">Promo</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="student">Student</option>
-            <option value="online-shopping">Online Shopping</option>
+          <select id="category_credit_card" class="category_dropdown" tabindex="-1" aria-hidden="true">
+            <option value="all">All Cards</option>
+            <option value="discount">Discount</option>
+            <option value="points">Points</option>
+            <option value="air_miles">Air Miles</option>
+            <option value="cashback">Cash Back</option>
           </select>
         </div>
         <div class="compare-product-search">
-          <div class="compare-add-input">
+          <div class="compare-add-input" style="margin-top: 70px">
             <input class="compare-add-input__input" type="text" id="search_input" placeholder="Type to search by card name">
             <span class="compare-add-input__addon">
               <i class="fa fa-search"></i>
@@ -345,20 +356,24 @@
           <div id="compare-product-list" class="compare-product-list" style="position: relative;">
             <?php foreach ($this->credit_cards as $key => $credit_card): ?>
               <?php
+              if(!in_array($credit_card->getId(), $this->list_item))
+              {
                 $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
               ?>
               <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" onclick="CreditCard.add_item_compare(this);">
                 <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
                 <span class="product-add-title"><?php echo $credit_card->getName(); ?></span>
               </div>
-            <?php endforeach; ?>
+            <?php 
+                }
+                endforeach; 
+            ?>
           </div>
         </div>
       </div>
     <?php endif ?>
   </div>
 </section>
-
 <?php
 $offStyle = 12;
 $offScript = 30;
@@ -372,4 +387,37 @@ $this->headLink()->offsetSetStylesheet($offStyle++, $this->basePath('assets/plug
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/select2/js/select2.js'));
 $this->inlineScript()->offsetSetFile($offScript++, $this->basePath('assets/plugins/jquery-match-height-master/dist/jquery.matchHeight-min.js'));
 $this->inlineScript()->offsetSetFile(100, $this->basePath('assets/js/credit_cards.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+$('body').on('keyup', '#search_input', function(){
+  var search_input_value=$('#search_input').val().toLowerCase();
+  if(search_input_value!='')
+  {
+    var product=$('div.product-add-item');
+    for(var i=0;i<product.length;i++)
+    {
+      var item_name=product[i].innerText.toLowerCase();
+      if(item_name.indexOf(search_input_value)>=0)
+      {
+        product[i].style.display='block';
+      }else
+      {
+        product[i].style.display='none';
+      }
+    }
+  }else
+  {
+    var product=$('div.product-add-item');
+    for(var i=0;i<product.length;i++)
+    {
+        product[i].style.display='block';
+    }
+  }
+})
+$('body').on('change','#category_credit_card',function(){
+  var category_credit=$('#category_credit_card').val();
+  CreditCard.list_compare(category_credit);
+})
+JS;
+$this->inlineScript()->captureEnd();
 ?>

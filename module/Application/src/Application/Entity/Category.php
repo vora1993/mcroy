@@ -13,6 +13,7 @@ class Category implements CategoryInterface
     protected $date_added;
     protected $date_modified;
     protected $status;
+    protected $show_bank_interest_rate;
     
     public function getId()
     {
@@ -112,6 +113,16 @@ class Category implements CategoryInterface
     public function setStatus($status)
     {
         $this->status = (int) $status;
+        return $this;
+    }
+
+    public function getShowBankInterestRate()
+    {
+        return $this->show_bank_interest_rate;
+    }
+    public function setShowBankInterestRate($show_bank_interest_rate)
+    {
+        $this->show_bank_interest_rate = (int) $show_bank_interest_rate;
         return $this;
     }
 }

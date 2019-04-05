@@ -28,13 +28,16 @@ class PageController extends AbstractActionController
   public function viewAction() {
     $id = $this->params()->fromRoute('id');  // From RouteMatch
     $seo = $this->params()->fromRoute('seo');  // From RouteMatch
-
     $viewModel = new ViewModel();
     if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
 
     $application_model_page = $this->getServiceLocator()->get('application_model_page');
-    $post = $application_model_page->fetchRow(array('seo' => $seo));
-    return array("post" => $post);
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
   }
 
   public function faqForBusinessLoanAction() {
@@ -54,6 +57,34 @@ class PageController extends AbstractActionController
   public function faqForGovernmentAssistedLoanAction() {
     $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
     $faq = $application_model_faq->fetchRow(array("type" => "government_assisted_loan"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqAlternativeFundingAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_alternative_funding"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForCommercialAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_commercial"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForResidentialAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_residential"));
+
+    return array("faq" => $faq);
+  }
+
+  public function faqForAlternativeAction() {
+    $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+    $faq = $application_model_faq->fetchRow(array("type" => "faq_for_alternative"));
 
     return array("faq" => $faq);
   }
@@ -80,7 +111,7 @@ class PageController extends AbstractActionController
       return $response;
     }
 
-    $post = $application_model_page->fetchRow(array('seo' => $seo));
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
     return array("post" => $post);
   }
 
@@ -94,7 +125,7 @@ class PageController extends AbstractActionController
     $application_model_post = $this->getServiceLocator()->get('application_model_post');
     $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
 
-    $post = $application_model_page->fetchRow(array('seo' => $seo));
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
     return array("post" => $post, "widget_1" => $widget_1, "posts" => $posts);
   }
 
@@ -178,5 +209,38 @@ class PageController extends AbstractActionController
     }
 
     return array('income_factor_addons' => $income_factor_addons);
+  }
+
+  public function mortgageRefinanceCalculatorAction()
+  {
+    
+  }
+  public function privacyPolicyAction()
+  {
+    $seo='privacy-policy';
+    $viewModel = new ViewModel();
+    if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
+
+    $application_model_page = $this->getServiceLocator()->get('application_model_page');
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
+  }
+  public function termsOfUseAction()
+  {
+    $seo='terms-of-use';
+    $viewModel = new ViewModel();
+    if($seo === 'contact-us') $viewModel->setTemplate('Frontend/contact-us.phtml');
+
+    $application_model_page = $this->getServiceLocator()->get('application_model_page');
+    $post = $application_model_page->fetchRow(array('seo' => $seo, 'status' => 1));
+
+    $application_model_post = $this->getServiceLocator()->get('application_model_post');
+    $posts = $application_model_post->fetchAll(array('status' => 1), "post_date", "DESC", 0, 8);
+
+    return array("post" => $post, "posts" => $posts);
   }
 }

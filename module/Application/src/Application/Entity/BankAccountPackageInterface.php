@@ -7,6 +7,7 @@ interface BankAccountPackageInterface
     public function getId();
     public function getBankId();
     public function getCategoryId();
+    public function getCategoryAccount();
     public function getLoanTitle();
     public function getPromotions();
     public function getLink();

@@ -42,6 +42,14 @@ if(count($categories) > 0) {
         );
     }
 }
+foreach ($rows as $key => $value) {
+    if($value['name']=='Residential Loan')
+    {
+        $id_parent=$value['id'];
+    }
+}
+$arr_resident=buildTree($rows,$id_parent);
+$arr_resident=json_encode($arr_resident);
 ?>
 <!-- BEGIN SIDEBAR -->
 <?php echo $this->partial('backend_sidebar', array('view' => 'property_loan', 'action' => 'add')); ?>
@@ -90,7 +98,7 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("Category") ?><span class="required"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name="category_id" class="form-control">
+                                        <select id="category_id" name="category_id" class="form-control">
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
                                             <?php 
                                             $tree = buildTree($rows);
@@ -100,23 +108,31 @@ if(count($categories) > 0) {
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4"><?php echo $this->translate("Are you buying a new home or refinancing your property?") ?>?</label>
+                                    <label class="control-label col-md-4"><?php echo $this->translate("Are you Purchasing or Refinancing an Industrial/Commercial unit?") ?>?</label>
                                     <div class="col-md-6">
                                         <div class="mt-radio-inline">
                                             <div class="md-radio inline-block" style="margin-right: 15px;">
-                                                <input type="radio" name="property" id="home_loan" class="md-check" value="home_loan" checked="checked"> 
+                                                <input type="radio" name="property" id="home_loan" class="md-check" value="Purchasing" checked="checked" disabled> 
                                                 <label for="home_loan">
                                                     <span></span>
                                                     <span class="check"></span>
-                                                    <span class="box"></span><?php echo $this->translate("Home Loan") ?>
+                                                    <span class="box"></span><?php echo $this->translate("Purchasing") ?>
                                                 </label>
                                             </div>
                                             <div class="md-radio inline-block">
-                                                <input type="radio" name="property" id="refinancing" class="md-check" value="refinancing"> 
+                                                <input type="radio" name="property" id="refinancing" class="md-check" value="refinancing" disabled> 
                                                 <label for="refinancing">
                                                     <span></span>
                                                     <span class="check"></span>
                                                     <span class="box"></span><?php echo $this->translate("Refinancing") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="property" id="purchase_and_refinance" class="md-check" value="purchase and refinance" disabled> 
+                                                <label for="purchase_and_refinance">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("purchase and refinance") ?>
                                                 </label>
                                             </div>
                                         </div>
@@ -127,12 +143,12 @@ if(count($categories) > 0) {
                                     <div class="col-md-6">
                                         <select name="bank_id" class="form-control">
                                             <option value=""><?php echo $this->translate("[select]") ?></option>
+                                            <?php 
+                                            foreach ($this->list_bank as $key => $value) 
+                                            {
+                                            ?>
+                                            <option value="<?php echo $value->getId()?>"><?php echo $value->getName() ?></option>
                                             <?php
-                                            $banks = $this->banks(array("status" => 1));
-                                            if(count($banks) > 0) {
-                                                foreach ($banks as $bank) {
-                                                    echo '<option value="'.$bank->getId().'">'.$bank->getName().'</option>';
-                                                }
                                             }
                                             ?>
                                         </select>
@@ -159,13 +175,20 @@ if(count($categories) > 0) {
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("What type of property are you buying") ?>?</label>
                                     <div class="col-md-6">
-                                        <select name="property_type" class="form-control">
-                                            <option value="HDB Flat"><?php echo $this->translate("HDB Flat") ?></option>
-                                            <option value="Executive Condo"><?php echo $this->translate("Executive Condo") ?></option>
-                                            <option value="Condo / Apartment"><?php echo $this->translate("Condo / Apartment") ?></option>
-                                            <option value="Landed Property"><?php echo $this->translate("Landed Property") ?></option>
+                                        <select id="comercial" name="property_type" class="form-control">
+                                            <option value="Industrial" ><?php echo $this->translate("Industrial (B1/B2 units)") ?> </option>
+                                            <option value="Commercial"><?php echo $this->translate("Commercial (Shophouse, Retail, Office units)") ?></option>
+                                            <option value="JTC Propertyt"><?php echo $this->translate("JTC Property") ?></option>
+                                            <option value="Industrial/Commercial and JTC"><?php echo $this->translate("Industrial/Commercial and JTC") ?></option>
                                         </select>
-                                    </div>
+                                        <select id="residential" name="property_type_residential" class="form-control">
+                                            <option value="HDB Flat"><?php echo $this->translate("HDB Flat") ?></option>
+                                        <option value="Executive Condo"><?php echo $this->translate("Executive Condo") ?></option>
+                                        <option value="Condo / Apartment"><?php echo $this->translate("Condo / Apartment") ?></option>
+                                        <option value="Landed Property"><?php echo $this->translate("Landed Property") ?></option>
+                                        </select>
+                                    </div>                              
+                                    <input type="hidden" name="check_property_buy">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-4"><?php echo $this->translate("Is the property completed or under construction") ?>?</label>
@@ -185,6 +208,29 @@ if(count($categories) > 0) {
                                                     <span></span>
                                                     <span class="check"></span>
                                                     <span class="box"></span><?php echo $this->translate("Under Construction") ?>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4"><?php echo $this->translate("What type of corporate entity will you be using for the purchase") ?>?</label>
+                                    <div class="col-md-6">
+                                        <div class="mt-radio-inline">
+                                            <div class="md-radio inline-block" style="margin-right: 15px;">
+                                                <input type="radio" name="type_of_corporate" id="completed1" class="md-check" value="Investment Holding Company" checked="checked"> 
+                                                <label for="completed1">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Investment Holding Company") ?>
+                                                </label>
+                                            </div>
+                                            <div class="md-radio inline-block">
+                                                <input type="radio" name="type_of_corporate" id="under_construction2" class="md-check" value="Operating Business"> 
+                                                <label for="under_construction2">
+                                                    <span></span>
+                                                    <span class="check"></span>
+                                                    <span class="box"></span><?php echo $this->translate("Operating Business") ?>
                                                 </label>
                                             </div>
                                         </div>
@@ -413,6 +459,39 @@ tinymce.init({
         });
     }
 });
+//Change category
+$('#residential').hide();
+$('#comercial').hide();
+$('#category_id').change(function(){
+    var conceptName = $('#category_id').find(":selected").text();
+    // $("input[name='property']").attr('checked', false);
+    if(conceptName=='- New Purchase (s)')
+    {
+        $("input[name=property][value='Purchasing']").prop('checked', true);
+    }else if(conceptName=='- Refinancing (s)')
+    {
+        $("input[name=property][value='refinancing']").prop('checked', true);
+    }else
+    {
+        $("input[name=property][value='purchase and refinance']").prop('checked', true);
+    }
+    var arr={$arr_resident};
+    var arr_check=[{$id_parent}];
+    arr.forEach(function(item){
+        arr_check.push(item.id);
+    })
+    if(arr_check.indexOf(parseInt(this.value))>-1)
+    {
+        $('input[name="check_property_buy"]').val('residential');
+        $('#residential').show();
+        $('#comercial').hide();
+    }else
+    {
+        $('input[name="check_property_buy"]').val('comercial');
+        $('#comercial').show();
+        $('#residential').hide();
+    }
+})
 
 /*
 $('select[name=property_package]').on('change', function() {

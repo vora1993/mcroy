@@ -1,6 +1,7 @@
 <?php
 $title = $this->translate("Sign Up and Login Page");
 $this->headTitle($title);
+$settings = $this->settings['settings'];
 ?>
 
 <div class="page-title">
@@ -21,7 +22,7 @@ $this->headTitle($title);
                             <span class="fa fa-facebook"></span> <?php echo $this->translate("Login with Facebook") ?>
                         </a>
 				    </div>
-                    <div class="text-or"><span>Or</span><p></p></div>
+                    <div class="text-or"><span>Or</span></div>
                     <!-- BEGIN LOGIN FORM -->
                         <form class="login-form" action="<?php echo $this->url("frontend_user", array("action" => "login")) ?>" method="post">
                         <div class="alert alert-danger display-hide">
@@ -69,7 +70,7 @@ $this->headTitle($title);
                                     <span class="fa fa-facebook"></span> <?php echo $this->translate("Sign up with Facebook") ?>
                                 </a>
         				    </div>
-                            <div class="text-or"><span>Or</span><p></p></div>
+                            <div class="text-or"><span>Or</span></div>
                         </div>
                         <div class="row">
                             <!-- BEGIN REGISTER FORM-->
@@ -82,7 +83,7 @@ $this->headTitle($title);
                                     <button class="close" data-close="alert"></button>
                                     <span> <?php echo $this->translate("Successfully register") ?> </span>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $this->translate("First name") ?> <span class="required">*</span></label>
@@ -95,7 +96,7 @@ $this->headTitle($title);
                                         <input type="text" name="lastname" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $this->translate("Email") ?> <span class="required">*</span></label>
@@ -108,7 +109,7 @@ $this->headTitle($title);
                                         <input type="password" name="password" class="form-control" id="password">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label"><?php echo $this->translate("Password Verify") ?> <span class="required">*</span></label>
@@ -130,7 +131,7 @@ $this->headTitle($title);
                                     </div>
                                 </div>
                                 <?php endif;?>
-                                
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="md-checkbox-list">
@@ -144,7 +145,7 @@ $this->headTitle($title);
                                             </div>
                                         </div>
                                     </div>
-                        
+
                                     <div class="form-group text-center">
                                         <input type="hidden" name="auto_login" value="yes" />
                                         <input type="hidden" name="redirect_url" value="<?php echo $this->redirect_url; ?>" />
@@ -160,6 +161,72 @@ $this->headTitle($title);
         </div>
     </div>
 </div>
+
+<section class="selectlist">
+    <div class="container" id="selected-holder">
+                <?php
+                  $supporter_array_key = array('supporter_name', 'supporter_email', 'supporter_phone', 'supporter_image');
+                ?>
+
+                <?php foreach ($settings as $key => $setting):?>
+                  <?php if(in_array($setting->getKey(), $supporter_array_key)): ?>
+                      <?php if($setting->getKey() === 'supporter_image'): ?>
+                      <?php
+                      $logo = $setting->getValue();
+                      if ($logo) {
+                          if (!file_exists('data/user/m_'.$logo)) {
+                              $supporter_image = $this->basePath('data/user/'.$logo);
+                          } else {
+                              $supporter_image = $this->basePath('data/user/m_'.$logo);
+                          }
+                      } else {
+                          $supporter_image = $this->basePath('data/user/no-avatar-256.png');
+                      }
+                      ?>
+                     <!--  <img class="suppoter-image" id="photo" alt="logo" src="<?php echo $supporter_image ?>" style="height: 50px; width: 50px;"> -->
+                      <?php else: ?>
+                      <?php
+                        // echo $setting->getValue();
+                        if($setting->getKey() === 'supporter_name'){
+                          $supporter_name = $setting->getValue();
+                        } else if ($setting->getKey() === 'supporter_email') {
+                          $supporter_email = $setting->getValue();
+
+                        } else if ($setting->getKey() === 'supporter_phone') {
+                          $supporter_phone = $setting->getValue();
+                        }
+
+                      ?>
+                      <?php endif; ?>
+                  <?php endif;?>
+                <?php endforeach;?>
+        <div class="row compare-row" style="display: none;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6" id="select-holder">
+              <div class="shortlist-info-container">
+                  <h4 class='message-style'><?php echo $this->translate("Hi, I'm your career consultant. Feel free to ask me any questions") ?></h4>
+              </div>
+              <hr>
+              <div class="supporter-container">
+                <div class="col-md-2">
+                  <img class="suppoter-image" height="45" src="<?php echo $supporter_image ?>" >
+                </div>
+                <div class="col-md-10">
+                  <h4 class='name-style'><?php echo $supporter_name ?></h4>
+                  <h4 class='message-style'><?php echo $this->translate("Email. ")?> <span class='email-style'><b><?php echo $supporter_email ?></b></span> <?php echo $this->translate("Tel. ")?> <span class='email-style'><b><?php echo $supporter_phone ?></b></span></h4>
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="suppoter-icon"><a href="javascript:;" onclick="Loan.shortlist2(this)"><i class=" suppoter-icon fa fa-weixin"></i></a></div>
+    </div>
+</section>
 <?php
 $offStyle = 12;
 $offScript = 10;

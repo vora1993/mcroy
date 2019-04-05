@@ -217,7 +217,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/business-loan/status",
+                            url: full_url+"/admin/business-loan/statusBusiness",
                             data: {ids: selectedIds, action: 'active'},
                             dataType: 'json',
                             beforeSend: function() {
@@ -252,7 +252,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/business-loan/status",
+                            url: full_url+"/admin/business-loan/statusBusiness",
                             data: {ids: selectedIds, action: 'deactive'},
                             dataType: 'json',
                             beforeSend: function() {
@@ -287,7 +287,7 @@ jQuery(document).ready(function() {
                     if(selectedIds.length > 0) {
                         $.ajax({
                             type: "POST",
-                            url: full_url+"/admin/business-loan/status",
+                            url: full_url+"/admin/business-loan/statusBusiness",
                             data: {ids: selectedIds, action: 'trash'},
                             dataType: 'json',
                             beforeSend: function() {

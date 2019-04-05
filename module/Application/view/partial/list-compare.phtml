@@ -1,0 +1,331 @@
+    <?php if ($this->credit_cards_compare): ?>
+      <?php foreach ($this->credit_cards_compare as $key => $credit_card): ?>
+        <?php
+          $_dataAttributes = \Zend\Json\Json::decode($credit_card->getDataAttributes());
+          $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+        ?>
+        <div class="compare-content-item compare-item" data-compare-id="<?php echo $credit_card->getId() ?>" compare-product="normal">
+          <div class="compare-section-top">
+            <div class="compare-section product">
+              <span class="close" data-compare-remove="<?php echo $credit_card->getId() ?>" onclick="CreditCard.remove_select(this)">X</span>
+              <article class="compare-product">
+                <a class="" href="#">
+                  <img src="<?php echo $dir_logo ?>" alt="<?php echo $credit_card->getName() ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
+                </a>
+                <a class="compare-product-link" href="#"><?php echo $credit_card->getName() ?></a>
+              </article>
+            </div>
+            <div class="btn-action-wrapper" data-offset-top="405">
+              <a class="apply-now-btn btn-sm apply-btn btn-block without-suggested applyFromActiveResult" href="<?php echo !empty($credit_card->getApplyUrl()) ? $credit_card->getApplyUrl() : 'javascript:void(0);'; ?>" data-enquiry-type="" data-product-id="<?php echo $credit_card->getId() ?>" data-channel="credit-cards" data-hop-off="1" data-name="<?php echo $credit_card->getName() ?>" data-provider="" data-product-l="1" data-with-suggested="false" data-suggested="2059" data-suggested-desc="" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="Summary" onclick="" target="_blank">
+                <i class="fa fa-angle-double-right pull-right"></i>
+                <?php echo $this->translate("apply now") ?>
+              </a>
+              <a class="trg-goto-site position-header passive-false" data-product-id="<?php echo $credit_card->getId() ?>" data-site-url="#" data-channel="credit-cards" data-provider="" data-product-l="1" href="#" data-name="<?php echo $credit_card->getName() ?>" data-partnered="1" data-sponsored="true" data-page-position="Header" data-passive="false" data-category="" target="_blank">
+                <?php echo $this->translate("Get more Details") ?>
+              </a>
+            </div>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Credit Card Promotions & Deals") ?></h5>
+          <div class="compare-section promotions ">
+            <article class="table-detail">
+              <span class="promo-list">
+                <?php echo $_dataAttributes->promotion_and_deals; ?>
+              </span>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Cash Back") ?></h5>
+          <div class="compare-section cash-back">
+            <article class="table-detail table-detail-cash-back">
+              <header>
+                <div class="rating excellent">
+                  <ul class="">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                  </ul>
+                  <span class="rating-desc rate-2-text"><?php echo $this->translate("Excellent") ?></span>
+                </div>
+                <span class="must-have-card"><b><?php echo $this->translate("Must Have Card") ?></b></span>
+              </header>
+              <main>
+                <?php if(!empty($_dataAttributes->cash_back)): ?>
+                  <div class="checklist">
+                    <?php echo $_dataAttributes->cash_back_details; ?>
+                  </div>
+                <?php else: ?>
+                  <div class="text-center ptm"><i class="icons-na icons-na--air-miles"></i></div>
+                  <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO CASH BACK INFORMATION AVAILABLE") ?></span>
+                <?php endif ?>
+              </main>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Air Miles") ?></h5>
+          <div class="compare-section air-miles">
+            <article class="table-detail table-detail-air-miles">
+              <main>
+                <?php if(!empty($_dataAttributes->air_miles)): ?>
+                  <div class="checklist">
+                  <?php echo $_dataAttributes->air_miles_details; ?>
+                </div>
+                <?php else: ?>
+                  <div class="text-center ptm"><i class="icons-na icons-na--air-miles"></i></div>
+                  <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO AIR MILES INFORMATION AVAILABLE") ?></span>
+                <?php endif ?>
+              </main>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Points") ?></h5>
+          <div class="compare-section rewards">
+            <article class="table-detail table-detail-rewards">
+              <main>
+                <?php if(!empty($_dataAttributes->points)): ?>
+                  <div class="checklist">
+                  <?php echo $_dataAttributes->points_details; ?>
+                </div>
+                <?php else: ?>
+                  <div class="text-center ptm"><i class="icons-na icons-na--rewards"></i></div>
+                  <span class="td-table-nodata td-table-nodata-compare"><?php $this->translate("NO POINTS INFORMATION AVAILABLE") ?></span>
+                <?php endif ?>
+              </main>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Discount") ?></h5>
+          <div class="compare-section promo">
+            <article class="table-detail table-detail-promo">
+              <main>
+                <?php if(!empty($_dataAttributes->discount)): ?>
+                  <div class="checklist">
+                  <?php echo $_dataAttributes->discount_details; ?>
+                </div>
+                <?php else: ?>
+                  <div class="text-center ptm"><i class="icons-na icons-na--promo"></i></div>
+                  <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO DISCOUNT INFORMATION AVAILABLE") ?></span>
+                <?php endif ?>
+              </main>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Things to Look Out For") ?></h5>
+          <div class="compare-section things-to-look-out">
+            <?php if(!empty($_dataAttributes->look_out_for)): ?>
+              <article class="table-detail">
+                <?php echo $_dataAttributes->look_out_for; ?>
+              </article>
+            <?php else: ?>
+              <main>
+                <span class="td-table-nodata td-table-nodata-compare"><?php echo $this->translate("NO INFORMATION AVAILABLE") ?></span>
+              </main>
+            <?php endif ?>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Eligibility") ?></h5>
+          <div class="compare-section eligibility">
+            <article class="table-detail">
+              <ul>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Singaporean Minimum Income") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->singaporean_income != ""): ?>
+                      <?php echo $_dataAttributes->singaporean_income; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Non-Singaporean Minimum Income") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->non_singaporean_income != ""): ?>
+                      <?php echo $_dataAttributes->non_singaporean_income; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+              </ul>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Annual Fees & Rates") ?></h5>
+          <div class="compare-section annual-fees-rates">
+            <article class="table-detail">
+              <ul>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Principal Annual Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->principal_annual_fee != ""): ?>
+                      <?php echo $_dataAttributes->principal_annual_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+              </ul>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Interest Rate & Payment Fees") ?></h5>
+          <div class="compare-section interest-rate-fees">
+            <article class="table-detail">
+              <ul>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Annual Interest Rate") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->annual_interest_rate != ""): ?>
+                      <?php echo $_dataAttributes->annual_interest_rate; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Fee Waiver") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->fee_waiver != ""): ?>
+                      <?php echo $_dataAttributes->fee_waiver; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Late Payment Fees") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->late_payment_fees != ""): ?>
+                      <?php echo $_dataAttributes->late_payment_fees; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Minimum Monthly Repayment") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->minimum_monthly_repayment != ""): ?>
+                      <?php echo $_dataAttributes->minimum_monthly_repayment; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Interest-free Period") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->interest_free_period != ""): ?>
+                      <?php echo $_dataAttributes->interest_free_period; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Foreign Currency Transaction Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->foreign_currency_transaction_fee != ""): ?>
+                      <?php echo $_dataAttributes->foreign_currency_transaction_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Cash Advance Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->cash_advance_fee != ""): ?>
+                      <?php echo $_dataAttributes->cash_advance_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Local Currency Transfer Fee") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->currency_transfer_fee != ""): ?>
+                      <?php echo $_dataAttributes->currency_transfer_fee; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+              </ul>
+            </article>
+          </div>
+          <h5 class="section-title"><?php echo $this->translate("Other Information") ?></h5>
+          <div class="compare-section other-information">
+            <article class="table-detail">
+              <ul>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Card Association") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->card_association != ""): ?>
+                      <?php echo $_dataAttributes->card_association; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Wireless Payment") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->wireless_payment != ""): ?>
+                      <?php echo $_dataAttributes->wireless_payment; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+                <li class="list-label-value">
+                  <span class="list-label"><?php echo $this->translate("Mobile Wallet Payment") ?></span>
+                  <span class="list-value">
+                    <?php if ($_dataAttributes->mobile_wallet_payment != ""): ?>
+                      <?php echo $_dataAttributes->mobile_wallet_payment; ?>
+                    <?php else: ?>
+                      <span class="not-available"><?php echo $this->translate("N/A") ?></span>
+                    <?php endif ?>
+                  </span>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
+    <?php if (count($this->credit_cards_compare) < 3): ?>
+      <div class="compare-content-item compare-item compare-content--add">
+        <i class="cat-icon large summary"></i>
+        <h4>Add a card for Comparison</h4>
+        <div class="category_dropdown_container">
+          <select id="category_credit_card" class="category_dropdown select2" tabindex="-1" aria-hidden="true">
+            <option <?php if($this->category=='all') echo 'selected'?> value="all">All Cards</option>
+            <option <?php if($this->category=='discount') echo 'selected'?> value="discount">Discount</option>
+            <option <?php if($this->category=='points') echo 'selected'?> value="points">Points</option>
+            <option <?php if($this->category=='air_miles') echo 'selected'?> value="air_miles">Air Miles</option>
+            <option <?php if($this->category=='cashback') echo 'selected'?> value="cashback">Cash Back</option>
+          </select>
+        </div>
+        <div class="compare-product-search">
+          <div class="compare-add-input" style="margin-top: 70px;">
+            <input class="compare-add-input__input" type="text" id="search_input" placeholder="Type to search by card name">
+            <span class="compare-add-input__addon">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+          <div id="compare-product-list" class="compare-product-list" style="position: relative;">
+            <?php foreach ($this->credit_cards as $key => $credit_card): ?>
+              <?php
+              if(!in_array($credit_card->getId(), $this->list_item))
+              {
+                $dir_logo = '/data/credit_cards/'.$credit_card->getId().'/'.$credit_card->getLogo();
+              
+              ?>
+              <div class="product-add-item" data-compare-add="<?php echo $credit_card->getId(); ?>" onclick="CreditCard.add_item_compare(this);">
+                <img class="product-add-image" height="45" alt="<?php echo $credit_card->getName(); ?>" src="<?php echo $dir_logo; ?>" onerror="this.onerror=null;this.src='/assets/img/card-placeholder.svg';">
+                <span class="product-add-title"><?php echo $credit_card->getName(); ?></span>
+              </div>
+            <?php
+                } 
+              endforeach; 
+            ?>
+          </div>
+        </div>
+      </div>
+<?php endif ?>

@@ -22,17 +22,33 @@ class BankAccountController extends AbstractActionController
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
-
+            if($post['tenor']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg']     = $translator->translate("Tenor must greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            if($post['int_rate']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg']     = $translator->translate("Interest Rate must greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             $application_model_bank_account_package = $this->getServiceLocator()->get('application_model_bank_account_package');
             $loan = new \Application\Entity\BankAccountPackage;
             $loan->setBankId($post['bank_id']);
             $loan->setCategoryId($post['category_id']);
+            $loan->setCategoryAccount($post['category_account']);
             $loan->setLoanTitle($post['loan_title']);
             if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
             $loan->setLink($post['link']);
             $loan->setTenor($post['tenor']);
             $loan->setDateAdded(new Expression('NOW()'));
-            $loan->setIntRate($post['int_rate']);
+            $loan->setIntRate($post['int_rate']/100);
             $loan->setInitialDepositAmount($post['initial_deposit_amount']);
             $loan->setMinimumBalance($post['minimum_balance']);
             $loan->setChequeBookFees($post['cheque_book_fees']);
@@ -43,7 +59,6 @@ class BankAccountController extends AbstractActionController
             $loan->setCitizenship($post['citizenship']);
             $loan->setAge($post['age']);
             $loan->setStatus($post['status']);
-
             // Calculate
             $interest_rate = $post['interest-rate'];
             if(count($interest_rate) > 0) {
@@ -58,7 +73,6 @@ class BankAccountController extends AbstractActionController
                 }
                 $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
             }
-
             $added = $application_model_bank_account_package->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -85,17 +99,35 @@ class BankAccountController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
-
+                if($post['tenor']<=0)
+                {
+                    $response = $this->getResponse();
+                    $messages['success'] = false;
+                    $messages['msg']     = $translator->translate("Tenor must greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
+                if($post['int_rate']<=0)
+                {
+                    $messages['success'] = false;
+                    $messages['msg']     = $translator->translate("Interest Rate must greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 $error = 0;
                 if(!$error) {
                     $loan->setId($id);
                     $loan->setBankId($post['bank_id']);
                     $loan->setCategoryId($post['category_id']);
+                    $loan->setCategoryAccount($post['category_account']);
                     $loan->setLoanTitle($post['loan_title']);
                     if($post['promotions']) $loan->setPromotions($this->clearHtml($post['promotions']));
                     $loan->setLink($post['link']);
                     $loan->setTenor($post['tenor']);
-                    $loan->setIntRate($post['int_rate']);
+                    if($loan->getIntRate()!=($post['int_rate']))
+                    {
+                        $loan->setIntRate($post['int_rate']/100);
+                    }                  
                     $loan->setInitialDepositAmount($post['initial_deposit_amount']);
                     $loan->setMinimumBalance($post['minimum_balance']);
                     $loan->setChequeBookFees($post['cheque_book_fees']);
@@ -120,6 +152,13 @@ class BankAccountController extends AbstractActionController
                                 'percentage' => $percentage
                             );
                         }
+                        $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
+                    }else{
+                        $loan_tenure = array();
+                        $loan_tenure[] = array(
+                            'tier'  => $tier,
+                            'percentage' => $percentage
+                        );
                         $loan->setInterestRate(\Zend\Json\Json::encode($loan_tenure));
                     }
 
@@ -585,12 +624,16 @@ class BankAccountController extends AbstractActionController
             $translator = $this->getServiceLocator()->get('translator');
             $application_model_bank_interest_rate= $this->getServiceLocator()->get('application_model_bank_interest_rate');
             $loan = new \Application\Entity\BankInterestRate;
+            $display=$post['display'];
+            $type=$post['type'];
+            if($display=='fixed-deposit') $type=$post['type_fixed'];
             $loan->setBankId($post['bank_id']);
             $loan->setName($post['name']);
             $loan->setRate($post['rate']);
-            $loan->setType($post['type']);
+            $loan->setType($type);
             $loan->setSort($post['sort']);
             $loan->setStatus(1);
+            $loan->setDisplay($display);
             $added = $application_model_bank_interest_rate->insert($loan);
             if($added) {
                 $messages['success'] = true;
@@ -618,12 +661,16 @@ class BankAccountController extends AbstractActionController
                 $post = $request->getPost();
                 $error = 0;
                 if(!$error) {
+                    $display=$post['display'];
+                    $type=$post['type'];
+                    if($display=='fixed-deposit') $type=$post['type_fixed'];
                     $loan->setBankId($post['bank_id']);
                     $loan->setName($post['name']);
                     $loan->setRate($post['rate']);
-                    $loan->setType($post['type']);
+                    $loan->setType($type);
                     $loan->setSort($post['sort']);
                     $loan->setStatus($post['status']);
+                    $loan->setDisplay($display);
 
                     $edited = $application_model_bank_interest_rate->update($loan);
                     if($edited) {

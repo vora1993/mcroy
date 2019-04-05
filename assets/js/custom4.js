@@ -58,6 +58,29 @@ var Loan = {
             },
         });
     },
+    load_fixed_deposit: function() {
+        var category_id = $("input[name=category_id]").val();
+        var loan_amount_interes=$("input[name=loan_amount]").val();
+        var month_interes=$("select[name=month_interes]").val();
+        $.ajax({
+            type: "POST",
+            url: full_url + "/loan-application/bank-account",
+            data: {category_id: category_id,loan_amount_interes: loan_amount_interes,month_interes: month_interes},
+            dataType: 'json',
+            beforeSend: function() {
+                App.blockUI({boxed: true});
+            },
+            success: function(itemJson) {
+                App.unblockUI();
+                $('#results').html(itemJson.html);
+                Loan.detail();
+            },
+
+            error : function(xhr, status){
+                console.log(status);
+            },
+        });
+    },
     compare: function(a) {
         var b = $(a).data("id");
         if (b > 0) {
@@ -230,6 +253,7 @@ var Loan = {
         var d = b.find(".fa").hasClass("fa-long-arrow-up") ? '<i class="fa fa-long-arrow-down">' : '<i class="fa fa-long-arrow-up">';
         var e = b.find(".fa").hasClass("fa-long-arrow-up") ? "asc" : "desc";
         var f = b.parent().parent().hasClass("active") ? true : false;
+        console.log(c+'/'+e);
         $(".filters-table-head > div").removeClass("active");
         b.parent().parent().addClass("active");
         $(".filters-table-head > div a i").remove();
@@ -238,7 +262,9 @@ var Loan = {
             if ("bank" === c) if ("asc" === e) return $(a).find(".bank-title > a").text() < $(b).find(".bank-title > a").text(); else return $(a).find(".bank-title > a").text() > $(b).find(".bank-title > a").text();
             if ("initial_deposit_amount" === c || "minimum_balance" === c || "interest_rates" === c || "tenor" === c || "interest_earned" === c) {
                 var d = ".box__" + c;
-                if ("asc" === e) return $(a).find(d + " > span").data("value") < $(b).find(d + " > span").data("value"); else return $(a).find(d + " > span").data("value") > $(b).find(d + " > span").data("value");
+                console.log($(a).find(d + " > span").data("value") +'/'+ $(b).find(d + " > span").data("value"));
+                if ("asc" === e) return $(b).find(d + " > span").data("value")-$(a).find(d + " > span").data("value"); 
+                else return $(a).find(d + " > span").data("value") - $(b).find(d + " > span").data("value");
             }
         });
         var i = $(".filters-content.sponsored").clone();

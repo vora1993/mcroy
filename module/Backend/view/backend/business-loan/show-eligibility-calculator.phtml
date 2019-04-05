@@ -1,0 +1,76 @@
+<?php
+$title = $this->translate("View Business Loan Eligibility Calculator");
+$this->headTitle($title);
+$user = $this->user(array("id" => $business->getUserId()));
+$_dataAttributes = \Zend\Json\Json::decode($business->getData());
+?>
+<!-- BEGIN SIDEBAR -->
+<?php echo $this->partial('backend_sidebar', array('view' => 'business_loan', 'action' => 'show-eligibility-calculator')); ?>
+<!-- END SIDEBAR -->
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate("Dashboard") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('admin/business_loan', array('view' => 'business_loan', 'action' => 'eligibility-calculator')) ?>"><?php echo $this->translate("Business Loan Eligibility Calculator") ?></a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <span><?php echo $this->translate("Show Business Loan Eligibility Calculator") ?></span>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit portlet-datatable bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class="icon-settings font-dark"></i>
+                            <span class="caption-subject bold uppercase"> <?php echo $title ?></span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:;" onclick="window.history.back()" class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm"> <?php echo $this->translate("Back") ?>
+                              <i class="fa fa-history"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-hover">
+                                <thead class="box-red">
+                                    <tr>
+                                        <th> <?php echo $this->translate("Label") ?> </th>
+                                        <th> <?php echo $this->translate("Value") ?> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td><?php echo $this->translate("Email") ?></td>
+                                    <td><?php echo !empty($user) ? $user->getEmail() : 'N/A'; ?></td>
+                                  </tr>
+                                  <?php foreach ($_dataAttributes as $key => $data):?>
+                                    <?php if($key != '_token' AND $key != 'director'): ?>
+                                      <tr>
+                                        <td><?php echo ucfirst(str_replace("_"," ", $key));  ?></td>
+                                        <td><?php echo $data; ?></td>
+                                      </tr>
+                                    <?php endif; ?>
+                                  <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTENT -->

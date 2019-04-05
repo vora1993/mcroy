@@ -27,13 +27,182 @@ class PropertyLoanController extends AbstractActionController
         $loans = $application_model_property_loan->fetchAll(array("type" => "refinancing"));
         return array("loans" => $loans);
     }
+
+    public function totalCostsOutlayAction()
+    {
+        $application_model_property_cost_out_play = $this->getServiceLocator()->get('application_model_property_cost_out_play');
+        $loans = $application_model_property_cost_out_play->fetchRow();
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        $messages = array();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $loans->setMortgageStampDuty($post['mortgage_stamp_duty']);
+            $loans->setValuationFee($post['valuation_fee']);
+            $loans->setLegalFee($post['legal_fee']);
+            $loans->setFireInsurance($post['fire_insurance']);
+            $updated = $application_model_property_cost_out_play->update($loans);
+            if($updated) {
+                $messages['success'] = true;
+                $messages['msg'] = $translator->translate("Successfully updated");
+            } else {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Something error. Please check");
+            }
+            
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+        return array("loans"=>$loans);
+    }
+
+    public function bankInRefinancingAction()
+    {
+        $application_model_bank_in_refinancing = $this->getServiceLocator()->get('application_model_bank_in_refinancing');
+        $loans = $application_model_bank_in_refinancing->fetchAll();
+        $id = $this->params()->fromRoute('id') ? $this->params()->fromRoute('id') : 0;
+        return array("loans"=>$loans,"step"=>$id);
+    }
     
-    public function addAction() {
+    public function addBankInRefinancingAction()
+    {
         $request = $this->getRequest();
         if ($request->isPost()) {
             $post = $request->getPost();
             $messages = array();
             $translator = $this->getServiceLocator()->get('translator');
+            
+            $application_model_bank_in_refinancing = $this->getServiceLocator()->get('application_model_bank_in_refinancing');
+            $loan = new \Application\Entity\BankInRefinancing;
+            $loan->setName($post['name']);
+            $added = $application_model_bank_in_refinancing->insert($loan);
+            if($added) {
+                $messages['success'] = true;
+                $messages['msg'] = $translator->translate("Successfully added");
+            } else {
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Something error. Please check");
+            }
+            $response = $this->getResponse();
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+    }
+
+    public function editbankInRefinancingAction() {
+        $id = $this->params()->fromRoute('id');
+        $application_model_bank_in_refinancing = $this->getServiceLocator()->get('application_model_bank_in_refinancing');
+        $loan = $application_model_bank_in_refinancing->fetchRow(array('id' => $id));
+        if($loan) {
+            $translator = $this->getServiceLocator()->get('translator');
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $post = $request->getPost();
+                $loan->setName($post['name']);
+                $updated = $application_model_bank_in_refinancing->update($loan);
+                if($updated) {
+                    $messages['success'] = true;
+                    $messages['msg'] = $translator->translate("Successfully updated");
+                } else {
+                    $messages['success'] = false;
+                    $messages['msg'] = $translator->translate("Something error. Please check");
+                }
+                
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('loan' => $loan);
+        } else {
+            return $this->redirect()->toRoute("admin/property_loan"); 
+        }
+    }
+
+    public function tooltipForCommercialAction()
+    {
+        $application_model_tooltip_property_loan = $this->getServiceLocator()->get('application_model_tooltip_property_loan');
+        $value = $application_model_tooltip_property_loan->fetchRow(array('id'=>1));
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        $messages = array();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $arr=[];
+            $arr['loan_type']=$post['loan_type'];
+            $arr['total_interest']=$post['total_interest'];
+            $arr['lock_in']=$post['lock_in'];
+            $arr['remaining_loan_amount']=$post['remaining_loan_amount'];
+            $value->setValue(json_encode($arr));
+            $updated = $application_model_tooltip_property_loan->update($value);
+
+            if($updated) {
+              $messages['success'] = true;
+              $messages['msg']     = $translator->translate("Successfully updated");
+            } else {
+              $messages['success'] = false;
+              $messages['msg']     = $translator->translate("Something error. Please check");
+            }
+
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+
+        return array('value' => $value);
+    }
+
+    public function tooltipForResidentialAction()
+    {
+        $application_model_tooltip_property_loan = $this->getServiceLocator()->get('application_model_tooltip_property_loan');
+        $value = $application_model_tooltip_property_loan->fetchRow(array('id'=>2));
+        $translator = $this->getServiceLocator()->get('translator');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        $messages = array();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $arr=[];
+            $arr['loan_type']=$post['loan_type'];
+            $arr['total_interest']=$post['total_interest'];
+            $arr['lock_in']=$post['lock_in'];
+            $arr['loan_amount']=$post['loan_amount'];
+            $value->setValue(json_encode($arr));
+            $updated = $application_model_tooltip_property_loan->update($value);
+
+            if($updated) {
+              $messages['success'] = true;
+              $messages['msg']     = $translator->translate("Successfully updated");
+            } else {
+              $messages['success'] = false;
+              $messages['msg']     = $translator->translate("Something error. Please check");
+            }
+
+            $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+            return $response;
+        }
+
+        return array('value' => $value);
+    }
+
+    public function addAction() {
+        $application_model_bank_in_refinancing = $this->getServiceLocator()->get('application_model_bank_in_refinancing');
+        $list_bank = $application_model_bank_in_refinancing->fetchAll();
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $messages = array();
+            $translator = $this->getServiceLocator()->get('translator');
+            if((int)$post['int_year_2']<=0)
+            {
+                $response = $this->getResponse();
+                $messages['success'] = false;
+                $messages['msg'] = $translator->translate("Interest 2 year must is greater than 0");
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
             
             $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
             $loan = new \Application\Entity\PropertyLoanPackage;
@@ -44,7 +213,14 @@ class PropertyLoanController extends AbstractActionController
             $loan->setProperty($post['property']);
             $loan->setBankId($post['bank_id']);
             $loan->setDateAdded(new Expression('NOW()'));
-            $loan->setType($post['property_type']);
+            if($post['check_property_buy']=='residential')
+            {
+                $loan->setType($post['property_type_residential']);
+            }else
+            {
+                $loan->setType($post['property_type']);
+            }            
+            $loan->setTypeOfCorporate($post['type_of_corporate']);
             $loan->setPropertyStatus($post['property_status']);
             $loan->setPackage($post['property_package']);
             if($post['property_package'] === 'Floating') {
@@ -92,12 +268,15 @@ class PropertyLoanController extends AbstractActionController
             $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
             return $response;
         }
+        return array('list_bank'=>$list_bank);
     }
     
     public function editAction() {
         $id = $this->params()->fromRoute('id');
         $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
         $loan = $application_model_property_loan_package->fetchRow(array('id' => $id));
+        $application_model_bank_in_refinancing = $this->getServiceLocator()->get('application_model_bank_in_refinancing');
+        $list_bank = $application_model_bank_in_refinancing->fetchAll();
         if($loan) {
             $translator = $this->getServiceLocator()->get('translator');
             $request = $this->getRequest();
@@ -105,6 +284,13 @@ class PropertyLoanController extends AbstractActionController
             $messages = array();
             if ($request->isPost()) {
                 $post = $request->getPost();
+                if((int)$post['int_year_2']<=0)
+                {
+                    $messages['success'] = false;
+                    $messages['msg'] = $translator->translate("Interest 2 year must is greater than 0");
+                    $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                    return $response;
+                }
                 $loan->setTitle($post['title']);
                 $loan->setPromotions($post['promotions']);
                 $loan->setMinLoanAmount($post['min_loan_amount']);
@@ -112,7 +298,15 @@ class PropertyLoanController extends AbstractActionController
                 $loan->setBankId($post['bank_id']);
                 $loan->setCategoryId($post['category_id']);
                 $loan->setDateModified(new Expression('NOW()'));
-                $loan->setType($post['property_type']);
+                if($post['check_property_buy']=='residential')
+                {
+                    $loan->setType($post['property_type_residential']);
+                }else
+                {
+                    $loan->setType($post['property_type']);
+                }  
+                // $loan->setType($post['property_type']);
+                $loan->setTypeOfCorporate($post['type_of_corporate']);
                 $loan->setPropertyStatus($post['property_status']);
                 $loan->setPackage($post['property_package']);
                 if($post['property_package'] === 'Floating') {
@@ -161,7 +355,7 @@ class PropertyLoanController extends AbstractActionController
                 return $response;
             }
             
-            return array('loan' => $loan);
+            return array('loan' => $loan,'list_bank'=>$list_bank);
         } else {
             return $this->redirect()->toRoute("admin/property_loan"); 
         }
@@ -174,9 +368,103 @@ class PropertyLoanController extends AbstractActionController
         return array('loan' => $loan);
     }
     
-    public function faqAction() {
+    public function faqForCommercialAction() {
         $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
-        $faq = $application_model_faq->fetchRow(array('type' => 'property_loan'));
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_commercial'));
+        if($faq) {
+            $translator = $this->getServiceLocator()->get('translator');
+            
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $id = $faq->getId();
+                $post = $request->getPost();
+                $error = 0;
+                if(!$error) {
+                    $faq->setId($id);
+                    $_faq = $post['faq'];
+                    if(count($_faq) > 0) {
+                        $loan_tenure = array();
+                        foreach ($_faq as $key => $value) {
+                            $question = $value['question'];
+                            $answer = $value['answer'];
+                            $loan_tenure[] = array(
+                                'question'  => $question,
+                                'answer' => $answer
+                            );
+                        }
+                        $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
+                        $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
+                    }
+                    
+                    $edited = $application_model_faq->update($faq);
+                    if($edited) {
+                        $messages['success'] = true;
+                        $messages['msg']     = $translator->translate("Successfully updated");
+                    } else {
+                        $messages['success'] = false;
+                        $messages['msg']     = $translator->translate("Something error. Please check");
+                    }
+                }
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('faq' => $faq);
+        } 
+    }
+
+    public function faqForResidentialAction() {
+        $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_residential'));
+        if($faq) {
+            $translator = $this->getServiceLocator()->get('translator');
+            
+            $request = $this->getRequest();
+            $response = $this->getResponse();
+            $messages = array();
+            if ($request->isPost()) {
+                $id = $faq->getId();
+                $post = $request->getPost();
+                $error = 0;
+                if(!$error) {
+                    $faq->setId($id);
+                    $_faq = $post['faq'];
+                    if(count($_faq) > 0) {
+                        $loan_tenure = array();
+                        foreach ($_faq as $key => $value) {
+                            $question = $value['question'];
+                            $answer = $value['answer'];
+                            $loan_tenure[] = array(
+                                'question'  => $question,
+                                'answer' => $answer
+                            );
+                        }
+                        $faq->setQuestion(\Zend\Json\Json::encode($loan_tenure));
+                        $faq->setAnswer(\Zend\Json\Json::encode($loan_tenure));
+                    }
+                    
+                    $edited = $application_model_faq->update($faq);
+                    if($edited) {
+                        $messages['success'] = true;
+                        $messages['msg']     = $translator->translate("Successfully updated");
+                    } else {
+                        $messages['success'] = false;
+                        $messages['msg']     = $translator->translate("Something error. Please check");
+                    }
+                }
+                $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
+                return $response;
+            }
+            
+            return array('faq' => $faq);
+        } 
+    }
+
+    public function faqForAlternativeAction() {
+        $application_model_faq = $this->getServiceLocator()->get('application_model_faq');
+        $faq = $application_model_faq->fetchRow(array('type' => 'faq_for_alternative'));
         if($faq) {
             $translator = $this->getServiceLocator()->get('translator');
             
@@ -426,5 +714,19 @@ class PropertyLoanController extends AbstractActionController
         }
         $response->setContent ( \Zend\Json\Json::encode ( $messages ) );
         return $response;
+    }
+
+    public function commercialAndIndustrialAction()
+    {
+        $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
+        $loans = $application_model_property_loan_package->fetchAll();
+        return array("loans" => $loans);
+    }
+
+    public function residentialAction()
+    {
+        $application_model_property_loan_package = $this->getServiceLocator()->get('application_model_property_loan_package');
+        $loans = $application_model_property_loan_package->fetchAll();
+        return array("loans" => $loans);
     }
 }

@@ -45,6 +45,7 @@ class SliderController extends AbstractActionController
                     $post->setType($data['type']);
                     $post->setLink($data['link']);
                     $post->setStyle($data['style']);
+                    $post->setSortOrder($data['sort']);
                     $updated = $application_model_slider->update($post);
                     if($updated) {
                         $messages['success'] = true;
@@ -87,6 +88,7 @@ class SliderController extends AbstractActionController
                 $post_entity->setStatus($post['status']);
                 $post_entity->setType($post['type']);
                 $post_entity->setLink($post['link']);
+                $post_entity->setSortOrder($data['sort']);
                 $style_button='';
                 if(isset($post['link']) && isset($post['style'])) $style_button=$post['style'];
                 $post_entity->setStyle($style_button);

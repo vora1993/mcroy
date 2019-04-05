@@ -26,6 +26,7 @@ class RefinancingController extends AbstractActionController
             case 1:
                 if ($request->isPost()) {
                     $post = $request->getPost();
+                    $session->offsetSet('yes_or_no',1);
                     $property_type = $post['property_type'];
                     $current_bank_name = $post['current_bank_name'];
                     $remaining_loan_amount = $post['remaining_loan_amount'];
@@ -77,7 +78,7 @@ class RefinancingController extends AbstractActionController
             break;
 
             case 3:
-                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure') && $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
                 }
                 if($this->getServiceLocator()->get('AuthService')->hasIdentity()) {
@@ -87,10 +88,10 @@ class RefinancingController extends AbstractActionController
             break;
 
             case 4:
-                if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status')) {
+                if(!$session->offsetExists('property_type') && !$session->offsetExists('property_status') && $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 1));
                 }
-                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure')) {
+                if(!$session->offsetExists('preferred_rate_package') && !$session->offsetExists('new_loan_tenure') && $session->offsetExists('yes_or_no')==1) {
                     return $this->redirect()->toRoute("refinancing", array("action" => "step", "id" => 2));
                 }
                 if(!$this->getServiceLocator()->get('AuthService')->hasIdentity()) {
@@ -106,24 +107,36 @@ class RefinancingController extends AbstractActionController
                     $condition['property_status'] = $session->offsetGet('property_status');
                 }
                 if($session->offsetExists('preferred_rate_package')) {
-                    $condition['package'] = $session->offsetGet('preferred_rate_package');
+                    if(!$session->offsetGet('preferred_rate_package')=='both')
+                    {
+                        $condition['package'] = $session->offsetGet('preferred_rate_package');
+                    }                   
                 }
                 if($session->offsetGet('no_lock_in_only') == 1) {
                     $condition['lock_in_year'] = 0;
                 }
+                if($session->offsetGet('current_bank_name')) {
+                    $condition['bank_id'] = $session->offsetGet('current_bank_name');
+                }
+                if($session->offsetGet('yes_or_no')==0) {
+                    $condition=[];
+                }
                 $loans = $application_model_property_loan_bank->fetchFilter($condition);
                 if ($request->isPost()) {
                     $post = $request->getPost();
-                    $loan_amount              = $post['loan_amount'];
+                    $remaining_loan_amount              = $post['remaining_loan_amount'];
                     $loan_tenure              = $post['loan_tenure'];
                     $total_interest_for_years = $post['total_interest_for_years'];
+                    $current_interest_rate=$post['current_interest_rate'];
                     $preferred_rate_package   = $post['preferred_rate_package'];
                     $no_lock_in_only          = $post['no_lock_in_only'];
-
-                    if($loan_amount && $loan_tenure) {
+                    if($remaining_loan_amount && $loan_tenure) {
+                        $session->offsetSet('remaining_loan_amount', $remaining_loan_amount);
                         $session->offsetSet('loan_amount', $loan_amount);
-                        $session->offsetSet('loan_tenure', $loan_tenure);
+                        $session->offsetSet('new_loan_tenure', $loan_tenure);
                         $session->offsetSet('total_interest_for_years', $total_interest_for_years);
+                        $session->offsetSet('total_interest_for_years', $total_interest_for_years);
+                        $session->offsetSet('current_interest_rate', $current_interest_rate);
                         $session->offsetSet('preferred_rate_package', $preferred_rate_package);
                         if($no_lock_in_only == 1) $session->offsetSet('no_lock_in_only', 1);
                         else $session->offsetSet('no_lock_in_only', 0);
@@ -281,5 +294,28 @@ class RefinancingController extends AbstractActionController
             "select"                   => $select,
             "redirect_url"             => $redirect
         );
+    }
+    public function selectNoAction() {
+        $seo = $this->params()->fromPost('seo');
+        $session = new Session('home_loan');
+        $router = $this->getServiceLocator()->get('Application')->getMvcEvent()->getRouter();
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        if ($request->isPost()) {
+            $session->offsetSet('property', 'Purchasing');
+            $session->offsetSet('property_type', '');
+            $session->offsetSet('property_status', '');
+            $session->offsetSet('yes_or_no',0);
+
+            $session->offsetSet('loan_amount', 10000);
+            $session->offsetSet('loan_tenure', 20);
+            $session->offsetSet('loan_percent', 80);
+            // $session->offsetSet('preferred_rate_package', 'Floating');
+            // $session->offsetSet('existing_home_loans', 'Floating');
+            $session->offsetSet('purchase_price', 10000);
+            $redirect = $router->assemble(array("action" => "step", "seo" => $seo, "step" => "step", "id" => 3), array('name' => "refinancing"));
+        }
+        $response->setContent ( \Zend\Json\Json::encode ( array("redirect" => $redirect) ) );
+        return $response;
     }
 }

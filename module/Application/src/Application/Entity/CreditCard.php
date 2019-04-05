@@ -22,7 +22,7 @@ class CreditCard implements CreditCardInterface
   protected $points_value;
   protected $air_miles_value;
   protected $discount_value;
-
+  protected $star;
 
   public function getId()
   {
@@ -224,6 +224,17 @@ class CreditCard implements CreditCardInterface
   public function setDiscountValue($discount_value)
   {
     $this->discount_value = (float) $discount_value;
+    return $this;
+  }
+
+  public function getStar()
+  {
+    return $this->star;
+  }
+
+  public function setStar($star)
+  {
+    $this->star = (float)$star;
     return $this;
   }
 }
